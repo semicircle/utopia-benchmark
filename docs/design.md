@@ -101,5 +101,36 @@ Every task has hidden tests and a Python **control** version.
 - Docs should fit comfortably in context (roughly 30–50k tokens), so this tests
   in-context learning, not retrieval over a huge manual.
 - The VM is deterministic given (seed, inputs).
-- Implementation language for the VM and compiler: to be decided (Rust or Go
-  are the candidates).
+
+## 8. Implementation stack
+
+**Toolchain (generator, compiler, VM, headless UI): Go.**
+**Harness (running models, sandboxes, scoring): Python.**
+
+Why Go for the toolchain:
+
+- **Opaque, per-seed binaries.** The AI under test must not read the VM source,
+  or it could read the errata ledger and semantic knobs straight out of it.
+  Each evaluation seed is baked into a single static binary (dialect tables
+  embedded with `go:embed`) and only that binary goes into the sandbox. Go
+  builds in seconds, so a fresh build per seed is cheap.
+- **Single static binary, easy cross-compilation.** It drops into any sandbox
+  image with no runtime to install.
+- **The VM owns concurrency and memory.** Households, ticks and seasons are
+  implemented inside the VM as data structures and a seeded scheduler, so the
+  host language's own threading and GC don't leak into the semantics. Go's
+  simplicity costs nothing here.
+- **Easy to read and contribute to,** for humans and AI coding agents alike.
+
+The trade-off is that Go has no sum types, so AST/IR code uses interfaces and
+type switches, which is more verbose than Rust's enums and `match`. Speed is
+not a concern at benchmark program sizes.
+
+**Determinism rules:** never iterate a Go map where order can affect output
+(sort keys, or use ordered structures). All randomness comes from the seed.
+No wall-clock time inside the VM; time is logical ticks.
+
+Why Python for the harness: every model provider ships a Python SDK first, and
+existing eval frameworks with sandboxed agent support (for example UK AISI's
+Inspect) may save most of the harness work. That needs evaluating before we
+build our own.
