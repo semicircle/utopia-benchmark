@@ -27,6 +27,8 @@ The goal is one striking chart, as early as possible.
 
 - [ ] Hard-mode tier (priorities, reordering optimizer, memory pools)
 - [ ] Hidden "surprise" knobs
+- [ ] A second platform profile (for example async actors or CSP), on the same
+  `Scheduler`/`Allocator` substrate
 - [ ] Optional: turn the methodology page into an arXiv technical report
 
 ## Principles

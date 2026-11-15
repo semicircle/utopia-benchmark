@@ -57,7 +57,87 @@ The platform deliberately avoids mainstream models that models have memorized.
   immediate mode. Rendering is headless (character grid or framebuffer) and
   driven by scripted events, so UI tasks are testable automatically.
 
-## 4. Hard mode and surprises
+## 4. Platform substrate: many models on one VM
+
+Can one VM support different concurrency and memory models? Yes, within a
+range. The VM is an interpreter, so guest threads and guest memory are never
+host threads or host memory. They are data structures inside the VM. A
+concurrency model is a scheduler policy, and a memory model is an allocator
+plus checking rules. Both sit behind narrow interfaces over a fixed core.
+
+### Concurrency: one scheduler core, swappable policies
+
+Every concurrency model reduces to *tasks*, *wait conditions*, *wake-ups* and
+*a choice of what runs next*:
+
+```go
+type Scheduler interface {
+    PickNext(runnable []TaskID, clock Tick) TaskID // seeded, deterministic
+    ShouldPreempt(t TaskID, instrsRun int) bool    // checked between instructions
+    OnBlock(t TaskID, why WaitCond)
+    OnWake(t TaskID)
+}
+```
+
+| Model | How it maps onto the substrate |
+|---|---|
+| Synchronous ticks | Every task runs to the tick boundary; signals latch; the clock advances |
+| Households + letters (actors) | Task plus mailbox; receiving blocks on "queue not empty" |
+| CSP channels | Send and receive block until both sides meet (rendezvous) |
+| Linda tuple space | Shared store; `in()` blocks on "a matching tuple exists" |
+| RTOS priorities (hard mode) | `PickNext` = highest priority; preempt when a higher one wakes |
+
+Preemption is free because the interpreter decides between instructions, and
+every choice is driven by the seed, so runs stay deterministic. This is the
+same approach as deterministic concurrency testers such as `loom` and
+`shuttle`: a fixed runtime with a pluggable scheduling strategy.
+
+### Memory: handles, not pointers
+
+Guest code only holds **handles** (an object-table index plus a generation
+number). A memory model is then a rule for allocating and invalidating them:
+
+| Model | Rule |
+|---|---|
+| GC heap | Handles never go stale; unreachable objects are collected |
+| Seasons (regions) | Objects are tagged with a season; ending it makes all its handles stale |
+| Fixed pools (hard mode) | Allocation fails when the pool is at capacity |
+| Move / ownership | Sending a letter invalidates the sender's handle |
+
+A stale handle is a deterministic trap, never undefined behavior. That keeps
+runs reproducible and gives errata a clean hook (for example, an off-by-one in
+season release under a specific condition).
+
+**Weak memory / reordering** (hard mode) fits the same way: give each task a
+store buffer, flushed at explicit barriers or by a seeded policy.
+
+### Where the range ends
+
+The VM is not the hard part. These are:
+
+1. **Not every combination is coherent.** Synchronous ticks with reordering
+   shared memory, or capability isolation with a global tuple space, make no
+   sense together. So models are not independent knobs. They come as a few
+   coherent **platform profiles**, and each seed varies *parameters within*
+   a profile: letter latency (1 or 2 ticks), delivery order (FIFO or by
+   sender), whether seasons nest, and so on.
+2. **Every task must be solvable in every profile.** Hidden tests observe only
+   outputs (stdout, the UI grid, letters crossing the boundary), never VM
+   internals, and each profile needs its own reference solution to prove a
+   task is solvable.
+3. **Each model needs its own docs chapter template,** and the whole set still
+   has to fit the context budget (§8).
+
+### Plan
+
+- **v0/v1:** ship **one** profile (ticks + households + seasons). Novelty comes
+  from the lexicon, false friends and parameters within that profile, which is
+  already enough to defeat memorization.
+- **From day one,** build the VM on `Scheduler` and `Allocator` interfaces so a
+  second profile (for example async actors or CSP) can be added later without a
+  rewrite.
+
+## 5. Hard mode and surprises
 
 Painful features live behind knobs, are off by default, and are scored on a
 separate tier:
@@ -69,7 +149,7 @@ separate tier:
 Some knobs can be turned on as hidden **surprises**: not in the docs, but
 discoverable by experiment.
 
-## 5. Errata: seeded system bugs
+## 6. Errata: seeded system bugs
 
 Debugging the platform itself is a core skill under test. Three classes:
 
@@ -84,7 +164,7 @@ Rules:
 - Each seed has a hidden **errata ledger**, so scoring can record which bugs
   were found and worked around, not just whether the app passed.
 
-## 6. Tasks
+## 7. Tasks
 
 Tiered from small to real:
 
@@ -96,13 +176,13 @@ Tiered from small to real:
 
 Every task has hidden tests and a Python **control** version.
 
-## 7. Constraints
+## 8. Constraints
 
 - Docs should fit comfortably in context (roughly 30–50k tokens), so this tests
   in-context learning, not retrieval over a huge manual.
 - The VM is deterministic given (seed, inputs).
 
-## 8. Implementation stack
+## 9. Implementation stack
 
 **Toolchain (generator, compiler, VM, headless UI): Go.**
 **Harness (running models, sandboxes, scoring): Python.**
