@@ -3,3 +3,4 @@
 /workspaces/
 /_site/
 __pycache__/
+.venv/

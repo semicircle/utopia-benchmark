@@ -111,30 +111,53 @@ syntax and vocabulary. That makes a useful ablation arm.
 
 ### Running a model
 
-`harness/run.py` drives a model through the `claude` CLI, so either a Claude
-subscription login (`claude auth login`) or `ANTHROPIC_API_KEY` works. With
-a key, runs use `--bare` (no hooks, plugins or CLAUDE.md), and the key is kept
-out of the model's tool environment and redacted from saved results.
+Bring an API key and a model name. The harness talks to the Anthropic
+Messages API or to any OpenAI-compatible endpoint (OpenAI, OpenRouter,
+Together, vLLM, Ollama, ...).
 
 ```bash
-python3 harness/run.py oneshot --model reference --seeds 1-12 --out /tmp/selftest   # pipeline self-test, no model
-python3 harness/run.py oneshot --arm python --model claude-opus-5-5                 # control arm
-python3 harness/run.py oneshot --seeds 1-8 --semantics standard --model claude-opus-5-5
-python3 harness/run.py oneshot --seeds 1-8 --model claude-opus-5-5                  # false friends
-python3 harness/run.py agent --seeds 1,2 --model claude-opus-5-5                    # full agent runs
-python3 harness/build_site.py                                                       # results site in _site/
+python3 -m venv .venv && .venv/bin/pip install -r harness/requirements.txt
+
+export ANTHROPIC_API_KEY=...
+.venv/bin/python harness/run.py oneshot --arm python                      # control arm
+.venv/bin/python harness/run.py oneshot --seeds 1-8 --semantics standard  # new syntax only
+.venv/bin/python harness/run.py oneshot --seeds 1-8                       # plus false friends
+.venv/bin/python harness/run.py agent --seeds 1,2 --max-cost 10           # full agent runs
+
+# any OpenAI-compatible endpoint
+export OPENROUTER_API_KEY=...
+.venv/bin/python harness/run.py oneshot --provider openai --base-url https://openrouter.ai/api/v1 \
+    --api-key-env OPENROUTER_API_KEY --model some/model --price-in 1 --price-out 4
+
+.venv/bin/python harness/build_site.py                                    # results site in _site/
+```
+
+Offline self-tests, no key needed:
+
+```bash
+python3 harness/run.py oneshot --provider reference --seeds 1-12 --out /tmp/selftest
+python3 harness/run.py agent --provider scripted --seeds 1-4 --out /tmp/selftest
 ```
 
 - **oneshot**: the manual and all tasks in one prompt, no tools. Cheap, and it
   measures pure in-context learning.
-- **agent**: a headless Claude Code agent in a fresh workspace outside this
-  repo, with the manual, tasks and toolchain. Web tools are disabled and every
-  path and command in the transcript is audited.
+- **agent**: the model works in a fresh workspace outside this repo with three
+  tools (`run_shell`, `read_file`, `write_file`), the same for every provider.
+  File tools are confined to the workspace; shell commands are audited and
+  flagged if they reach outside it. Grading rebuilds the toolchain after the
+  run, so nothing the agent touched is trusted. Shell commands do run on the
+  host, so use a container or VM for models you do not trust.
+- `--runner claude-code` runs the agent as headless Claude Code instead.
+- Limits: `--max-steps`, `--max-cost` (USD, estimated from token usage) and
+  `--max-seconds` per run. Effort defaults to `high`; refusal fallbacks are
+  off so every answer comes from the model under test.
 
-Each run lands in `results/runs/RUN_ID/` (scores, usage, prompt, response or
-transcript, solutions). Pushing to `main` rebuilds the site and publishes it
-with GitHub Pages (`.github/workflows/pages.yml`; set Pages' source to
-"GitHub Actions" once in the repo settings).
+Keys are read from the environment only. They are stripped from the agent's
+shell environment and redacted from everything saved. Each run lands in
+`results/runs/RUN_ID/` (scores, usage, cost, prompt, response or transcript,
+solutions). Pushing to `main` rebuilds the site and publishes it with GitHub
+Pages (`.github/workflows/pages.yml`; set Pages' source to "GitHub Actions"
+once in the repo settings).
 
 ### Layout
 
@@ -146,6 +169,8 @@ with GitHub Pages (`.github/workflows/pages.yml`; set Pages' source to
 - `tasks/`: tasks, each with a prompt, a canonical reference solution and hidden tests
 - `harness/grade.py`: runs solutions against hidden tests
 - `harness/run.py`: runs a model (one-shot or agent) and records the result
+- `harness/llm.py`: Anthropic and OpenAI-compatible clients, the agent loop and its tools
+- `harness/claude_code.py`: optional Claude Code runner
 - `harness/build_site.py`: builds the static results site from `results/`
 
 `go test ./...` checks that every reference solution passes its tests in
