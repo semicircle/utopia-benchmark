@@ -1,0 +1,4 @@
+let n = num(readline());
+count i from 1 to n {
+    print i;
+}

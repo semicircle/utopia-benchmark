@@ -7,10 +7,14 @@ trust: a GitHub repo, a website and a leaderboard.
 
 The goal is one striking chart, as early as possible.
 
-- [ ] Minimal VM and compiler for one dialect family
-- [ ] Generator with a handful of lexicon and semantic knobs
-- [ ] ~5 tasks (T0–T2) with hidden tests and Python control versions
+- [x] Minimal VM and compiler (four syntax styles, ten semantic knobs)
+- [x] Generator with conlang lexicon, syntax styles and semantic knobs
+- [x] Docs generated from a fixed English template, with executed examples
+- [x] 7 T0 tasks with hidden tests and canonical reference solutions
+- [ ] T1–T2 tasks, and Python control versions of every task
+- [x] Grader (`harness/grade.py`)
 - [ ] Harness: give the docs and toolchain to an agent, run it, score it
+- [ ] Babel lexicon (metaphorical keywords from human languages)
 - [ ] Run about 4 models and record full transcripts
 
 ## v1: public launch

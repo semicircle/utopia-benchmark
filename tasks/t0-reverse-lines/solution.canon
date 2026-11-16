@@ -1,0 +1,9 @@
+let lines = [];
+let line = readline();
+while (line != none) {
+    push(lines, line);
+    line = readline();
+}
+for (let i = len(lines) - 1; i >= 0; i = i - 1) {
+    print lines[i];
+}

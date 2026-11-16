@@ -1,0 +1,511 @@
+{{- define "ex" -}}
+```
+{{.Code}}
+```
+{{if .Input}}
+Given this standard input:
+
+```
+{{.Input}}```
+{{end}}
+Output:
+
+```
+{{.Output}}
+```
+{{- end -}}
+
+{{- define "syntax" -}}
+```
+{{index .Syntax .Key}}
+```
+{{range index .Notes .Key}}
+- {{.}}
+{{- end}}
+{{- end -}}
+
+# The {{.Name}} Language Reference
+
+{{.Name}} is a small programming language. This reference is complete: it
+describes everything the language and its toolchain do. Where {{.Name}}
+differs from languages you may know, the difference is deliberate, so follow
+this document rather than habit.
+
+Every example in this reference was run with the real toolchain, and the
+output shown is exactly what it printed.
+
+## 1. Running programs
+
+{{.Name}} source files use the extension `.{{.Ext}}`. The toolchain is a
+single program named `{{.Bin}}`:
+
+```
+{{.Bin}} run program.{{.Ext}}      # check and run a program
+{{.Bin}} check program.{{.Ext}}    # only check it for errors, without running it
+```
+
+A program reads from standard input and writes to standard output. If an
+error occurs, `{{.Bin}}` prints a message to standard error and exits with
+status 1. Output printed before the error is kept.
+
+A program may run at most 50,000,000 steps and nest at most 10,000 function
+calls. Exceeding either limit is an error.
+
+## 2. Lexical structure
+
+**Layout.** Spaces, tabs, line breaks and indentation have no meaning; use
+them freely for readability. A comment starts with `{{.Comment}}` and runs to
+the end of the line.
+
+**Statement terminator.** Simple statements (declarations, assignments,
+calls, printing, jumps, `{{.Return}}`{{if .Has.break}}, `{{.Break}}`{{end}}{{if .Has.continue}}, `{{.Cont}}`{{end}}) end with
+`{{.Term}}`. Compound statements such as conditionals and loops do not need
+one after them, but their syntax is shown in full below.
+
+**Names** of variables, functions and labels are made of letters, digits
+and `_`, and must not start with a digit. Names are case-sensitive.
+
+**Keywords** are reserved and cannot be used as names. They are
+case-sensitive and must be written exactly as shown:
+
+| Keyword | Meaning |
+|---|---|
+{{- range .Keywords}}
+| `{{.A}}` | {{.B}} |
+{{- end}}
+
+The builtin function names (section 9) are also reserved.
+
+**Literals.** Integers are written in decimal (`0`, `42`, `1000`); there are
+no fractions. A negative number is written with a minus sign (`-5`). Strings
+are written between double quotes, such as `"hello"`. Inside a string, `\n`
+is a line break, `\t` a tab, `\"` a double quote and `\\` a backslash.
+Booleans are `{{.True}}` and `{{.False}}`. The value `{{.None}}` means "no
+value".
+
+## 3. Values
+
+| Type | Examples | Notes |
+|---|---|---|
+| integer | `0`, `-7`, `123` | 64-bit; overflow wraps around |
+| string | `"hi"`, `""` | a sequence of characters; cannot be changed in place |
+| boolean | `{{.True}}`, `{{.False}}` | the only values allowed as conditions |
+| list | `[1, 2, 3]`, `[]`, `["a", 1]` | mutable; may mix types |
+| none | `{{.None}}` | "no value"; returned by functions that return nothing |
+
+Lists are shared, not copied: assigning a list to another variable, or
+passing it to a function, gives access to the same list.
+
+{{template "ex" .Ex.listshare}}
+
+Printing shows integers in decimal, strings without quotes, booleans and
+`{{.None}}` as their keywords, and lists in brackets with strings quoted.
+
+## 4. Variables and simple statements
+
+A variable must be declared before it is used:
+
+{{template "syntax" (dict . "let")}}
+
+Assignment changes an existing variable. Assigning to a name that was never
+declared is an error.
+
+{{template "syntax" (dict . "assign")}}
+
+Each function has one flat set of variables. A variable declared anywhere in
+a function, including inside a loop or a branch, is visible from that point
+to the end of the function. Declaring an existing variable again simply
+assigns to it. The top-level code of a program has its own variables, which
+functions cannot see.
+
+`{{.Print}}` prints a value followed by a line break. `{{.Write}}` prints a
+value without a line break.
+
+{{template "syntax" (dict . "print")}}
+
+{{template "syntax" (dict . "write")}}
+
+{{template "ex" .Ex.vars}}
+
+## 5. Expressions
+
+### Operators
+
+| Operator | Meaning |
+|---|---|
+| `-x` | negation |
+| `{{.Not}} x` | logical not |
+| `a * b` | multiplication |
+| `a / b` | integer division (see below) |
+| `a {{.ModOp}} b` | remainder (see below) |
+| `a + b` | addition{{if eq .Concat "+"}}, or joining text (see below){{end}} |
+| `a - b` | subtraction |
+{{- if ne .Concat "+"}}
+| `a {{.Concat}} b` | joining text (see below) |
+{{- end}}
+| `a {{.Eq}} b` | equal |
+| `a {{.Ne}} b` | not equal |
+| `a < b`, `a <= b`, `a > b`, `a >= b` | ordering |
+| `a {{.And}} b` | logical and |
+| `a {{.Or}} b` | logical or |
+
+Note the spellings: assignment is `{{.Assign}}`{{if ne .Assign .Eq}} and equality is `{{.Eq}}`{{end}}.
+{{- if eq .Assign "<-"}} Because `<-` is one token, write `a < -1` with a space
+when comparing with a negative number.{{end}}
+{{- if eq .Comment "--"}} Because `--` starts a comment, write `a - -1` with a
+space when subtracting a negative number.{{end}}
+
+### Grouping and precedence
+
+{{if eq .Prec "standard" -}}
+Operators group the usual mathematical way. From tightest to loosest:
+negation and `{{.Not}}`; then `*`, `/` and `{{.ModOp}}`; then `+` and `-`{{if ne .Concat "+"}} and `{{.Concat}}`{{end}}; then the comparisons; then
+`{{.And}}`; then `{{.Or}}`. Operators of the same level group from left to
+right, so `10 - 4 - 3` means `(10 - 4) - 3`.
+{{- else if eq .Prec "flat-left" -}}
+**All binary operators have the same precedence and group from left to
+right.** There is no "multiplication first" rule: `2 + 3 * 4` means
+`(2 + 3) * 4`. This applies to every binary operator, including comparisons
+and `{{.And}}`/`{{.Or}}`, so `a < b {{.And}} c < d` means
+`((a < b) {{.And}} c) < d`; write `(a < b) {{.And}} (c < d)` instead. Negation
+and `{{.Not}}` bind tighter than any binary operator.
+{{- else -}}
+**All binary operators have the same precedence and group from right to
+left.** There is no "multiplication first" rule: `2 * 3 + 4` means
+`2 * (3 + 4)`, and `10 - 4 - 3` means `10 - (4 - 3)`. This applies to every
+binary operator, including comparisons and `{{.And}}`/`{{.Or}}`, so
+`a < b {{.And}} c < d` means `a < (b {{.And}} (c < d))`; write
+`(a < b) {{.And}} (c < d)` instead. Negation and `{{.Not}}` bind tighter than
+any binary operator.
+{{- end}} Parentheses group explicitly.
+
+{{template "ex" .Ex.prec}}
+
+### Order of evaluation
+
+{{if eq .Sem.OperandOrder "left-to-right" -}}
+The two operands of a binary operator are evaluated left operand first.
+{{- else -}}
+**The two operands of a binary operator are evaluated right operand first**,
+then the left one.
+{{- end}}
+
+{{template "ex" .Ex.operandorder}}
+
+{{if eq .Sem.ArgOrder "left-to-right" -}}
+Arguments of a function call are evaluated from left to right.
+{{- else -}}
+**Arguments of a function call are evaluated from right to left**: the last
+argument first. They are still passed in the order written.
+{{- end}}
+
+{{template "ex" .Ex.argorder}}
+
+### Integer arithmetic
+
+Division of integers gives an integer.
+{{- if eq .Sem.Div "toward-zero"}} The exact result is rounded toward zero,
+so `7 / 2` is `3` and `-7 / 2` is `-3`.
+{{- else if eq .Sem.Div "toward-negative-infinity"}} **The exact result is
+rounded down, toward negative infinity**, so `7 / 2` is `3` and `-7 / 2` is `-4`.
+{{- else}} **The exact result is rounded up, toward positive infinity**, so
+`7 / 2` is `4` and `-7 / 2` is `-3`.
+{{- end}} The remainder `a {{.ModOp}} b` is always `a - b * (a / b)` using that
+division, so its sign follows from the rounding rule. Dividing by zero is an
+error.
+
+{{template "ex" .Ex.div}}
+
+### Text
+
+{{if eq .Concat "+" -}}
+`+` adds two integers. If either operand is a string, both operands are
+converted to text (as printing would show them) and joined instead. Note that
+`1 + 2 + "x"` is `"3x"` but `"x" + 1 + 2` is `"x12"`, following the grouping
+rules above.
+{{- else -}}
+`{{.Concat}}` converts both operands to text (as printing would show them)
+and joins them. `+` only adds integers.
+{{- end}}
+
+{{template "ex" .Ex.concat}}
+
+Strings can be compared with `<`, `<=`, `>` and `>=`, character by character
+(by character code). Comparing values of different types with `{{.Eq}}` gives
+`{{.False}}`; ordering them is an error.
+
+### Lists and indexing
+
+`x[i]` is element `i` of list `x`, or the one-character string at position
+`i` of string `x`. **Indexes start at {{.Sem.IndexBase}}**: the first element
+is `x[{{.Sem.IndexBase}}]`. List elements can be replaced with `x[i] {{.Assign}} value{{.Term}}`.
+
+{{template "syntax" (dict . "index-assign")}}
+
+{{template "ex" .Ex.index}}
+
+{{if eq .Sem.OutOfRange "wrap" -}}
+**An index outside the list wraps around**: it is taken modulo the length,
+so one past the last element is the first element again, and negative
+indexes count back from the end. Indexing an empty list or string is an
+error.
+
+{{template "ex" .Ex.wrap}}
+{{- else -}}
+Using an index outside the list or string is an error.
+{{- end}}
+
+{{if .Sem.ListEqStructural -}}
+Two lists are equal (`{{.Eq}}`) when they have the same length and equal
+elements.
+{{- else -}}
+**Two lists are equal (`{{.Eq}}`) only if they are the very same list.** Two
+different lists with the same elements are not equal.
+{{- end}}
+
+{{template "ex" .Ex.listeq}}
+
+### Logic and conditions
+
+Conditions must be booleans: there is no "truthiness", and using an integer,
+string, list or `{{.None}}` as a condition is an error. The operands of
+`{{.And}}`, `{{.Or}}` and `{{.Not}}` must also be booleans.
+
+{{if .Sem.ShortCircuit -}}
+`{{.And}}` and `{{.Or}}` evaluate their right operand only when needed: if the
+left operand of `{{.And}}` is `{{.False}}`, or the left operand of `{{.Or}}`
+is `{{.True}}`, the right operand is not evaluated.
+{{- else -}}
+**`{{.And}}` and `{{.Or}}` always evaluate both operands**, even when the
+left operand already decides the result.
+{{- end}}
+
+{{template "ex" .Ex.shortcircuit}}
+
+## 6. Control flow
+
+{{- if .Has.if}}
+
+### Conditionals
+
+{{template "syntax" (dict . "if")}}
+
+The conditions are tested in order, and the statements of the first true
+one run. If none is true, the statements of the final branch without a
+condition run, if there is one.
+
+{{template "ex" .Ex.if}}
+{{- end}}
+
+{{- if .Has.switch}}
+
+### Choosing by value
+
+{{template "syntax" (dict . "switch")}}
+
+The expression is evaluated once and compared with each literal in order,
+using `{{.Eq}}`. Literals are integers or strings, and must all be
+different.
+{{- if eq .Styles.Switch "c"}}
+{{- if .Sem.SwitchFallthrough}} Execution starts at the first matching case
+(or at the default part if none matches). **It then continues into the
+following cases until `{{.Break}}`** or the end of the statement, so most
+cases should end with `{{.Break}}{{.Term}}`.
+
+{{template "ex" .Ex.fallthrough}}
+
+The next example ends each case with `{{.Break}}`:
+{{- else}} Only the statements of the matching case run (or the default part
+if none matches); execution does not continue into the next case. `{{.Break}}` inside a case leaves the statement early.
+{{- end}}
+{{- else}} Only the statements of the matching case run (or the default part,
+if none matches and there is one).
+{{- if .Has.break}} `{{.Break}}` inside it refers to the enclosing loop, not
+to this statement.{{end}}
+{{- end}}
+
+{{template "ex" .Ex.switch}}
+{{- end}}
+
+{{- if .Has.while}}
+
+### While loops
+
+{{template "syntax" (dict . "while")}}
+
+The condition is tested before each pass; the loop ends when it is
+`{{.False}}`.
+
+{{template "ex" .Ex.while}}
+{{- end}}
+
+{{- if (index .Has "do-while")}}
+
+### Do-while loops
+
+{{template "syntax" (dict . "do-while")}}
+
+The statements run once, then again for as long as the condition is
+`{{.True}}`. The condition is tested after each pass.
+
+{{template "ex" .Ex.posttest}}
+{{- end}}
+
+{{- if (index .Has "repeat-until")}}
+
+### Repeat-until loops
+
+{{template "syntax" (dict . "repeat-until")}}
+
+The statements run once, then again **until** the condition is `{{.True}}`.
+The condition is tested after each pass.
+
+{{template "ex" .Ex.posttest}}
+{{- end}}
+
+{{- if (index .Has "c-for")}}
+
+### For loops
+
+{{template "syntax" (dict . "c-for")}}
+
+The initializer runs once. Then, while the condition is `{{.True}}`, the
+statements run, followed by the update.
+
+{{template "ex" .Ex.cfor}}
+{{- end}}
+
+{{- if (index .Has "count-for")}}
+
+### Counting loops
+
+{{template "syntax" (dict . "count-for")}}
+
+The start, limit and step are evaluated once, before the loop begins; the
+step defaults to `1` and must not be `0`. The variable starts at the start
+value and changes by the step after each pass.
+{{- if .Sem.CountInclusive}} The loop runs while the variable has not passed the
+limit; **the limit itself is included**.
+{{- else}} **The limit itself is not included**: with a positive step, the loop
+runs while the variable is less than the limit; with a negative step, while it
+is greater.
+{{- end}}
+
+{{template "ex" .Ex.count}}
+{{- end}}
+
+{{- if .Has.break}}
+
+### Leaving loops early
+
+{{template "syntax" (dict . "break")}}
+{{- if .Has.continue}}
+
+{{template "syntax" (dict . "continue")}}
+
+`{{.Break}}` leaves the innermost loop. `{{.Cont}}` skips to the next pass of
+the innermost loop (for a counting or for loop, the update still happens).
+{{- else}}
+
+`{{.Break}}` leaves the switch statement it is in.
+{{- end}}
+{{- if .Has.continue}}
+
+{{template "ex" .Ex.breakcont}}
+{{- end}}
+{{- end}}
+
+{{- if .Has.label}}
+
+### Labels and jumps
+
+{{- if not .Has.if}}
+{{.Name}} has no if statement; decisions are made with conditional jumps.
+{{- end}}
+{{- if not .Has.while}}
+{{.Name}} has no loop statements; loops are written with labels and jumps.
+{{- end}}
+
+A label marks a position in a function. It does not end with `{{.Term}}`:
+
+{{template "syntax" (dict . "label")}}
+
+A jump continues execution at a label in the same function:
+
+{{template "syntax" (dict . "goto")}}
+
+A conditional jump jumps only if the condition is `{{.True}}`; otherwise
+execution continues with the next statement:
+
+{{template "syntax" (dict . "jumpif")}}
+
+Each label name may be defined only once in a function. Jumps may go
+forward or backward, and into or out of any block in the same function.
+{{- if not .Has.while}}
+
+{{template "ex" .Ex.labels}}
+{{- else if not .Has.if}}
+
+{{template "ex" .Ex.if}}
+{{- end}}
+{{- end}}
+
+{{- if .Has.dispatch}}
+
+### Dispatch
+
+{{template "syntax" (dict . "dispatch")}}
+
+The expression is evaluated once and compared with each literal in order,
+using `{{.Eq}}`. On the first match, execution jumps to that literal's
+label. If nothing matches, it jumps to the label after `{{.DispatchElse}}`, or,
+without one, continues with the next statement. Literals are integers or
+strings and must all be different.
+
+{{template "ex" .Ex.switch}}
+{{- end}}
+
+## 7. Functions
+
+{{template "syntax" (dict . "func")}}
+
+Functions are declared at the top level of a program, not inside other
+statements, and may be called before their declaration. Calling a function
+with the wrong number of arguments is an error. Recursion is allowed.
+
+{{template "syntax" (dict . "return")}}
+
+`{{.Return}}` ends the function and gives back the value, or `{{.None}}`
+without one. A function that ends without `{{.Return}}` returns `{{.None}}`.
+A `{{.Return}}` in top-level code ends the program.
+
+A call can be used as a statement, which discards its result:
+
+{{template "syntax" (dict . "call")}}
+
+{{template "ex" .Ex.func}}
+
+## 8. Errors
+
+Errors found before running, such as syntax errors, unknown names and wrong
+argument counts, stop the program before anything runs. Errors found while
+running stop it at that point. In both cases, the message names the line.
+
+{{template "ex" .Ex.errors}}
+
+## 9. Builtin functions
+
+| Function | Description |
+|---|---|
+{{- range .Builtins}}
+| `{{.A}}` | {{.B}} |
+{{- end}}
+
+{{template "ex" .Ex.builtins}}
+
+## 10. A complete program
+
+This program reads integers, one per line, until the input ends, and prints
+how many there were, their sum and the largest.
+
+{{template "ex" .Ex.complete}}

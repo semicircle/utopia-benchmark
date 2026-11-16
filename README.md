@@ -70,7 +70,61 @@ Utopia measures what is left when recall is taken away:
 
 ## Status
 
-Idea stage. See:
+**v0 in progress.** The dialect generator, compiler, VM, docs generator and
+seven T0 tasks work end to end. Households, seasons and the UI are not built
+yet.
+
+What a seed varies today:
+
+- **Lexicon**: every keyword and builtin name is a fresh conlang word, from
+  a per-seed sound system, in lower, UPPER or Title case.
+- **Syntax styles**, chosen separately for functions, conditionals, switches
+  and loops: C/Java-like (`{ }`), Pascal-like (`begin`/`end`, `repeat`/`until`,
+  `case ... of`), BASIC-like (`END IF`, `WEND`, `FOR ... NEXT i`,
+  `SELECT CASE`), and assembly-like (labels, `jumpif cond, label`, dispatch
+  tables, no structured loops or ifs).
+- **Operator spelling**: assignment `=`/`:=`/`<-`, equality, inequality,
+  concatenation, `mod`, the statement terminator and the comment marker.
+- **Semantics (false friends)**: argument and operand evaluation order,
+  division rounding, index base, out-of-range wrapping, inclusive or
+  exclusive counting loops, short-circuit logic, switch fallthrough, list
+  equality, and operator precedence (standard, flat left-to-right, or flat
+  right-to-left).
+
+The reference manual comes from one fixed English template
+([internal/docs/reference.md.tmpl](internal/docs/reference.md.tmpl)). Its
+syntax blocks are drawn from the same templates the parser uses, and every
+example in it is run to produce the output shown.
+
+### Quick start
+
+```bash
+go build -o utopia ./cmd/utopia
+./utopia docs -seed 42 | less                     # read a generated language reference
+./utopia gen -seed 42 -out workspaces/s42 -bake    # workspace for an AI: docs, tasks, toolchain
+./utopia render -seed 42 tasks/t0-fizzbuzz/solution.canon   # reference solution in that dialect
+python3 harness/grade.py --bin workspaces/s42/bin/<name> --solutions workspaces/s42/solutions
+```
+
+Pass `-semantics standard` to keep conventional behavior and vary only
+syntax and vocabulary. That makes a useful ablation arm.
+
+### Layout
+
+- `internal/lang`: AST, and a lexer, parser and printer driven by shape templates
+- `internal/gen`: seed to dialect (styles, conlang lexicon, knobs) and the canonical dialect
+- `internal/lower`: rewrites canonical programs into any dialect (down to labels and jumps)
+- `internal/vm`: bytecode compiler and deterministic VM
+- `internal/docs`: the language reference generator
+- `tasks/`: tasks, each with a prompt, a canonical reference solution and hidden tests
+- `harness/grade.py`: runs solutions against hidden tests
+
+`go test ./...` checks that every reference solution passes its tests in
+600 generated dialects. It also checks that lowered programs round-trip
+through the printer and parser, and that the reference renders for every
+seed.
+
+See also:
 
 - [docs/design.md](docs/design.md): design notes for v1
 - [docs/related-work.md](docs/related-work.md): prior work and how Utopia differs

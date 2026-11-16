@@ -1,0 +1,13 @@
+let even = 0;
+let odd = 0;
+let line = readline();
+while (line != none) {
+    if (num(line) % 2 == 0) {
+        even = even + 1;
+    } else {
+        odd = odd + 1;
+    }
+    line = readline();
+}
+print "even " & even;
+print "odd " & odd;
