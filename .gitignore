@@ -1,3 +1,5 @@
 .DS_Store
 /utopia
 /workspaces/
+/_site/
+__pycache__/

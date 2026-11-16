@@ -109,6 +109,33 @@ python3 harness/grade.py --bin workspaces/s42/bin/<name> --solutions workspaces/
 Pass `-semantics standard` to keep conventional behavior and vary only
 syntax and vocabulary. That makes a useful ablation arm.
 
+### Running a model
+
+`harness/run.py` drives a model through the `claude` CLI, so either a Claude
+subscription login (`claude auth login`) or `ANTHROPIC_API_KEY` works. With
+a key, runs use `--bare` (no hooks, plugins or CLAUDE.md), and the key is kept
+out of the model's tool environment and redacted from saved results.
+
+```bash
+python3 harness/run.py oneshot --model reference --seeds 1-12 --out /tmp/selftest   # pipeline self-test, no model
+python3 harness/run.py oneshot --arm python --model claude-opus-5-5                 # control arm
+python3 harness/run.py oneshot --seeds 1-8 --semantics standard --model claude-opus-5-5
+python3 harness/run.py oneshot --seeds 1-8 --model claude-opus-5-5                  # false friends
+python3 harness/run.py agent --seeds 1,2 --model claude-opus-5-5                    # full agent runs
+python3 harness/build_site.py                                                       # results site in _site/
+```
+
+- **oneshot**: the manual and all tasks in one prompt, no tools. Cheap, and it
+  measures pure in-context learning.
+- **agent**: a headless Claude Code agent in a fresh workspace outside this
+  repo, with the manual, tasks and toolchain. Web tools are disabled and every
+  path and command in the transcript is audited.
+
+Each run lands in `results/runs/RUN_ID/` (scores, usage, prompt, response or
+transcript, solutions). Pushing to `main` rebuilds the site and publishes it
+with GitHub Pages (`.github/workflows/pages.yml`; set Pages' source to
+"GitHub Actions" once in the repo settings).
+
 ### Layout
 
 - `internal/lang`: AST, and a lexer, parser and printer driven by shape templates
@@ -118,6 +145,8 @@ syntax and vocabulary. That makes a useful ablation arm.
 - `internal/docs`: the language reference generator
 - `tasks/`: tasks, each with a prompt, a canonical reference solution and hidden tests
 - `harness/grade.py`: runs solutions against hidden tests
+- `harness/run.py`: runs a model (one-shot or agent) and records the result
+- `harness/build_site.py`: builds the static results site from `results/`
 
 `go test ./...` checks that every reference solution passes its tests in
 600 generated dialects. It also checks that lowered programs round-trip

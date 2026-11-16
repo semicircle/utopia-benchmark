@@ -13,7 +13,9 @@ The goal is one striking chart, as early as possible.
 - [x] 7 T0 tasks with hidden tests and canonical reference solutions
 - [ ] T1–T2 tasks, and Python control versions of every task
 - [x] Grader (`harness/grade.py`)
-- [ ] Harness: give the docs and toolchain to an agent, run it, score it
+- [x] Harness: give the docs and toolchain to an agent, run it, score it (`harness/run.py`)
+- [x] One-shot mode (docs + tasks in one prompt, no tools) and a Python control arm
+- [x] Results site (`harness/build_site.py`, deployed by GitHub Pages)
 - [ ] Babel lexicon (metaphorical keywords from human languages)
 - [ ] Run about 4 models and record full transcripts
 

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utopia Benchmark Results</title>
+<meta name="description" content="Can your AI code in a language that didn't exist this morning? Results from the Utopia benchmark.">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #fcfcfb;
+  --panel: #f4f3f0;
+  --line: #e2e0da;
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --muted: #7a7974;
+  --accent: #2a78d6;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --good: #0ca30c;
+  --bad: #d03b3b;
+  --code-bg: #f4f3f0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1a1a19;
+    --panel: #232322;
+    --line: #363634;
+    --text: #f0efec;
+    --text-2: #c3c2b7;
+    --muted: #8f8e86;
+    --accent: #3987e5;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --code-bg: #232322;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1a1a19; --panel: #232322; --line: #363634; --text: #f0efec; --text-2: #c3c2b7;
+  --muted: #8f8e86; --accent: #3987e5; --series-1: #3987e5; --series-2: #d95926;
+  --series-3: #199e70; --code-bg: #232322;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.55 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+main { max-width: 980px; margin: 0 auto; padding: 0 16px 80px; }
+header { padding: 56px 0 24px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+h1 { font-size: 44px; line-height: 1.1; margin: 0 0 8px; letter-spacing: -0.02em; }
+.tagline { font-size: 20px; color: var(--text-2); margin: 0 0 16px; }
+h2 { font-size: 22px; margin: 48px 0 8px; letter-spacing: -0.01em; }
+h3 { font-size: 16px; margin: 24px 0 8px; }
+p { margin: 0 0 12px; max-width: 70ch; }
+.sub { color: var(--text-2); }
+.muted { color: var(--muted); font-size: 14px; }
+a { color: var(--accent); }
+code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; }
+pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px; overflow-x: auto; margin: 0; }
+.pill { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--text-2); margin: 0 4px 4px 0; white-space: nowrap; }
+
+/* headline chart */
+.chart-group { margin: 20px 0 8px; }
+.chart-group h3 { margin: 0 0 8px; font-size: 15px; }
+.bar-row { display: grid; grid-template-columns: 190px 1fr 64px; align-items: center; gap: 12px; padding: 5px 0; position: relative; }
+.bar-label { font-size: 14px; color: var(--text-2); }
+.bar-track { height: 22px; position: relative; border-left: 1px solid var(--line); }
+.bar { height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-value { font-variant-numeric: tabular-nums; font-size: 14px; text-align: right; }
+.bar-row.empty .bar-value { color: var(--muted); }
+.gridlines { position: absolute; inset: 0; pointer-events: none; }
+.gridlines span { position: absolute; top: -4px; bottom: -4px; border-left: 1px dashed var(--line); }
+.tooltip { position: fixed; pointer-events: none; background: var(--text); color: var(--bg); font-size: 13px; padding: 6px 10px; border-radius: 6px; opacity: 0; transition: opacity .1s; z-index: 10; max-width: 280px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text-2); margin: 8px 0 0; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+/* tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 600; color: var(--text-2); background: var(--panel); font-size: 13px; }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.cell { text-align: center; font-weight: 600; }
+.cell.ok { color: var(--good); }
+.cell.no { color: var(--bad); }
+
+/* runs */
+details.run { border: 1px solid var(--line); border-radius: 8px; margin: 8px 0; background: var(--bg); }
+details.run > summary { cursor: pointer; padding: 10px 14px; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; list-style: none; }
+details.run > summary::-webkit-details-marker { display: none; }
+details.run > summary::before { content: "▸"; color: var(--muted); }
+details.run[open] > summary::before { content: "▾"; }
+.run-body { padding: 0 14px 14px; }
+.run-body dl { display: grid; grid-template-columns: 150px 1fr; gap: 4px 12px; margin: 0 0 12px; font-size: 14px; }
+.run-body dt { color: var(--muted); }
+.run-body dd { margin: 0; }
+blockquote { margin: 8px 0 12px; padding: 8px 14px; border-left: 3px solid var(--line); color: var(--text-2); white-space: pre-wrap; font-size: 14px; }
+.files a { font-size: 13px; margin-right: 10px; }
+
+/* samples */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 8px; }
+.tabs button { font: inherit; font-size: 13px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--text-2); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.empty-note { padding: 24px; text-align: center; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); }
+ol.method li { margin-bottom: 6px; max-width: 70ch; }
+footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line); }
+
+@media (max-width: 640px) {
+  h1 { font-size: 34px; }
+  .bar-row { grid-template-columns: 110px 1fr 52px; gap: 8px; }
+  .bar-label { font-size: 13px; }
+  .run-body dl { grid-template-columns: 1fr; }
+  .run-body dt { margin-top: 6px; }
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Utopia</h1>
+  <p class="tagline">Can your AI code in a language that didn't exist this morning?</p>
+  <p class="sub">Every run of Utopia generates a brand-new programming language from a seed: fresh
+    keywords, its own syntax, and <em>false friends</em> — semantics that look familiar but behave
+    differently (indices from 1, right-to-left operator grouping, switch fallthrough…). The model gets
+    the manual and must write working programs. Nothing it memorized applies.</p>
+  <p class="muted" id="stamp"></p>
+</header>
+
+<section>
+  <h2>Headline: how much of the skill was recall?</h2>
+  <p class="sub">Share of tasks whose solution passed every hidden test. <strong>Python</strong> is the
+    control: the same tasks in a language the model knows. <strong>Utopia, standard semantics</strong>
+    changes only words and syntax. <strong>Utopia, false friends</strong> also changes behavior.</p>
+  <div id="headline"></div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<section>
+  <h2>Summary</h2>
+  <div id="summary"></div>
+</section>
+
+<section>
+  <h2>Per task</h2>
+  <p class="sub">Each row is one run in one generated language. ✓ passed every hidden test, ✗ failed at least one.</p>
+  <div id="matrix"></div>
+</section>
+
+<section>
+  <h2>Runs</h2>
+  <p class="sub">Open a run to see its language, the false friends it had, process metrics and the
+    full prompt, response or agent transcript.</p>
+  <div id="runs"></div>
+</section>
+
+<section>
+  <h2>What a Utopia language looks like</h2>
+  <p class="sub">The same FizzBuzz reference solution, generated into different dialects.</p>
+  <div class="tabs" id="sample-tabs" role="tablist"></div>
+  <pre id="sample-code"></pre>
+</section>
+
+<section>
+  <h2>Method</h2>
+  <ol class="method">
+    <li><strong>Generate.</strong> A seed produces a whole language: a conlang lexicon, independent
+      syntax styles for functions, conditionals, switches and loops (C-like, Pascal-like, BASIC-like or
+      assembly-like), operator spellings, and ten semantic knobs. A reference manual is generated from a
+      fixed template, and every example in it is executed to produce the output shown.</li>
+    <li><strong>One-shot mode.</strong> The model receives the manual and all tasks in one prompt, with no
+      tools, and must write every solution without running anything. It is cheap and measures pure
+      in-context learning.</li>
+    <li><strong>Agent mode.</strong> The model works as a coding agent (Claude Code, headless) in a fresh
+      workspace with the manual, the tasks and the language's toolchain, and may experiment freely.
+      Web access is disabled, the workspace sits outside the benchmark's source tree, and every file
+      path and shell command in the transcript is audited for attempts to look elsewhere.</li>
+    <li><strong>Grade.</strong> Solutions run against hidden tests; a task passes only if every test's
+      output matches exactly.</li>
+  </ol>
+  <p class="muted">v0 caveats: only seven T0 tasks (small programs), public practice seeds, few runs per
+    arm, so differences of one task are noise. Models are driven through the <code>claude</code> CLI;
+    other providers are not wired up yet.</p>
+</section>
+
+<footer class="muted">Utopia is an open, AI-native benchmark. Seeds shown here are public practice seeds.</footer>
+</main>
+<div class="tooltip" id="tip" role="tooltip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const runs = (DATA && DATA.runs) || [];
+
+const ARMS = [
+  { key: "python", label: "Python (control)", color: "var(--series-1)", match: r => r.arm === "python" },
+  { key: "standard", label: "Utopia, standard semantics", color: "var(--series-2)", match: r => r.arm === "utopia" && r.semantics === "standard" },
+  { key: "random", label: "Utopia, false friends", color: "var(--series-3)", match: r => r.arm === "utopia" && r.semantics === "random" },
+];
+const MODE_LABEL = { oneshot: "one-shot (no tools)", agent: "agent (with toolchain)" };
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (a, b) => b ? Math.round(100 * a / b) : null;
+const fmtInt = n => n == null ? "—" : n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "k" : String(n);
+const armOf = r => ARMS.find(a => a.match(r));
+
+const tip = document.getElementById("tip");
+function bindTip(el, html) {
+  el.addEventListener("mousemove", e => {
+    tip.innerHTML = html; tip.style.opacity = 1;
+    const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+    tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px";
+  });
+  el.addEventListener("mouseleave", () => { tip.style.opacity = 0; });
+}
+
+function groups() {
+  const g = new Map();
+  for (const r of runs) {
+    const k = r.model + "|" + r.mode;
+    if (!g.has(k)) g.set(k, { model: r.model, mode: r.mode, runs: [] });
+    g.get(k).runs.push(r);
+  }
+  return [...g.values()].sort((a, b) => a.model.localeCompare(b.model) || (a.mode === "oneshot" ? -1 : 1));
+}
+
+function renderStamp() {
+  const dates = runs.map(r => r.date).filter(Boolean).sort();
+  document.getElementById("stamp").textContent = runs.length
+    ? `${runs.length} runs · ${new Set(runs.map(r => r.model)).size} model(s) · last run ${dates[dates.length - 1].slice(0, 10)}`
+    : "No runs recorded yet.";
+}
+
+function renderHeadline() {
+  const root = document.getElementById("headline");
+  const gs = groups();
+  if (!gs.length) { root.innerHTML = '<div class="empty-note">No results yet. Run <code>harness/run.py</code>, then rebuild the site.</div>'; return; }
+  for (const g of gs) {
+    const box = document.createElement("div");
+    box.className = "chart-group";
+    box.innerHTML = `<h3>${esc(g.model)} · ${esc(MODE_LABEL[g.mode] || g.mode)}</h3>`;
+    for (const arm of ARMS) {
+      const rs = g.runs.filter(arm.match);
+      const passed = rs.reduce((s, r) => s + r.passed, 0), total = rs.reduce((s, r) => s + r.total, 0);
+      const p = pct(passed, total);
+      const row = document.createElement("div");
+      row.className = "bar-row" + (p == null ? " empty" : "");
+      row.innerHTML = `<div class="bar-label">${esc(arm.label)}</div>
+        <div class="bar-track"><div class="gridlines">${[25, 50, 75, 100].map(v => `<span style="left:${v}%"></span>`).join("")}</div>
+        ${p == null ? "" : `<div class="bar" style="width:${Math.max(p, 0.5)}%;background:${arm.color}"></div>`}</div>
+        <div class="bar-value">${p == null ? "not run" : p + "%"}</div>`;
+      if (p != null) {
+        const langs = rs.filter(r => r.language).map(r => r.language);
+        bindTip(row, `<strong>${esc(arm.label)}</strong><br>${passed}/${total} tasks passed over ${rs.length} run(s)` +
+          (arm.key !== "python" && langs.length ? `<br>languages: ${esc(langs.slice(0, 8).join(", "))}${langs.length > 8 ? "…" : ""}` : ""));
+      }
+      box.appendChild(row);
+    }
+    root.appendChild(box);
+  }
+  document.getElementById("legend").innerHTML = '<span class="muted">Dashed lines at 25, 50, 75 and 100%.</span>';
+}
+
+function renderSummary() {
+  const root = document.getElementById("summary");
+  if (!runs.length) { root.innerHTML = '<div class="empty-note">No results yet.</div>'; return; }
+  let rows = "";
+  for (const g of groups()) for (const arm of ARMS) {
+    const rs = g.runs.filter(arm.match);
+    if (!rs.length) continue;
+    const passed = rs.reduce((s, r) => s + r.passed, 0), total = rs.reduce((s, r) => s + r.total, 0);
+    const tok = rs.map(r => r.tokens).filter(x => x != null);
+    const dur = rs.map(r => r.duration_s).filter(x => x != null);
+    const perfect = rs.filter(r => r.passed === r.total).length;
+    rows += `<tr><td>${esc(g.model)}</td><td>${esc(MODE_LABEL[g.mode] || g.mode)}</td>
+      <td><span class="swatch" style="background:${arm.color}"></span>${esc(arm.label)}</td>
+      <td class="num">${rs.length}</td><td class="num">${passed}/${total} (${pct(passed, total)}%)</td>
+      <td class="num">${perfect}/${rs.length}</td>
+      <td class="num">${tok.length ? fmtInt(tok.reduce((a, b) => a + b, 0) / tok.length) : "—"}</td>
+      <td class="num">${dur.length ? Math.round(dur.reduce((a, b) => a + b, 0) / dur.length) + "s" : "—"}</td></tr>`;
+  }
+  root.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Model</th><th>Mode</th><th>Arm</th>
+    <th class="num">Runs</th><th class="num">Tasks passed</th><th class="num">Perfect runs</th>
+    <th class="num">Avg tokens</th><th class="num">Avg time</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function sortedRuns() {
+  return [...runs].sort((a, b) => a.model.localeCompare(b.model) || a.mode.localeCompare(b.mode) ||
+    ARMS.indexOf(armOf(a)) - ARMS.indexOf(armOf(b)) || (a.seed ?? 0) - (b.seed ?? 0));
+}
+
+function runLabel(r) {
+  return r.arm === "python" ? "Python" : `${r.language} · seed ${r.seed}`;
+}
+
+function renderMatrix() {
+  const root = document.getElementById("matrix");
+  if (!runs.length) { root.innerHTML = '<div class="empty-note">No results yet.</div>'; return; }
+  const taskIds = [...new Set(runs.flatMap(r => Object.keys(r.tasks)))].sort();
+  const head = taskIds.map(t => `<th class="cell">${esc(t.replace(/^t\d-/, ""))}</th>`).join("");
+  const body = sortedRuns().map(r => {
+    const cells = taskIds.map(t => r.tasks[t] === undefined ? '<td class="cell muted">·</td>'
+      : r.tasks[t] ? '<td class="cell ok" title="passed">✓</td>' : '<td class="cell no" title="failed">✗</td>').join("");
+    return `<tr><td>${esc(runLabel(r))}</td><td class="muted">${esc(r.mode)}</td><td class="muted">${esc(r.model)}</td>${cells}
+      <td class="num">${r.passed}/${r.total}</td></tr>`;
+  }).join("");
+  root.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Run</th><th>Mode</th><th>Model</th>${head}<th class="num">Score</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+function renderRuns() {
+  const root = document.getElementById("runs");
+  if (!runs.length) { root.innerHTML = '<div class="empty-note">No results yet.</div>'; return; }
+  root.innerHTML = sortedRuns().map(r => {
+    const arm = armOf(r);
+    const styles = r.styles ? Object.entries(r.styles).map(([k, v]) => `<span class="pill">${esc(k.toLowerCase())}: ${esc(v)}</span>`).join("") : "—";
+    const friends = r.arm === "python" ? "—" : r.friends.length ? r.friends.map(f => `<span class="pill">${esc(f)}</span>`).join("") : "none (standard semantics)";
+    const failed = Object.entries(r.tasks).filter(([, ok]) => !ok).map(([t]) => t);
+    const proc = r.mode === "agent"
+      ? `<dt>Toolchain runs</dt><dd>${r.runs ?? "—"} (${r.runs_failed ?? "—"} ended in an error)</dd>
+         <dt>Turns</dt><dd>${r.turns ?? "—"}</dd>
+         <dt>Audit</dt><dd>${r.suspicious ? `<strong>${r.suspicious} flagged action(s)</strong>, see meta.json` : "clean: no access outside the workspace"}</dd>` : "";
+    const files = r.files.filter(f => !f.startsWith("workspace/") || r.files.length < 30)
+      .map(f => `<a href="runs/${encodeURIComponent(r.id)}/${f.split("/").map(encodeURIComponent).join("/")}">${esc(f)}</a>`).join("");
+    return `<details class="run"><summary>
+        <span class="swatch" style="background:${arm ? arm.color : "var(--muted)"}"></span>
+        <strong>${esc(runLabel(r))}</strong>
+        <span class="muted">${esc(r.model)} · ${esc(MODE_LABEL[r.mode] || r.mode)}</span>
+        <span style="margin-left:auto" class="${r.passed === r.total ? "cell ok" : "cell no"}">${r.passed}/${r.total}</span>
+      </summary><div class="run-body"><dl>
+        <dt>Run ID</dt><dd><code>${esc(r.id)}</code></dd>
+        <dt>Date</dt><dd>${esc((r.date || "").replace("T", " "))}</dd>
+        ${r.arm === "python" ? "" : `<dt>Syntax styles</dt><dd>${styles}</dd><dt>False friends</dt><dd>${friends}</dd>`}
+        <dt>Failed tasks</dt><dd>${failed.length ? failed.map(esc).join(", ") : "none"}</dd>
+        <dt>Tokens</dt><dd>${fmtInt(r.tokens)} total, ${fmtInt(r.output_tokens)} output</dd>
+        <dt>Time</dt><dd>${r.duration_s ?? "—"}s${r.timed_out ? " (timed out)" : ""}</dd>
+        ${proc}
+      </dl>
+      ${r.final_message ? `<div class="muted">The agent's closing reflection:</div><blockquote>${esc(r.final_message)}</blockquote>` : ""}
+      <div class="files">${files}</div></div></details>`;
+  }).join("");
+}
+
+function renderSamples() {
+  const samples = (DATA && DATA.samples) || [];
+  const tabs = document.getElementById("sample-tabs"), code = document.getElementById("sample-code");
+  if (!samples.length) { code.textContent = ""; return; }
+  const show = i => {
+    [...tabs.children].forEach((b, j) => b.setAttribute("aria-selected", String(i === j)));
+    code.textContent = samples[i].code;
+  };
+  samples.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.role = "tab"; b.textContent = s.name;
+    b.addEventListener("click", () => show(i));
+    tabs.appendChild(b);
+  });
+  show(Math.min(1, samples.length - 1));
+}
+
+renderStamp(); renderHeadline(); renderSummary(); renderMatrix(); renderRuns(); renderSamples();
+</script>
+</body>
+</html>
