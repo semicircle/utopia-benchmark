@@ -1,0 +1,23 @@
+goyu line <- uyotho().
+omethol line != gursume
+    goyu n <- druwol(line).
+    wem gugum n
+    gugum 1
+        suwe "Monday".
+    gugum 2
+        suwe "Tuesday".
+    gugum 3
+        suwe "Wednesday".
+    gugum 4
+        suwe "Thursday".
+    gugum 5
+        suwe "Friday".
+    gugum 6
+        suwe "Saturday".
+    gugum 7
+        suwe "Sunday".
+    gugum truthor
+        suwe "invalid".
+    wodrotru wem
+    line <- uyotho().
+shusushe

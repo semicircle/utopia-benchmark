@@ -1,0 +1,14 @@
+goyu evens <- 0.
+goyu odds <- 0.
+goyu line <- uyotho().
+omethol line != gursume
+    goyu n <- druwol(line).
+    dre n trumguwu 2 == 0 ethur
+        evens <- evens + 1.
+    truthor
+        odds <- odds + 1.
+    wodrotru dre
+    line <- uyotho().
+shusushe
+suwe "even " & evens.
+suwe "odd " & odds.

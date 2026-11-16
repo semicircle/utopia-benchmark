@@ -1,0 +1,11 @@
+goyu xs <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    dreme(xs, line).
+    line <- uyotho().
+shusushe
+dre wumdror(xs) > 0 ethur
+    wego i <- (wumdror(xs) - 1) setru 0 meshe -1
+        suwe xs[i].
+    trer i
+wodrotru dre

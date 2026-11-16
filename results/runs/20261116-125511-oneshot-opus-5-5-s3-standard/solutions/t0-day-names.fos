@@ -1,0 +1,25 @@
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Ishsi (Drash(line) > 0) {
+        Sogas n = Drak(line);
+        Pidok (n) {
+        Dro 1:
+            Dosfasho "Monday";
+        Dro 2:
+            Dosfasho "Tuesday";
+        Dro 3:
+            Dosfasho "Wednesday";
+        Dro 4:
+            Dosfasho "Thursday";
+        Dro 5:
+            Dosfasho "Friday";
+        Dro 6:
+            Dosfasho "Saturday";
+        Dro 7:
+            Dosfasho "Sunday";
+        Papo:
+            Dosfasho "invalid";
+        }
+    }
+    line = Goshvovo();
+}

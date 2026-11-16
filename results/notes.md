@@ -1,0 +1,3 @@
+**v0 finding: the T0 tier is saturated.** Claude Opus 5.5 (effort high) passed every task in every arm: one-shot with no tools, across 8 dialects with standard semantics and 8 with false friends, and as an agent. It follows the manual rather than habit: in dialects where switch cases fall through it adds a break to every case, and in dialects with no operator precedence it parenthesizes `(i % 15) == 0`. The whole v0 run cost about $2.
+
+So the seven T0 tasks are a smoke test, not a measurement. The next step is harder tasks that lean on the false friends (indexing, integer division, evaluation order, list identity) and on the platform model: T1–T2 programs, then households, letters and seeded VM bugs.

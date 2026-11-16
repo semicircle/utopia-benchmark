@@ -1,0 +1,8 @@
+goyu n <- druwol(uyotho()).
+goyu p <- 1.
+dre n >= 1 ethur
+    wego i <- 1 setru n
+        p <- p * i.
+    trer i
+wodrotru dre
+suwe p.

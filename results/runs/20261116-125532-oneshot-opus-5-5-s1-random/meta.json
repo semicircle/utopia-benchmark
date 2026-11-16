@@ -1,0 +1,107 @@
+{
+  "run_id": "20261116-125532-oneshot-opus-5-5-s1-random",
+  "mode": "oneshot",
+  "arm": "utopia",
+  "provider": "anthropic",
+  "base_url": null,
+  "model": "claude-opus-5-5",
+  "runner": null,
+  "effort": "high",
+  "thinking": true,
+  "max_tokens": 32000,
+  "seed": 1,
+  "semantics": "random",
+  "language": "Wochu",
+  "dialect": {
+    "builtins": {
+      "len": "dushzosh",
+      "num": "leidush",
+      "push": "koshkil",
+      "readline": "lono",
+      "str": "sheiyidi"
+    },
+    "comment": "--",
+    "ext": "woc",
+    "keywords": {
+      "and": "elish",
+      "begin": "krei",
+      "break": "exzulto",
+      "case": "yishzit",
+      "continue": "weshosho",
+      "do": "zoltit",
+      "else": "wogeish",
+      "end": "zushox",
+      "endfunc": "iweil",
+      "false": "eikreit",
+      "for": "keit",
+      "func": "eilyot",
+      "if": "nei",
+      "let": "weltuxle",
+      "mod": "yeil",
+      "none": "leitchux",
+      "not": "tilteiyo",
+      "of": "eixwo",
+      "or": "yosheil",
+      "print": "leshdei",
+      "return": "chozulni",
+      "true": "dut",
+      "while": "krenul",
+      "write": "zulkucho"
+    },
+    "name": "Wochu",
+    "ops": {
+      "Assign": ":=",
+      "Eq": "==",
+      "Ne": "<>",
+      "Concat": "+",
+      "Mod": ""
+    },
+    "seed": 1,
+    "semantics": {
+      "ArgOrder": "left-to-right",
+      "OperandOrder": "left-to-right",
+      "Div": "toward-positive-infinity",
+      "IndexBase": 0,
+      "OutOfRange": "wrap",
+      "CountInclusive": false,
+      "ShortCircuit": true,
+      "SwitchFallthrough": false,
+      "ListEqStructural": false,
+      "Prec": "standard"
+    },
+    "styles": {
+      "Func": "asm",
+      "If": "c",
+      "Switch": "pascal",
+      "Loop": "c"
+    },
+    "terminator": ";"
+  },
+  "date": "2026-11-16T12:55:32",
+  "commit": "d0fc92b",
+  "duration_s": 15.2,
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 4,
+    "output_tokens": 1669,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 7317,
+    "requests": 1,
+    "cost_usd_estimate": 0.07
+  },
+  "cost_usd": 0.07,
+  "model_reported": "claude-opus-5-5",
+  "score": {
+    "passed": 7,
+    "total": 7,
+    "tasks": {
+      "t0-count": true,
+      "t0-day-names": true,
+      "t0-even-odd": true,
+      "t0-factorial": true,
+      "t0-fizzbuzz": true,
+      "t0-hello": true,
+      "t0-reverse-lines": true
+    }
+  }
+}

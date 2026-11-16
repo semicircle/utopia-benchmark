@@ -1,0 +1,10 @@
+troufu lines = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    marboun(lines, line);
+    line = bounfou();
+trushou
+troufu count = utoufa(lines);
+sutrarsu i = count sou 1 suntru -1
+    binmi lines[i];
+moun i

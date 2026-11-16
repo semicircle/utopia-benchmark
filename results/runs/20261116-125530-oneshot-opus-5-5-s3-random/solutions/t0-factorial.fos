@@ -1,0 +1,6 @@
+Sogas n = Drak(Goshvovo());
+Sogas r = 1;
+Paxfasva (Sogas i = 2; i <= n; i = i + 1) {
+    r = r * i;
+}
+Dosfasho r;

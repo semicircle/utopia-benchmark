@@ -1,0 +1,16 @@
+Trepiho evens := 0;
+Trepiho odds := 0;
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu Purmo(line) > 0 Yeshil Hupo
+        Trepiho n := Eshiyer(line);
+        Mushu n % 2 = 0 Yeshil Hupo
+            evens := evens + 1;
+        Tho Thotri Hupo
+            odds := odds + 1;
+        Tho
+    Tho
+    line := Thoke();
+}
+Rashar "even " + evens;
+Rashar "odd " + odds;

@@ -1,0 +1,113 @@
+{
+  "run_id": "20261116-125513-oneshot-opus-5-5-s2-standard",
+  "mode": "oneshot",
+  "arm": "utopia",
+  "provider": "anthropic",
+  "base_url": null,
+  "model": "claude-opus-5-5",
+  "runner": null,
+  "effort": "high",
+  "thinking": true,
+  "max_tokens": 32000,
+  "seed": 2,
+  "semantics": "standard",
+  "language": "Gutrur",
+  "dialect": {
+    "builtins": {
+      "len": "wumdror",
+      "num": "druwol",
+      "push": "dreme",
+      "readline": "uyotho",
+      "str": "shodrewe"
+    },
+    "comment": "//",
+    "ext": "gut",
+    "keywords": {
+      "and": "suyogur",
+      "break": "wuyem",
+      "case": "gugum",
+      "continue": "omgu",
+      "do": "treyur",
+      "else": "truthor",
+      "elseif": "yuyuge",
+      "end": "wodrotru",
+      "false": "tru",
+      "for": "wego",
+      "func": "dredrume",
+      "if": "dre",
+      "let": "goyu",
+      "loop": "sho",
+      "mod": "trumguwu",
+      "next": "trer",
+      "none": "gursume",
+      "not": "shogu",
+      "or": "drorsu",
+      "print": "suwe",
+      "return": "odrol",
+      "select": "wem",
+      "step": "meshe",
+      "then": "ethur",
+      "to": "setru",
+      "true": "sudru",
+      "until": "ewuyo",
+      "wend": "shusushe",
+      "while": "omethol",
+      "write": "wemgego"
+    },
+    "name": "Gutrur",
+    "ops": {
+      "Assign": "<-",
+      "Eq": "==",
+      "Ne": "!=",
+      "Concat": "&",
+      "Mod": ""
+    },
+    "seed": 2,
+    "semantics": {
+      "ArgOrder": "left-to-right",
+      "OperandOrder": "left-to-right",
+      "Div": "toward-zero",
+      "IndexBase": 0,
+      "OutOfRange": "error",
+      "CountInclusive": true,
+      "ShortCircuit": true,
+      "SwitchFallthrough": false,
+      "ListEqStructural": true,
+      "Prec": "standard"
+    },
+    "styles": {
+      "Func": "basic",
+      "If": "basic",
+      "Switch": "basic",
+      "Loop": "basic"
+    },
+    "terminator": "."
+  },
+  "date": "2026-11-16T12:55:13",
+  "commit": "d0fc92b",
+  "duration_s": 13.1,
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 4,
+    "output_tokens": 1561,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 7309,
+    "requests": 1,
+    "cost_usd_estimate": 0.0678
+  },
+  "cost_usd": 0.0678,
+  "model_reported": "claude-opus-5-5",
+  "score": {
+    "passed": 7,
+    "total": 7,
+    "tasks": {
+      "t0-count": true,
+      "t0-day-names": true,
+      "t0-even-odd": true,
+      "t0-factorial": true,
+      "t0-fizzbuzz": true,
+      "t0-hello": true,
+      "t0-reverse-lines": true
+    }
+  }
+}

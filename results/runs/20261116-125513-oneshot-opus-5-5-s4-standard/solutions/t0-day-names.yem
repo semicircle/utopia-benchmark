@@ -1,0 +1,25 @@
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu Purmo(line) > 0 Yeshil Hupo
+        Trepiho n := Eshiyer(line);
+        Pakru Sher n
+        Sher 1
+            Rashar "Monday";
+        Sher 2
+            Rashar "Tuesday";
+        Sher 3
+            Rashar "Wednesday";
+        Sher 4
+            Rashar "Thursday";
+        Sher 5
+            Rashar "Friday";
+        Sher 6
+            Rashar "Saturday";
+        Sher 7
+            Rashar "Sunday";
+        Sher Thotri
+            Rashar "invalid";
+        Tho Pakru
+    Tho
+    line := Thoke();
+}

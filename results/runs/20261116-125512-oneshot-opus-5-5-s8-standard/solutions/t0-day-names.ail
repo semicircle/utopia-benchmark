@@ -1,0 +1,25 @@
+plulai line := playadu();
+edrushe line <> aiplai
+    atdoyal (dra(line) > 0) {
+        plulai v := plaltai(line);
+        otai (v) {
+        dai 1:
+            shaibe "Monday";
+        dai 2:
+            shaibe "Tuesday";
+        dai 3:
+            shaibe "Wednesday";
+        dai 4:
+            shaibe "Thursday";
+        dai 5:
+            shaibe "Friday";
+        dai 6:
+            shaibe "Saturday";
+        dai 7:
+            shaibe "Sunday";
+        efu:
+            shaibe "invalid";
+        }
+    }
+    line := playadu();
+aitudre

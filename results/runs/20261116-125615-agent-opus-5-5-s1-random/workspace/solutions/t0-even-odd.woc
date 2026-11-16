@@ -1,0 +1,14 @@
+weltuxle ev := 0;
+weltuxle od := 0;
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle n := leidush(line);
+    nei (n yeil 2 == 0) {
+        ev := ev + 1;
+    } wogeish {
+        od := od + 1;
+    }
+    line := lono();
+}
+leshdei "even " + ev;
+leshdei "odd " + od;

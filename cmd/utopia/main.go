@@ -58,7 +58,26 @@ func bakedMain() int {
 		fmt.Fprint(os.Stderr, usage)
 		return 2
 	}
-	return runFile(d, os.Args[2], os.Args[1] == "check")
+	code := runFile(d, os.Args[2], os.Args[1] == "check")
+	trace(os.Args[1], os.Args[2], code)
+	return code
+}
+
+// trace appends one JSON line per invocation to the file named by
+// UTOPIA_TRACE, when set. The harness uses it to count toolchain runs and
+// failures, however the agent spelled the command.
+func trace(cmd, path string, code int) {
+	name := os.Getenv("UTOPIA_TRACE")
+	if name == "" {
+		return
+	}
+	f, err := os.OpenFile(name, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+	line, _ := json.Marshal(map[string]any{"cmd": cmd, "file": path, "exit": code})
+	f.Write(append(line, '\n'))
 }
 
 func runFile(d *lang.Dialect, path string, checkOnly bool) int {

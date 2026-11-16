@@ -122,7 +122,9 @@ def main():
                 files += [f"{sub}/{p.relative_to(src / sub)}" for p in sorted((src / sub).rglob("*")) if p.is_file()]
         runs.append(slim(meta, files))
 
-    data = {"runs": runs, "samples": samples()}
+    notes_path = ROOT / "results" / "notes.md"
+    notes = notes_path.read_text() if notes_path.exists() else ""
+    data = {"runs": runs, "samples": samples(), "notes": notes}
     page = TEMPLATE.read_text().replace("/*__DATA__*/null", json.dumps(data).replace("</", "<\\/"))
     (out / "index.html").write_text(page)
     (out / ".nojekyll").write_text("")

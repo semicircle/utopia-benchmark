@@ -1,0 +1,11 @@
+weltuxle names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle n := leidush(line);
+    nei (n >= 1 elish n <= 7) {
+        leshdei names[n - 1];
+    } wogeish {
+        leshdei "invalid";
+    }
+    line := lono();
+}

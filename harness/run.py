@@ -305,15 +305,16 @@ class Workspace:
 
     OUTPUT_LIMIT = 20_000
 
-    def __init__(self, ws: Path, bin_name):
+    def __init__(self, ws: Path, bin_name, trace: Path):
         self.ws = ws.resolve()
+        self.trace = trace
         self.bin_name = bin_name
         (self.ws / ".tmp").mkdir(exist_ok=True)
         # A minimal environment: no API keys, HOME is the workspace.
         self.env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": str(self.ws),
-                    "TMPDIR": str(self.ws / ".tmp"), "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8"}
+                    "TMPDIR": str(self.ws / ".tmp"), "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8",
+                    "UTOPIA_TRACE": str(trace)}
         self.calls = {}
-        self.toolchain_runs = self.toolchain_failed = 0
         self.suspicious = []
 
     def _path(self, rel):
@@ -352,7 +353,6 @@ class Workspace:
     def run_shell(self, command):
         if OUTSIDE_RE.search(command):
             self.suspicious.append({"command": command[:300]})
-        is_run = bool(self.bin_name and re.search(rf"\b{re.escape(self.bin_name)}\s+run\b", command))
         proc = subprocess.Popen(["bash", "-c", command], cwd=self.ws, env=self.env, stdin=subprocess.DEVNULL,
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
         try:
@@ -362,17 +362,23 @@ class Workspace:
             os.killpg(proc.pid, signal.SIGKILL)
             out, err = proc.communicate()
             status = "killed after 30 seconds"
-        if is_run:
-            self.toolchain_runs += 1
-            if status != "0":
-                self.toolchain_failed += 1
         text = (f"exit status: {status}\n--- stdout ---\n{out.decode('utf-8', 'replace')}"
                 f"--- stderr ---\n{err.decode('utf-8', 'replace')}")
         return self._clip(text), status != "0"
 
     def metrics(self):
-        return {"tool_calls": self.calls, "toolchain_runs": self.toolchain_runs,
-                "toolchain_runs_failed": self.toolchain_failed, "suspicious": self.suspicious}
+        runs = []
+        if self.trace.exists():
+            for line in self.trace.read_text().splitlines():
+                try:
+                    runs.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+        return {"tool_calls": self.calls,
+                "toolchain_runs": sum(r.get("cmd") == "run" for r in runs),
+                "toolchain_runs_failed": sum(r.get("cmd") == "run" and r.get("exit") != 0 for r in runs),
+                "toolchain_checks": sum(r.get("cmd") == "check" for r in runs),
+                "suspicious": self.suspicious}
 
 
 def scripted_client(run, exe):
@@ -401,7 +407,7 @@ def agent_one(cfg, exe, seed, scratch):
                                         cfg.max_cost, cfg.api_key, run.bin_name)
             process = out.pop("process")
         else:
-            ws = Workspace(run.ws, run.bin_name)
+            ws = Workspace(run.ws, run.bin_name, run.dir / "trace.jsonl")
             client = scripted_client(run, exe) if cfg.provider == "scripted" else cfg.client()
             limits = llm.Limits(cfg.max_steps, cfg.max_cost, cfg.max_seconds)
             with open(transcript, "w") as tf:

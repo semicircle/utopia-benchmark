@@ -1,0 +1,6 @@
+goyu n <- druwol(uyotho()).
+goyu i <- 1.
+omethol i <= n
+    suwe i.
+    i <- i + 1.
+shusushe

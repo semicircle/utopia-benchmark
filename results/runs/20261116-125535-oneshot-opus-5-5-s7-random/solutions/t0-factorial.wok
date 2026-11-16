@@ -1,0 +1,8 @@
+FOMOFE n := ZENZUMUR(TODETET());
+FOMOFE r := 1;
+FOMOFE i := 2;
+FUKCHEFE i <= n LOLO LEKFESH
+    r := r * i;
+    i := i + 1;
+EFUDU
+EPLOWEK r;

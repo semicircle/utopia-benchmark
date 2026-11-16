@@ -131,6 +131,11 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
   <p class="muted" id="stamp"></p>
 </header>
 
+<section id="notes-section" hidden>
+  <h2>Findings</h2>
+  <div id="notes"></div>
+</section>
+
 <section>
   <h2>Headline: how much of the skill was recall?</h2>
   <p class="sub">Share of tasks whose solution passed every hidden test. <strong>Python</strong> is the
@@ -359,7 +364,15 @@ function renderSamples() {
   show(Math.min(1, samples.length - 1));
 }
 
-renderStamp(); renderHeadline(); renderSummary(); renderMatrix(); renderRuns(); renderSamples();
+function renderNotes() {
+  const text = (DATA && DATA.notes || "").trim();
+  if (!text) return;
+  const inline = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/`(.+?)`/g, "<code>$1</code>");
+  document.getElementById("notes").innerHTML = text.split(/\n\s*\n/).map(p => `<p>${inline(p.replace(/\n/g, " "))}</p>`).join("");
+  document.getElementById("notes-section").hidden = false;
+}
+
+renderNotes(); renderStamp(); renderHeadline(); renderSummary(); renderMatrix(); renderRuns(); renderSamples();
 </script>
 </body>
 </html>

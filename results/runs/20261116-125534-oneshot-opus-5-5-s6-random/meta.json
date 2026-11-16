@@ -1,0 +1,113 @@
+{
+  "run_id": "20261116-125534-oneshot-opus-5-5-s6-random",
+  "mode": "oneshot",
+  "arm": "utopia",
+  "provider": "anthropic",
+  "base_url": null,
+  "model": "claude-opus-5-5",
+  "runner": null,
+  "effort": "high",
+  "thinking": true,
+  "max_tokens": 32000,
+  "seed": 6,
+  "semantics": "random",
+  "language": "Tinbousan",
+  "dialect": {
+    "builtins": {
+      "len": "utoufa",
+      "num": "shufa",
+      "push": "marboun",
+      "readline": "bounfou",
+      "str": "moufunsa"
+    },
+    "comment": "//",
+    "ext": "tin",
+    "keywords": {
+      "and": "dra",
+      "begin": "drufirsa",
+      "break": "basu",
+      "case": "sourmar",
+      "continue": "samu",
+      "default": "fitru",
+      "do": "sansou",
+      "else": "tru",
+      "end": "drumin",
+      "false": "fufir",
+      "for": "sutrarsu",
+      "func": "tumumin",
+      "if": "sitrartu",
+      "let": "troufu",
+      "loop": "drin",
+      "next": "moun",
+      "none": "furfifan",
+      "not": "shutoun",
+      "or": "butrouta",
+      "print": "binmi",
+      "return": "drur",
+      "step": "suntru",
+      "switch": "utir",
+      "then": "fisu",
+      "to": "sou",
+      "true": "sibitrou",
+      "until": "sun",
+      "wend": "trushou",
+      "while": "tafashou",
+      "write": "sha"
+    },
+    "name": "Tinbousan",
+    "ops": {
+      "Assign": "=",
+      "Eq": "==",
+      "Ne": "~=",
+      "Concat": "+",
+      "Mod": "%"
+    },
+    "seed": 6,
+    "semantics": {
+      "ArgOrder": "left-to-right",
+      "OperandOrder": "right-to-left",
+      "Div": "toward-zero",
+      "IndexBase": 1,
+      "OutOfRange": "error",
+      "CountInclusive": true,
+      "ShortCircuit": true,
+      "SwitchFallthrough": true,
+      "ListEqStructural": true,
+      "Prec": "flat-right"
+    },
+    "styles": {
+      "Func": "basic",
+      "If": "pascal",
+      "Switch": "c",
+      "Loop": "basic"
+    },
+    "terminator": ";"
+  },
+  "date": "2026-11-16T12:55:34",
+  "commit": "d0fc92b",
+  "duration_s": 16.9,
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 4,
+    "output_tokens": 1963,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 7563,
+    "requests": 1,
+    "cost_usd_estimate": 0.0771
+  },
+  "cost_usd": 0.0771,
+  "model_reported": "claude-opus-5-5",
+  "score": {
+    "passed": 7,
+    "total": 7,
+    "tasks": {
+      "t0-count": true,
+      "t0-day-names": true,
+      "t0-even-odd": true,
+      "t0-factorial": true,
+      "t0-fizzbuzz": true,
+      "t0-hello": true,
+      "t0-reverse-lines": true
+    }
+  }
+}

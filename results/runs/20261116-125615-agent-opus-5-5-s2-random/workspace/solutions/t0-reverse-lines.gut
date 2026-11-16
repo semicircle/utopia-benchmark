@@ -1,0 +1,9 @@
+goyu lines <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    dreme(lines, line).
+    line <- uyotho().
+shusushe
+wego i <- wumdror(lines) - 1 setru 0 meshe -1
+    suwe lines[i].
+trer i

@@ -1,0 +1,6 @@
+weltuxle n := leidush(lono());
+weltuxle r := 1;
+keit (weltuxle i := 2; i <= n; i := i + 1) {
+    r := r * i;
+}
+leshdei r;

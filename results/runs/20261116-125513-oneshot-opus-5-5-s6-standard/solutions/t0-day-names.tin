@@ -1,0 +1,25 @@
+troufu line = bounfou();
+tafashou line ~= furfifan
+    sitrartu line ~= "" fisu drufirsa
+        troufu d = shufa(line);
+        utir (d) {
+        sourmar 1:
+            binmi "Monday";
+        sourmar 2:
+            binmi "Tuesday";
+        sourmar 3:
+            binmi "Wednesday";
+        sourmar 4:
+            binmi "Thursday";
+        sourmar 5:
+            binmi "Friday";
+        sourmar 6:
+            binmi "Saturday";
+        sourmar 7:
+            binmi "Sunday";
+        fitru:
+            binmi "invalid";
+        }
+    drumin
+    line = bounfou();
+trushou
