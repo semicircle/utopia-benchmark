@@ -107,7 +107,7 @@ blockquote { margin: 8px 0 12px; padding: 8px 14px; border-left: 3px solid var(-
 .tabs button { font: inherit; font-size: 13px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--text-2); cursor: pointer; }
 .tabs button[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 .empty-note { padding: 24px; text-align: center; border: 1px dashed var(--line); border-radius: 8px; color: var(--muted); }
-ol.method li { margin-bottom: 6px; max-width: 70ch; }
+ol.method li, ul.why li { margin-bottom: 6px; max-width: 70ch; }
 footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line); }
 
 @media (max-width: 640px) {
@@ -130,6 +130,26 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
     the manual and must write working programs. Nothing it memorized applies.</p>
   <p class="muted" id="stamp"></p>
 </header>
+
+<section>
+  <h2>Why</h2>
+  <p>Today's coding benchmarks mostly measure recall. Models have seen millions of Python and
+    JavaScript programs, so "write a todo app" often means remembering one rather than engineering
+    one. Prior work backs this up: frontier models that score ~100% on problems in Python drop to
+    0–11% on the same problems in esoteric languages
+    (<a href="https://arxiv.org/abs/2603.09678">EsoLang-Bench</a>).</p>
+  <p>Utopia measures what is left when recall is taken away:</p>
+  <ul class="why">
+    <li><strong>In-context learning</strong>: learning a whole language and platform from its docs.</li>
+    <li><strong>Following the spec over habit</strong>: semantics that <em>look</em> familiar but
+      behave differently ("false friends").</li>
+    <li><strong>Engineering</strong>: building working, multi-part apps, not toy algorithms.</li>
+    <li><strong>Debugging the platform itself</strong>: finding and working around seeded VM bugs
+      and docs that are wrong.</li>
+  </ul>
+  <p class="muted">The results on this page cover the first two. Multi-part apps and seeded platform
+    bugs are on the roadmap.</p>
+</section>
 
 <section>
   <h2>What a Utopia language looks like</h2>
