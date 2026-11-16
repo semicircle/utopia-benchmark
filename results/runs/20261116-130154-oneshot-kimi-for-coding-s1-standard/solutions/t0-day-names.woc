@@ -1,0 +1,22 @@
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle n := leidush(line);
+    nei (n == 1) {
+        leshdei "Monday";
+    } wogeish nei (n == 2) {
+        leshdei "Tuesday";
+    } wogeish nei (n == 3) {
+        leshdei "Wednesday";
+    } wogeish nei (n == 4) {
+        leshdei "Thursday";
+    } wogeish nei (n == 5) {
+        leshdei "Friday";
+    } wogeish nei (n == 6) {
+        leshdei "Saturday";
+    } wogeish nei (n == 7) {
+        leshdei "Sunday";
+    } wogeish {
+        leshdei "invalid";
+    }
+    line := lono();
+}

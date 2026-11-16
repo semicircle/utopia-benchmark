@@ -1,0 +1,9 @@
+eilyot fact(n)
+    nei (n <= 1) {
+        chozulni 1;
+    }
+    chozulni n * fact(n - 1);
+iweil
+
+weltuxle n := leidush(lono());
+leshdei fact(n);

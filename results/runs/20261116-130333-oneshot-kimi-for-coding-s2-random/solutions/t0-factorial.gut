@@ -1,0 +1,6 @@
+goyu n <- druwol(uyotho()).
+goyu result <- 1.
+wego i <- 1 setru n
+    result <- result * i.
+trer i
+suwe result.

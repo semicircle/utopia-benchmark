@@ -1,0 +1,30 @@
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE n := ZENZUMUR(line);
+    ZET n CHU
+    1: LEKFESH
+        EPLOWEK "Monday";
+    EFUDU
+    2: LEKFESH
+        EPLOWEK "Tuesday";
+    EFUDU
+    3: LEKFESH
+        EPLOWEK "Wednesday";
+    EFUDU
+    4: LEKFESH
+        EPLOWEK "Thursday";
+    EFUDU
+    5: LEKFESH
+        EPLOWEK "Friday";
+    EFUDU
+    6: LEKFESH
+        EPLOWEK "Saturday";
+    EFUDU
+    7: LEKFESH
+        EPLOWEK "Sunday";
+    EFUDU
+    CHEME LEKFESH
+        EPLOWEK "invalid";
+    EFUDU EFUDU
+    line := TODETET();
+EFUDU

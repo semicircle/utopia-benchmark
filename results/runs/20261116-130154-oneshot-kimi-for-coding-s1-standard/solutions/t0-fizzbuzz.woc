@@ -1,0 +1,15 @@
+weltuxle line := lono();
+weltuxle n := leidush(line);
+keit (weltuxle i := 1; i <= n; i := i + 1) {
+    nei (i yeil 3 == 0) {
+        nei (i yeil 5 == 0) {
+            leshdei "FizzBuzz";
+        } wogeish {
+            leshdei "Fizz";
+        }
+    } wogeish nei (i yeil 5 == 0) {
+        leshdei "Buzz";
+    } wogeish {
+        leshdei i;
+    }
+}

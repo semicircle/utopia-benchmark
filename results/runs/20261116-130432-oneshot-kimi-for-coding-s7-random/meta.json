@@ -1,0 +1,110 @@
+{
+  "run_id": "20261116-130432-oneshot-kimi-for-coding-s7-random",
+  "mode": "oneshot",
+  "arm": "utopia",
+  "provider": "openai",
+  "base_url": "https://api.kimi.com/coding/v1",
+  "model": "kimi-for-coding",
+  "runner": null,
+  "effort": null,
+  "thinking": true,
+  "max_tokens": 32000,
+  "seed": 7,
+  "semantics": "random",
+  "language": "Wokluwu",
+  "dialect": {
+    "builtins": {
+      "len": "FORMOWE",
+      "num": "ZENZUMUR",
+      "push": "WESH",
+      "readline": "TODETET",
+      "str": "ECHEK"
+    },
+    "comment": "#",
+    "ext": "wok",
+    "keywords": {
+      "and": "ZULUSHTE",
+      "begin": "LEKFESH",
+      "break": "DUTZE",
+      "case": "ZET",
+      "continue": "DOSHMON",
+      "do": "LOLO",
+      "else": "CHEME",
+      "end": "EFUDU",
+      "false": "LERLU",
+      "for": "TUTCHEK",
+      "func": "EDEWUT",
+      "if": "PLUWOK",
+      "let": "FOMOFE",
+      "none": "LER",
+      "not": "TEMO",
+      "of": "CHU",
+      "or": "MUR",
+      "print": "EPLOWEK",
+      "repeat": "DUDERTE",
+      "return": "EFOTU",
+      "step": "ZEPLO",
+      "then": "DEWOTUSH",
+      "to": "ZUWOWEN",
+      "true": "MULO",
+      "until": "DOSHFETO",
+      "while": "FUKCHEFE",
+      "write": "WOFE"
+    },
+    "name": "Wokluwu",
+    "ops": {
+      "Assign": ":=",
+      "Eq": "=",
+      "Ne": "~=",
+      "Concat": "&",
+      "Mod": "%"
+    },
+    "seed": 7,
+    "semantics": {
+      "ArgOrder": "right-to-left",
+      "OperandOrder": "left-to-right",
+      "Div": "toward-positive-infinity",
+      "IndexBase": 1,
+      "OutOfRange": "error",
+      "CountInclusive": true,
+      "ShortCircuit": false,
+      "SwitchFallthrough": false,
+      "ListEqStructural": false,
+      "Prec": "standard"
+    },
+    "styles": {
+      "Func": "c",
+      "If": "pascal",
+      "Switch": "pascal",
+      "Loop": "pascal"
+    },
+    "terminator": ";"
+  },
+  "date": "2026-11-16T13:04:32",
+  "commit": "09b0e6f",
+  "duration_s": 50.6,
+  "stop_reason": "stop",
+  "usage": {
+    "input_tokens": 3799,
+    "output_tokens": 2453,
+    "cache_read_input_tokens": 1792,
+    "cache_creation_input_tokens": 0,
+    "requests": 1,
+    "cost_usd_estimate": null
+  },
+  "cost_usd": null,
+  "model_reported": "kimi-for-coding",
+  "score": {
+    "passed": 7,
+    "total": 7,
+    "tasks": {
+      "t0-count": true,
+      "t0-day-names": true,
+      "t0-even-odd": true,
+      "t0-factorial": true,
+      "t0-fizzbuzz": true,
+      "t0-hello": true,
+      "t0-reverse-lines": true
+    }
+  }
+}

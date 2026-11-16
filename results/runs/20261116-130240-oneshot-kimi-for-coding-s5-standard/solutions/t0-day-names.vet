@@ -1,0 +1,23 @@
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi d = nelchiyul(line).
+    thi torelro d
+    torelro 1
+        miyol "Monday".
+    torelro 2
+        miyol "Tuesday".
+    torelro 3
+        miyol "Wednesday".
+    torelro 4
+        miyol "Thursday".
+    torelro 5
+        miyol "Friday".
+    torelro 6
+        miyol "Saturday".
+    torelro 7
+        miyol "Sunday".
+    torelro thumku
+        miyol "invalid".
+    dit thi
+    line = nilhino().
+dit

@@ -1,0 +1,14 @@
+troufu even = 0;
+troufu odd = 0;
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu n = shufa(line);
+    sitrartu (n % 2) == 0 fisu drufirsa
+        even = even + 1;
+    drumin tru drufirsa
+        odd = odd + 1;
+    drumin
+    line = bounfou();
+trushou
+binmi "even " + even;
+binmi "odd " + odd;

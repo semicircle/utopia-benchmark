@@ -1,0 +1,5 @@
+weltuxle line := lono();
+weltuxle n := leidush(line);
+keit (weltuxle i := 1; i <= n; i := i + 1) {
+    leshdei i;
+}

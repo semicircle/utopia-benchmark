@@ -1,0 +1,47 @@
+{
+  "id": "chatcmpl-9eCN2CjnypTSQaGDRGp3RwfL",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "<solution task=\"t0-count\">\nTrepiho n := Eshiyer(Thoke());\nPil (Trepiho i := 1; i <= n; i := i + 1) {\n    Rashar i;\n}\n</solution>\n\n<solution task=\"t0-day-names\">\nTrepiho line := Thoke();\nRokomi (line ~= Krupelro) {\n    Trepiho d := Eshiyer(line);\n    Pakru Sher d\n    Sher 1\n        Rashar \"Monday\";\n    Sher 2\n        Rashar \"Tuesday\";\n    Sher 3\n        Rashar \"Wednesday\";\n    Sher 4\n        Rashar \"Thursday\";\n    Sher 5\n        Rashar \"Friday\";\n    Sher 6\n        Rashar \"Saturday\";\n    Sher 7\n        Rashar \"Sunday\";\n    Sher Thotri\n        Rashar \"invalid\";\n    Tho Pakru\n    line := Thoke();\n}\n</solution>\n\n<solution task=\"t0-even-odd\">\nTrepiho even := 0;\nTrepiho odd := 0;\nTrepiho line := Thoke();\nRokomi (line ~= Krupelro) {\n    Trepiho n := Eshiyer(line);\n    Mushu n % 2 = 0 Yeshil Hupo\n        even := even + 1;\n    Tho Thotri Hupo\n        odd := odd + 1;\n    Tho\n    line := Thoke();\n}\nRashar \"even \" + even;\nRashar \"odd \" + odd;\n</solution>\n\n<solution task=\"t0-factorial\">\nTrepiho n := Eshiyer(Thoke());\nTrepiho result := 1;\nPil (Trepiho i := 2; i <= n; i := i + 1) {\n    result := result * i;\n}\nRashar result;\n</solution>\n\n<solution task=\"t0-fizzbuzz\">\nTrepiho n := Eshiyer(Thoke());\nPil (Trepiho i := 1; i <= n; i := i + 1) {\n    Mushu i % 15 = 0 Yeshil Hupo\n        Rashar \"FizzBuzz\";\n    Tho Thotri Mushu i % 3 = 0 Yeshil Hupo\n        Rashar \"Fizz\";\n    Tho Thotri Mushu i % 5 = 0 Yeshil Hupo\n        Rashar \"Buzz\";\n    Tho Thotri Hupo\n        Rashar i;\n    Tho\n}\n</solution>\n\n<solution task=\"t0-hello\">\nRashar \"Hello, Utopia!\";\n</solution>\n\n<solution task=\"t0-reverse-lines\">\nTrepiho lines := [];\nTrepiho line := Thoke();\nRokomi (line ~= Krupelro) {\n    Theki(lines, line);\n    line := Thoke();\n}\nPil (Trepiho i := Purmo(lines) - 1; i >= 0; i := i - 1) {\n    Rashar lines[i];\n}\n</solution>",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null,
+        "reasoning_content": "Let me analyze the tasks and write Yemora solutions.\n\nKey things to remember:\n- Print with newline: `Rashar <expr>;`\n- Print without newline: `Rurmopa <expr>;`\n- Read line: `Thoke()` returns string or `Krupelro` at EOF\n- Variable declaration: `Trepiho <name> := <expr>;`\n- Loops: `Rokomi (cond) { ... }`, `Pil (init; cond; update) { ... }`\n- Functions: `Ruyoyo name(params) ... Opa`\n- Int conversion: `Eshiyer(s)`\n- List append: `Theki(xs, v)`\n- Length: `Purmo(x)`\n- Modulo: `a % b`\n- Equality: `=`, inequality: `~=`\n- Conditions must be booleans, no truthiness. So `line ~= Krupelro` works for loop condition.\n- String concatenation with `+`.\n- Comments start with `'`.\n\nTask t0-count: read n, print 1..n one per line. If n=0 print nothing.\n\n```\nTrepiho n := Eshiyer(Thoke());\nPil (Trepiho i := 1; i <= n; i := i + 1) {\n    Rashar i;\n}\n```\n\nTask t0-day-names: read lines until EOF, print day name or invalid.\n\n```\nTrepiho line := Thoke();\nRokomi (line ~= Krupelro) {\n    Trepiho d := Eshiyer(line);\n    Pakru Sher d\n    Sher 1\n        Rashar \"Monday\";\n    Sher 2\n        Rashar \"Tuesday\";\n    Sher 3\n        Rashar \"Wednesday\";\n    Sher 4\n        Rashar \"Thursday\";\n    Sher 5\n        Rashar \"Friday\";\n    Sher 6\n        Rashar \"Saturday\";\n    Sher 7\n        Rashar \"Sunday\";\n    Sher Thotri\n        Rashar \"invalid\";\n    Tho Pakru\n    line := Thoke();\n}\n```\n\nTask t0-even-odd: count even and odd.\n\n```\nTrepiho even := 0;\nTrepiho odd := 0;\nTrepiho line := Thoke();\nRokomi (line ~= Krupelro) {\n    Trepiho n := Eshiyer(line);\n    Mushu n % 2 = 0 Yeshil Hupo\n        even := even + 1;\n    Tho Thotri Hupo\n        odd := odd + 1;\n    Tho\n    line := Thoke();\n}\nRashar \"even \" + even;\nRashar \"odd \" + odd;\n```\n\nNote: negative numbers \u2014 `-7 % 2` is `-1`, not 0, so `-7` would be counted odd. That's correct since -7 is odd. For even negatives like `-4 % 2 = 0`, fine. Good.\n\nTask t0-factorial: n 0..20. 20! = 2432902008176640000 which fits in 64-bit (max ~9.2e18). So plain multiplication works.\n\n```\nTrepiho n := Eshiyer(Thoke());\nTrepiho result := 1;\nPil (Trepiho i := 2; i <= n; i := i + 1) {\n    result := result * i;\n}\nRashar result;\n```\n\nOr recursive. Iterative is fine.\n\nTask t0-fizzbuzz:\n\n```\nTrepiho n := Eshiyer(Thoke());\nPil (Trepiho i := 1; i <= n; i := i + 1) {\n    Mushu i % 15 = 0 Yeshil Hupo\n        Rashar \"FizzBuzz\";\n    Tho Thotri Mushu i % 3 = 0 Yeshil Hupo\n        Rashar \"Fizz\";\n    Tho Thotri Mushu i % 5 = 0 Yeshil Hupo\n        Rashar \"Buzz\";\n    Tho Thotri Hupo\n        Rashar i;\n    Tho\n}\n```\n\nTask t0-hello:\n\n```\nRashar \"Hello, Utopia!\";\n```\n\nTask t0-reverse-lines: read all lines into a list, then print in reverse.\n\n```\nTrepiho lines := [];\nTrepiho line := Thoke();\nRokomi (line ~= Krupelro) {\n    Theki(lines, line);\n    line := Thoke();\n}\nPil (Trepiho i := Purmo(lines) - 1; i >= 0; i := i - 1) {\n    Rashar lines[i];\n}\n```\n\nCareful: if lines is empty, Purmo(lines)-1 = -1, condition i >= 0 is false, loop doesn't run. Good.\n\nAll straightforward. Let me double-check syntax details:\n\n- `Pil (Trepiho i := 1; i <= n; i := i + 1) { ... }` \u2014 initializer is a declaration without trailing semicolon, condition, update without trailing semicolon. Matches reference example.\n- `Rokomi (line ~= Krupelro) { ... }` \u2014 matches reference.\n- `Pakru Sher d` ... `Tho Pakru` \u2014 matches.\n- `Mushu ... Yeshil Hupo ... Tho Thotri Hupo ... Tho` \u2014 matches.\n\nOne concern in t0-count: reading input. Standard input contains one line with integer n. `Thoke()` reads it. `Eshiyer` converts. Fine.\n\nEverything looks good."
+      }
+    }
+  ],
+  "created": 1794805387,
+  "model": "kimi-for-coding",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 1900,
+    "prompt_tokens": 5360,
+    "total_tokens": 7260,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 1206,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cache_write_tokens": null,
+      "cached_tokens": 2304,
+      "image_tokens": null,
+      "text_tokens": null
+    },
+    "cached_tokens": 2304
+  }
+}

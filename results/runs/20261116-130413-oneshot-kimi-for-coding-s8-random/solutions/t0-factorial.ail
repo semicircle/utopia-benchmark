@@ -1,0 +1,7 @@
+plulai line := playadu();
+plulai n := plaltai(line);
+plulai result := 1;
+shoyo i := 1 busale n + 1
+    result := result * i;
+pla i
+shaibe result;

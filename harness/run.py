@@ -295,7 +295,7 @@ def oneshot_one(cfg, exe, seed, scratch):
 
 # ---------------------------------------------------------------- agent
 
-OUTSIDE_RE = re.compile(r"utopia_benchmark|\.\./|(^|\s)~|/Users/|/home/|\bfind\s+/\s|\bcurl\b|\bwget\b|"
+OUTSIDE_RE = re.compile(r"utopia_benchmark|\.\./\.\.|(^|\s)~|/Users/|/home/|\bfind\s+/\s|\bcurl\b|\bwget\b|"
                         r"\bpip3?\s+install\b|\bgit\s+clone\b|\bmdfind\b|\blocate\b")
 
 

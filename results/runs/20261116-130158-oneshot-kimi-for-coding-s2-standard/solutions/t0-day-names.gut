@@ -1,0 +1,22 @@
+goyu line <- uyotho().
+omethol line != gursume
+    goyu d <- druwol(line).
+    dre d == 1 ethur
+        suwe "Monday".
+    yuyuge d == 2 ethur
+        suwe "Tuesday".
+    yuyuge d == 3 ethur
+        suwe "Wednesday".
+    yuyuge d == 4 ethur
+        suwe "Thursday".
+    yuyuge d == 5 ethur
+        suwe "Friday".
+    yuyuge d == 6 ethur
+        suwe "Saturday".
+    yuyuge d == 7 ethur
+        suwe "Sunday".
+    truthor
+        suwe "invalid".
+    wodrotru dre
+    line <- uyotho().
+shusushe

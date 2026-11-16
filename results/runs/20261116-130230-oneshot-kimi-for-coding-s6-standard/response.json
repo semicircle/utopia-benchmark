@@ -1,0 +1,40 @@
+{
+  "id": "chatcmpl-mP8hH0MK600Q1Tk2hsyAYHDg",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "<solution task=\"t0-count\">\ntroufu n = shufa(bounfou());\nsutrarsu i = 1 sou n\n    binmi i;\nmoun i\n</solution>\n\n<solution task=\"t0-day-names\">\ntroufu line = bounfou();\ntafashou line ~= furfifan\n    troufu d = shufa(line);\n    utir (d) {\n    sourmar 1:\n        binmi \"Monday\";\n    sourmar 2:\n        binmi \"Tuesday\";\n    sourmar 3:\n        binmi \"Wednesday\";\n    sourmar 4:\n        binmi \"Thursday\";\n    sourmar 5:\n        binmi \"Friday\";\n    sourmar 6:\n        binmi \"Saturday\";\n    sourmar 7:\n        binmi \"Sunday\";\n    fitru:\n        binmi \"invalid\";\n    }\n    line = bounfou();\ntrushou\n</solution>\n\n<solution task=\"t0-even-odd\">\ntroufu even = 0;\ntroufu odd = 0;\ntroufu line = bounfou();\ntafashou line ~= furfifan\n    troufu n = shufa(line);\n    sitrartu n % 2 == 0 fisu drufirsa\n        even = even + 1;\n    drumin tru drufirsa\n        odd = odd + 1;\n    drumin\n    line = bounfou();\ntrushou\nbinmi \"even \" + even;\nbinmi \"odd \" + odd;\n</solution>\n\n<solution task=\"t0-factorial\">\ntroufu n = shufa(bounfou());\ntroufu result = 1;\nsutrarsu i = 1 sou n\n    result = result * i;\nmoun i\nbinmi result;\n</solution>\n\n<solution task=\"t0-fizzbuzz\">\ntroufu n = shufa(bounfou());\nsutrarsu i = 1 sou n\n    sitrartu i % 15 == 0 fisu drufirsa\n        binmi \"FizzBuzz\";\n    drumin tru sitrartu i % 3 == 0 fisu drufirsa\n        binmi \"Fizz\";\n    drumin tru sitrartu i % 5 == 0 fisu drufirsa\n        binmi \"Buzz\";\n    drumin tru drufirsa\n        binmi i;\n    drumin\nmoun i\n</solution>\n\n<solution task=\"t0-hello\">\nbinmi \"Hello, Utopia!\";\n</solution>\n\n<solution task=\"t0-reverse-lines\">\ntroufu lines = [];\ntroufu line = bounfou();\ntafashou line ~= furfifan\n    marboun(lines, line);\n    line = bounfou();\ntrushou\ntroufu i = utoufa(lines) - 1;\ntafashou i >= 0\n    binmi lines[i];\n    i = i - 1;\ntrushou\n</solution>",
+        "refusal": null,
+        "role": "assistant",
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": null,
+        "reasoning_content": "Let me write solutions for each task in Tinbousan.\n\n**t0-count**: read n, print 1..n.\n\n```\ntroufu n = shufa(bounfou());\nsutrarsu i = 1 sou n\n    binmi i;\nmoun i\n```\n\n**t0-day-names**: read lines until EOF, print day names. Use switch.\n\n```\ntroufu line = bounfou();\ntafashou line ~= furfifan\n    troufu d = shufa(line);\n    utir (d) {\n    sourmar 1:\n        binmi \"Monday\";\n    sourmar 2:\n        binmi \"Tuesday\";\n    sourmar 3:\n        binmi \"Wednesday\";\n    sourmar 4:\n        binmi \"Thursday\";\n    sourmar 5:\n        binmi \"Friday\";\n    sourmar 6:\n        binmi \"Saturday\";\n    sourmar 7:\n        binmi \"Sunday\";\n    fitru:\n        binmi \"invalid\";\n    }\n    line = bounfou();\ntrushou\n```\n\n**t0-even-odd**: count evens and odds, handle negatives with % \u2014 sign follows dividend, but n % 2 == 0 works for negatives too.\n\n```\ntroufu even = 0;\ntroufu odd = 0;\ntroufu line = bounfou();\ntafashou line ~= furfifan\n    troufu n = shufa(line);\n    sitrartu n % 2 == 0 fisu drufirsa\n        even = even + 1;\n    drumin tru drufirsa\n        odd = odd + 1;\n    drumin\n    line = bounfou();\ntrushou\nbinmi \"even \" + even;\nbinmi \"odd \" + odd;\n```\n\n**t0-factorial**: n \u2264 20, factorial fits in 64-bit (20! = 2432902008176640000 < 2^63-1 \u2248 9.22e18). Loop.\n\n```\ntroufu n = shufa(bounfou());\ntroufu result = 1;\nsutrarsu i = 1 sou n\n    result = result * i;\nmoun i\nbinmi result;\n```\n\n**t0-fizzbuzz**:\n\n```\ntroufu n = shufa(bounfou());\nsutrarsu i = 1 sou n\n    sitrartu i % 15 == 0 fisu drufirsa\n        binmi \"FizzBuzz\";\n    drumin tru sitrartu i % 3 == 0 fisu drufirsa\n        binmi \"Fizz\";\n    drumin tru sitrouta i % 5 == 0 fisu drufirsa\n```\n\nCareful: `drumin tru sitrartu` \u2014 the else-if chain. Write:\n\n```\nsitrartu i % 15 == 0 fisu drufirsa\n    binmi \"FizzBuzz\";\ndrumin tru sitrartu i % 3 == 0 fisu drufirsa\n    binmi \"Fizz\";\ndrumin tru sitrartu i % 5 == 0 fisu drufirsa\n    binmi \"Buzz\";\ndrumin tru drufirsa\n    binmi i;\ndrumin\n```\n\nNote: conditions must be booleans \u2014 `i % 15 == 0` is boolean, fine.\n\n**t0-hello**:\n\n```\nbinmi \"Hello, Utopia!\";\n```\n\n**t0-reverse-lines**: store lines in a list, then print in reverse. Reading until bounfou returns furfifan.\n\n```\ntroufu lines = [];\ntroufu line = bounfou();\ntafashou line ~= furfifan\n    marboun(lines, line);\n    line = bounfou();\ntrushou\ntroufu i = utoufa(lines) - 1;\ntafashou i >= 0\n    binmi lines[i];\n    i = i - 1;\ntrushou\n```\n\nCheck switch literal uniqueness in day-names: fine.\n\nCheck that `binmi i;` prints integer \u2014 yes.\n\nCheck t0-count when n=0: loop from 1 to 0 doesn't run. Good.\n\nCheck factorial: \"sutrarsu i = 1 sou 0\" when n=0 \u2014 doesn't run, result stays 1. Good.\n\nAll looks correct. Format each with <solution task=\"...\"> tags."
+      }
+    }
+  ],
+  "created": 1794805317,
+  "model": "kimi-for-coding",
+  "object": "chat.completion",
+  "metadata": null,
+  "moderation": null,
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 1649,
+    "prompt_tokens": 5498,
+    "total_tokens": 7147,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 970,
+      "rejected_prediction_tokens": null,
+      "text_tokens": null
+    },
+    "prompt_tokens_details": null
+  }
+}

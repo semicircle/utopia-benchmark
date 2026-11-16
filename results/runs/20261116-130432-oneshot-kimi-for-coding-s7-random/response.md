@@ -1,0 +1,97 @@
+<solution task="t0-count">
+FOMOFE n := ZENZUMUR(TODETET());
+TUTCHEK i := 1 ZUWOWEN n LOLO LEKFESH
+    EPLOWEK i;
+EFUDU
+</solution>
+
+<solution task="t0-day-names">
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE d := ZENZUMUR(line);
+    ZET d CHU
+    1: LEKFESH
+        EPLOWEK "Monday";
+    EFUDU
+    2: LEKFESH
+        EPLOWEK "Tuesday";
+    EFUDU
+    3: LEKFESH
+        EPLOWEK "Wednesday";
+    EFUDU
+    4: LEKFESH
+        EPLOWEK "Thursday";
+    EFUDU
+    5: LEKFESH
+        EPLOWEK "Friday";
+    EFUDU
+    6: LEKFESH
+        EPLOWEK "Saturday";
+    EFUDU
+    7: LEKFESH
+        EPLOWEK "Sunday";
+    EFUDU
+    CHEME LEKFESH
+        EPLOWEK "invalid";
+    EFUDU EFUDU
+    line := TODETET();
+EFUDU
+</solution>
+
+<solution task="t0-even-odd">
+FOMOFE even := 0;
+FOMOFE odd := 0;
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE n := ZENZUMUR(line);
+    PLUWOK n % 2 = 0 DEWOTUSH LEKFESH
+        even := even + 1;
+    EFUDU CHEME LEKFESH
+        odd := odd + 1;
+    EFUDU
+    line := TODETET();
+EFUDU
+EPLOWEK "even " & even;
+EPLOWEK "odd " & odd;
+</solution>
+
+<solution task="t0-factorial">
+FOMOFE n := ZENZUMUR(TODETET());
+FOMOFE r := 1;
+TUTCHEK i := 1 ZUWOWEN n LOLO LEKFESH
+    r := r * i;
+EFUDU
+EPLOWEK r;
+</solution>
+
+<solution task="t0-fizzbuzz">
+FOMOFE n := ZENZUMUR(TODETET());
+TUTCHEK i := 1 ZUWOWEN n LOLO LEKFESH
+    PLUWOK i % 15 = 0 DEWOTUSH LEKFESH
+        EPLOWEK "FizzBuzz";
+    EFUDU CHEME PLUWOK i % 3 = 0 DEWOTUSH LEKFESH
+        EPLOWEK "Fizz";
+    EFUDU CHEME PLUWOK i % 5 = 0 DEWOTUSH LEKFESH
+        EPLOWEK "Buzz";
+    EFUDU CHEME LEKFESH
+        EPLOWEK i;
+    EFUDU
+EFUDU
+</solution>
+
+<solution task="t0-hello">
+EPLOWEK "Hello, Utopia!";
+</solution>
+
+<solution task="t0-reverse-lines">
+FOMOFE lines := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    WESH(lines, line);
+    line := TODETET();
+EFUDU
+FOMOFE k := FORMOWE(lines);
+TUTCHEK i := k ZUWOWEN 1 ZEPLO -1 LOLO LEKFESH
+    EPLOWEK lines[i];
+EFUDU
+</solution>

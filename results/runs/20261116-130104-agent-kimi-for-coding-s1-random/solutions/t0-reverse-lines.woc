@@ -1,0 +1,11 @@
+weltuxle lines := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    koshkil(lines, line);
+    line := lono();
+}
+weltuxle i := dushzosh(lines) - 1;
+krenul (i >= 0) {
+    leshdei lines[i];
+    i := i - 1;
+}

@@ -1,0 +1,14 @@
+ohetdi even = 0.
+ohetdi odd = 0.
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi n = nelchiyul(line).
+    rilniro (n kolethul 2) == 0 hutro nethe
+        even = even + 1.
+    dit thumku nethe
+        odd = odd + 1.
+    dit
+    line = nilhino().
+dit
+miyol "even " & even.
+miyol "odd " & odd.

@@ -1,0 +1,7 @@
+ohetdi line = nilhino().
+ohetdi n = nelchiyul(line).
+ohetdi result = 1.
+lemyunom i = 1 thikutli n mitho nethe
+    result = result * i.
+dit
+miyol result.

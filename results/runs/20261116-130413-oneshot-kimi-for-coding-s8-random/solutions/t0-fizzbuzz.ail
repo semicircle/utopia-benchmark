@@ -1,0 +1,13 @@
+plulai line := playadu();
+plulai n := plaltai(line);
+shoyo i := 1 busale n + 1
+    atdoyal (i % 15 == 0) {
+        shaibe "FizzBuzz";
+    } bulbayo atdoyal (i % 3 == 0) {
+        shaibe "Fizz";
+    } bulbayo atdoyal (i % 5 == 0) {
+        shaibe "Buzz";
+    } bulbayo {
+        shaibe i;
+    }
+pla i

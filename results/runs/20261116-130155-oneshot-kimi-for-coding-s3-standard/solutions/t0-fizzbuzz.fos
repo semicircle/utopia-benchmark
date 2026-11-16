@@ -1,0 +1,12 @@
+Sogas n = Drak(Goshvovo());
+Paxfasva (Sogas i = 1; i <= n; i = i + 1) {
+    Ishsi (i Dodogo 15 == 0) {
+        Dosfasho "FizzBuzz";
+    } Padri Ishsi (i Dodogo 3 == 0) {
+        Dosfasho "Fizz";
+    } Padri Ishsi (i Dodogo 5 == 0) {
+        Dosfasho "Buzz";
+    } Padri {
+        Dosfasho i;
+    }
+}

@@ -1,0 +1,113 @@
+{
+  "run_id": "20261116-130358-oneshot-kimi-for-coding-s6-random",
+  "mode": "oneshot",
+  "arm": "utopia",
+  "provider": "openai",
+  "base_url": "https://api.kimi.com/coding/v1",
+  "model": "kimi-for-coding",
+  "runner": null,
+  "effort": null,
+  "thinking": true,
+  "max_tokens": 32000,
+  "seed": 6,
+  "semantics": "random",
+  "language": "Tinbousan",
+  "dialect": {
+    "builtins": {
+      "len": "utoufa",
+      "num": "shufa",
+      "push": "marboun",
+      "readline": "bounfou",
+      "str": "moufunsa"
+    },
+    "comment": "//",
+    "ext": "tin",
+    "keywords": {
+      "and": "dra",
+      "begin": "drufirsa",
+      "break": "basu",
+      "case": "sourmar",
+      "continue": "samu",
+      "default": "fitru",
+      "do": "sansou",
+      "else": "tru",
+      "end": "drumin",
+      "false": "fufir",
+      "for": "sutrarsu",
+      "func": "tumumin",
+      "if": "sitrartu",
+      "let": "troufu",
+      "loop": "drin",
+      "next": "moun",
+      "none": "furfifan",
+      "not": "shutoun",
+      "or": "butrouta",
+      "print": "binmi",
+      "return": "drur",
+      "step": "suntru",
+      "switch": "utir",
+      "then": "fisu",
+      "to": "sou",
+      "true": "sibitrou",
+      "until": "sun",
+      "wend": "trushou",
+      "while": "tafashou",
+      "write": "sha"
+    },
+    "name": "Tinbousan",
+    "ops": {
+      "Assign": "=",
+      "Eq": "==",
+      "Ne": "~=",
+      "Concat": "+",
+      "Mod": "%"
+    },
+    "seed": 6,
+    "semantics": {
+      "ArgOrder": "left-to-right",
+      "OperandOrder": "right-to-left",
+      "Div": "toward-zero",
+      "IndexBase": 1,
+      "OutOfRange": "error",
+      "CountInclusive": true,
+      "ShortCircuit": true,
+      "SwitchFallthrough": true,
+      "ListEqStructural": true,
+      "Prec": "flat-right"
+    },
+    "styles": {
+      "Func": "basic",
+      "If": "pascal",
+      "Switch": "c",
+      "Loop": "basic"
+    },
+    "terminator": ";"
+  },
+  "date": "2026-11-16T13:03:58",
+  "commit": "09b0e6f",
+  "duration_s": 23.7,
+  "stop_reason": "stop",
+  "usage": {
+    "input_tokens": 4124,
+    "output_tokens": 2143,
+    "cache_read_input_tokens": 1536,
+    "cache_creation_input_tokens": 0,
+    "requests": 1,
+    "cost_usd_estimate": null
+  },
+  "cost_usd": null,
+  "model_reported": "kimi-for-coding",
+  "score": {
+    "passed": 7,
+    "total": 7,
+    "tasks": {
+      "t0-count": true,
+      "t0-day-names": true,
+      "t0-even-odd": true,
+      "t0-factorial": true,
+      "t0-fizzbuzz": true,
+      "t0-hello": true,
+      "t0-reverse-lines": true
+    }
+  }
+}

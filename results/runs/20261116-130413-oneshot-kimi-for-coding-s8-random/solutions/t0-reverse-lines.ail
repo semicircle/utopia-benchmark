@@ -1,0 +1,10 @@
+plulai lines := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    sutse(lines, line);
+    line := playadu();
+aitudre
+plulai count := dra(lines);
+shoyo i := count busale 0 ede -1
+    shaibe lines[i];
+pla i

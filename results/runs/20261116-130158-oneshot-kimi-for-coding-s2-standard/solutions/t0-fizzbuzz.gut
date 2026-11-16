@@ -1,0 +1,12 @@
+goyu n <- druwol(uyotho()).
+wego i <- 1 setru n
+    dre i trumguwu 15 == 0 ethur
+        suwe "FizzBuzz".
+    yuyuge i trumguwu 3 == 0 ethur
+        suwe "Fizz".
+    yuyuge i trumguwu 5 == 0 ethur
+        suwe "Buzz".
+    truthor
+        suwe i.
+    wodrotru dre
+trer i
