@@ -1,0 +1,24 @@
+Gis num(s, a, b) Fodashsa
+    Sogas v = 0;
+    Paxfasva (Sogas i = a; i < b; i = i + 1) {
+        v = v * 10 + Drak(s[i]);
+    }
+    Asdra v;
+Gosafax
+
+Sogas names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+Sogas t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Ishsi (Drash(line) >= 10) {
+        Sogas y = num(line, 0, 4);
+        Sogas m = num(line, 5, 7);
+        Sogas d = num(line, 8, 10);
+        Ishsi (m < 3) {
+            y = y - 1;
+        }
+        Sogas w = (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) Dodogo 7;
+        Dosfasho names[w];
+    }
+    line = Goshvovo();
+}

@@ -1,0 +1,8 @@
+plulai line := playadu();
+plulai n := 0;
+atdoyal (line <> aiplai) {
+    n := plaltai(line);
+}
+shoyo i := 1 busale n + 1
+    shaibe i;
+pla i

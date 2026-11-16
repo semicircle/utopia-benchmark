@@ -1,0 +1,104 @@
+Ruyoyo split(s)
+    Trepiho res := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c = " " Hiyikra c = "\t" Hiyikra c = "\r" Yeshil Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(res, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + c;
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(res, cur);
+    Tho
+    Omel res;
+Opa
+
+Ruyoyo todigits(s)
+    Trepiho ds := [];
+    Pil (Trepiho i := Purmo(s) - 1; i >= 0; i := i - 1) {
+        Theki(ds, Eshiyer(s[i]));
+    }
+    Omel ds;
+Opa
+
+Ruyoyo tostr(ds)
+    Trepiho top := Purmo(ds) - 1;
+    Rokomi (top > 0 Pethe ds[top] = 0) {
+        top := top - 1;
+    }
+    Trepiho s := "";
+    Pil (Trepiho i := top; i >= 0; i := i - 1) {
+        s := s + ds[i];
+    }
+    Omel s;
+Opa
+
+Ruyoyo add(a, b)
+    Trepiho la := Purmo(a);
+    Trepiho lb := Purmo(b);
+    Trepiho n := la;
+    Mushu lb > n Yeshil Hupo
+        n := lb;
+    Tho
+    Trepiho res := [];
+    Trepiho carry := 0;
+    Pil (Trepiho i := 0; i < n; i := i + 1) {
+        Trepiho x := carry;
+        Mushu i < la Yeshil Hupo
+            x := x + a[i];
+        Tho
+        Mushu i < lb Yeshil Hupo
+            x := x + b[i];
+        Tho
+        Theki(res, x % 10);
+        carry := x / 10;
+    }
+    Mushu carry > 0 Yeshil Hupo
+        Theki(res, carry);
+    Tho
+    Omel res;
+Opa
+
+Ruyoyo mul(a, b)
+    Trepiho la := Purmo(a);
+    Trepiho lb := Purmo(b);
+    Trepiho res := [];
+    Pil (Trepiho k := 0; k < la + lb; k := k + 1) {
+        Theki(res, 0);
+    }
+    Pil (Trepiho i := 0; i < la; i := i + 1) {
+        Trepiho ai := a[i];
+        Mushu ai ~= 0 Yeshil Hupo
+            Pil (Trepiho j := 0; j < lb; j := j + 1) {
+                res[i + j] := res[i + j] + ai * b[j];
+            }
+        Tho
+    }
+    Trepiho carry := 0;
+    Pil (Trepiho k := 0; k < la + lb; k := k + 1) {
+        Trepiho x := res[k] + carry;
+        res[k] := x % 10;
+        carry := x / 10;
+    }
+    Rokomi (carry > 0) {
+        Theki(res, carry % 10);
+        carry := carry / 10;
+    }
+    Omel res;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho toks := split(line);
+    Mushu Purmo(toks) >= 2 Yeshil Hupo
+        Trepiho a := todigits(toks[0]);
+        Trepiho b := todigits(toks[1]);
+        Rashar tostr(add(a, b)) + " " + tostr(mul(a, b));
+    Tho
+    line := Thoke();
+}

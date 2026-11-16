@@ -1,0 +1,122 @@
+tumumin split(s)
+    troufu res = [];
+    troufu cur = "";
+    sutrarsu i = 1 sou utoufa(s)
+        troufu c = s[i];
+        sitrartu (c == " ") butrouta (c == "\t") fisu drufirsa
+            sitrartu utoufa(cur) > 0 fisu drufirsa
+                marboun(res, cur);
+                cur = "";
+            drumin
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+    moun i
+    sitrartu utoufa(cur) > 0 fisu drufirsa
+        marboun(res, cur);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin parse(s)
+    troufu res = [];
+    troufu e = utoufa(s);
+    tafashou e >= 1
+        troufu st = e - 3;
+        sitrartu st < 1 fisu drufirsa
+            st = 1;
+        drumin
+        troufu v = 0;
+        sutrarsu k = st sou e
+            v = (v * 10) + shufa(s[k]);
+        moun k
+        marboun(res, v);
+        e = st - 1;
+    trushou
+    sitrartu utoufa(res) == 0 fisu drufirsa
+        marboun(res, 0);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin fmt(xs)
+    troufu n = utoufa(xs);
+    tafashou (n > 1) dra (xs[n] == 0)
+        n = n - 1;
+    trushou
+    troufu out = moufunsa(xs[n]);
+    sutrarsu i = (n - 1) sou 1 suntru -1
+        troufu p = moufunsa(xs[i]);
+        tafashou utoufa(p) < 4
+            p = "0" + p;
+        trushou
+        out = out + p;
+    moun i
+    drur out;
+drumin tumumin
+
+tumumin add(a, b)
+    troufu res = [];
+    troufu carry = 0;
+    troufu na = utoufa(a);
+    troufu nb = utoufa(b);
+    troufu n = na;
+    sitrartu nb > n fisu drufirsa
+        n = nb;
+    drumin
+    sutrarsu i = 1 sou n
+        troufu v = carry;
+        sitrartu i <= na fisu drufirsa
+            v = v + a[i];
+        drumin
+        sitrartu i <= nb fisu drufirsa
+            v = v + b[i];
+        drumin
+        marboun(res, v % 10000);
+        carry = v / 10000;
+    moun i
+    sitrartu carry > 0 fisu drufirsa
+        marboun(res, carry);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin mul(a, b)
+    troufu na = utoufa(a);
+    troufu nb = utoufa(b);
+    troufu res = [];
+    sutrarsu i = 1 sou (na + nb)
+        marboun(res, 0);
+    moun i
+    sutrarsu i = 1 sou na
+        troufu carry = 0;
+        troufu ai = a[i];
+        sutrarsu j = 1 sou nb
+            troufu idx = (i + j) - 1;
+            troufu v = (res[idx] + (ai * b[j])) + carry;
+            res[idx] = v % 10000;
+            carry = v / 10000;
+        moun j
+        troufu k = i + nb;
+        tafashou carry > 0
+            troufu v2 = res[k] + carry;
+            res[k] = v2 % 10000;
+            carry = v2 / 10000;
+            k = k + 1;
+        trushou
+    moun i
+    drur res;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu toks = split(line);
+    sitrartu utoufa(toks) >= 2 fisu drufirsa
+        troufu x = parse(toks[1]);
+        troufu y = parse(toks[2]);
+        troufu sm = fmt(add(x, y));
+        troufu pr = fmt(mul(x, y));
+        binmi (sm + " ") + pr;
+    drumin
+    line = bounfou();
+trushou

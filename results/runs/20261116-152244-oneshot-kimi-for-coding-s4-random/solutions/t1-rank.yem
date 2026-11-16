@@ -1,0 +1,38 @@
+Trepiho first := Thoke();
+Trepiho xs := [];
+Trepiho cur := "";
+Pil (Trepiho i := 0; i < Purmo(first); i := i + 1) {
+    Mushu first[i] = " " Yeshil Hupo
+        Mushu cur ~= "" Yeshil Hupo
+            Theki(xs, Eshiyer(cur));
+            cur := "";
+        Tho
+    Tho Thotri Hupo
+        cur := cur + first[i];
+    Tho
+}
+Mushu cur ~= "" Yeshil Hupo
+    Theki(xs, Eshiyer(cur));
+Tho
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho q := Eshiyer(line);
+    Trepiho cnt := 0;
+    Trepiho found := Yaki;
+    Pil (Trepiho i := 0; i < Purmo(xs); i := i + 1) {
+        Mushu xs[i] < q Yeshil Hupo
+            cnt := cnt + 1;
+        Tho
+        Mushu xs[i] = q Yeshil Hupo
+            found := Yupu;
+        Tho
+    }
+    Rurmopa cnt + " ";
+    Mushu found Yeshil Hupo
+        Rashar "found";
+    Tho Thotri Hupo
+        Rashar "missing";
+    Tho
+    line := Thoke();
+}

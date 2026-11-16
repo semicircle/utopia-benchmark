@@ -1,0 +1,66 @@
+dredrume cell(grid, r, c, h, w)
+    dre r < 0 drorsu r >= h drorsu c < 0 drorsu c >= w ethur
+        odrol 0.
+    wodrotru dre
+    goyu row <- grid[r].
+    odrol row[c].
+wodrotru dredrume
+
+goyu g <- druwol(uyotho()).
+goyu grid <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    goyu row <- [].
+    wego i <- 0 setru wumdror(line) - 1
+        dre line[i] == "#" ethur
+            dreme(row, 1).
+        yuyuge line[i] == "." ethur
+            dreme(row, 0).
+        wodrotru dre
+    trer i
+    dre wumdror(row) > 0 ethur
+        dreme(grid, row).
+    wodrotru dre
+    line <- uyotho().
+shusushe
+goyu h <- wumdror(grid).
+goyu w <- 0.
+dre h > 0 ethur
+    w <- wumdror(grid[0]).
+wodrotru dre
+wego gen <- 1 setru g
+    goyu ng <- [].
+    wego r <- 0 setru h - 1
+        goyu nr <- [].
+        goyu cur <- grid[r].
+        wego c <- 0 setru w - 1
+            goyu cnt <- 0.
+            wego dr <- -1 setru 1
+                wego dc <- -1 setru 1
+                    dre dr != 0 drorsu dc != 0 ethur
+                        cnt <- cnt + cell(grid, r + dr, c + dc, h, w).
+                    wodrotru dre
+                trer dc
+            trer dr
+            dre cnt == 3 drorsu (cnt == 2 suyogur cur[c] == 1) ethur
+                dreme(nr, 1).
+            truthor
+                dreme(nr, 0).
+            wodrotru dre
+        trer c
+        dreme(ng, nr).
+    trer r
+    grid <- ng.
+trer gen
+wego r <- 0 setru h - 1
+    goyu rowv <- grid[r].
+    goyu s <- "".
+    wego c <- 0 setru w - 1
+        dre rowv[c] == 1 ethur
+            s <- s & "#".
+        truthor
+            s <- s & ".".
+        wodrotru dre
+    trer c
+    suwe s.
+trer r

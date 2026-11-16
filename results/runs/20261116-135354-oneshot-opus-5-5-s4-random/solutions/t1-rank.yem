@@ -1,0 +1,56 @@
+Ruyoyo split(s)
+    Trepiho out := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c = " " Hiyikra c = "\t" Hiyikra c = "\r" Yeshil Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(out, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + c;
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(out, cur);
+    Tho
+    Omel out;
+Opa
+
+Ruyoyo lowerBound(xs, q)
+    Trepiho lo := 0;
+    Trepiho hi := Purmo(xs);
+    Rokomi (lo < hi) {
+        Trepiho mid := (lo + hi) / 2;
+        Mushu xs[mid] < q Yeshil Hupo
+            lo := mid + 1;
+        Tho Thotri Hupo
+            hi := mid;
+        Tho
+    }
+    Omel lo;
+Opa
+
+Trepiho first := Thoke();
+Mushu first ~= Krupelro Yeshil Hupo
+    Trepiho toks := split(first);
+    Trepiho xs := [];
+    Pil (Trepiho i := 0; i < Purmo(toks); i := i + 1) {
+        Theki(xs, Eshiyer(toks[i]));
+    }
+    Trepiho line := Thoke();
+    Rokomi (line ~= Krupelro) {
+        Trepiho qt := split(line);
+        Mushu Purmo(qt) > 0 Yeshil Hupo
+            Trepiho q := Eshiyer(qt[0]);
+            Trepiho idx := lowerBound(xs, q);
+            Mushu idx < Purmo(xs) Pethe xs[idx] = q Yeshil Hupo
+                Rashar "" + idx + " found";
+            Tho Thotri Hupo
+                Rashar "" + idx + " missing";
+            Tho
+        Tho
+        line := Thoke();
+    }
+Tho

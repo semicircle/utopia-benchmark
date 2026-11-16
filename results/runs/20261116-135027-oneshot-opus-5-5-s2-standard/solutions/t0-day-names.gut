@@ -1,0 +1,22 @@
+dredrume isBlank(s)
+    wego i <- 0 setru wumdror(s) - 1
+        dre s[i] != " " suyogur s[i] != "\t" suyogur s[i] != "\r" ethur
+            odrol tru.
+        wodrotru dre
+    trer i
+    odrol sudru.
+wodrotru dredrume
+
+goyu names <- ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+goyu line <- uyotho().
+omethol line != gursume
+    dre shogu isBlank(line) ethur
+        goyu n <- druwol(line).
+        dre n >= 1 suyogur n <= 7 ethur
+            suwe names[n - 1].
+        truthor
+            suwe "invalid".
+        wodrotru dre
+    wodrotru dre
+    line <- uyotho().
+shusushe

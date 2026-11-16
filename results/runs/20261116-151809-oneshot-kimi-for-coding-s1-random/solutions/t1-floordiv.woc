@@ -1,0 +1,31 @@
+eilyot substr(s, a, b)
+    weltuxle r := "";
+    keit (weltuxle i := a; i < b; i := i + 1) {
+        r := r + s[i];
+    }
+    chozulni r;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle i := 0;
+    weltuxle len := dushzosh(line);
+    krenul (i < len) {
+        nei (line[i] == " ") {
+            exzulto;
+        }
+        i := i + 1;
+    }
+    weltuxle a := leidush(substr(line, 0, i));
+    weltuxle b := leidush(substr(line, i + 1, len));
+    weltuxle q := a / b;
+    weltuxle r := a - b * q;
+    nei (r <> 0) {
+        nei ((r < 0) <> (b < 0)) {
+            q := q - 1;
+            r := r + b;
+        }
+    }
+    leshdei q + " " + r;
+    line := lono();
+}

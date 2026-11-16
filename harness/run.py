@@ -121,6 +121,20 @@ exactly.
 """
 
 SOLUTION_RE = re.compile(r'<solution task="([^"]+)">\n?(.*?)</solution>', re.S)
+FENCE_RE = re.compile(r"\A\s*```[^\n]*\n(.*?)\n?```\s*\Z", re.S)
+
+
+def extract_solutions(text, ids):
+    """Solutions from a one-shot answer, by task id. A Markdown code fence
+    wrapped around the code inside the tag is removed: the benchmark measures
+    the language, not the answer format."""
+    out = {}
+    for tid, code in SOLUTION_RE.findall(text):
+        tid = tid.strip()
+        if tid in ids:
+            m = FENCE_RE.match(code)
+            out[tid] = m.group(1) + "\n" if m else code
+    return out
 DEFAULT_KEY_ENV = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
 SECRET_ENV = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN", "OPENAI_API_KEY")
 
@@ -273,9 +287,8 @@ def oneshot_one(cfg, exe, seed, scratch):
 
         sol = run.ws / "solutions"
         sol.mkdir(exist_ok=True)
-        for tid, code in SOLUTION_RE.findall(out["text"]):
-            if tid.strip() in task_ids():
-                (sol / f"{tid.strip()}.{run.info['ext']}").write_text(code)
+        for tid, code in extract_solutions(out["text"], task_ids()).items():
+            (sol / f"{tid}.{run.info['ext']}").write_text(code)
         report = run.grade()
 
         run_id = make_run_id(cfg, "oneshot", seed)

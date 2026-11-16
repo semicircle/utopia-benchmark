@@ -1,0 +1,26 @@
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi n = yuyem(line).
+    ohetdi sp = 0.
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        rilniro sp == 0 hutro nethe
+            rilniro line[i] == " " hutro nethe
+                sp = i.
+            dit
+        dit
+    dit
+    ohetdi sa = "".
+    ohetdi sb = "".
+    lemyunom i = 1 thikutli sp mitho nethe
+        sa = sa & line[i].
+    dit
+    lemyunom i = sp + 1 thikutli n + 1 mitho nethe
+        sb = sb & line[i].
+    dit
+    ohetdi a = nelchiyul(sa).
+    ohetdi b = nelchiyul(sb).
+    ohetdi q = a / b.
+    ohetdi r = a kolethul b.
+    miyol q & " " & r.
+    line = nilhino().
+dit

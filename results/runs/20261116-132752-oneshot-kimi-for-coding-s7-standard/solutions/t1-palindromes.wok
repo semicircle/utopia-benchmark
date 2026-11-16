@@ -1,0 +1,47 @@
+EDEWUT isLetter(c) {
+    EFOTU (c >= "A" ZULUSHTE c <= "Z") MUR (c >= "a" ZULUSHTE c <= "z");
+}
+
+EDEWUT isAlnum(c) {
+    EFOTU (c >= "0" ZULUSHTE c <= "9") MUR isLetter(c);
+}
+
+EDEWUT lc(c) {
+    FOMOFE alpha := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    FOMOFE i := 0;
+    FUKCHEFE i < 26 LOLO LEKFESH
+        PLUWOK alpha[i] = c DEWOTUSH LEKFESH
+            EFOTU alpha[i + 26];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    EFOTU c;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE f := "";
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(line) LOLO LEKFESH
+        PLUWOK isAlnum(line[i]) DEWOTUSH LEKFESH
+            f := f & line[i];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    FOMOFE ok := MULO;
+    FOMOFE lo := 0;
+    FOMOFE hi := FORMOWE(f) - 1;
+    FUKCHEFE lo < hi LOLO LEKFESH
+        PLUWOK lc(f[lo]) ~= lc(f[hi]) DEWOTUSH LEKFESH
+            ok := LERLU;
+        EFUDU
+        lo := lo + 1;
+        hi := hi - 1;
+    EFUDU
+    PLUWOK ok DEWOTUSH LEKFESH
+        EPLOWEK "yes";
+    EFUDU CHEME LEKFESH
+        EPLOWEK "no";
+    EFUDU
+    line := TODETET();
+EFUDU

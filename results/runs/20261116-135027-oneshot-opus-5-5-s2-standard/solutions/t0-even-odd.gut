@@ -1,0 +1,25 @@
+dredrume isBlank(s)
+    wego i <- 0 setru wumdror(s) - 1
+        dre s[i] != " " suyogur s[i] != "\t" suyogur s[i] != "\r" ethur
+            odrol tru.
+        wodrotru dre
+    trer i
+    odrol sudru.
+wodrotru dredrume
+
+goyu ev <- 0.
+goyu od <- 0.
+goyu line <- uyotho().
+omethol line != gursume
+    dre shogu isBlank(line) ethur
+        goyu n <- druwol(line).
+        dre n trumguwu 2 == 0 ethur
+            ev <- ev + 1.
+        truthor
+            od <- od + 1.
+        wodrotru dre
+    wodrotru dre
+    line <- uyotho().
+shusushe
+suwe "even " & ev.
+suwe "odd " & od.

@@ -1,0 +1,83 @@
+rimli norm(c) nethe
+    thi torelro c
+    torelro "a"
+        yiletho "A".
+    torelro "b"
+        yiletho "B".
+    torelro "c"
+        yiletho "C".
+    torelro "d"
+        yiletho "D".
+    torelro "e"
+        yiletho "E".
+    torelro "f"
+        yiletho "F".
+    torelro "g"
+        yiletho "G".
+    torelro "h"
+        yiletho "H".
+    torelro "i"
+        yiletho "I".
+    torelro "j"
+        yiletho "J".
+    torelro "k"
+        yiletho "K".
+    torelro "l"
+        yiletho "L".
+    torelro "m"
+        yiletho "M".
+    torelro "n"
+        yiletho "N".
+    torelro "o"
+        yiletho "O".
+    torelro "p"
+        yiletho "P".
+    torelro "q"
+        yiletho "Q".
+    torelro "r"
+        yiletho "R".
+    torelro "s"
+        yiletho "S".
+    torelro "t"
+        yiletho "T".
+    torelro "u"
+        yiletho "U".
+    torelro "v"
+        yiletho "V".
+    torelro "w"
+        yiletho "W".
+    torelro "x"
+        yiletho "X".
+    torelro "y"
+        yiletho "Y".
+    torelro "z"
+        yiletho "Z".
+    torelro thumku
+        yiletho c.
+    dit thi
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi f = "".
+    ohetdi n = yuyem(line).
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        ohetdi c = line[i].
+        rilniro ((c >= "A") lotvethu (c <= "Z")) nime ((c >= "a") lotvethu (c <= "z")) nime ((c >= "0") lotvethu (c <= "9")) hutro nethe
+            f = f & norm(c).
+        dit
+    dit
+    ohetdi m = yuyem(f).
+    ohetdi ok = ronuthit.
+    lemyunom i = 1 thikutli (m / 2) + 1 mitho nethe
+        rilniro f[i] <> f[m + 1 - i] hutro nethe
+            ok = litthi.
+        dit
+    dit
+    rilniro ok hutro nethe
+        miyol "yes".
+    dit thumku nethe
+        miyol "no".
+    dit
+    line = nilhino().
+dit

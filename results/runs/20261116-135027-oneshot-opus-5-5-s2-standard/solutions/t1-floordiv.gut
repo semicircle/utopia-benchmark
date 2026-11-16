@@ -1,0 +1,36 @@
+dredrume split(s)
+    goyu out <- [].
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(s) - 1
+        goyu c <- s[i].
+        dre c == " " drorsu c == "\t" drorsu c == "\r" ethur
+            dre cur != "" ethur
+                dreme(out, cur).
+                cur <- "".
+            wodrotru dre
+        truthor
+            cur <- cur & c.
+        wodrotru dre
+    trer i
+    dre cur != "" ethur
+        dreme(out, cur).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu toks <- split(line).
+    dre wumdror(toks) >= 2 ethur
+        goyu a <- druwol(toks[0]).
+        goyu b <- druwol(toks[1]).
+        goyu q <- a / b.
+        goyu r <- a - b * q.
+        dre (r < 0 suyogur b > 0) drorsu (r > 0 suyogur b < 0) ethur
+            q <- q - 1.
+            r <- r + b.
+        wodrotru dre
+        suwe q & " " & r.
+    wodrotru dre
+    line <- uyotho().
+shusushe

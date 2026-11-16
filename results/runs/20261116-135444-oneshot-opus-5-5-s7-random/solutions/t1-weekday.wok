@@ -1,0 +1,24 @@
+EDEWUT fdiv(a, b) {
+    EFOTU -((-a) / b);
+}
+
+EDEWUT fmod(a, b) {
+    EFOTU a - b * fdiv(a, b);
+}
+
+FOMOFE t := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+FOMOFE names := ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    PLUWOK FORMOWE(line) >= 10 DEWOTUSH LEKFESH
+        FOMOFE y := ZENZUMUR(line[1] & line[2] & line[3] & line[4]);
+        FOMOFE m := ZENZUMUR(line[6] & line[7]);
+        FOMOFE d := ZENZUMUR(line[9] & line[10]);
+        PLUWOK m < 3 DEWOTUSH LEKFESH
+            y := y - 1;
+        EFUDU
+        FOMOFE w := fmod(y + fdiv(y, 4) - fdiv(y, 100) + fdiv(y, 400) + t[m] + d, 7);
+        EPLOWEK names[w + 1];
+    EFUDU
+    line := TODETET();
+EFUDU

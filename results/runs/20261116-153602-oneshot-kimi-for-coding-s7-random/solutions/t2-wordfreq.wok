@@ -1,0 +1,74 @@
+EDEWUT lower(c) {
+    FOMOFE up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    FOMOFE lo := "abcdefghijklmnopqrstuvwxyz";
+    TUTCHEK i := 1 ZUWOWEN 26 LOLO LEKFESH
+        PLUWOK c = up[i] DEWOTUSH LEKFESH
+            EFOTU lo[i];
+        EFUDU
+    EFUDU
+    EFOTU c;
+}
+
+EDEWUT addword(words, cnts, w) {
+    FOMOFE found := 0;
+    TUTCHEK j := 1 ZUWOWEN FORMOWE(words) LOLO LEKFESH
+        PLUWOK words[j] = w DEWOTUSH LEKFESH
+            found := j;
+            DUTZE;
+        EFUDU
+    EFUDU
+    PLUWOK found = 0 DEWOTUSH LEKFESH
+        WESH(words, w);
+        WESH(cnts, 1);
+    EFUDU CHEME LEKFESH
+        cnts[found] := cnts[found] + 1;
+    EFUDU
+}
+
+FOMOFE words := [];
+FOMOFE cnts := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE cur := "";
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        FOMOFE c := line[i];
+        PLUWOK (c >= "A" ZULUSHTE c <= "Z") MUR (c >= "a" ZULUSHTE c <= "z") DEWOTUSH LEKFESH
+            cur := cur & lower(c);
+        EFUDU CHEME LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                addword(words, cnts, cur);
+                cur := "";
+            EFUDU
+        EFUDU
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        addword(words, cnts, cur);
+        cur := "";
+    EFUDU
+    line := TODETET();
+EFUDU
+FOMOFE n := FORMOWE(words);
+TUTCHEK t := 1 ZUWOWEN 10 LOLO LEKFESH
+    PLUWOK n = 0 DEWOTUSH LEKFESH
+        DUTZE;
+    EFUDU
+    FOMOFE bi := 0;
+    TUTCHEK j := 1 ZUWOWEN n LOLO LEKFESH
+        PLUWOK bi = 0 DEWOTUSH LEKFESH
+            PLUWOK cnts[j] >= 0 DEWOTUSH LEKFESH
+                bi := j;
+            EFUDU
+        EFUDU CHEME LEKFESH
+            PLUWOK cnts[j] > cnts[bi] DEWOTUSH LEKFESH
+                bi := j;
+            EFUDU CHEME PLUWOK cnts[j] = cnts[bi] ZULUSHTE words[j] < words[bi] DEWOTUSH LEKFESH
+                bi := j;
+            EFUDU
+        EFUDU
+    EFUDU
+    PLUWOK bi = 0 DEWOTUSH LEKFESH
+        DUTZE;
+    EFUDU
+    EPLOWEK words[bi] & " " & cnts[bi];
+    cnts[bi] := -1;
+EFUDU

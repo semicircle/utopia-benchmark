@@ -1,0 +1,66 @@
+troufu g = shufa(bounfou());
+troufu grid = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    sitrartu utoufa(line) > 0 fisu drufirsa
+        troufu row = [];
+        sutrarsu j = 1 sou utoufa(line)
+            sitrartu line[j] == "#" fisu drufirsa
+                marboun(row, 1);
+            drumin tru drufirsa
+                marboun(row, 0);
+            drumin
+        moun j
+        marboun(grid, row);
+    drumin
+    line = bounfou();
+trushou
+troufu h = utoufa(grid);
+troufu w = 0;
+sitrartu h > 0 fisu drufirsa
+    w = utoufa(grid[1]);
+drumin
+sutrarsu gen = 1 sou g
+    troufu ng = [];
+    sutrarsu i = 1 sou h
+        troufu nrow = [];
+        sutrarsu j = 1 sou w
+            troufu cnt = 0;
+            sutrarsu di = -1 sou 1
+                troufu ni = i + di;
+                sitrartu (ni >= 1) dra (ni <= h) fisu drufirsa
+                    troufu r = grid[ni];
+                    sutrarsu dj = -1 sou 1
+                        troufu nj = j + dj;
+                        sitrartu (nj >= 1) dra (nj <= w) fisu drufirsa
+                            sitrartu (di ~= 0) butrouta (dj ~= 0) fisu drufirsa
+                                cnt = cnt + r[nj];
+                            drumin
+                        drumin
+                    moun dj
+                drumin
+            moun di
+            troufu cur = grid[i];
+            troufu alive = cur[j];
+            sitrartu (cnt == 3) butrouta ((alive == 1) dra (cnt == 2)) fisu drufirsa
+                marboun(nrow, 1);
+            drumin tru drufirsa
+                marboun(nrow, 0);
+            drumin
+        moun j
+        marboun(ng, nrow);
+    moun i
+    grid = ng;
+moun gen
+sutrarsu i = 1 sou h
+    troufu rr = grid[i];
+    troufu out = "";
+    sutrarsu j = 1 sou w
+        sitrartu rr[j] == 1 fisu drufirsa
+            out = out + "#";
+        drumin tru drufirsa
+            out = out + ".";
+        drumin
+    moun j
+    binmi out;
+moun i

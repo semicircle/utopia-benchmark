@@ -1,0 +1,14 @@
+Sogas even = 0;
+Sogas odd = 0;
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas n = Drak(line);
+    Ishsi (n Dodogo 2 == 0) {
+        even = even + 1;
+    } Padri {
+        odd = odd + 1;
+    }
+    line = Goshvovo();
+}
+Dosfasho "even " + even;
+Dosfasho "odd " + odd;

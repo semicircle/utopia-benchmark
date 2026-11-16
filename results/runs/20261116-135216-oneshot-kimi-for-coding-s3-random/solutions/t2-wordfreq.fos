@@ -1,0 +1,76 @@
+Gis isLetter(c) Fodashsa
+    Asdra ("A" <= c Fas c <= "Z") Gox ("a" <= c Fas c <= "z");
+Gosafax
+
+Gis tolower(c) Fodashsa
+    Sogas ups = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Sogas los = "abcdefghijklmnopqrstuvwxyz";
+    Paxfasva (Sogas i = 1; i <= 26; i = i + 1) {
+        Ishsi (c == ups[i]) {
+            Asdra los[i];
+        }
+    }
+    Asdra c;
+Gosafax
+
+Gis addWord(words, counts, w) Fodashsa
+    Paxfasva (Sogas i = 1; i <= Drash(words); i = i + 1) {
+        Ishsi (words[i] == w) {
+            counts[i] = counts[i] + 1;
+            Asdra;
+        }
+    }
+    Dragi(words, w);
+    Dragi(counts, 1);
+Gosafax
+
+Gis without(xs, k) Fodashsa
+    Sogas r = [];
+    Paxfasva (Sogas i = 1; i <= Drash(xs); i = i + 1) {
+        Ishsi (i ~= k) {
+            Dragi(r, xs[i]);
+        }
+    }
+    Asdra r;
+Gosafax
+
+Sogas words = [];
+Sogas counts = [];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas cur = "";
+    Paxfasva (Sogas i = 1; i <= Drash(line); i = i + 1) {
+        Sogas c = line[i];
+        Ishsi (isLetter(c)) {
+            cur = cur + tolower(c);
+        } Padri {
+            Ishsi (cur ~= "") {
+                addWord(words, counts, cur);
+                cur = "";
+            }
+        }
+    }
+    Ishsi (cur ~= "") {
+        addWord(words, counts, cur);
+    }
+    line = Goshvovo();
+}
+
+Paxfasva (Sogas t = 1; t <= 10; t = t + 1) {
+    Ishsi (Drash(words) == 0) {
+        Fosvas;
+    }
+    Sogas bi = 1;
+    Paxfasva (Sogas i = 2; i <= Drash(words); i = i + 1) {
+        Ishsi (counts[i] > counts[bi]) {
+            bi = i;
+        } Padri Ishsi (counts[i] == counts[bi]) {
+            Ishsi (words[i] < words[bi]) {
+                bi = i;
+            }
+        }
+    }
+    Dosfasho words[bi] + " " + counts[bi];
+    words = without(words, bi);
+    counts = without(counts, bi);
+}

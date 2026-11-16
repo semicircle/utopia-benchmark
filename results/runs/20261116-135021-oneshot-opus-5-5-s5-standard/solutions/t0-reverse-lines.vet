@@ -1,0 +1,9 @@
+ohetdi xs = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    nimhol(xs, line).
+    line = nilhino().
+dit
+lemyunom i = yuyem(xs) - 1 thikutli 0 rodilvul -1 mitho nethe
+    miyol xs[i].
+dit

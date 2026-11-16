@@ -1,0 +1,52 @@
+eilyot substring(s, first, past)
+    weltuxle result := "";
+    keit (weltuxle i := first; i < past; i := i + 1) {
+        result := result + s[i];
+    }
+    chozulni result;
+iweil
+
+eilyot dayName(index)
+    yishzit index eixwo
+    0: krei
+        chozulni "Monday";
+    zushox
+    1: krei
+        chozulni "Tuesday";
+    zushox
+    2: krei
+        chozulni "Wednesday";
+    zushox
+    3: krei
+        chozulni "Thursday";
+    zushox
+    4: krei
+        chozulni "Friday";
+    zushox
+    5: krei
+        chozulni "Saturday";
+    zushox
+    wogeish krei
+        chozulni "Sunday";
+    zushox zushox
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle y := leidush(substring(line, 0, 4));
+    weltuxle m := leidush(substring(line, 5, 7));
+    weltuxle d := leidush(substring(line, 8, 10));
+    weltuxle ym := y - 1;
+    weltuxle days := 365 * ym + ym / 4 - ym / 100 + ym / 400;
+    weltuxle leap := (y yeil 4 == 0 yosheil y yeil 100 <> 0) yosheil (y yeil 400 == 0);
+    weltuxle monthDays := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    keit (weltuxle month := 1; month < m; month := month + 1) {
+        days := days + monthDays[month - 1];
+        nei (month == 2 yosheil leap) {
+            days := days + 1;
+        }
+    }
+    days := days + d - 1;
+    leshdei dayName(days yeil 7);
+    line := lono();
+}

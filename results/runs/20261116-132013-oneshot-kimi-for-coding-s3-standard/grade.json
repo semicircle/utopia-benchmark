@@ -1,0 +1,362 @@
+{
+  "tasks": [
+    {
+      "id": "t0-count",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-day-names",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-even-odd",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-factorial",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-fizzbuzz",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-hello",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-reverse-lines",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-digits",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-floordiv",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-palindromes",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rank",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rotate",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        },
+        {
+          "name": "08",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-weekday",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-bignum",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-life",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-rpn",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "7\n5\n3\n-3\n-3\n-1\n1\n14\n6\nerror\nerror\nerror\nerror\nerror\n20\n12\nerror\nerror\n-3\nerror\nerror\n0\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "-18\n-1\n-15\nerror\n-5\n0\nerror\n14\n5\n-2\n0\n-11\n-406\n9\n20\n1\n-2\n-3\nerror\n-20\nerror\n-2\n0\n-8\n7\n-3\n-13\n-1\n-40\n-252\nerror\n2\n-12\n-1\n-1\n-12\n0\n-7\n-17\nerror\n0\n8\nerror\n-11\n-15\n-12\n11\n-160\n0\n-6\n-95\n0\n9\nerror\n13\n13\n5\n0\n16\n-13\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-wordfreq",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed_tasks": 16,
+  "total_tasks": 17
+}

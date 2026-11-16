@@ -1,0 +1,49 @@
+plulai g := plaltai(playadu());
+plulai grid := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    sutse(grid, line);
+    line := playadu();
+aitudre
+plulai rows := dra(grid);
+plulai cols := dra(grid[1]);
+shoyo gen := 1 busale g + 1
+    plulai next := [];
+    shoyo r := 1 busale rows + 1
+        plulai row := "";
+        shoyo c := 1 busale cols + 1
+            plulai cnt := 0;
+            shoyo dr := -1 busale 2
+                shoyo dc := -1 busale 2
+                    atdoyal (dr <> 0 tobe dc <> 0) {
+                        plulai rr := r + dr;
+                        plulai cc := c + dc;
+                        atdoyal (rr >= 1 rulsai rr <= rows rulsai cc >= 1 rulsai cc <= cols) {
+                            atdoyal (grid[rr][cc] == "#") {
+                                cnt := cnt + 1;
+                            }
+                        }
+                    }
+                pla dc
+            pla dr
+            plulai alive := grid[r][c] == "#";
+            plulai na := nonotru;
+            atdoyal (alive rulsai (cnt == 2 tobe cnt == 3)) {
+                na := eretde;
+            }
+            atdoyal (tul alive rulsai cnt == 3) {
+                na := eretde;
+            }
+            atdoyal (na) {
+                row := row + "#";
+            } bulbayo {
+                row := row + ".";
+            }
+        pla c
+        sutse(next, row);
+    pla r
+    grid := next;
+pla gen
+shoyo r := 1 busale rows + 1
+    shaibe grid[r];
+pla r

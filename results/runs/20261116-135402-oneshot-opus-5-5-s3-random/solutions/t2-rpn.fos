@@ -1,0 +1,119 @@
+Gis split(s) Fodashsa
+    Sogas res = [];
+    Sogas cur = "";
+    Sogas i = 1;
+    Sogas n = Drash(s);
+    Sipokvix (i <= n) {
+        Sogas c = s[i];
+        Ishsi (c == " " Gox c == "\t" Gox c == "\r") {
+            Ishsi (cur ~= "") {
+                Dragi(res, cur);
+                cur = "";
+            }
+        } Padri {
+            cur = cur + c;
+        }
+        i = i + 1;
+    }
+    Ishsi (cur ~= "") {
+        Dragi(res, cur);
+    }
+    Asdra res;
+Gosafax
+
+Gis isInt(t) Fodashsa
+    Sogas n = Drash(t);
+    Sogas st = 1;
+    Ishsi (t[1] == "-") {
+        st = 2;
+    }
+    Ishsi (st > n) {
+        Asdra Fixpodri;
+    }
+    Paxfasva (Sogas i = st; i <= n; i = i + 1) {
+        Sogas c = t[i];
+        Ishsi (c < "0" Gox c > "9") {
+            Asdra Fixpodri;
+        }
+    }
+    Asdra Pigi;
+Gosafax
+
+Gis tdiv(a, b) Fodashsa
+    Sogas aa = a;
+    Ishsi (aa < 0) {
+        aa = -aa;
+    }
+    Sogas bb = b;
+    Ishsi (bb < 0) {
+        bb = -bb;
+    }
+    Sogas q = -((-aa) / bb);
+    Ishsi ((a < 0) ~= (b < 0)) {
+        q = -q;
+    }
+    Asdra q;
+Gosafax
+
+Gis push(st, sp, v) Fodashsa
+    Sogas np = sp + 1;
+    Ishsi (np <= Drash(st)) {
+        st[np] = v;
+    } Padri {
+        Dragi(st, v);
+    }
+    Asdra np;
+Gosafax
+
+Gis evalLine(line) Fodashsa
+    Sogas toks = split(line);
+    Ishsi (Drash(toks) == 0) {
+        Asdra "error";
+    }
+    Sogas st = [];
+    Sogas sp = 0;
+    Paxfasva (Sogas i = 1; i <= Drash(toks); i = i + 1) {
+        Sogas t = toks[i];
+        Ishsi (t == "+" Gox t == "-" Gox t == "*" Gox t == "/" Gox t == "%") {
+            Ishsi (sp < 2) {
+                Asdra "error";
+            }
+            Sogas b = st[sp];
+            Sogas a = st[sp - 1];
+            sp = sp - 2;
+            Sogas v = 0;
+            Ishsi (t == "+") {
+                v = a + b;
+            } Padri Ishsi (t == "-") {
+                v = a - b;
+            } Padri Ishsi (t == "*") {
+                v = a * b;
+            } Padri {
+                Ishsi (b == 0) {
+                    Asdra "error";
+                }
+                Sogas q = tdiv(a, b);
+                Ishsi (t == "/") {
+                    v = q;
+                } Padri {
+                    v = a - b * q;
+                }
+            }
+            sp = push(st, sp, v);
+        } Padri Ishsi (isInt(t)) {
+            sp = push(st, sp, Drak(t));
+        } Padri {
+            Asdra "error";
+        }
+    }
+    Ishsi (sp ~= 1) {
+        Asdra "error";
+    }
+    Asdra Igo(st[1]);
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Dosfasho evalLine(line);
+    line = Goshvovo();
+}

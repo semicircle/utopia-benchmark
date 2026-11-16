@@ -1,0 +1,118 @@
+dredrume lowerChar(c)
+    dre c >= "A" suyogur c <= "Z" ethur
+        goyu upper <- "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+        goyu lower <- "abcdefghijklmnopqrstuvwxyz".
+        goyu a <- 0.
+        goyu b <- 25.
+        omethol a < b
+            goyu m <- (a + b) / 2.
+            dre upper[m] < c ethur
+                a <- m + 1.
+            truthor
+                b <- m.
+            wodrotru dre
+        shusushe
+        odrol lower[a].
+    wodrotru dre
+    odrol c.
+wodrotru dredrume
+
+dredrume isLetter(c)
+    odrol (c >= "a" suyogur c <= "z") drorsu (c >= "A" suyogur c <= "Z").
+wodrotru dredrume
+
+dredrume msort(xs)
+    goyu n <- wumdror(xs).
+    dre n <= 1 ethur
+        odrol xs.
+    wodrotru dre
+    goyu mid <- n / 2.
+    goyu left <- [].
+    goyu right <- [].
+    wego i <- 0 setru mid - 1
+        dreme(left, xs[i]).
+    trer i
+    wego i <- mid setru n - 1
+        dreme(right, xs[i]).
+    trer i
+    left <- msort(left).
+    right <- msort(right).
+    goyu out <- [].
+    goyu p <- 0.
+    goyu q <- 0.
+    goyu ln <- wumdror(left).
+    goyu rn <- wumdror(right).
+    omethol p < ln suyogur q < rn
+        dre left[p] <= right[q] ethur
+            dreme(out, left[p]).
+            p <- p + 1.
+        truthor
+            dreme(out, right[q]).
+            q <- q + 1.
+        wodrotru dre
+    shusushe
+    omethol p < ln
+        dreme(out, left[p]).
+        p <- p + 1.
+    shusushe
+    omethol q < rn
+        dreme(out, right[q]).
+        q <- q + 1.
+    shusushe
+    odrol out.
+wodrotru dredrume
+
+goyu words <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(line) - 1
+        goyu ch <- line[i].
+        dre isLetter(ch) ethur
+            cur <- cur & lowerChar(ch).
+        yuyuge cur != "" ethur
+            dreme(words, cur).
+            cur <- "".
+        wodrotru dre
+    trer i
+    dre cur != "" ethur
+        dreme(words, cur).
+    wodrotru dre
+    line <- uyotho().
+shusushe
+
+goyu sorted <- msort(words).
+goyu dw <- [].
+goyu dc <- [].
+goyu nd <- 0.
+wego i <- 0 setru wumdror(sorted) - 1
+    dre nd > 0 suyogur dw[nd - 1] == sorted[i] ethur
+        dc[nd - 1] <- dc[nd - 1] + 1.
+    truthor
+        dreme(dw, sorted[i]).
+        dreme(dc, 1).
+        nd <- nd + 1.
+    wodrotru dre
+trer i
+
+goyu used <- [].
+wego i <- 0 setru nd - 1
+    dreme(used, tru).
+trer i
+wego k <- 1 setru 10
+    goyu best <- -1.
+    wego i <- 0 setru nd - 1
+        dre shogu used[i] ethur
+            dre best == -1 ethur
+                best <- i.
+            yuyuge dc[i] > dc[best] ethur
+                best <- i.
+            wodrotru dre
+        wodrotru dre
+    trer i
+    dre best == -1 ethur
+        wuyem.
+    wodrotru dre
+    suwe dw[best] & " " & dc[best].
+    used[best] <- sudru.
+trer k

@@ -11,7 +11,8 @@ The goal is one striking chart, as early as possible.
 - [x] Generator with conlang lexicon, syntax styles and semantic knobs
 - [x] Docs generated from a fixed English template, with executed examples
 - [x] 7 T0 tasks with hidden tests and canonical reference solutions
-- [ ] T1–T2 tasks, and Python control versions of every task
+- [x] T1–T2 tasks (10), with hidden tests from independent Python references
+- [x] Python control versions of every task
 - [x] Grader (`harness/grade.py`)
 - [x] Harness: give the docs and toolchain to an agent, run it, score it (`harness/run.py`)
 - [x] One-shot mode (docs + tasks in one prompt, no tools) and a Python control arm

@@ -1,0 +1,21 @@
+let k = num(readline());
+let items = [];
+let line = readline();
+while (line != none) {
+    push(items, line);
+    line = readline();
+}
+let n = len(items);
+if (n > 0) {
+    let shift = k % n;
+    if (shift < 0) {
+        shift = shift + n;
+    }
+    for (let i = 0; i < n; i = i + 1) {
+        let j = i - shift;
+        if (j < 0) {
+            j = j + n;
+        }
+        print items[j];
+    }
+}

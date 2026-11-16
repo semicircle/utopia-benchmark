@@ -1,0 +1,13 @@
+troufu names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    sitrartu utoufa(line) > 0 fisu drufirsa
+        troufu n = shufa(line);
+        sitrartu (n >= 1) dra (n <= 7) fisu drufirsa
+            binmi names[n];
+        drumin tru drufirsa
+            binmi "invalid";
+        drumin
+    drumin
+    line = bounfou();
+trushou

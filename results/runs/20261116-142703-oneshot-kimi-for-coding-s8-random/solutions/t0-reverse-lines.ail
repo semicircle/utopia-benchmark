@@ -1,0 +1,11 @@
+plulai lines := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    sutse(lines, line);
+    line := playadu();
+aitudre
+plulai i := dra(lines);
+edrushe i >= 1
+    shaibe lines[i];
+    i := i - 1;
+aitudre

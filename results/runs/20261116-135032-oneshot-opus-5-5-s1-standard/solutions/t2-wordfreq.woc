@@ -1,0 +1,96 @@
+eilyot lower(c)
+    weltuxle up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    weltuxle lo := "abcdefghijklmnopqrstuvwxyz";
+    weltuxle a := 0;
+    weltuxle b := 25;
+    krenul (a < b) {
+        weltuxle mid := (a + b) / 2;
+        nei (up[mid] < c) { a := mid + 1; } wogeish { b := mid; }
+    }
+    chozulni lo[a];
+iweil
+
+eilyot msort(xs, lo, hi, tmp)
+    nei (hi - lo <= 1) { chozulni; }
+    weltuxle mid := (lo + hi) / 2;
+    msort(xs, lo, mid, tmp);
+    msort(xs, mid, hi, tmp);
+    weltuxle i := lo;
+    weltuxle j := mid;
+    weltuxle k := lo;
+    krenul (i < mid elish j < hi) {
+        nei (xs[j] < xs[i]) {
+            tmp[k] := xs[j];
+            j := j + 1;
+        } wogeish {
+            tmp[k] := xs[i];
+            i := i + 1;
+        }
+        k := k + 1;
+    }
+    krenul (i < mid) {
+        tmp[k] := xs[i];
+        i := i + 1;
+        k := k + 1;
+    }
+    krenul (j < hi) {
+        tmp[k] := xs[j];
+        j := j + 1;
+        k := k + 1;
+    }
+    keit (k := lo; k < hi; k := k + 1) {
+        xs[k] := tmp[k];
+    }
+iweil
+
+weltuxle words := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle cur := "";
+    keit (weltuxle i := 0; i < dushzosh(line); i := i + 1) {
+        weltuxle c := line[i];
+        nei (c >= "a" elish c <= "z") {
+            cur := cur + c;
+        } wogeish nei (c >= "A" elish c <= "Z") {
+            cur := cur + lower(c);
+        } wogeish {
+            nei (dushzosh(cur) > 0) {
+                koshkil(words, cur);
+                cur := "";
+            }
+        }
+    }
+    nei (dushzosh(cur) > 0) { koshkil(words, cur); }
+    line := lono();
+}
+
+weltuxle n := dushzosh(words);
+weltuxle tmp := [];
+keit (weltuxle i := 0; i < n; i := i + 1) { koshkil(tmp, words[i]); }
+msort(words, 0, n, tmp);
+
+weltuxle dw := [];
+weltuxle dc := [];
+weltuxle used := [];
+weltuxle i := 0;
+krenul (i < n) {
+    weltuxle j := i;
+    krenul (j < n elish words[j] == words[i]) { j := j + 1; }
+    koshkil(dw, words[i]);
+    koshkil(dc, j - i);
+    koshkil(used, 0);
+    i := j;
+}
+
+weltuxle m := dushzosh(dw);
+keit (weltuxle t := 0; t < 10; t := t + 1) {
+    weltuxle best := -1;
+    keit (weltuxle q := 0; q < m; q := q + 1) {
+        nei (used[q] == 0 elish (best == -1 yosheil dc[q] > dc[best])) {
+            best := q;
+        }
+    }
+    nei (best == -1) { exzulto; }
+    used[best] := 1;
+    leshdei dw[best] + " " + dc[best];
+}

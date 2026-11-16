@@ -1,0 +1,22 @@
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi n = nelchiyul(line).
+    ohetdi neg = n < 0.
+    ohetdi m = n.
+    rilniro neg hutro nethe
+        m = -n.
+    dit
+    ohetdi s = 0.
+    ohetdi r = 0.
+    konit m > 0 mitho nethe
+        ohetdi d = m kolethul 10.
+        s = s + d.
+        r = (r * 10) + d.
+        m = m / 10.
+    dit
+    rilniro neg hutro nethe
+        r = -r.
+    dit
+    miyol (s & " ") & r.
+    line = nilhino().
+dit

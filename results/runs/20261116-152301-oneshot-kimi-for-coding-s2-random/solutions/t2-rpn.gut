@@ -1,0 +1,122 @@
+dredrume split(line)
+    goyu toks <- [].
+    goyu cur <- "".
+    goyu n <- wumdror(line).
+    wego i <- 0 setru n - 1
+        dre line[i] == " " ethur
+            dre wumdror(cur) > 0 ethur
+                dreme(toks, cur).
+            wodrotru dre
+            cur <- "".
+        truthor
+            cur <- cur & line[i].
+        wodrotru dre
+    trer i
+    dre wumdror(cur) > 0 ethur
+        dreme(toks, cur).
+    wodrotru dre
+    odrol toks.
+wodrotru dredrume
+
+dredrume isIntTok(t)
+    goyu n <- wumdror(t).
+    dre n == 0 ethur
+        odrol tru.
+    wodrotru dre
+    goyu start <- 0.
+    dre t[0] == "-" ethur
+        start <- 1.
+    wodrotru dre
+    dre start == n ethur
+        odrol tru.
+    wodrotru dre
+    goyu ok <- sudru.
+    wego i <- start setru n - 1
+        dre shogu ((t[i] >= "0") suyogur (t[i] <= "9")) ethur
+            ok <- tru.
+        wodrotru dre
+    trer i
+    odrol ok.
+wodrotru dredrume
+
+dredrume divz(a, b)
+    goyu q <- a / b.
+    goyu r <- a - (b * q).
+    dre (r != 0) suyogur ((a < 0) != (b < 0)) ethur
+        q <- q + 1.
+    wodrotru dre
+    odrol q.
+wodrotru dredrume
+
+dredrume modz(a, b)
+    odrol a - (b * divz(a, b)).
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu toks <- split(line).
+    goyu nt <- wumdror(toks).
+    goyu bad <- tru.
+    goyu stack <- [].
+    goyu top <- 0.
+    dre nt == 0 ethur
+        bad <- sudru.
+    wodrotru dre
+    goyu ti <- 0.
+    omethol (ti < nt) suyogur (shogu bad)
+        goyu t <- toks[ti].
+        dre (wumdror(t) == 1) suyogur ((t == "+") drorsu (t == "-") drorsu (t == "*") drorsu (t == "/") drorsu (t == "%")) ethur
+            dre top < 2 ethur
+                bad <- sudru.
+            truthor
+                top <- top - 1.
+                goyu b <- stack[top].
+                top <- top - 1.
+                goyu a <- stack[top].
+                goyu v <- 0.
+                dre t == "+" ethur
+                    v <- a + b.
+                yuyuge t == "-" ethur
+                    v <- a - b.
+                yuyuge t == "*" ethur
+                    v <- a * b.
+                yuyuge t == "/" ethur
+                    dre b == 0 ethur
+                        bad <- sudru.
+                    truthor
+                        v <- divz(a, b).
+                    wodrotru dre
+                yuyuge t == "%" ethur
+                    dre b == 0 ethur
+                        bad <- sudru.
+                    truthor
+                        v <- modz(a, b).
+                    wodrotru dre
+                wodrotru dre
+                dre top < wumdror(stack) ethur
+                    stack[top] <- v.
+                truthor
+                    dreme(stack, v).
+                wodrotru dre
+                top <- top + 1.
+            wodrotru dre
+        yuyuge isIntTok(t) ethur
+            goyu v <- druwol(t).
+            dre top < wumdror(stack) ethur
+                stack[top] <- v.
+            truthor
+                dreme(stack, v).
+            wodrotru dre
+            top <- top + 1.
+        truthor
+            bad <- sudru.
+        wodrotru dre
+        ti <- ti + 1.
+    shusushe
+    dre (shogu bad) drorsu (top != 1) ethur
+        suwe "error".
+    truthor
+        suwe stack[0].
+    wodrotru dre
+    line <- uyotho().
+shusushe

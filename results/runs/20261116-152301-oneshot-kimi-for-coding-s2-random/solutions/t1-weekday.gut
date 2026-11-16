@@ -1,0 +1,47 @@
+dredrume slice(s, i, j)
+    goyu r <- "".
+    wego k <- i setru j - 1
+        r <- r & s[k].
+    trer k
+    odrol r.
+wodrotru dredrume
+
+dredrume weekday(y, m, d)
+    dre m <= 2 ethur
+        y <- y - 1.
+    wodrotru dre
+    goyu mm <- m.
+    dre m > 2 ethur
+        mm <- m - 3.
+    truthor
+        mm <- m + 9.
+    wodrotru dre
+    goyu doy <- (153 * mm + 2) / 5 + d - 1.
+    goyu doe <- (y * 365) + (y / 4) - (y / 100) + (y / 400) + doy.
+    goyu w <- doe trumguwu 7.
+    wem gugum w
+    gugum 0
+        odrol "Wednesday".
+    gugum 1
+        odrol "Thursday".
+    gugum 2
+        odrol "Friday".
+    gugum 3
+        odrol "Saturday".
+    gugum 4
+        odrol "Sunday".
+    gugum 5
+        odrol "Monday".
+    gugum 6
+        odrol "Tuesday".
+    wodrotru wem
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu y <- druwol(slice(line, 0, 4)).
+    goyu m <- druwol(slice(line, 5, 7)).
+    goyu d <- druwol(slice(line, 8, 10)).
+    suwe weekday(y, m, d).
+    line <- uyotho().
+shusushe

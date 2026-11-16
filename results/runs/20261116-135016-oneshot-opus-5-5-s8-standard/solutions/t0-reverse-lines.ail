@@ -1,0 +1,11 @@
+plulai xs := [];
+plulai line := playadu();
+edrushe (line <> aiplai)
+    sutse(xs, line);
+    line := playadu();
+aitudre
+plulai i := dra(xs) - 1;
+edrushe (i >= 0)
+    shaibe xs[i];
+    i := i - 1;
+aitudre

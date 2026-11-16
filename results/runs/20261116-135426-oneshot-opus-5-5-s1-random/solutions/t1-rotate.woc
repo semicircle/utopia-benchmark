@@ -1,0 +1,33 @@
+eilyot clean(s)
+    weltuxle r := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (c <> " " elish c <> "\t" elish c <> "\r") {
+            r := r + c;
+        }
+    }
+    chozulni r;
+iweil
+
+weltuxle first := lono();
+nei (first <> leitchux) {
+    weltuxle k := leidush(clean(first));
+    weltuxle items := [];
+    weltuxle line := lono();
+    krenul (line <> leitchux) {
+        koshkil(items, line);
+        line := lono();
+    }
+    weltuxle m := dushzosh(items);
+    nei (m > 0) {
+        weltuxle fq := 0 - ((0 - k) / m);
+        weltuxle s := k - m * fq;
+        keit (weltuxle i := 0; i < m; i := i + 1) {
+            weltuxle j := i - s;
+            nei (j < 0) {
+                j := j + m;
+            }
+            leshdei items[j];
+        }
+    }
+}

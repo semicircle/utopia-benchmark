@@ -1,0 +1,28 @@
+eilyot substr(s, a, b)
+    weltuxle r := "";
+    keit (weltuxle i := a; i < b; i := i + 1) {
+        r := r + s[i];
+    }
+    chozulni r;
+iweil
+
+weltuxle cum := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+weltuxle names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle y := leidush(substr(line, 0, 4));
+    weltuxle mo := leidush(substr(line, 5, 7));
+    weltuxle d := leidush(substr(line, 8, 10));
+    weltuxle yy := y - 1;
+    weltuxle beforeYear := 365 * yy + yy / 4 - yy / 100 + yy / 400;
+    weltuxle leap := ((y yeil 4 == 0) elish (y yeil 100 <> 0)) yosheil (y yeil 400 == 0);
+    weltuxle beforeMonth := cum[mo - 1];
+    nei (leap) {
+        nei (mo > 2) {
+            beforeMonth := beforeMonth + 1;
+        }
+    }
+    weltuxle elapsed := beforeYear + beforeMonth + (d - 1);
+    leshdei names[elapsed yeil 7];
+    line := lono();
+}

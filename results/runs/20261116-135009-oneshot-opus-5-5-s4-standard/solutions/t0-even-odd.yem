@@ -1,0 +1,16 @@
+Trepiho ev := 0;
+Trepiho od := 0;
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu line ~= "" Yeshil Hupo
+        Trepiho n := Eshiyer(line);
+        Mushu n % 2 = 0 Yeshil Hupo
+            ev := ev + 1;
+        Tho Thotri Hupo
+            od := od + 1;
+        Tho
+    Tho
+    line := Thoke();
+}
+Rashar "even " + ev;
+Rashar "odd " + od;

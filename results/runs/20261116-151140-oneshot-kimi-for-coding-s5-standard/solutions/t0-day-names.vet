@@ -1,0 +1,11 @@
+ohetdi days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi n = nelchiyul(line).
+    rilniro n >= 1 lotvethu n <= 7 hutro nethe
+        miyol days[n - 1].
+    dit thumku nethe
+        miyol "invalid".
+    dit
+    line = nilhino().
+dit

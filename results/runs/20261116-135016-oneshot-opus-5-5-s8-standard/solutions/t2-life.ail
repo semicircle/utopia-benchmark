@@ -1,0 +1,54 @@
+plulai g := plaltai(playadu());
+plulai cells := [];
+plulai h := 0;
+plulai w := 0;
+plulai line := playadu();
+edrushe (line <> aiplai)
+    atdoyal (dra(line) > 0) {
+        w := dra(line);
+        shoyo i := 0 busale dra(line) - 1
+            atdoyal (line[i] == "#") {
+                sutse(cells, 1);
+            } bulbayo {
+                sutse(cells, 0);
+            }
+        pla i
+        h := h + 1;
+    }
+    line := playadu();
+aitudre
+shoyo gen := 1 busale g
+    plulai nxt := [];
+    shoyo r := 0 busale h - 1
+        shoyo c := 0 busale w - 1
+            plulai cnt := 0;
+            shoyo dr := -1 busale 1
+                shoyo dc := -1 busale 1
+                    plulai rr := r + dr;
+                    plulai cc := c + dc;
+                    atdoyal ((dr <> 0 tobe dc <> 0) rulsai rr >= 0 rulsai rr < h rulsai cc >= 0 rulsai cc < w) {
+                        cnt := cnt + cells[rr * w + cc];
+                    }
+                pla dc
+            pla dr
+            plulai cur := cells[r * w + c];
+            atdoyal ((cur == 1 rulsai (cnt == 2 tobe cnt == 3)) tobe (cur == 0 rulsai cnt == 3)) {
+                sutse(nxt, 1);
+            } bulbayo {
+                sutse(nxt, 0);
+            }
+        pla c
+    pla r
+    cells := nxt;
+pla gen
+shoyo r2 := 0 busale h - 1
+    plulai s := "";
+    shoyo c2 := 0 busale w - 1
+        atdoyal (cells[r2 * w + c2] == 1) {
+            s := s + "#";
+        } bulbayo {
+            s := s + ".";
+        }
+    pla c2
+    shaibe s;
+pla r2

@@ -1,0 +1,102 @@
+EDEWUT splitSpaces(s) {
+    FOMOFE toks := [];
+    FOMOFE cur := "";
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(s) LOLO LEKFESH
+        PLUWOK s[i] = " " DEWOTUSH LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                WESH(toks, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & s[i];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        WESH(toks, cur);
+    EFUDU
+    EFOTU toks;
+}
+
+EDEWUT isInt(s) {
+    PLUWOK FORMOWE(s) = 0 DEWOTUSH LEKFESH
+        EFOTU LERLU;
+    EFUDU
+    FOMOFE i := 0;
+    PLUWOK s[0] = "-" DEWOTUSH LEKFESH
+        PLUWOK FORMOWE(s) = 1 DEWOTUSH LEKFESH
+            EFOTU LERLU;
+        EFUDU
+        i := 1;
+    EFUDU
+    FUKCHEFE i < FORMOWE(s) LOLO LEKFESH
+        FOMOFE c := s[i];
+        PLUWOK TEMO (c >= "0" ZULUSHTE c <= "9") DEWOTUSH LEKFESH
+            EFOTU LERLU;
+        EFUDU
+        i := i + 1;
+    EFUDU
+    EFOTU MULO;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE toks := splitSpaces(line);
+    FOMOFE st := [];
+    FOMOFE size := 0;
+    FOMOFE err := LERLU;
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(toks) LOLO LEKFESH
+        FOMOFE t := toks[i];
+        PLUWOK err = LERLU DEWOTUSH LEKFESH
+            PLUWOK isInt(t) DEWOTUSH LEKFESH
+                WESH(st, ZENZUMUR(t));
+                size := size + 1;
+            EFUDU CHEME PLUWOK t = "+" MUR t = "-" MUR t = "*" MUR t = "/" MUR t = "%" DEWOTUSH LEKFESH
+                PLUWOK size < 2 DEWOTUSH LEKFESH
+                    err := MULO;
+                EFUDU CHEME LEKFESH
+                    FOMOFE b := st[size - 1];
+                    FOMOFE a := st[size - 2];
+                    size := size - 2;
+                    FOMOFE v := 0;
+                    PLUWOK t = "+" DEWOTUSH LEKFESH
+                        v := a + b;
+                    EFUDU CHEME PLUWOK t = "-" DEWOTUSH LEKFESH
+                        v := a - b;
+                    EFUDU CHEME PLUWOK t = "*" DEWOTUSH LEKFESH
+                        v := a * b;
+                    EFUDU CHEME PLUWOK t = "/" DEWOTUSH LEKFESH
+                        PLUWOK b = 0 DEWOTUSH LEKFESH
+                            err := MULO;
+                        EFUDU CHEME LEKFESH
+                            v := a / b;
+                        EFUDU
+                    EFUDU CHEME LEKFESH
+                        PLUWOK b = 0 DEWOTUSH LEKFESH
+                            err := MULO;
+                        EFUDU CHEME LEKFESH
+                            v := a % b;
+                        EFUDU
+                    EFUDU
+                    PLUWOK err = LERLU DEWOTUSH LEKFESH
+                        WESH(st, v);
+                        size := size + 1;
+                    EFUDU
+                EFUDU
+            EFUDU CHEME LEKFESH
+                err := MULO;
+            EFUDU
+        EFUDU
+        i := i + 1;
+    EFUDU
+    PLUWOK err = MULO DEWOTUSH LEKFESH
+        EPLOWEK "error";
+    EFUDU CHEME PLUWOK size = 1 DEWOTUSH LEKFESH
+        EPLOWEK st[0];
+    EFUDU CHEME LEKFESH
+        EPLOWEK "error";
+    EFUDU
+    line := TODETET();
+EFUDU

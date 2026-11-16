@@ -1,0 +1,52 @@
+Gis substr(s, i, j) Fodashsa
+    Sogas r = "";
+    Paxfasva (Sogas k = i; k <= j; k = k + 1) {
+        r = r + s[k];
+    }
+    Asdra r;
+Gosafax
+
+Gis floordiv(a, b) Fodashsa
+    Sogas q = a / b;
+    Ishsi (a - b * q ~= 0) {
+        q = q - 1;
+    }
+    Asdra q;
+Gosafax
+
+Gis isleap(y) Fodashsa
+    Ishsi (y Dodogo 400 == 0) {
+        Asdra Pigi;
+    }
+    Ishsi (y Dodogo 100 == 0) {
+        Asdra Fixpodri;
+    }
+    Asdra y Dodogo 4 == 0;
+Gosafax
+
+Gis daysbefore(y) Fodashsa
+    Sogas yy = y - 1;
+    Asdra 365 * yy + floordiv(yy, 4) - floordiv(yy, 100) + floordiv(yy, 400);
+Gosafax
+
+Sogas names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+Sogas mdays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas y = Drak(substr(line, 1, 4));
+    Sogas m = Drak(substr(line, 6, 7));
+    Sogas d = Drak(substr(line, 9, 10));
+    Sogas doy = d;
+    Paxfasva (Sogas i = 1; i < m; i = i + 1) {
+        doy = doy + mdays[i];
+    }
+    Ishsi (m > 2) {
+        Ishsi (isleap(y)) {
+            doy = doy + 1;
+        }
+    }
+    Sogas offset = daysbefore(y) + doy - 1;
+    Dosfasho names[(offset Dodogo 7) + 1];
+    line = Goshvovo();
+}

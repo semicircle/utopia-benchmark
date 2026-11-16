@@ -1,0 +1,135 @@
+nudro lower(c) {
+    otai (c) {
+    dai "A": druna "a";
+    dai "B": druna "b";
+    dai "C": druna "c";
+    dai "D": druna "d";
+    dai "E": druna "e";
+    dai "F": druna "f";
+    dai "G": druna "g";
+    dai "H": druna "h";
+    dai "I": druna "i";
+    dai "J": druna "j";
+    dai "K": druna "k";
+    dai "L": druna "l";
+    dai "M": druna "m";
+    dai "N": druna "n";
+    dai "O": druna "o";
+    dai "P": druna "p";
+    dai "Q": druna "q";
+    dai "R": druna "r";
+    dai "S": druna "s";
+    dai "T": druna "t";
+    dai "U": druna "u";
+    dai "V": druna "v";
+    dai "W": druna "w";
+    dai "X": druna "x";
+    dai "Y": druna "y";
+    dai "Z": druna "z";
+    }
+    druna c;
+}
+
+nudro msort(xs) {
+    plulai n := dra(xs);
+    atdoyal (n <= 1) {
+        druna xs;
+    }
+    plulai mid := n / 2;
+    plulai left := [];
+    plulai right := [];
+    plulai i := 0;
+    edrushe (i < mid)
+        sutse(left, xs[i]);
+        i := i + 1;
+    aitudre
+    edrushe (i < n)
+        sutse(right, xs[i]);
+        i := i + 1;
+    aitudre
+    left := msort(left);
+    right := msort(right);
+    plulai res := [];
+    plulai a := 0;
+    plulai b := 0;
+    plulai la := dra(left);
+    plulai lb := dra(right);
+    edrushe (a < la rulsai b < lb)
+        atdoyal (left[a] <= right[b]) {
+            sutse(res, left[a]);
+            a := a + 1;
+        } bulbayo {
+            sutse(res, right[b]);
+            b := b + 1;
+        }
+    aitudre
+    edrushe (a < la)
+        sutse(res, left[a]);
+        a := a + 1;
+    aitudre
+    edrushe (b < lb)
+        sutse(res, right[b]);
+        b := b + 1;
+    aitudre
+    druna res;
+}
+
+plulai words := [];
+plulai line := playadu();
+edrushe (line <> aiplai)
+    plulai cur := "";
+    plulai i := 0;
+    plulai ln := dra(line);
+    edrushe (i < ln)
+        plulai c := line[i];
+        atdoyal (c >= "a" rulsai c <= "z") {
+            cur := cur + c;
+        } bulbayo atdoyal (c >= "A" rulsai c <= "Z") {
+            cur := cur + lower(c);
+        } bulbayo {
+            atdoyal (cur <> "") {
+                sutse(words, cur);
+                cur := "";
+            }
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (cur <> "") {
+        sutse(words, cur);
+    }
+    line := playadu();
+aitudre
+words := msort(words);
+plulai uw := [];
+plulai uc := [];
+plulai m := 0;
+plulai j := 0;
+edrushe (j < dra(words))
+    atdoyal (m > 0 rulsai uw[m - 1] == words[j]) {
+        uc[m - 1] := uc[m - 1] + 1;
+    } bulbayo {
+        sutse(uw, words[j]);
+        sutse(uc, 1);
+        m := m + 1;
+    }
+    j := j + 1;
+aitudre
+plulai t := 0;
+edrushe (t < 10)
+    plulai best := -1;
+    plulai bi := -1;
+    plulai k := 0;
+    edrushe (k < m)
+        atdoyal (uc[k] > best) {
+            best := uc[k];
+            bi := k;
+        }
+        k := k + 1;
+    aitudre
+    atdoyal (bi < 0) {
+        sonaidel;
+    }
+    shaibe uw[bi] + " " + uc[bi];
+    uc[bi] := -1;
+    t := t + 1;
+aitudre

@@ -1,0 +1,13 @@
+plulai names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+plulai line := playadu();
+edrushe (line <> aiplai)
+    atdoyal (line <> "") {
+        plulai n := plaltai(line);
+        atdoyal (n >= 1 rulsai n <= 7) {
+            shaibe names[n - 1];
+        } bulbayo {
+            shaibe "invalid";
+        }
+    }
+    line := playadu();
+aitudre

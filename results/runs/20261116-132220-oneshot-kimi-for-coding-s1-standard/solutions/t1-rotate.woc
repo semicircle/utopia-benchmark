@@ -1,0 +1,19 @@
+weltuxle k := leidush(lono());
+weltuxle items := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    koshkil(items, line);
+    line := lono();
+}
+weltuxle count := dushzosh(items);
+nei (count > 0) {
+    weltuxle shift := k yeil count;
+    nei (shift < 0) {
+        shift := shift + count;
+    }
+    shift := shift yeil count;
+    weltuxle start := count - shift;
+    keit (weltuxle i := 0; i < count; i := i + 1) {
+        leshdei items[(start + i) yeil count];
+    }
+}

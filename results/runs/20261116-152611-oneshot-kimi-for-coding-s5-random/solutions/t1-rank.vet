@@ -1,0 +1,41 @@
+ohetdi first = nilhino().
+ohetdi xs = [].
+rilniro first <> emletlel hutro nethe
+    ohetdi cur = "".
+    ohetdi n = yuyem(first).
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        ohetdi c = first[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(xs, nelchiyul(cur)).
+                cur = "".
+            dit
+        dit thumku nethe
+            cur = cur & c.
+        dit
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(xs, nelchiyul(cur)).
+    dit
+dit
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi q = nelchiyul(line).
+    ohetdi cnt = 0.
+    ohetdi found = litthi.
+    ohetdi m = yuyem(xs).
+    lemyunom i = 1 thikutli m + 1 mitho nethe
+        rilniro xs[i] < q hutro nethe
+            cnt = cnt + 1.
+        dit
+        rilniro xs[i] == q hutro nethe
+            found = ronuthit.
+        dit
+    dit
+    rilniro found hutro nethe
+        miyol cnt & " found".
+    dit thumku nethe
+        miyol cnt & " missing".
+    dit
+    line = nilhino().
+dit

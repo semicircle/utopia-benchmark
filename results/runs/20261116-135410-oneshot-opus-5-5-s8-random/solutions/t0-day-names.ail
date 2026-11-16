@@ -1,0 +1,37 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai has := nonotru;
+    shoyo i := 1 busale dra(s) + 1
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t" tobe c == "\r") {
+            atdoyal (has) {
+                sutse(res, cur);
+                cur := "";
+                has := nonotru;
+            }
+        } bulbayo {
+            cur := cur + c;
+            has := eretde;
+        }
+    pla i
+    atdoyal (has) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+plulai names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai parts := split(line);
+    atdoyal (dra(parts) > 0) {
+        plulai n := plaltai(parts[1]);
+        atdoyal (n >= 1 rulsai n <= 7) {
+            shaibe names[n];
+        } bulbayo {
+            shaibe "invalid";
+        }
+    }
+    line := playadu();
+aitudre

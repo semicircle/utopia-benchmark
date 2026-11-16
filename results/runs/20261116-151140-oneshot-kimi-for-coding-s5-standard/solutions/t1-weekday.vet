@@ -1,0 +1,20 @@
+rimli dow(line, names) nethe
+    ohetdi y = nelchiyul(line[0] & line[1] & line[2] & line[3]).
+    ohetdi m = nelchiyul(line[5] & line[6]).
+    ohetdi d = nelchiyul(line[8] & line[9]).
+    rilniro m < 3 hutro nethe
+        m = m + 12.
+        y = y - 1.
+    dit
+    ohetdi K = y kolethul 100.
+    ohetdi J = y / 100.
+    ohetdi h = (d + 13*(m + 1)/5 + K + K/4 + J/4 + 5*J) kolethul 7.
+    yiletho names[h].
+dit
+
+ohetdi names = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    miyol dow(line, names).
+    line = nilhino().
+dit

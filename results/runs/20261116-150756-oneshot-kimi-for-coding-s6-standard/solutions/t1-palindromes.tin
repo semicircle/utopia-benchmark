@@ -1,0 +1,45 @@
+tumumin lower(c)
+    troufu ups = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    troufu los = "abcdefghijklmnopqrstuvwxyz";
+    troufu i = 0;
+    troufu r = c;
+    tafashou i < 26
+        sitrartu c == ups[i] fisu drufirsa
+            r = los[i];
+        drumin
+        i = i + 1;
+    trushou
+    drur r;
+drumin tumumin
+
+tumumin isalnum(c)
+    drur (c >= "a" dra c <= "z") butrouta (c >= "A" dra c <= "Z") butrouta (c >= "0" dra c <= "9");
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu norm = [];
+    troufu i = 0;
+    tafashou i < utoufa(line)
+        troufu c = line[i];
+        sitrartu isalnum(c) fisu drufirsa
+            marboun(norm, lower(c));
+        drumin
+        i = i + 1;
+    trushou
+    troufu L = utoufa(norm);
+    troufu ok = sibitrou;
+    troufu j = 0;
+    tafashou j <= L / 2 dra ok
+        sitrartu norm[j] ~= norm[L - 1 - j] fisu drufirsa
+            ok = fufir;
+        drumin
+        j = j + 1;
+    trushou
+    sitrartu ok fisu drufirsa
+        binmi "yes";
+    drumin tru drufirsa
+        binmi "no";
+    drumin
+    line = bounfou();
+trushou

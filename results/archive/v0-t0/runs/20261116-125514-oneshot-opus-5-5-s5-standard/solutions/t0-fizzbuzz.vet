@@ -1,0 +1,12 @@
+ohetdi n = nelchiyul(nilhino()).
+lemyunom i = 1 thikutli n mitho nethe
+    rilniro i kolethul 15 == 0 hutro nethe
+        miyol "FizzBuzz".
+    dit thumku rilniro i kolethul 3 == 0 hutro nethe
+        miyol "Fizz".
+    dit thumku rilniro i kolethul 5 == 0 hutro nethe
+        miyol "Buzz".
+    dit thumku nethe
+        miyol i.
+    dit
+dit

@@ -1,0 +1,110 @@
+Gis split(s) Fodashsa
+    Sogas res = [];
+    Sogas cur = "";
+    Sogas has = Fixpodri;
+    Paxfasva (Sogas i = 0; i < Drash(s); i = i + 1) {
+        Sogas c = s[i];
+        Ishsi (c == " " Gox c == "\t") {
+            Ishsi (has) {
+                Dragi(res, cur);
+                cur = "";
+                has = Fixpodri;
+            }
+        } Padri {
+            cur = cur + c;
+            has = Pigi;
+        }
+    }
+    Ishsi (has) {
+        Dragi(res, cur);
+    }
+    Asdra res;
+Gosafax
+
+Gis isInt(t) Fodashsa
+    Sogas n = Drash(t);
+    Sogas st = 0;
+    Ishsi (n > 0 Fas t[0] == "-") {
+        st = 1;
+    }
+    Ishsi (n <= st) {
+        Asdra Fixpodri;
+    }
+    Paxfasva (Sogas i = st; i < n; i = i + 1) {
+        Sogas c = t[i];
+        Ishsi (c < "0" Gox c > "9") {
+            Asdra Fixpodri;
+        }
+    }
+    Asdra Pigi;
+Gosafax
+
+Gis evalLine(line) Fodashsa
+    Sogas toks = split(line);
+    Ishsi (Drash(toks) == 0) {
+        Asdra Dridrak;
+    }
+    Sogas st = [];
+    Sogas sp = 0;
+    Paxfasva (Sogas i = 0; i < Drash(toks); i = i + 1) {
+        Sogas t = toks[i];
+        Ishsi (isInt(t)) {
+            Sogas v = Drak(t);
+            Ishsi (sp < Drash(st)) {
+                st[sp] = v;
+            } Padri {
+                Dragi(st, v);
+            }
+            sp = sp + 1;
+        } Padri Ishsi (t == "+" Gox t == "-" Gox t == "*" Gox t == "/" Gox t == "%") {
+            Ishsi (sp < 2) {
+                Asdra Dridrak;
+            }
+            Sogas b = st[sp - 1];
+            Sogas a = st[sp - 2];
+            sp = sp - 2;
+            Sogas r = 0;
+            Pidok (t) {
+            Dro "+":
+                r = a + b;
+            Dro "-":
+                r = a - b;
+            Dro "*":
+                r = a * b;
+            Dro "/":
+                Ishsi (b == 0) {
+                    Asdra Dridrak;
+                }
+                r = a / b;
+            Papo:
+                Ishsi (b == 0) {
+                    Asdra Dridrak;
+                }
+                r = a Dodogo b;
+            }
+            Ishsi (sp < Drash(st)) {
+                st[sp] = r;
+            } Padri {
+                Dragi(st, r);
+            }
+            sp = sp + 1;
+        } Padri {
+            Asdra Dridrak;
+        }
+    }
+    Ishsi (sp ~= 1) {
+        Asdra Dridrak;
+    }
+    Asdra st[0];
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas res = evalLine(line);
+    Ishsi (res == Dridrak) {
+        Dosfasho "error";
+    } Padri {
+        Dosfasho res;
+    }
+    line = Goshvovo();
+}

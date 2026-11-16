@@ -1,0 +1,30 @@
+tumumin num(s, a, b)
+    troufu v = 0;
+    sutrarsu i = a sou b
+        v = (v * 10) + shufa(s[i]);
+    moun i
+    drur v;
+drumin tumumin
+
+troufu tt = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+troufu names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    sitrartu utoufa(line) >= 10 fisu drufirsa
+        troufu y = num(line, 1, 4);
+        troufu m = num(line, 6, 7);
+        troufu d = num(line, 9, 10);
+        sitrartu m < 3 fisu drufirsa
+            y = y - 1;
+        drumin
+        troufu v = y;
+        v = v + (y / 4);
+        v = v - (y / 100);
+        v = v + (y / 400);
+        v = v + tt[m];
+        v = v + d;
+        v = v % 7;
+        binmi names[v + 1];
+    drumin
+    line = bounfou();
+trushou

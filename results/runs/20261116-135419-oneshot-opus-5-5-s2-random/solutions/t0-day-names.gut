@@ -1,0 +1,13 @@
+goyu days <- ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+goyu line <- uyotho().
+omethol line != gursume
+    dre wumdror(line) > 0 ethur
+        goyu n <- druwol(line).
+        dre (n >= 1) suyogur (n <= 7) ethur
+            suwe days[n - 1].
+        truthor
+            suwe "invalid".
+        wodrotru dre
+    wodrotru dre
+    line <- uyotho().
+shusushe

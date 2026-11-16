@@ -1,0 +1,48 @@
+eilyot splitInts(line)
+    weltuxle parts := [];
+    weltuxle cur := "";
+    weltuxle len := dushzosh(line);
+    keit (weltuxle i := 0; i < len; i := i + 1) {
+        nei (line[i] == " ") {
+            nei (cur <> "") {
+                koshkil(parts, cur);
+            }
+            cur := "";
+        } wogeish {
+            cur := cur + line[i];
+        }
+    }
+    nei (cur <> "") {
+        koshkil(parts, cur);
+    }
+    chozulni parts;
+iweil
+
+weltuxle first := lono();
+weltuxle nums := [];
+nei (first <> leitchux) {
+    weltuxle parts := splitInts(first);
+    keit (weltuxle i := 0; i < dushzosh(parts); i := i + 1) {
+        koshkil(nums, leidush(parts[i]));
+    }
+}
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle q := leidush(line);
+    weltuxle cnt := 0;
+    weltuxle found := eikreit;
+    keit (weltuxle i := 0; i < dushzosh(nums); i := i + 1) {
+        nei (nums[i] < q) {
+            cnt := cnt + 1;
+        }
+        nei (nums[i] == q) {
+            found := dut;
+        }
+    }
+    nei (found) {
+        leshdei cnt + " found";
+    } wogeish {
+        leshdei cnt + " missing";
+    }
+    line := lono();
+}

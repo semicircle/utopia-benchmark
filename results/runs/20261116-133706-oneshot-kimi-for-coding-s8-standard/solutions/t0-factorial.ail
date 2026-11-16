@@ -1,0 +1,6 @@
+plulai n := plaltai(playadu());
+plulai r := 1;
+shoyo i := 2 busale n
+    r := r * i;
+pla i
+shaibe r;

@@ -1,0 +1,106 @@
+eilyot substring(s, first, past)
+    weltuxle result := "";
+    keit (weltuxle i := first; i < past; i := i + 1) {
+        result := result + s[i];
+    }
+    chozulni result;
+iweil
+
+eilyot isDigitChar(c)
+    chozulni (c >= "0") elish (c <= "9");
+iweil
+
+eilyot isIntegerToken(token)
+    weltuxle start := 0;
+    nei (dushzosh(token) > 0 yosheil token[0] == "-") {
+        start := 1;
+    }
+    nei (start == dushzosh(token)) {
+        chozulni eikreit;
+    }
+    keit (weltuxle i := start; i < dushzosh(token); i := i + 1) {
+        nei (tilteiyo isDigitChar(token[i])) {
+            chozulni eikreit;
+        }
+    }
+    chozulni dut;
+iweil
+
+eilyot evaluate(line)
+    weltuxle stack := [];
+    weltuxle hadToken := eikreit;
+    weltuxle bad := eikreit;
+    weltuxle i := 0;
+    krenul (i < dushzosh(line) yosheil tilteiyo bad) {
+        krenul (i < dushzosh(line) yosheil line[i] == " ") {
+            i := i + 1;
+        }
+        nei (i >= dushzosh(line)) {
+            exzulto;
+        }
+        weltuxle first := i;
+        krenul (i < dushzosh(line) yosheil line[i] <> " ") {
+            i := i + 1;
+        }
+        weltuxle token := substring(line, first, i);
+        hadToken := dut;
+        nei (token == "+" yosheil token == "-" yosheil token == "*" yosheil token == "/" yosheil token == "%") {
+            nei (dushzosh(stack) < 2) {
+                bad := dut;
+            } wogeish {
+                weltuxle b := stack[dushzosh(stack) - 1];
+                weltuxle a := stack[dushzosh(stack) - 2];
+                weltuxle value := 0;
+                weltuxle okay := dut;
+                nei (token == "+") {
+                    value := a + b;
+                } wogeish nei (token == "-") {
+                    value := a - b;
+                } wogeish nei (token == "*") {
+                    value := a * b;
+                } wogeish nei (token == "/") {
+                    nei (b == 0) {
+                        okay := eikreit;
+                    } wogeish {
+                        value := a / b;
+                    }
+                } wogeish {
+                    nei (b == 0) {
+                        okay := eikreit;
+                    } wogeish {
+                        value := a yeil b;
+                    }
+                }
+                nei (okay) {
+                    weltuxle next := [];
+                    keit (weltuxle j := 0; j < dushzosh(stack) - 2; j := j + 1) {
+                        koshkil(next, stack[j]);
+                    }
+                    koshkil(next, value);
+                    stack := next;
+                } wogeish {
+                    bad := dut;
+                }
+            }
+        } wogeish nei (isIntegerToken(token)) {
+            koshkil(stack, leidush(token));
+        } wogeish {
+            bad := dut;
+        }
+    }
+    nei (bad yosheil tilteiyo hadToken yosheil dushzosh(stack) <> 1) {
+        chozulni [dut, 0];
+    }
+    chozulni [eikreit, stack[0]];
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle answer := evaluate(line);
+    nei (answer[0]) {
+        leshdei "error";
+    } wogeish {
+        leshdei answer[1];
+    }
+    line := lono();
+}

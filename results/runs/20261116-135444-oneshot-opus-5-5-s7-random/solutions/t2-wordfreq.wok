@@ -1,0 +1,114 @@
+EDEWUT fdiv(a, b) {
+    EFOTU -((-a) / b);
+}
+
+EDEWUT lower(c) {
+    FOMOFE up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    FOMOFE lo := "abcdefghijklmnopqrstuvwxyz";
+    TUTCHEK i := 1 ZUWOWEN 26 LOLO LEKFESH
+        PLUWOK up[i] = c DEWOTUSH LEKFESH
+            EFOTU lo[i];
+        EFUDU
+    EFUDU
+    EFOTU c;
+}
+
+EDEWUT msort(xs) {
+    FOMOFE n := FORMOWE(xs);
+    PLUWOK n <= 1 DEWOTUSH LEKFESH
+        EFOTU xs;
+    EFUDU
+    FOMOFE mid := fdiv(n, 2);
+    FOMOFE a := [];
+    FOMOFE b := [];
+    TUTCHEK k := 1 ZUWOWEN mid LOLO LEKFESH
+        WESH(a, xs[k]);
+    EFUDU
+    TUTCHEK k := mid + 1 ZUWOWEN n LOLO LEKFESH
+        WESH(b, xs[k]);
+    EFUDU
+    a := msort(a);
+    b := msort(b);
+    FOMOFE res := [];
+    FOMOFE i := 1;
+    FOMOFE j := 1;
+    FOMOFE na := FORMOWE(a);
+    FOMOFE nb := FORMOWE(b);
+    FUKCHEFE i <= na ZULUSHTE j <= nb LOLO LEKFESH
+        PLUWOK a[i] <= b[j] DEWOTUSH LEKFESH
+            WESH(res, a[i]);
+            i := i + 1;
+        EFUDU CHEME LEKFESH
+            WESH(res, b[j]);
+            j := j + 1;
+        EFUDU
+    EFUDU
+    FUKCHEFE i <= na LOLO LEKFESH
+        WESH(res, a[i]);
+        i := i + 1;
+    EFUDU
+    FUKCHEFE j <= nb LOLO LEKFESH
+        WESH(res, b[j]);
+        j := j + 1;
+    EFUDU
+    EFOTU res;
+}
+
+FOMOFE words := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE cur := "";
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        FOMOFE c := line[i];
+        PLUWOK c >= "a" ZULUSHTE c <= "z" DEWOTUSH LEKFESH
+            cur := cur & c;
+        EFUDU CHEME PLUWOK c >= "A" ZULUSHTE c <= "Z" DEWOTUSH LEKFESH
+            cur := cur & lower(c);
+        EFUDU CHEME LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                WESH(words, cur);
+                cur := "";
+            EFUDU
+        EFUDU
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        WESH(words, cur);
+    EFUDU
+    line := TODETET();
+EFUDU
+FOMOFE sw := msort(words);
+FOMOFE uw := [];
+FOMOFE uc := [];
+TUTCHEK i := 1 ZUWOWEN FORMOWE(sw) LOLO LEKFESH
+    FOMOFE w := sw[i];
+    FOMOFE nu := FORMOWE(uw);
+    PLUWOK nu > 0 DEWOTUSH LEKFESH
+        PLUWOK uw[nu] = w DEWOTUSH LEKFESH
+            uc[nu] := uc[nu] + 1;
+            DOSHMON;
+        EFUDU
+    EFUDU
+    WESH(uw, w);
+    WESH(uc, 1);
+EFUDU
+FOMOFE used := [];
+TUTCHEK i := 1 ZUWOWEN FORMOWE(uw) LOLO LEKFESH
+    WESH(used, LERLU);
+EFUDU
+TUTCHEK k := 1 ZUWOWEN 10 LOLO LEKFESH
+    FOMOFE best := 0;
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(uw) LOLO LEKFESH
+        PLUWOK used[i] = LERLU DEWOTUSH LEKFESH
+            PLUWOK best = 0 DEWOTUSH LEKFESH
+                best := i;
+            EFUDU CHEME PLUWOK uc[i] > uc[best] DEWOTUSH LEKFESH
+                best := i;
+            EFUDU
+        EFUDU
+    EFUDU
+    PLUWOK best = 0 DEWOTUSH LEKFESH
+        DUTZE;
+    EFUDU
+    EPLOWEK uw[best] & " " & uc[best];
+    used[best] := MULO;
+EFUDU

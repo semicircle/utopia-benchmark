@@ -1,0 +1,81 @@
+tumumin trim(s)
+    troufu a = 0;
+    troufu b = utoufa(s) - 1;
+    tafashou a <= b dra s[a] <= " "
+        a = a + 1;
+    trushou
+    tafashou b >= a dra s[b] <= " "
+        b = b - 1;
+    trushou
+    troufu r = "";
+    sutrarsu i = a sou b
+        r = r + s[i];
+    moun i
+    drur r;
+drumin tumumin
+
+troufu g = shufa(trim(bounfou()));
+troufu grid = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu t = trim(line);
+    sitrartu utoufa(t) > 0 fisu drufirsa
+        troufu row = [];
+        sutrarsu j = 0 sou utoufa(t) - 1
+            sitrartu t[j] == "#" fisu drufirsa
+                marboun(row, 1);
+            drumin tru drufirsa
+                marboun(row, 0);
+            drumin
+        moun j
+        marboun(grid, row);
+    drumin
+    line = bounfou();
+trushou
+troufu h = utoufa(grid);
+troufu w = 0;
+sitrartu h > 0 fisu drufirsa
+    w = utoufa(grid[0]);
+drumin
+sutrarsu gen = 1 sou g
+    troufu ng = [];
+    sutrarsu r = 0 sou h - 1
+        troufu nrow = [];
+        troufu crow = grid[r];
+        sutrarsu c = 0 sou w - 1
+            troufu cnt = 0;
+            sutrarsu dr = -1 sou 1
+                troufu rr = r + dr;
+                sitrartu rr >= 0 dra rr < h fisu drufirsa
+                    troufu prow = grid[rr];
+                    sutrarsu dc = -1 sou 1
+                        troufu cc = c + dc;
+                        sitrartu cc >= 0 dra cc < w dra (dr ~= 0 butrouta dc ~= 0) fisu drufirsa
+                            cnt = cnt + prow[cc];
+                        drumin
+                    moun dc
+                drumin
+            moun dr
+            troufu alive = crow[c];
+            sitrartu cnt == 3 butrouta (alive == 1 dra cnt == 2) fisu drufirsa
+                marboun(nrow, 1);
+            drumin tru drufirsa
+                marboun(nrow, 0);
+            drumin
+        moun c
+        marboun(ng, nrow);
+    moun r
+    grid = ng;
+moun gen
+sutrarsu r = 0 sou h - 1
+    troufu orow = grid[r];
+    troufu out = "";
+    sutrarsu c = 0 sou w - 1
+        sitrartu orow[c] == 1 fisu drufirsa
+            out = out + "#";
+        drumin tru drufirsa
+            out = out + ".";
+        drumin
+    moun c
+    binmi out;
+moun r

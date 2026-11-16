@@ -1,0 +1,24 @@
+dredrume slice(s, i, j)
+    goyu r <- "".
+    wego k <- i setru j - 1
+        r <- r & s[k].
+    trer k
+    odrol r.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu n <- wumdror(line).
+    goyu sp <- 0.
+    wego i <- 0 setru n - 1
+        dre line[i] == " " ethur
+            sp <- i.
+        wodrotru dre
+    trer i
+    goyu a <- druwol(slice(line, 0, sp)).
+    goyu b <- druwol(slice(line, sp + 1, n)).
+    goyu q <- a / b.
+    goyu r <- a - (b * q).
+    suwe q & " " & r.
+    line <- uyotho().
+shusushe

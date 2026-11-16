@@ -1,0 +1,96 @@
+tumumin split(s)
+    troufu res = [];
+    troufu cur = "";
+    sutrarsu i = 0 sou utoufa(s) - 1
+        troufu c = s[i];
+        sitrartu c <= " " fisu drufirsa
+            sitrartu utoufa(cur) > 0 fisu drufirsa
+                marboun(res, cur);
+                cur = "";
+            drumin
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+    moun i
+    sitrartu utoufa(cur) > 0 fisu drufirsa
+        marboun(res, cur);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin isNum(t)
+    troufu start = 0;
+    sitrartu t[0] == "-" fisu drufirsa
+        start = 1;
+    drumin
+    sitrartu start >= utoufa(t) fisu drufirsa
+        drur fufir;
+    drumin
+    sutrarsu i = start sou utoufa(t) - 1
+        sitrartu t[i] < "0" butrouta t[i] > "9" fisu drufirsa
+            drur fufir;
+        drumin
+    moun i
+    drur sibitrou;
+drumin tumumin
+
+tumumin evalLine(line)
+    troufu toks = split(line);
+    sitrartu utoufa(toks) == 0 fisu drufirsa
+        drur "error";
+    drumin
+    troufu st = [];
+    troufu sp = 0;
+    sutrarsu i = 0 sou utoufa(toks) - 1
+        troufu t = toks[i];
+        sitrartu isNum(t) fisu drufirsa
+            troufu v = shufa(t);
+            sitrartu sp < utoufa(st) fisu drufirsa
+                st[sp] = v;
+            drumin tru drufirsa
+                marboun(st, v);
+            drumin
+            sp = sp + 1;
+        drumin tru sitrartu t == "+" butrouta t == "-" butrouta t == "*" butrouta t == "/" butrouta t == "%" fisu drufirsa
+            sitrartu sp < 2 fisu drufirsa
+                drur "error";
+            drumin
+            troufu b = st[sp - 1];
+            troufu a = st[sp - 2];
+            sp = sp - 2;
+            troufu r = 0;
+            utir (t) {
+            sourmar "+":
+                r = a + b;
+            sourmar "-":
+                r = a - b;
+            sourmar "*":
+                r = a * b;
+            sourmar "/":
+                sitrartu b == 0 fisu drufirsa
+                    drur "error";
+                drumin
+                r = a / b;
+            sourmar "%":
+                sitrartu b == 0 fisu drufirsa
+                    drur "error";
+                drumin
+                r = a % b;
+            }
+            st[sp] = r;
+            sp = sp + 1;
+        drumin tru drufirsa
+            drur "error";
+        drumin
+    moun i
+    sitrartu sp ~= 1 fisu drufirsa
+        drur "error";
+    drumin
+    drur moufunsa(st[0]);
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    binmi evalLine(line);
+    line = bounfou();
+trushou

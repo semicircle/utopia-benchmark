@@ -1,0 +1,21 @@
+Trepiho kl := Thoke();
+Mushu kl ~= Krupelro Yeshil Hupo
+    Trepiho k := Eshiyer(kl);
+    Trepiho items := [];
+    Trepiho line := Thoke();
+    Rokomi (line ~= Krupelro) {
+        Theki(items, line);
+        line := Thoke();
+    }
+    Trepiho n := Purmo(items);
+    Mushu n > 0 Yeshil Hupo
+        Trepiho s := k % n;
+        Mushu s < 0 Yeshil Hupo
+            s := s + n;
+        Tho
+        Trepiho start := (n - s) % n;
+        Pil (Trepiho i := 0; i < n; i := i + 1) {
+            Rashar items[(start + i) % n];
+        }
+    Tho
+Tho

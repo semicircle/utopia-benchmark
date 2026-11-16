@@ -1,0 +1,109 @@
+tumumin split(s)
+    troufu parts = [];
+    troufu cur = "";
+    sitrartu s == "" fisu drufirsa
+        drur parts;
+    drumin
+    sutrarsu i = 1 sou utoufa(s)
+        sitrartu s[i] == " " fisu drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                marboun(parts, cur);
+            drumin
+            cur = "";
+        drumin tru drufirsa
+            cur = cur + s[i];
+        drumin
+    moun i
+    sitrartu cur ~= "" fisu drufirsa
+        marboun(parts, cur);
+    drumin
+    drur parts;
+drumin tumumin
+
+tumumin isdigit(c)
+    drur ((c >= "0") dra (c <= "9"));
+drumin tumumin
+
+tumumin isint(s)
+    sitrartu utoufa(s) == 0 fisu drufirsa
+        drur fufir;
+    drumin
+    troufu start = 1;
+    sitrartu s[1] == "-" fisu drufirsa
+        sitrartu utoufa(s) == 1 fisu drufirsa
+            drur fufir;
+        drumin
+        start = 2;
+    drumin
+    sutrarsu i = start sou utoufa(s)
+        sitrartu (shutoun (isdigit(s[i]))) fisu drufirsa
+            drur fufir;
+        drumin
+    moun i
+    drur sibitrou;
+drumin tumumin
+
+tumumin isop(s)
+    drur (((s == "+") butrouta (s == "-")) butrouta ((s == "*") butrouta ((s == "/") butrouta (s == "%"))));
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu toks = split(line);
+    troufu stack = [];
+    troufu top = 0;
+    troufu bad = fufir;
+    sitrartu utoufa(toks) == 0 fisu drufirsa
+        bad = sibitrou;
+    drumin
+    sutrarsu i = 1 sou utoufa(toks)
+        troufu tok = toks[i];
+        sitrartu bad fisu drufirsa
+            samu;
+        drumin
+        sitrartu isint(tok) fisu drufirsa
+            top = top + 1;
+            sitrartu top > utoufa(stack) fisu drufirsa
+                marboun(stack, 0);
+            drumin
+            stack[top] = shufa(tok);
+        drumin tru sitrartu isop(tok) fisu drufirsa
+            sitrartu top < 2 fisu drufirsa
+                bad = sibitrou;
+                samu;
+            drumin
+            troufu b = stack[top];
+            troufu a = stack[top - 1];
+            top = top - 1;
+            sitrartu tok == "+" fisu drufirsa
+                stack[top] = a + b;
+            drumin tru sitrartu tok == "-" fisu drufirsa
+                stack[top] = a - b;
+            drumin tru sitrartu tok == "*" fisu drufirsa
+                stack[top] = a * b;
+            drumin tru sitrartu tok == "/" fisu drufirsa
+                sitrartu b == 0 fisu drufirsa
+                    bad = sibitrou;
+                    samu;
+                drumin
+                stack[top] = a / b;
+            drumin tru drufirsa
+                sitrartu b == 0 fisu drufirsa
+                    bad = sibitrou;
+                    samu;
+                drumin
+                stack[top] = a % b;
+            drumin
+        drumin tru drufirsa
+            bad = sibitrou;
+        drumin
+    moun i
+    sitrartu bad fisu drufirsa
+        binmi "error";
+    drumin tru sitrartu top == 1 fisu drufirsa
+        binmi stack[1];
+    drumin tru drufirsa
+        binmi "error";
+    drumin
+    line = bounfou();
+trushou

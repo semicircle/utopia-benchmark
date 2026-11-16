@@ -1,0 +1,30 @@
+Ruyoyo substr(s, lo, hi)
+    Trepiho r := "";
+    Pil (Trepiho i := lo; i < hi; i := i + 1) {
+        r := r + s[i];
+    }
+    Omel r;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho n := Eshiyer(line);
+    Trepiho s := Mitrer(n);
+    Trepiho neg := Yaki;
+    Mushu s[0] = "-" Yeshil Hupo
+        neg := Yupu;
+        s := substr(s, 1, Purmo(s));
+    Tho
+    Trepiho sum := 0;
+    Trepiho rev := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        sum := sum + Eshiyer(s[i]);
+        rev := s[i] + rev;
+    }
+    Trepiho r := Eshiyer(rev);
+    Mushu neg Yeshil Hupo
+        r := -r;
+    Tho
+    Rashar sum + " " + r;
+    line := Thoke();
+}

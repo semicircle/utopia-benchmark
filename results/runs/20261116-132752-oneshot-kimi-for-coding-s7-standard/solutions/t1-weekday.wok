@@ -1,0 +1,47 @@
+EDEWUT weekday(y, m, d) {
+    FOMOFE yy := y - 1;
+    FOMOFE days := yy * 365 + yy / 4 - yy / 100 + yy / 400;
+    FOMOFE mdays := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    FOMOFE leap := (y % 4 = 0 ZULUSHTE y % 100 ~= 0) MUR y % 400 = 0;
+    PLUWOK leap DEWOTUSH LEKFESH
+        mdays[1] := 29;
+    EFUDU
+    FOMOFE i := 0;
+    FUKCHEFE i < m - 1 LOLO LEKFESH
+        days := days + mdays[i];
+        i := i + 1;
+    EFUDU
+    days := days + d - 1;
+    FOMOFE w := days % 7;
+    ZET w CHU
+    0: LEKFESH
+        EFOTU "Monday";
+    EFUDU
+    1: LEKFESH
+        EFOTU "Tuesday";
+    EFUDU
+    2: LEKFESH
+        EFOTU "Wednesday";
+    EFUDU
+    3: LEKFESH
+        EFOTU "Thursday";
+    EFUDU
+    4: LEKFESH
+        EFOTU "Friday";
+    EFUDU
+    5: LEKFESH
+        EFOTU "Saturday";
+    EFUDU
+    CHEME LEKFESH
+        EFOTU "Sunday";
+    EFUDU EFUDU
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE y := ZENZUMUR(line[0] & line[1] & line[2] & line[3]);
+    FOMOFE m := ZENZUMUR(line[5] & line[6]);
+    FOMOFE d := ZENZUMUR(line[8] & line[9]);
+    EPLOWEK weekday(y, m, d);
+    line := TODETET();
+EFUDU

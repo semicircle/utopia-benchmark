@@ -1,0 +1,47 @@
+func lower(c) {
+    let up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let lo = "abcdefghijklmnopqrstuvwxyz";
+    for (let i = 0; i < 26; i = i + 1) {
+        if (up[i] == c) {
+            return lo[i];
+        }
+    }
+    return c;
+}
+
+func kept(c) {
+    let ok = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < len(ok); i = i + 1) {
+        if (ok[i] == c) {
+            return true;
+        }
+    }
+    return false;
+}
+
+let line = readline();
+while (line != none) {
+    let cs = [];
+    for (let i = 0; i < len(line); i = i + 1) {
+        let c = lower(line[i]);
+        if (kept(c)) {
+            push(cs, c);
+        }
+    }
+    let same = true;
+    let a = 0;
+    let b = len(cs) - 1;
+    while (a < b) {
+        if (cs[a] != cs[b]) {
+            same = false;
+        }
+        a = a + 1;
+        b = b - 1;
+    }
+    if (same) {
+        print "yes";
+    } else {
+        print "no";
+    }
+    line = readline();
+}

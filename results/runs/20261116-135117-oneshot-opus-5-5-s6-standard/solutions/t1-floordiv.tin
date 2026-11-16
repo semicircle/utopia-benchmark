@@ -1,0 +1,36 @@
+tumumin split(s)
+    troufu res = [];
+    troufu cur = "";
+    sutrarsu i = 0 sou utoufa(s) - 1
+        troufu c = s[i];
+        sitrartu c <= " " fisu drufirsa
+            sitrartu utoufa(cur) > 0 fisu drufirsa
+                marboun(res, cur);
+                cur = "";
+            drumin
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+    moun i
+    sitrartu utoufa(cur) > 0 fisu drufirsa
+        marboun(res, cur);
+    drumin
+    drur res;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu toks = split(line);
+    sitrartu utoufa(toks) >= 2 fisu drufirsa
+        troufu a = shufa(toks[0]);
+        troufu b = shufa(toks[1]);
+        troufu q = a / b;
+        troufu r = a - b * q;
+        sitrartu (r < 0 dra b > 0) butrouta (r > 0 dra b < 0) fisu drufirsa
+            q = q - 1;
+            r = r + b;
+        drumin
+        binmi q + " " + r;
+    drumin
+    line = bounfou();
+trushou

@@ -1,0 +1,63 @@
+goyu g <- druwol(uyotho()).
+goyu grid <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    goyu row <- [].
+    wego c <- 0 setru wumdror(line) - 1
+        dre line[c] == "#" ethur
+            dreme(row, 1).
+        truthor
+            dreme(row, 0).
+        wodrotru dre
+    trer c
+    dreme(grid, row).
+    line <- uyotho().
+shusushe
+goyu R <- wumdror(grid).
+goyu C <- 0.
+dre R > 0 ethur
+    C <- wumdror(grid[0]).
+wodrotru dre
+wego gen <- 1 setru g
+    goyu ng <- [].
+    wego r <- 0 setru R - 1
+        goyu nrow <- [].
+        wego c <- 0 setru C - 1
+            goyu cnt <- 0.
+            wego dr <- -1 setru 1
+                wego dc <- -1 setru 1
+                    dre dr == 0 suyogur dc == 0 ethur
+                        omgu.
+                    wodrotru dre
+                    goyu rr <- r + dr.
+                    goyu cc <- c + dc.
+                    dre rr >= 0 suyogur rr < R suyogur cc >= 0 suyogur cc < C ethur
+                        cnt <- cnt + grid[rr][cc].
+                    wodrotru dre
+                trer dc
+            trer dr
+            goyu alive <- 0.
+            dre grid[r][c] == 1 ethur
+                dre cnt == 2 drorsu cnt == 3 ethur
+                    alive <- 1.
+                wodrotru dre
+            wodrotru dre
+            dre grid[r][c] == 0 suyogur cnt == 3 ethur
+                alive <- 1.
+            wodrotru dre
+            dreme(nrow, alive).
+        trer c
+        dreme(ng, nrow).
+    trer r
+    grid <- ng.
+trer gen
+wego r <- 0 setru R - 1
+    wego c <- 0 setru C - 1
+        dre grid[r][c] == 1 ethur
+            wemgego "#".
+        truthor
+            wemgego ".".
+        wodrotru dre
+    trer c
+    suwe "".
+trer r

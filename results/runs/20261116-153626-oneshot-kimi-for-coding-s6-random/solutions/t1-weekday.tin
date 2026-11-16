@@ -1,0 +1,48 @@
+tumumin substr(s, a, b)
+    troufu out = "";
+    sutrarsu i = a sou b
+        out = out + s[i];
+    moun i
+    drur out;
+drumin tumumin
+
+tumumin weekdaynum(date)
+    troufu y = shufa(substr(date, 1, 4));
+    troufu m = shufa(substr(date, 6, 7));
+    troufu d = shufa(substr(date, 9, 10));
+    troufu yy = y - 1;
+    troufu days = ((((365 * yy) + (yy / 4)) - (yy / 100)) + (yy / 400));
+    troufu leap = (((y % 4) == 0) dra (((y % 100) ~= 0) butrouta ((y % 400) == 0)));
+    troufu offsets = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    sitrartu leap fisu drufirsa
+        offsets = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335];
+    drumin
+    days = (days + offsets[m]) + (d - 1);
+    drur days % 7;
+drumin tumumin
+
+tumumin weekdayname(w)
+    utir (w) {
+    sourmar 0:
+        drur "Monday";
+    sourmar 1:
+        drur "Tuesday";
+    sourmar 2:
+        drur "Wednesday";
+    sourmar 3:
+        drur "Thursday";
+    sourmar 4:
+        drur "Friday";
+    sourmar 5:
+        drur "Saturday";
+    sourmar 6:
+        drur "Sunday";
+    }
+    drur "Monday";
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    binmi weekdayname(weekdaynum(line));
+    line = bounfou();
+trushou

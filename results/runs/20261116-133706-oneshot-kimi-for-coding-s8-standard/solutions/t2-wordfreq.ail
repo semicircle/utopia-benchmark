@@ -1,0 +1,119 @@
+nudro lower(c) {
+    otai (c) {
+    dai "A":
+        druna "a";
+    dai "B":
+        druna "b";
+    dai "C":
+        druna "c";
+    dai "D":
+        druna "d";
+    dai "E":
+        druna "e";
+    dai "F":
+        druna "f";
+    dai "G":
+        druna "g";
+    dai "H":
+        druna "h";
+    dai "I":
+        druna "i";
+    dai "J":
+        druna "j";
+    dai "K":
+        druna "k";
+    dai "L":
+        druna "l";
+    dai "M":
+        druna "m";
+    dai "N":
+        druna "n";
+    dai "O":
+        druna "o";
+    dai "P":
+        druna "p";
+    dai "Q":
+        druna "q";
+    dai "R":
+        druna "r";
+    dai "S":
+        druna "s";
+    dai "T":
+        druna "t";
+    dai "U":
+        druna "u";
+    dai "V":
+        druna "v";
+    dai "W":
+        druna "w";
+    dai "X":
+        druna "x";
+    dai "Y":
+        druna "y";
+    dai "Z":
+        druna "z";
+    efu:
+        druna c;
+    }
+}
+
+nudro findWord(words, w) {
+    plulai k := 0;
+    edrushe k < dra(words)
+        atdoyal (words[k] == w) {
+            druna k;
+        }
+        k := k + 1;
+    aitudre
+    druna -1;
+}
+
+nudro addWord(words, counts, w) {
+    plulai idx := findWord(words, w);
+    atdoyal (idx >= 0) {
+        counts[idx] := counts[idx] + 1;
+    } bulbayo {
+        sutse(words, w);
+        sutse(counts, 1);
+    }
+    druna aiplai;
+}
+
+plulai words := [];
+plulai counts := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai cur := "";
+    shoyo i := 0 busale dra(line) - 1
+        plulai c := line[i];
+        atdoyal ((c >= "a" rulsai c <= "z") tobe (c >= "A" rulsai c <= "Z")) {
+            cur := cur + lower(c);
+        } bulbayo {
+            atdoyal (cur <> "") {
+                addWord(words, counts, cur);
+                cur := "";
+            }
+        }
+    pla i
+    atdoyal (cur <> "") {
+        addWord(words, counts, cur);
+    }
+    line := playadu();
+aitudre
+plulai printed := 0;
+plulai n := dra(words);
+edrushe printed < 10 rulsai printed < n
+    plulai best := 0;
+    plulai k := 1;
+    edrushe k < n
+        atdoyal (counts[k] > counts[best]) {
+            best := k;
+        } bulbayo atdoyal (counts[k] == counts[best] rulsai words[k] < words[best]) {
+            best := k;
+        }
+        k := k + 1;
+    aitudre
+    shaibe words[best] + " " + counts[best];
+    counts[best] := -1;
+    printed := printed + 1;
+aitudre

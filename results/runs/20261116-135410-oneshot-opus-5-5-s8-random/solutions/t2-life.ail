@@ -1,0 +1,91 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai has := nonotru;
+    shoyo i := 1 busale dra(s) + 1
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t" tobe c == "\r") {
+            atdoyal (has) {
+                sutse(res, cur);
+                cur := "";
+                has := nonotru;
+            }
+        } bulbayo {
+            cur := cur + c;
+            has := eretde;
+        }
+    pla i
+    atdoyal (has) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+plulai gl := playadu();
+plulai g := 0;
+atdoyal (gl <> aiplai) {
+    plulai gp := split(gl);
+    atdoyal (dra(gp) > 0) {
+        g := plaltai(gp[1]);
+    }
+}
+plulai cells := [];
+plulai R := 0;
+plulai C := 0;
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai row := [];
+    shoyo i := 1 busale dra(line) + 1
+        plulai ch := line[i];
+        atdoyal (ch == "#") {
+            sutse(row, 1);
+        } bulbayo atdoyal (ch == ".") {
+            sutse(row, 0);
+        }
+    pla i
+    atdoyal (dra(row) > 0) {
+        C := dra(row);
+        R := R + 1;
+        shoyo i := 1 busale C + 1
+            sutse(cells, row[i]);
+        pla i
+    }
+    line := playadu();
+aitudre
+
+shoyo gen := 0 busale g
+    plulai nc := [];
+    shoyo r := 1 busale R + 1
+        shoyo c := 1 busale C + 1
+            plulai cnt := 0;
+            shoyo dr := -1 busale 2
+                shoyo dc := -1 busale 2
+                    plulai rr := r + dr;
+                    plulai cc := c + dc;
+                    atdoyal ((dr <> 0 tobe dc <> 0) rulsai rr >= 1 rulsai rr <= R rulsai cc >= 1 rulsai cc <= C) {
+                        cnt := cnt + cells[(rr - 1) * C + cc];
+                    }
+                pla dc
+            pla dr
+            plulai curv := cells[(r - 1) * C + c];
+            atdoyal (cnt == 3 tobe (curv == 1 rulsai cnt == 2)) {
+                sutse(nc, 1);
+            } bulbayo {
+                sutse(nc, 0);
+            }
+        pla c
+    pla r
+    cells := nc;
+pla gen
+
+shoyo r := 1 busale R + 1
+    plulai s := "";
+    shoyo c := 1 busale C + 1
+        atdoyal (cells[(r - 1) * C + c] == 1) {
+            s := s + "#";
+        } bulbayo {
+            s := s + ".";
+        }
+    pla c
+    shaibe s;
+pla r

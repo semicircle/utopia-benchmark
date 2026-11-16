@@ -1,0 +1,26 @@
+rimli isDigit(c) nethe
+    yiletho c >= "0" lotvethu c <= "9".
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi n = nelchiyul(line).
+    ohetdi s = chul(n).
+    ohetdi sum = 0.
+    ohetdi rev = "".
+    ohetdi i = 0.
+    konit i < yuyem(s) mitho nethe
+        ohetdi c = s[i].
+        rilniro isDigit(c) hutro nethe
+            sum = sum + nelchiyul(c).
+            rev = c & rev.
+        dit
+        i = i + 1.
+    dit
+    ohetdi out = rev.
+    rilniro n < 0 hutro nethe
+        out = "-" & rev.
+    dit
+    miyol sum & " " & nelchiyul(out).
+    line = nilhino().
+dit

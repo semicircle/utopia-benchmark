@@ -1,0 +1,46 @@
+Gis part(s, start, len) Fodashsa
+    Sogas r = "";
+    Paxfasva (Sogas i = 0; i < len; i = i + 1) {
+        r = r + s[start + i];
+    }
+    Asdra r;
+Gosafax
+
+Gis weekdayName(h) Fodashsa
+    Sogas r = "";
+    Pidok (h) {
+    Dro 0:
+        r = "Saturday";
+    Dro 1:
+        r = "Sunday";
+    Dro 2:
+        r = "Monday";
+    Dro 3:
+        r = "Tuesday";
+    Dro 4:
+        r = "Wednesday";
+    Dro 5:
+        r = "Thursday";
+    Dro 6:
+        r = "Friday";
+    Papo:
+        r = "";
+    }
+    Asdra r;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas y = Drak(part(line, 0, 4));
+    Sogas mo = Drak(part(line, 5, 2));
+    Sogas da = Drak(part(line, 8, 2));
+    Ishsi (mo <= 2) {
+        y = y - 1;
+        mo = mo + 12;
+    }
+    Sogas k = y Dodogo 100;
+    Sogas j = y / 100;
+    Sogas h = (da + (13 * (mo + 1)) / 5 + k + k / 4 + j / 4 + 5 * j) Dodogo 7;
+    Dosfasho weekdayName(h);
+    line = Goshvovo();
+}

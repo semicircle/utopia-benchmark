@@ -1,0 +1,16 @@
+plulai ev := 0;
+plulai od := 0;
+plulai line := playadu();
+edrushe (line <> aiplai)
+    atdoyal (line <> "") {
+        plulai n := plaltai(line);
+        atdoyal (n % 2 == 0) {
+            ev := ev + 1;
+        } bulbayo {
+            od := od + 1;
+        }
+    }
+    line := playadu();
+aitudre
+shaibe "even " + ev;
+shaibe "odd " + od;

@@ -1,0 +1,28 @@
+tumumin trim(s)
+    troufu a = 0;
+    troufu b = utoufa(s) - 1;
+    tafashou a <= b dra s[a] <= " "
+        a = a + 1;
+    trushou
+    tafashou b >= a dra s[b] <= " "
+        b = b - 1;
+    trushou
+    troufu r = "";
+    sutrarsu i = a sou b
+        r = r + s[i];
+    moun i
+    drur r;
+drumin tumumin
+
+troufu n = shufa(trim(bounfou()));
+sutrarsu i = 1 sou n
+    sitrartu i % 15 == 0 fisu drufirsa
+        binmi "FizzBuzz";
+    drumin tru sitrartu i % 3 == 0 fisu drufirsa
+        binmi "Fizz";
+    drumin tru sitrartu i % 5 == 0 fisu drufirsa
+        binmi "Buzz";
+    drumin tru drufirsa
+        binmi i;
+    drumin
+moun i

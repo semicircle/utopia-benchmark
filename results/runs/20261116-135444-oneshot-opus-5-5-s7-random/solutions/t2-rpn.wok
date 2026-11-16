@@ -1,0 +1,113 @@
+EDEWUT fdiv(a, b) {
+    EFOTU -((-a) / b);
+}
+
+EDEWUT tdiv(a, b) {
+    PLUWOK (a < 0) = (b < 0) DEWOTUSH LEKFESH
+        EFOTU fdiv(a, b);
+    EFUDU
+    EFOTU a / b;
+}
+
+EDEWUT split(s) {
+    FOMOFE res := [];
+    FOMOFE cur := "";
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(s) LOLO LEKFESH
+        FOMOFE c := s[i];
+        PLUWOK c = " " MUR c = "\t" MUR c = "\r" DEWOTUSH LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                WESH(res, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & c;
+        EFUDU
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        WESH(res, cur);
+    EFUDU
+    EFOTU res;
+}
+
+EDEWUT isint(t) {
+    FOMOFE n := FORMOWE(t);
+    FOMOFE st := 1;
+    PLUWOK t[1] = "-" DEWOTUSH LEKFESH
+        st := 2;
+    EFUDU
+    PLUWOK st > n DEWOTUSH LEKFESH
+        EFOTU LERLU;
+    EFUDU
+    TUTCHEK i := st ZUWOWEN n LOLO LEKFESH
+        FOMOFE c := t[i];
+        PLUWOK c < "0" MUR c > "9" DEWOTUSH LEKFESH
+            EFOTU LERLU;
+        EFUDU
+    EFUDU
+    EFOTU MULO;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE toks := split(line);
+    FOMOFE stk := [];
+    FOMOFE sp := 0;
+    FOMOFE bad := FORMOWE(toks) = 0;
+    TUTCHEK ti := 1 ZUWOWEN FORMOWE(toks) LOLO LEKFESH
+        FOMOFE t := toks[ti];
+        FOMOFE v := 0;
+        FOMOFE havev := LERLU;
+        PLUWOK t = "+" MUR t = "-" MUR t = "*" MUR t = "/" MUR t = "%" DEWOTUSH LEKFESH
+            PLUWOK sp < 2 DEWOTUSH LEKFESH
+                bad := MULO;
+                DUTZE;
+            EFUDU
+            FOMOFE b := stk[sp];
+            FOMOFE a := stk[sp - 1];
+            sp := sp - 2;
+            ZET t CHU
+            "+": LEKFESH
+                v := a + b;
+            EFUDU
+            "-": LEKFESH
+                v := a - b;
+            EFUDU
+            "*": LEKFESH
+                v := a * b;
+            EFUDU
+            CHEME LEKFESH
+                PLUWOK b = 0 DEWOTUSH LEKFESH
+                    bad := MULO;
+                    DUTZE;
+                EFUDU
+                v := tdiv(a, b);
+                PLUWOK t = "%" DEWOTUSH LEKFESH
+                    v := a - b * v;
+                EFUDU
+            EFUDU EFUDU
+            havev := MULO;
+        EFUDU CHEME PLUWOK isint(t) DEWOTUSH LEKFESH
+            v := ZENZUMUR(t);
+            havev := MULO;
+        EFUDU CHEME LEKFESH
+            bad := MULO;
+            DUTZE;
+        EFUDU
+        PLUWOK havev DEWOTUSH LEKFESH
+            PLUWOK sp < FORMOWE(stk) DEWOTUSH LEKFESH
+                stk[sp + 1] := v;
+            EFUDU CHEME LEKFESH
+                WESH(stk, v);
+            EFUDU
+            sp := sp + 1;
+        EFUDU
+    EFUDU
+    PLUWOK bad DEWOTUSH LEKFESH
+        EPLOWEK "error";
+    EFUDU CHEME PLUWOK sp ~= 1 DEWOTUSH LEKFESH
+        EPLOWEK "error";
+    EFUDU CHEME LEKFESH
+        EPLOWEK stk[1];
+    EFUDU
+    line := TODETET();
+EFUDU

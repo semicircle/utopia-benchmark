@@ -1,0 +1,14 @@
+plulai e := 0;
+plulai o := 0;
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai n := plaltai(line);
+    atdoyal (n % 2 == 0) {
+        e := e + 1;
+    } bulbayo {
+        o := o + 1;
+    }
+    line := playadu();
+aitudre
+shaibe "even " + e;
+shaibe "odd " + o;

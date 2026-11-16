@@ -1,0 +1,80 @@
+EDEWUT isLetter(c) {
+    EFOTU (c >= "A" ZULUSHTE c <= "Z") MUR (c >= "a" ZULUSHTE c <= "z");
+}
+
+EDEWUT lc(c) {
+    FOMOFE alpha := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    FOMOFE i := 0;
+    FUKCHEFE i < 26 LOLO LEKFESH
+        PLUWOK alpha[i] = c DEWOTUSH LEKFESH
+            EFOTU alpha[i + 26];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    EFOTU c;
+}
+
+EDEWUT addWord(entries, w) {
+    FOMOFE j := 0;
+    FOMOFE found := LERLU;
+    FUKCHEFE j < FORMOWE(entries) LOLO LEKFESH
+        PLUWOK entries[j][0] = w DEWOTUSH LEKFESH
+            entries[j][1] := entries[j][1] + 1;
+            found := MULO;
+        EFUDU
+        j := j + 1;
+    EFUDU
+    PLUWOK TEMO found DEWOTUSH LEKFESH
+        WESH(entries, [w, 1]);
+    EFUDU
+}
+
+EDEWUT before(x, y) {
+    PLUWOK x[1] > y[1] DEWOTUSH LEKFESH
+        EFOTU MULO;
+    EFUDU
+    PLUWOK x[1] = y[1] ZULUSHTE x[0] < y[0] DEWOTUSH LEKFESH
+        EFOTU MULO;
+    EFUDU
+    EFOTU LERLU;
+}
+
+FOMOFE entries := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE cur := "";
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(line) LOLO LEKFESH
+        FOMOFE c := line[i];
+        PLUWOK isLetter(c) DEWOTUSH LEKFESH
+            cur := cur & lc(c);
+        EFUDU CHEME PLUWOK cur ~= "" DEWOTUSH LEKFESH
+            addWord(entries, cur);
+            cur := "";
+        EFUDU
+        i := i + 1;
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        addWord(entries, cur);
+    EFUDU
+    line := TODETET();
+EFUDU
+
+FOMOFE m := FORMOWE(entries);
+TUTCHEK i := 1 ZUWOWEN m - 1 LOLO LEKFESH
+    FOMOFE j := i;
+    FUKCHEFE j > 0 ZULUSHTE before(entries[j], entries[j - 1]) LOLO LEKFESH
+        FOMOFE tmp := entries[j];
+        entries[j] := entries[j - 1];
+        entries[j - 1] := tmp;
+        j := j - 1;
+    EFUDU
+EFUDU
+
+FOMOFE lim := m;
+PLUWOK lim > 10 DEWOTUSH LEKFESH
+    lim := 10;
+EFUDU
+TUTCHEK i := 0 ZUWOWEN lim - 1 LOLO LEKFESH
+    EPLOWEK entries[i][0] & " " & entries[i][1];
+EFUDU

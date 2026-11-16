@@ -1,0 +1,114 @@
+Ruyoyo split(s)
+    Trepiho out := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c = " " Hiyikra c = "\t" Hiyikra c = "\r" Yeshil Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(out, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + c;
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(out, cur);
+    Tho
+    Omel out;
+Opa
+
+Ruyoyo toLimbs(s)
+    Trepiho out := [];
+    Trepiho i := Purmo(s);
+    Rokomi (i > 0) {
+        Trepiho start := i - 4;
+        Mushu start < 0 Yeshil Hupo
+            start := 0;
+        Tho
+        Trepiho v := 0;
+        Pil (Trepiho j := start; j < i; j := j + 1) {
+            v := v * 10 + Eshiyer(s[j]);
+        }
+        Theki(out, v);
+        i := start;
+    }
+    Mushu Purmo(out) = 0 Yeshil Hupo
+        Theki(out, 0);
+    Tho
+    Omel out;
+Opa
+
+Ruyoyo addL(a, b)
+    Trepiho out := [];
+    Trepiho carry := 0;
+    Trepiho n := Purmo(a);
+    Mushu Purmo(b) > n Yeshil Hupo
+        n := Purmo(b);
+    Tho
+    Pil (Trepiho i := 0; i < n; i := i + 1) {
+        Trepiho s := carry;
+        Mushu i < Purmo(a) Yeshil Hupo
+            s := s + a[i];
+        Tho
+        Mushu i < Purmo(b) Yeshil Hupo
+            s := s + b[i];
+        Tho
+        Theki(out, s % 10000);
+        carry := s / 10000;
+    }
+    Mushu carry > 0 Yeshil Hupo
+        Theki(out, carry);
+    Tho
+    Omel out;
+Opa
+
+Ruyoyo mulL(a, b)
+    Trepiho res := [];
+    Trepiho total := Purmo(a) + Purmo(b);
+    Pil (Trepiho i := 0; i < total; i := i + 1) {
+        Theki(res, 0);
+    }
+    Pil (i := 0; i < Purmo(a); i := i + 1) {
+        Trepiho ai := a[i];
+        Mushu ai ~= 0 Yeshil Hupo
+            Pil (Trepiho j := 0; j < Purmo(b); j := j + 1) {
+                res[i + j] := res[i + j] + ai * b[j];
+            }
+        Tho
+    }
+    Trepiho carry := 0;
+    Pil (Trepiho k := 0; k < total; k := k + 1) {
+        Trepiho v := res[k] + carry;
+        res[k] := v % 10000;
+        carry := v / 10000;
+    }
+    Omel res;
+Opa
+
+Ruyoyo toStr(x)
+    Trepiho top := Purmo(x) - 1;
+    Rokomi (top > 0 Pethe x[top] = 0) {
+        top := top - 1;
+    }
+    Trepiho out := Mitrer(x[top]);
+    Pil (Trepiho k := top - 1; k >= 0; k := k - 1) {
+        Trepiho s := Mitrer(x[k]);
+        Rokomi (Purmo(s) < 4) {
+            s := "0" + s;
+        }
+        out := out + s;
+    }
+    Omel out;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho toks := split(line);
+    Mushu Purmo(toks) >= 2 Yeshil Hupo
+        Trepiho a := toLimbs(toks[0]);
+        Trepiho b := toLimbs(toks[1]);
+        Rashar toStr(addL(a, b)) + " " + toStr(mulL(a, b));
+    Tho
+    line := Thoke();
+}

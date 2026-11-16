@@ -1,0 +1,59 @@
+Ruyoyo count_neighbors(grid, R, C, r, c)
+    Trepiho total := 0;
+    Pil (Trepiho dr := -1; dr <= 1; dr := dr + 1) {
+        Pil (Trepiho dc := -1; dc <= 1; dc := dc + 1) {
+            Mushu dr = 0 Pethe dc = 0 Yeshil Hupo
+                Tril;
+            Tho
+            Trepiho rr := r + dr;
+            Trepiho cc := c + dc;
+            Mushu rr >= 0 Pethe rr < R Pethe cc >= 0 Pethe cc < C Yeshil Hupo
+                Mushu grid[rr][cc] = "#" Yeshil Hupo
+                    total := total + 1;
+                Tho
+            Tho
+        }
+    }
+    Omel total;
+Opa
+
+Ruyoyo next_gen(grid, R, C)
+    Trepiho newgrid := [];
+    Pil (Trepiho r := 0; r < R; r := r + 1) {
+        Trepiho row := "";
+        Pil (Trepiho c := 0; c < C; c := c + 1) {
+            Trepiho nb := count_neighbors(grid, R, C, r, c);
+            Mushu grid[r][c] = "#" Yeshil Hupo
+                Mushu nb = 2 Hiyikra nb = 3 Yeshil Hupo
+                    row := row + "#";
+                Tho Thotri Hupo
+                    row := row + ".";
+                Tho
+            Tho Thotri Hupo
+                Mushu nb = 3 Yeshil Hupo
+                    row := row + "#";
+                Tho Thotri Hupo
+                    row := row + ".";
+                Tho
+            Tho
+        }
+        Theki(newgrid, row);
+    }
+    Omel newgrid;
+Opa
+
+Trepiho g := Eshiyer(Thoke());
+Trepiho grid := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Theki(grid, line);
+    line := Thoke();
+}
+Trepiho R := Purmo(grid);
+Trepiho C := Purmo(grid[0]);
+Pil (Trepiho gen := 0; gen < g; gen := gen + 1) {
+    grid := next_gen(grid, R, C);
+}
+Pil (Trepiho r := 0; r < R; r := r + 1) {
+    Rashar grid[r];
+}

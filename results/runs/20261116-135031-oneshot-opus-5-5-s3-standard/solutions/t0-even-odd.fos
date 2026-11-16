@@ -1,0 +1,16 @@
+Sogas ev = 0;
+Sogas od = 0;
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Ishsi (Drash(line) > 0) {
+        Sogas n = Drak(line);
+        Ishsi (n Dodogo 2 == 0) {
+            ev = ev + 1;
+        } Padri {
+            od = od + 1;
+        }
+    }
+    line = Goshvovo();
+}
+Dosfasho "even " + ev;
+Dosfasho "odd " + od;

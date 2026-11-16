@@ -1,0 +1,74 @@
+rimli step(gr) nethe
+    ohetdi R = yuyem(gr).
+    ohetdi C = yuyem(gr[1]).
+    ohetdi ng = [].
+    lemyunom i = 1 thikutli R + 1 mitho nethe
+        ohetdi row = [].
+        lemyunom j = 1 thikutli C + 1 mitho nethe
+            ohetdi cnt = 0.
+            lemyunom di = -1 thikutli 2 mitho nethe
+                lemyunom dj = -1 thikutli 2 mitho nethe
+                    rilniro (di == 0) lotvethu (dj == 0) hutro nethe
+                        lidutle.
+                    dit
+                    ohetdi ni = i + di.
+                    ohetdi nj = j + dj.
+                    rilniro ((ni >= 1) lotvethu ((ni <= R) lotvethu ((nj >= 1) lotvethu (nj <= C)))) hutro nethe
+                        cnt = cnt + gr[ni][nj].
+                    dit
+                dit
+            dit
+            ohetdi v = 0.
+            rilniro gr[i][j] == 1 hutro nethe
+                rilniro (cnt == 2) nime (cnt == 3) hutro nethe
+                    v = 1.
+                dit
+            dit thumku nethe
+                rilniro cnt == 3 hutro nethe
+                    v = 1.
+                dit
+            dit
+            nimhol(row, v).
+        dit
+        nimhol(ng, row).
+    dit
+    yiletho ng.
+dit
+
+ohetdi gs = nilhino().
+ohetdi g = nelchiyul(gs).
+ohetdi rows = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    nimhol(rows, line).
+    line = nilhino().
+dit
+ohetdi cur = [].
+ohetdi R = yuyem(rows).
+lemyunom i = 1 thikutli R + 1 mitho nethe
+    ohetdi row = [].
+    ohetdi rs = rows[i].
+    ohetdi C = yuyem(rs).
+    lemyunom j = 1 thikutli C + 1 mitho nethe
+        rilniro rs[j] == "#" hutro nethe
+            nimhol(row, 1).
+        dit thumku nethe
+            nimhol(row, 0).
+        dit
+    dit
+    nimhol(cur, row).
+dit
+lemyunom gen = 1 thikutli g + 1 mitho nethe
+    cur = step(cur).
+dit
+lemyunom i = 1 thikutli R + 1 mitho nethe
+    ohetdi s = "".
+    lemyunom j = 1 thikutli C + 1 mitho nethe
+        rilniro cur[i][j] == 1 hutro nethe
+            s = s & "#".
+        dit thumku nethe
+            s = s & ".".
+        dit
+    dit
+    miyol s.
+dit

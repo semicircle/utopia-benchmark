@@ -1,0 +1,81 @@
+eilyot clean(s)
+    weltuxle r := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (c <> " " elish c <> "\t" elish c <> "\r") {
+            r := r + c;
+        }
+    }
+    chozulni r;
+iweil
+
+weltuxle g := leidush(clean(lono()));
+weltuxle grid := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle s := clean(line);
+    nei (dushzosh(s) > 0) {
+        weltuxle row := [];
+        keit (weltuxle j := 0; j < dushzosh(s); j := j + 1) {
+            nei (s[j] == "#") {
+                koshkil(row, 1);
+            } wogeish {
+                koshkil(row, 0);
+            }
+        }
+        koshkil(grid, row);
+    }
+    line := lono();
+}
+weltuxle H := dushzosh(grid);
+weltuxle W := 0;
+nei (H > 0) {
+    W := dushzosh(grid[0]);
+}
+keit (weltuxle gen := 0; gen < g; gen := gen + 1) {
+    weltuxle ng := [];
+    keit (weltuxle r := 0; r < H; r := r + 1) {
+        weltuxle nr := [];
+        weltuxle cur := grid[r];
+        keit (weltuxle c := 0; c < W; c := c + 1) {
+            weltuxle cnt := 0;
+            keit (weltuxle dr := -1; dr <= 1; dr := dr + 1) {
+                keit (weltuxle dc := -1; dc <= 1; dc := dc + 1) {
+                    nei (dr <> 0 yosheil dc <> 0) {
+                        weltuxle rr := r + dr;
+                        weltuxle cc := c + dc;
+                        nei (rr >= 0 elish rr < H elish cc >= 0 elish cc < W) {
+                            weltuxle rowl := grid[rr];
+                            cnt := cnt + rowl[cc];
+                        }
+                    }
+                }
+            }
+            weltuxle v := 0;
+            nei (cur[c] == 1) {
+                nei (cnt == 2 yosheil cnt == 3) {
+                    v := 1;
+                }
+            } wogeish {
+                nei (cnt == 3) {
+                    v := 1;
+                }
+            }
+            koshkil(nr, v);
+        }
+        koshkil(ng, nr);
+    }
+    grid := ng;
+}
+keit (weltuxle r := 0; r < H; r := r + 1) {
+    weltuxle rowp := grid[r];
+    weltuxle out := "";
+    keit (weltuxle c := 0; c < W; c := c + 1) {
+        nei (rowp[c] == 1) {
+            out := out + "#";
+        } wogeish {
+            out := out + ".";
+        }
+    }
+    leshdei out;
+}

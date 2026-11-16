@@ -1,0 +1,28 @@
+EDEWUT fdiv(a, b) {
+    EFOTU -((-a) / b);
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    PLUWOK line ~= "" DEWOTUSH LEKFESH
+        FOMOFE n := ZENZUMUR(line);
+        FOMOFE m := n;
+        PLUWOK m < 0 DEWOTUSH LEKFESH
+            m := -m;
+        EFUDU
+        FOMOFE s := 0;
+        FOMOFE r := 0;
+        FUKCHEFE m > 0 LOLO LEKFESH
+            FOMOFE q := fdiv(m, 10);
+            FOMOFE d := m - 10 * q;
+            s := s + d;
+            r := r * 10 + d;
+            m := q;
+        EFUDU
+        PLUWOK n < 0 DEWOTUSH LEKFESH
+            r := -r;
+        EFUDU
+        EPLOWEK s & " " & r;
+    EFUDU
+    line := TODETET();
+EFUDU

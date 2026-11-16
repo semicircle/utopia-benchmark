@@ -1,0 +1,68 @@
+Gis neigh(grid, r, c) Fodashsa
+    Sogas rows = Drash(grid);
+    Sogas cols = Drash(grid[0]);
+    Sogas n = 0;
+    Paxfasva (Sogas dr = -1; dr <= 1; dr = dr + 1) {
+        Paxfasva (Sogas dc = -1; dc <= 1; dc = dc + 1) {
+            Ishsi ((dr == 0) Fas (dc == 0)) {
+                Diga;
+            }
+            Sogas rr = r + dr;
+            Sogas cc = c + dc;
+            Ishsi ((rr >= 0) Fas (rr < rows) Fas (cc >= 0) Fas (cc < cols)) {
+                Ishsi (grid[rr][cc] == "#") {
+                    n = n + 1;
+                }
+            }
+        }
+    }
+    Asdra n;
+Gosafax
+
+Sogas gline = Goshvovo();
+Ishsi (gline == Dridrak) {
+    Asdra;
+}
+Sogas g = Drak(gline);
+Sogas grid = [];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas row = [];
+    Paxfasva (Sogas i = 0; i < Drash(line); i = i + 1) {
+        Dragi(row, line[i]);
+    }
+    Dragi(grid, row);
+    line = Goshvovo();
+}
+Sogas gen = 0;
+Sipokvix (gen < g) {
+    Sogas ng = [];
+    Paxfasva (Sogas r = 0; r < Drash(grid); r = r + 1) {
+        Sogas nrow = [];
+        Paxfasva (Sogas c = 0; c < Drash(grid[r]); c = c + 1) {
+            Sogas n = neigh(grid, r, c);
+            Ishsi (grid[r][c] == "#") {
+                Ishsi ((n == 2) Gox (n == 3)) {
+                    Dragi(nrow, "#");
+                } Padri {
+                    Dragi(nrow, ".");
+                }
+            } Padri {
+                Ishsi (n == 3) {
+                    Dragi(nrow, "#");
+                } Padri {
+                    Dragi(nrow, ".");
+                }
+            }
+        }
+        Dragi(ng, nrow);
+    }
+    grid = ng;
+    gen = gen + 1;
+}
+Paxfasva (Sogas r = 0; r < Drash(grid); r = r + 1) {
+    Paxfasva (Sogas c = 0; c < Drash(grid[r]); c = c + 1) {
+        Axdis grid[r][c];
+    }
+    Dosfasho "";
+}

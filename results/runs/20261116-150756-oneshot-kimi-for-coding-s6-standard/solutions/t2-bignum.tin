@@ -1,0 +1,100 @@
+tumumin splittok(s)
+    troufu parts = [];
+    troufu cur = "";
+    troufu i = 0;
+    tafashou i < utoufa(s)
+        troufu c = s[i];
+        sitrartu c == " " fisu drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                marboun(parts, cur);
+            drumin
+            cur = "";
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+        i = i + 1;
+    trushou
+    sitrartu cur ~= "" fisu drufirsa
+        marboun(parts, cur);
+    drumin
+    drur parts;
+drumin tumumin
+
+tumumin parsebig(s)
+    troufu ds = [];
+    troufu i = utoufa(s) - 1;
+    tafashou i >= 0
+        marboun(ds, shufa(s[i]));
+        i = i - 1;
+    trushou
+    drur ds;
+drumin tumumin
+
+tumumin addbig(a, b)
+    troufu r = [];
+    troufu carry = 0;
+    troufu i = 0;
+    tafashou i < utoufa(a) butrouta i < utoufa(b) butrouta carry ~= 0
+        troufu s = carry;
+        sitrartu i < utoufa(a) fisu drufirsa
+            s = s + a[i];
+        drumin
+        sitrartu i < utoufa(b) fisu drufirsa
+            s = s + b[i];
+        drumin
+        marboun(r, s % 10);
+        carry = s / 10;
+        i = i + 1;
+    trushou
+    drur r;
+drumin tumumin
+
+tumumin mulbig(a, b)
+    troufu r = [];
+    troufu total = utoufa(a) + utoufa(b);
+    sutrarsu i = 0 sou total - 1
+        marboun(r, 0);
+    moun i
+    troufu i = 0;
+    tafashou i < utoufa(a)
+        troufu carry = 0;
+        troufu j = 0;
+        tafashou j < utoufa(b)
+            troufu cur = r[i + j] + a[i] * b[j] + carry;
+            r[i + j] = cur % 10;
+            carry = cur / 10;
+            j = j + 1;
+        trushou
+        troufu p = i + utoufa(b);
+        tafashou carry > 0
+            troufu cur = r[p] + carry;
+            r[p] = cur % 10;
+            carry = cur / 10;
+            p = p + 1;
+        trushou
+        i = i + 1;
+    trushou
+    drur r;
+drumin tumumin
+
+tumumin bigtos(ds)
+    troufu hi = utoufa(ds) - 1;
+    tafashou hi > 0 dra ds[hi] == 0
+        hi = hi - 1;
+    trushou
+    troufu s = "";
+    tafashou hi >= 0
+        s = s + moufunsa(ds[hi]);
+        hi = hi - 1;
+    trushou
+    drur s;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu parts = splittok(line);
+    troufu a = parsebig(parts[0]);
+    troufu b = parsebig(parts[1]);
+    binmi bigtos(addbig(a, b)) + " " + bigtos(mulbig(a, b));
+    line = bounfou();
+trushou

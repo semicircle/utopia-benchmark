@@ -1,0 +1,18 @@
+ohetdi k = nelchiyul(nilhino()).
+ohetdi items = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    nimhol(items, line).
+    line = nilhino().
+dit
+ohetdi m = yuyem(items).
+rilniro m > 0 hutro nethe
+    ohetdi r = k kolethul m.
+    rilniro r < 0 hutro nethe
+        r = r + m.
+    dit
+    ohetdi start = m - r.
+    lemyunom i = 0 thikutli m - 1 mitho nethe
+        miyol items[(i + start) kolethul m].
+    dit
+dit

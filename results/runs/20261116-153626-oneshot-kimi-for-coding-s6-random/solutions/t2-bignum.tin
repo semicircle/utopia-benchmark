@@ -1,0 +1,123 @@
+tumumin split(s)
+    troufu parts = [];
+    troufu cur = "";
+    sitrartu s == "" fisu drufirsa
+        drur parts;
+    drumin
+    sutrarsu i = 1 sou utoufa(s)
+        sitrartu s[i] == " " fisu drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                marboun(parts, cur);
+            drumin
+            cur = "";
+        drumin tru drufirsa
+            cur = cur + s[i];
+        drumin
+    moun i
+    sitrartu cur ~= "" fisu drufirsa
+        marboun(parts, cur);
+    drumin
+    drur parts;
+drumin tumumin
+
+tumumin charval(c)
+    troufu ds = "0123456789";
+    sutrarsu i = 1 sou 10
+        sitrartu c == ds[i] fisu drufirsa
+            drur (i - 1);
+        drumin
+    moun i
+    drur -1;
+drumin tumumin
+
+tumumin digitchar(d)
+    troufu ds = "0123456789";
+    drur ds[(d + 1)];
+drumin tumumin
+
+tumumin todigits(s)
+    troufu ds = [];
+    sutrarsu i = 1 sou utoufa(s)
+        marboun(ds, charval(s[i]));
+    moun i
+    drur ds;
+drumin tumumin
+
+tumumin flip(xs)
+    troufu out = [];
+    sutrarsu i = utoufa(xs) sou 1 suntru -1
+        marboun(out, xs[i]);
+    moun i
+    drur out;
+drumin tumumin
+
+tumumin undigits(ds)
+    troufu i = 1;
+    tafashou (i < utoufa(ds)) dra (ds[i] == 0)
+        i = i + 1;
+    trushou
+    troufu out = "";
+    sutrarsu j = i sou utoufa(ds)
+        out = out + digitchar(ds[j]);
+    moun j
+    drur out;
+drumin tumumin
+
+tumumin bigadd(a, b)
+    troufu da = todigits(a);
+    troufu db = todigits(b);
+    troufu i = utoufa(da);
+    troufu j = utoufa(db);
+    troufu carry = 0;
+    troufu out = [];
+    tafashou ((i >= 1) butrouta (j >= 1)) butrouta (carry ~= 0)
+        troufu sum = carry;
+        sitrartu i >= 1 fisu drufirsa
+            sum = sum + da[i];
+            i = i - 1;
+        drumin
+        sitrartu j >= 1 fisu drufirsa
+            sum = sum + db[j];
+            j = j - 1;
+        drumin
+        marboun(out, sum % 10);
+        carry = sum / 10;
+    trushou
+    drur undigits(flip(out));
+drumin tumumin
+
+tumumin bigmul(a, b)
+    sitrartu a == "0" fisu drufirsa
+        drur "0";
+    drumin
+    sitrartu b == "0" fisu drufirsa
+        drur "0";
+    drumin
+    troufu da = todigits(a);
+    troufu db = todigits(b);
+    troufu total = (utoufa(da) + utoufa(db)) + 1;
+    troufu res = [];
+    sutrarsu i = 1 sou total
+        marboun(res, 0);
+    moun i
+    sutrarsu ia = utoufa(da) sou 1 suntru -1
+        sutrarsu ib = utoufa(db) sou 1 suntru -1
+            troufu offset = ((utoufa(da) - ia) + (utoufa(db) - ib));
+            troufu idx = total - offset;
+            res[idx] = res[idx] + (da[ia] * db[ib]);
+        moun ib
+    moun ia
+    sutrarsu idx = total sou 2 suntru -1
+        troufu carry = res[idx] / 10;
+        res[idx] = res[idx] % 10;
+        res[idx - 1] = res[idx - 1] + carry;
+    moun idx
+    drur undigits(res);
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu parts = split(line);
+    binmi (bigadd(parts[1], parts[2]) + " ") + bigmul(parts[1], parts[2]);
+    line = bounfou();
+trushou

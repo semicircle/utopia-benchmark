@@ -1,0 +1,44 @@
+eilyot nextGeneration(grid)
+    weltuxle h := dushzosh(grid);
+    weltuxle w := dushzosh(grid[0]);
+    weltuxle result := [];
+    keit (weltuxle r := 0; r < h; r := r + 1) {
+        weltuxle row := "";
+        keit (weltuxle c := 0; c < w; c := c + 1) {
+            weltuxle neighbours := 0;
+            keit (weltuxle dr := -1; dr <= 1; dr := dr + 1) {
+                keit (weltuxle dc := -1; dc <= 1; dc := dc + 1) {
+                    nei (dr == 0 yosheil dc == 0) {
+                        weshosho;
+                    }
+                    weltuxle nr := r + dr;
+                    weltuxle nc := c + dc;
+                    nei (nr >= 0 yosheil nr < h yosheil nc >= 0 yosheil nc < w yosheil grid[nr][nc] == "#") {
+                        neighbours := neighbours + 1;
+                    }
+                }
+            }
+            nei (neighbours == 3 yosheil (grid[r][c] == "#" yosheil neighbours == 2)) {
+                row := row + "#";
+            } wogeish {
+                row := row + ".";
+            }
+        }
+        koshkil(result, row);
+    }
+    chozulni result;
+iweil
+
+weltuxle generations := leidush(lono());
+weltuxle grid := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    koshkil(grid, line);
+    line := lono();
+}
+keit (weltuxle g := 0; g < generations; g := g + 1) {
+    grid := nextGeneration(grid);
+}
+keit (weltuxle i := 0; i < dushzosh(grid); i := i + 1) {
+    leshdei grid[i];
+}

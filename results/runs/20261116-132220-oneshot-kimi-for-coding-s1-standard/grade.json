@@ -1,0 +1,428 @@
+{
+  "tasks": [
+    {
+      "id": "t0-count",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-day-names",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-even-odd",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-factorial",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-fizzbuzz",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-hello",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-reverse-lines",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-digits",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-floordiv",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "2 3\n-4 1\n-4 -1\n2 -3\n1 3\n-3 3\n-1 5\n-1 8\n-1 6\n-333333334 -2\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "-108424 2738\n30565 15112\n-243427 -365\n299108 3008\n-34269 -7687\n-108611 -557\n-288574 -351\n-44732 2412\n27802 -8673\n10889 3857\n-118854 4956\n244203 -3686\n-114309 3718\n59334 15051\n89869 -5652\n-158696 261\n2574899 238\n-29061 2578\n-154752 298\n92453 -13710\n100007 -9831\n12748 14771\n125962 8492\n25171 3261\n-107"
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "-9 -5\n9 14\n-16 1\n3 12\n5 -15\n6 0\n3 0\n-6 7\n4 -3\n-3 -1\n-11 8\n2 -8\n4 -10\n8 0\n-17 0\n18 -6\n17 0\n20 0\n9 15\n-5 -3\n-1 -3\n-1 -11\n19 2\n-77 1\n-12 -1\n9 -9\n13 -7\n-38 2\n-11 1\n-10 4\n95 1\n13 9\n13 -3\n-31 -1\n11 3\n1 -10\n-38 0\n-1 15\n-7 0\n-43 2\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t1-palindromes",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rank",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 13: index 7 is out of range (valid: 0 to 6)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 49: index 0 is out of range: the value is empty\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 13: index 11 is out of range (valid: 0 to 10)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "04",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 13: index 4218 is out of range (valid: 0 to 4217)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "05",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 13: index 2 is out of range (valid: 0 to 1)\n",
+          "stdout_head": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t1-rotate",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        },
+        {
+          "name": "08",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-weekday",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "Saturday\nThursday\nThursday\nSaturday\nWednesday\nMonday\nTuesday\nFriday\nTuesday\nWednesday\nMonday\nSunday\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "Thursday\nThursday\nTuesday\nWednesday\nThursday\nSaturday\nFriday\nWednesday\nMonday\nFriday\nSaturday\nFriday\nMonday\nThursday\nTuesday\nFriday\nMonday\nFriday\nSunday\nWednesday\nThursday\nWednesday\nThursday\nMonday\nWednesday\nTuesday\nSunday\nWednesday\nTuesday\nThursday\nThursday\nFriday\nFriday\nWednesday\nFriday\nFriday\nSat"
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "Friday\nThursday\nSunday\nFriday\nMonday\nSunday\nSunday\nSunday\nThursday\nFriday\nWednesday\nWednesday\nWednesday\nSaturday\nSunday\nSaturday\nMonday\nTuesday\nThursday\nTuesday\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-bignum",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 80: index -1 is out of range: the value is empty\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 80: index -1 is out of range: the value is empty\n",
+          "stdout_head": "80982471953615510033296532138 2\n207408529315095349368197997030197930078059308411835091796768254532456611 8\n4581512776932273845531196161056263085370023718686759528099454490911444788826 5\n79820235507049019072579064934503507775231836304504403 2\n2904358439537879593221282649881688605476865827900709572766"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-life",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": ".#....\n..#...\n###...\n......\n......\n......\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "#..\n#..\n#..\n"
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "#\n"
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": ".######.##.....##\n##.#...#.........\n.##..#.#..##.##.#\n.#......#.#......\n........#.#.#.##.\n.....#.####...##.\n..#..#.#.##.##.##\n#..##.#..#.#....#\n.#....##...#.#..#\n##...###......#..\n....#.#.#.......#\n...##...##..#....\n#...##.##..####.#\n"
+        },
+        {
+          "name": "07",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "..##..#.#\n##..##...\n.#.##..##\n.#.####.#\n....#....\n###...###\n#..#.##..\n######.#.\n.#.###..#\n..##.##..\n####.#...\n###.####.\n###.##.##\n..#..#..#\n...##..#.\n.####..#.\n#.###.#.#\n#....#...\n.#..#..##\n.#.#.#.#.\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-rpn",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 35: index 5 is out of range (valid: 0 to 4)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 35: index 3 is out of range (valid: 0 to 2)\n",
+          "stdout_head": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-wordfreq",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 38: index 20 is out of range (valid: 0 to 19)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 38: index 65 is out of range (valid: 0 to 64)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 38: index 15 is out of range (valid: 0 to 14)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "04",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 38: index 3 is out of range (valid: 0 to 2)\n",
+          "stdout_head": ""
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "passed_tasks": 10,
+  "total_tasks": 17
+}

@@ -1,0 +1,28 @@
+Gis dayName(d) Fodashsa
+    Sogas r = "invalid";
+    Pidok (d) {
+    Dro 1:
+        r = "Monday";
+    Dro 2:
+        r = "Tuesday";
+    Dro 3:
+        r = "Wednesday";
+    Dro 4:
+        r = "Thursday";
+    Dro 5:
+        r = "Friday";
+    Dro 6:
+        r = "Saturday";
+    Dro 7:
+        r = "Sunday";
+    Papo:
+        r = "invalid";
+    }
+    Asdra r;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Dosfasho dayName(Drak(line));
+    line = Goshvovo();
+}

@@ -1,0 +1,362 @@
+{
+  "tasks": [
+    {
+      "id": "t0-count",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-day-names",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-even-odd",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-factorial",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-fizzbuzz",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-hello",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-reverse-lines",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-digits",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-floordiv",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-palindromes",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rank",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rotate",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        },
+        {
+          "name": "08",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-weekday",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-bignum",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-life",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-rpn",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-wordfreq",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "garden 32\nnorth 21\nstone 21\nriver 20\nlight 19\nharbor 15\nquiet 15\nember 14\nglass 14\ncopper 8\n"
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "123 1\n456 1\n"
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "passed_tasks": 16,
+  "total_tasks": 17
+}

@@ -1,0 +1,21 @@
+plulai first := playadu();
+atdoyal (first == aiplai) {
+    druna;
+}
+plulai k := plaltai(first);
+plulai items := [];
+plulai line := playadu();
+edrushe (line <> aiplai)
+    sutse(items, line);
+    line := playadu();
+aitudre
+plulai n := dra(items);
+atdoyal (n > 0) {
+    plulai r := k % n;
+    atdoyal (r < 0) {
+        r := r + n;
+    }
+    shoyo i := 0 busale n - 1
+        shaibe items[(i - r + n) % n];
+    pla i
+}

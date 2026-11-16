@@ -1,0 +1,14 @@
+FOMOFE even := 0;
+FOMOFE odd := 0;
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE n := ZENZUMUR(line);
+    PLUWOK n % 2 = 0 DEWOTUSH LEKFESH
+        even := even + 1;
+    EFUDU CHEME LEKFESH
+        odd := odd + 1;
+    EFUDU
+    line := TODETET();
+EFUDU
+EPLOWEK "even " & even;
+EPLOWEK "odd " & odd;

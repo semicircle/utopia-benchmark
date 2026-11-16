@@ -1,0 +1,36 @@
+nudro lowerchar(c) {
+    plulai ups := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    shoyo i := 1 busale 27
+        atdoyal (ups[i] == c) {
+            druna "abcdefghijklmnopqrstuvwxyz"[i];
+        }
+    pla i
+    druna c;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai f := "";
+    shoyo i := 1 busale dra(line) + 1
+        plulai c := line[i];
+        atdoyal ((c >= "0" rulsai c <= "9") tobe (c >= "a" rulsai c <= "z") tobe (c >= "A" rulsai c <= "Z")) {
+            f := f + lowerchar(c);
+        }
+    pla i
+    plulai ok := eretde;
+    plulai i := 1;
+    plulai j := dra(f);
+    edrushe i < j
+        atdoyal (f[i] <> f[j]) {
+            ok := nonotru;
+        }
+        i := i + 1;
+        j := j - 1;
+    aitudre
+    atdoyal (ok) {
+        shaibe "yes";
+    } bulbayo {
+        shaibe "no";
+    }
+    line := playadu();
+aitudre

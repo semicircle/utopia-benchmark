@@ -1,0 +1,66 @@
+FOMOFE g := ZENZUMUR(TODETET());
+FOMOFE grid := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE row := [];
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(line) LOLO LEKFESH
+        PLUWOK line[i] = "#" DEWOTUSH LEKFESH
+            WESH(row, 1);
+        EFUDU CHEME LEKFESH
+            WESH(row, 0);
+        EFUDU
+        i := i + 1;
+    EFUDU
+    WESH(grid, row);
+    line := TODETET();
+EFUDU
+FOMOFE R := FORMOWE(grid);
+FOMOFE C := 0;
+PLUWOK R > 0 DEWOTUSH LEKFESH
+    C := FORMOWE(grid[0]);
+EFUDU
+
+TUTCHEK gen := 1 ZUWOWEN g LOLO LEKFESH
+    FOMOFE ng := [];
+    TUTCHEK r := 0 ZUWOWEN R - 1 LOLO LEKFESH
+        FOMOFE nrow := [];
+        TUTCHEK c := 0 ZUWOWEN C - 1 LOLO LEKFESH
+            FOMOFE cnt := 0;
+            TUTCHEK dr := -1 ZUWOWEN 1 LOLO LEKFESH
+                TUTCHEK dc := -1 ZUWOWEN 1 LOLO LEKFESH
+                    PLUWOK TEMO (dr = 0 ZULUSHTE dc = 0) DEWOTUSH LEKFESH
+                        FOMOFE rr := r + dr;
+                        FOMOFE cc := c + dc;
+                        PLUWOK rr >= 0 ZULUSHTE rr < R ZULUSHTE cc >= 0 ZULUSHTE cc < C DEWOTUSH LEKFESH
+                            cnt := cnt + grid[rr][cc];
+                        EFUDU
+                    EFUDU
+                EFUDU
+            EFUDU
+            FOMOFE alive := 0;
+            PLUWOK grid[r][c] = 1 DEWOTUSH LEKFESH
+                PLUWOK cnt = 2 MUR cnt = 3 DEWOTUSH LEKFESH
+                    alive := 1;
+                EFUDU
+            EFUDU CHEME PLUWOK cnt = 3 DEWOTUSH LEKFESH
+                alive := 1;
+            EFUDU
+            WESH(nrow, alive);
+        EFUDU
+        WESH(ng, nrow);
+    EFUDU
+    grid := ng;
+EFUDU
+
+TUTCHEK r := 0 ZUWOWEN R - 1 LOLO LEKFESH
+    FOMOFE s := "";
+    TUTCHEK c := 0 ZUWOWEN C - 1 LOLO LEKFESH
+        PLUWOK grid[r][c] = 1 DEWOTUSH LEKFESH
+            s := s & "#";
+        EFUDU CHEME LEKFESH
+            s := s & ".";
+        EFUDU
+    EFUDU
+    EPLOWEK s;
+EFUDU

@@ -1,0 +1,35 @@
+eilyot clean(s)
+    weltuxle r := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (c <> " " elish c <> "\t" elish c <> "\r") {
+            r := r + c;
+        }
+    }
+    chozulni r;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle s := clean(line);
+    nei (dushzosh(s) > 0) {
+        weltuxle neg := eikreit;
+        weltuxle sum := 0;
+        weltuxle rev := 0;
+        keit (weltuxle i := dushzosh(s) - 1; i >= 0; i := i - 1) {
+            weltuxle c := s[i];
+            nei (c == "-") {
+                neg := dut;
+            } wogeish {
+                weltuxle d := leidush(c);
+                sum := sum + d;
+                rev := rev * 10 + d;
+            }
+        }
+        nei (neg) {
+            rev := 0 - rev;
+        }
+        leshdei sum + " " + rev;
+    }
+    line := lono();
+}

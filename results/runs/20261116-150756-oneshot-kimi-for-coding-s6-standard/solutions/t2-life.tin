@@ -1,0 +1,54 @@
+troufu g = shufa(bounfou());
+troufu rows = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    marboun(rows, line);
+    line = bounfou();
+trushou
+troufu R = utoufa(rows);
+troufu C = utoufa(rows[0]);
+
+sutrarsu gen = 0 sou g - 1
+    troufu nrows = [];
+    sutrarsu r = 0 sou R - 1
+        troufu nrow = "";
+        sutrarsu c = 0 sou C - 1
+            troufu cnt = 0;
+            sutrarsu dr = -1 sou 1
+                sutrarsu dc = -1 sou 1
+                    sitrartu shutoun (dr == 0 dra dc == 0) fisu drufirsa
+                        troufu rr = r + dr;
+                        troufu cc = c + dc;
+                        sitrartu rr >= 0 dra rr < R dra cc >= 0 dra cc < C fisu drufirsa
+                            sitrartu rows[rr][cc] == "#" fisu drufirsa
+                                cnt = cnt + 1;
+                            drumin
+                        drumin
+                    drumin
+                moun dc
+            moun dr
+            troufu alive = rows[r][c] == "#";
+            troufu na = fufir;
+            sitrartu alive fisu drufirsa
+                sitrartu cnt == 2 butrouta cnt == 3 fisu drufirsa
+                    na = sibitrou;
+                drumin
+            drumin tru drufirsa
+                sitrartu cnt == 3 fisu drufirsa
+                    na = sibitrou;
+                drumin
+            drumin
+            sitrartu na fisu drufirsa
+                nrow = nrow + "#";
+            drumin tru drufirsa
+                nrow = nrow + ".";
+            drumin
+        moun c
+        marboun(nrows, nrow);
+    moun r
+    rows = nrows;
+moun gen
+
+sutrarsu r = 0 sou R - 1
+    binmi rows[r];
+moun r

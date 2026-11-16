@@ -1,0 +1,6 @@
+ohetdi n = nelchiyul(nilhino()).
+ohetdi f = 1.
+lemyunom i = 2 thikutli n + 1 mitho nethe
+    f = f * i.
+dit
+miyol f.

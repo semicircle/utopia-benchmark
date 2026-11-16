@@ -12,6 +12,15 @@ import (
 // Programs that print only integers and strings, so their output is the same
 // in every dialect.
 var programs = map[string]string{
+	"division": `
+func div(a, b) { return a / b; }
+let pairs = [7, 2, -7, 2, 7, -2, -7, -2, 6, 3, -6, 3, 0, 5, 1, 7, -1, 7, 123, 10, -123, 10];
+for (let i = 0; i < len(pairs); i = i + 2) {
+  let a = pairs[i];
+  let b = pairs[i + 1];
+  print a & " " & b & ": " & (a / b) & " " & (a % b) & " " & div(a, b) & " " & ((a + 100) % b);
+}
+`,
 	"loops": `
 let total = 0;
 count i from 1 to 10 { total = total + i; }

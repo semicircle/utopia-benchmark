@@ -1,0 +1,22 @@
+goyu line <- uyotho().
+omethol line != gursume
+    dre wumdror(line) > 0 ethur
+        goyu n <- druwol(line).
+        goyu a <- n.
+        dre n < 0 ethur
+            a <- -n.
+        wodrotru dre
+        goyu s <- 0.
+        goyu r <- 0.
+        omethol a > 0
+            s <- s + (a trumguwu 10).
+            r <- (r * 10) + (a trumguwu 10).
+            a <- a / 10.
+        shusushe
+        dre n < 0 ethur
+            r <- -r.
+        wodrotru dre
+        suwe s & " " & r.
+    wodrotru dre
+    line <- uyotho().
+shusushe

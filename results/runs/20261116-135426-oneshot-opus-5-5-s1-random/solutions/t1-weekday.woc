@@ -1,0 +1,41 @@
+eilyot clean(s)
+    weltuxle r := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (c <> " " elish c <> "\t" elish c <> "\r") {
+            r := r + c;
+        }
+    }
+    chozulni r;
+iweil
+
+eilyot fd(a, b)
+    chozulni 0 - ((0 - a) / b);
+iweil
+
+eilyot num(s, a, b)
+    weltuxle v := 0;
+    keit (weltuxle j := a; j < b; j := j + 1) {
+        v := v * 10 + leidush(s[j]);
+    }
+    chozulni v;
+iweil
+
+weltuxle names := ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+weltuxle t := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle s := clean(line);
+    nei (dushzosh(s) >= 10) {
+        weltuxle y := num(s, 0, 4);
+        weltuxle m := num(s, 5, 7);
+        weltuxle d := num(s, 8, 10);
+        nei (m < 3) {
+            y := y - 1;
+        }
+        weltuxle v := y + fd(y, 4) - fd(y, 100) + fd(y, 400) + t[m - 1] + d;
+        weltuxle w := v - 7 * fd(v, 7);
+        leshdei names[w];
+    }
+    line := lono();
+}

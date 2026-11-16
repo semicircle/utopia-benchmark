@@ -1,0 +1,73 @@
+func lowerLetter(c) {
+    let up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let lo = "abcdefghijklmnopqrstuvwxyz";
+    for (let i = 0; i < 26; i = i + 1) {
+        if (up[i] == c) {
+            return lo[i];
+        }
+        if (lo[i] == c) {
+            return c;
+        }
+    }
+    return "";
+}
+
+func before(wa, ca, wb, cb) {
+    if (ca != cb) {
+        return ca > cb;
+    }
+    return wa < wb;
+}
+
+let words = [];
+let counts = [];
+let line = readline();
+while (line != none) {
+    let cur = "";
+    for (let i = 0; i <= len(line); i = i + 1) {
+        let c = "";
+        if (i < len(line)) {
+            c = lowerLetter(line[i]);
+        }
+        if (c != "") {
+            cur = cur & c;
+        } else if (cur != "") {
+            let found = -1;
+            for (let j = 0; j < len(words); j = j + 1) {
+                if (words[j] == cur) {
+                    found = j;
+                }
+            }
+            if (found >= 0) {
+                counts[found] = counts[found] + 1;
+            } else {
+                push(words, cur);
+                push(counts, 1);
+            }
+            cur = "";
+        }
+    }
+    line = readline();
+}
+for (let i = 1; i < len(words); i = i + 1) {
+    let j = i;
+    while (j > 0) {
+        if (not before(words[j], counts[j], words[j - 1], counts[j - 1])) {
+            break;
+        }
+        let tw = words[j];
+        words[j] = words[j - 1];
+        words[j - 1] = tw;
+        let tc = counts[j];
+        counts[j] = counts[j - 1];
+        counts[j - 1] = tc;
+        j = j - 1;
+    }
+}
+let shown = len(words);
+if (shown > 10) {
+    shown = 10;
+}
+for (let i = 0; i < shown; i = i + 1) {
+    print words[i] & " " & counts[i];
+}

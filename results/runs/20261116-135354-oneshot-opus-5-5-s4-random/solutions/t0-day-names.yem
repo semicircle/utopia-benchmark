@@ -1,0 +1,34 @@
+Ruyoyo blank(s)
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Mushu s[i] ~= " " Pethe s[i] ~= "\t" Pethe s[i] ~= "\r" Yeshil Hupo
+            Omel Yaki;
+        Tho
+    }
+    Omel Yupu;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu Shurisho blank(line) Yeshil Hupo
+        Trepiho n := Eshiyer(line);
+        Pakru Sher n
+        Sher 1
+            Rashar "Monday";
+        Sher 2
+            Rashar "Tuesday";
+        Sher 3
+            Rashar "Wednesday";
+        Sher 4
+            Rashar "Thursday";
+        Sher 5
+            Rashar "Friday";
+        Sher 6
+            Rashar "Saturday";
+        Sher 7
+            Rashar "Sunday";
+        Sher Thotri
+            Rashar "invalid";
+        Tho Pakru
+    Tho
+    line := Thoke();
+}

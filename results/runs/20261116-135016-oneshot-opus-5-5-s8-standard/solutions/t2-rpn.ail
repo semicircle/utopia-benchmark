@@ -1,0 +1,102 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai i := 0;
+    edrushe (i < dra(s))
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t") {
+            atdoyal (dra(cur) > 0) {
+                sutse(res, cur);
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + c;
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (dra(cur) > 0) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+nudro isint(t) {
+    plulai start := 0;
+    atdoyal (t[0] == "-") {
+        start := 1;
+    }
+    atdoyal (dra(t) <= start) {
+        druna nonotru;
+    }
+    plulai i := start;
+    edrushe (i < dra(t))
+        atdoyal (t[i] < "0" tobe t[i] > "9") {
+            druna nonotru;
+        }
+        i := i + 1;
+    aitudre
+    druna eretde;
+}
+
+plulai line := playadu();
+edrushe (line <> aiplai)
+    plulai toks := split(line);
+    plulai st := [];
+    plulai sp := 0;
+    plulai ok := dra(toks) > 0;
+    plulai ti := 0;
+    edrushe (ok rulsai ti < dra(toks))
+        plulai t := toks[ti];
+        ti := ti + 1;
+        plulai havev := nonotru;
+        plulai v := 0;
+        atdoyal (isint(t)) {
+            v := plaltai(t);
+            havev := eretde;
+        } bulbayo atdoyal (t == "+" tobe t == "-" tobe t == "*" tobe t == "/" tobe t == "%") {
+            atdoyal (sp < 2) {
+                ok := nonotru;
+            } bulbayo {
+                plulai b := st[sp - 1];
+                plulai a := st[sp - 2];
+                sp := sp - 2;
+                atdoyal (t == "+") {
+                    v := a + b;
+                    havev := eretde;
+                } bulbayo atdoyal (t == "-") {
+                    v := a - b;
+                    havev := eretde;
+                } bulbayo atdoyal (t == "*") {
+                    v := a * b;
+                    havev := eretde;
+                } bulbayo {
+                    atdoyal (b == 0) {
+                        ok := nonotru;
+                    } bulbayo atdoyal (t == "/") {
+                        v := a / b;
+                        havev := eretde;
+                    } bulbayo {
+                        v := a % b;
+                        havev := eretde;
+                    }
+                }
+            }
+        } bulbayo {
+            ok := nonotru;
+        }
+        atdoyal (ok rulsai havev) {
+            atdoyal (sp < dra(st)) {
+                st[sp] := v;
+            } bulbayo {
+                sutse(st, v);
+            }
+            sp := sp + 1;
+        }
+    aitudre
+    atdoyal (ok rulsai sp == 1) {
+        shaibe st[0];
+    } bulbayo {
+        shaibe "error";
+    }
+    line := playadu();
+aitudre

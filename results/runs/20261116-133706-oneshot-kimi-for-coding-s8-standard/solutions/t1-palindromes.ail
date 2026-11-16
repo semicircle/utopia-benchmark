@@ -1,0 +1,85 @@
+nudro lower(c) {
+    otai (c) {
+    dai "A":
+        druna "a";
+    dai "B":
+        druna "b";
+    dai "C":
+        druna "c";
+    dai "D":
+        druna "d";
+    dai "E":
+        druna "e";
+    dai "F":
+        druna "f";
+    dai "G":
+        druna "g";
+    dai "H":
+        druna "h";
+    dai "I":
+        druna "i";
+    dai "J":
+        druna "j";
+    dai "K":
+        druna "k";
+    dai "L":
+        druna "l";
+    dai "M":
+        druna "m";
+    dai "N":
+        druna "n";
+    dai "O":
+        druna "o";
+    dai "P":
+        druna "p";
+    dai "Q":
+        druna "q";
+    dai "R":
+        druna "r";
+    dai "S":
+        druna "s";
+    dai "T":
+        druna "t";
+    dai "U":
+        druna "u";
+    dai "V":
+        druna "v";
+    dai "W":
+        druna "w";
+    dai "X":
+        druna "x";
+    dai "Y":
+        druna "y";
+    dai "Z":
+        druna "z";
+    efu:
+        druna c;
+    }
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai t := "";
+    shoyo i := 0 busale dra(line) - 1
+        plulai c := line[i];
+        atdoyal (c >= "0" rulsai c <= "9") {
+            t := t + c;
+        } bulbayo atdoyal (c >= "a" rulsai c <= "z") {
+            t := t + c;
+        } bulbayo atdoyal (c >= "A" rulsai c <= "Z") {
+            t := t + lower(c);
+        }
+    pla i
+    plulai r := "";
+    plulai j := dra(t) - 1;
+    edrushe j >= 0
+        r := r + t[j];
+        j := j - 1;
+    aitudre
+    atdoyal (t == r) {
+        shaibe "yes";
+    } bulbayo {
+        shaibe "no";
+    }
+    line := playadu();
+aitudre

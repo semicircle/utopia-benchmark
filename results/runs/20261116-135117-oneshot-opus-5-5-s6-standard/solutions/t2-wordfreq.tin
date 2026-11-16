@@ -1,0 +1,101 @@
+tumumin lower(c)
+    sitrartu c >= "A" dra c <= "Z" fisu drufirsa
+        troufu up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        troufu low = "abcdefghijklmnopqrstuvwxyz";
+        troufu lo = 0;
+        troufu hi = 25;
+        tafashou lo < hi
+            troufu mid = (lo + hi) / 2;
+            sitrartu up[mid] < c fisu drufirsa
+                lo = mid + 1;
+            drumin tru drufirsa
+                hi = mid;
+            drumin
+        trushou
+        drur low[lo];
+    drumin
+    drur c;
+drumin tumumin
+
+tumumin msort(xs, lo, hi)
+    sitrartu hi - lo <= 1 fisu drufirsa
+        troufu r = [];
+        sitrartu hi - lo == 1 fisu drufirsa
+            marboun(r, xs[lo]);
+        drumin
+        drur r;
+    drumin
+    troufu mid = (lo + hi) / 2;
+    troufu a = msort(xs, lo, mid);
+    troufu b = msort(xs, mid, hi);
+    troufu res = [];
+    troufu i = 0;
+    troufu j = 0;
+    troufu na = utoufa(a);
+    troufu nb = utoufa(b);
+    tafashou i < na dra j < nb
+        sitrartu a[i] <= b[j] fisu drufirsa
+            marboun(res, a[i]);
+            i = i + 1;
+        drumin tru drufirsa
+            marboun(res, b[j]);
+            j = j + 1;
+        drumin
+    trushou
+    tafashou i < na
+        marboun(res, a[i]);
+        i = i + 1;
+    trushou
+    tafashou j < nb
+        marboun(res, b[j]);
+        j = j + 1;
+    trushou
+    drur res;
+drumin tumumin
+
+troufu words = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu cur = "";
+    sutrarsu i = 0 sou utoufa(line) - 1
+        troufu c = line[i];
+        sitrartu (c >= "a" dra c <= "z") butrouta (c >= "A" dra c <= "Z") fisu drufirsa
+            cur = cur + lower(c);
+        drumin tru drufirsa
+            sitrartu utoufa(cur) > 0 fisu drufirsa
+                marboun(words, cur);
+                cur = "";
+            drumin
+        drumin
+    moun i
+    sitrartu utoufa(cur) > 0 fisu drufirsa
+        marboun(words, cur);
+    drumin
+    line = bounfou();
+trushou
+troufu sorted = msort(words, 0, utoufa(words));
+troufu uw = [];
+troufu uc = [];
+sutrarsu i = 0 sou utoufa(sorted) - 1
+    troufu wd = sorted[i];
+    troufu nu = utoufa(uw);
+    sitrartu nu > 0 dra uw[nu - 1] == wd fisu drufirsa
+        uc[nu - 1] = uc[nu - 1] + 1;
+    drumin tru drufirsa
+        marboun(uw, wd);
+        marboun(uc, 1);
+    drumin
+moun i
+sutrarsu k = 1 sou 10
+    troufu best = -1;
+    sutrarsu i = 0 sou utoufa(uw) - 1
+        sitrartu uc[i] > 0 dra (best == -1 butrouta uc[i] > uc[best]) fisu drufirsa
+            best = i;
+        drumin
+    moun i
+    sitrartu best == -1 fisu drufirsa
+        basu;
+    drumin
+    binmi uw[best] + " " + uc[best];
+    uc[best] = 0;
+moun k

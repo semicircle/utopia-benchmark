@@ -1,0 +1,123 @@
+rimli split(line) nethe
+    ohetdi toks = [].
+    ohetdi cur = "".
+    ohetdi i = 0.
+    konit i < yuyem(line) mitho nethe
+        ohetdi c = line[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(toks, cur).
+            dit
+            cur = "".
+        dit thumku nethe
+            cur = cur & c.
+        dit
+        i = i + 1.
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(toks, cur).
+    dit
+    yiletho toks.
+dit
+
+rimli trimBig(a) nethe
+    ohetdi n = yuyem(a).
+    konit n > 1 lotvethu a[n - 1] == 0 mitho nethe
+        n = n - 1.
+    dit
+    ohetdi out = [].
+    ohetdi i = 0.
+    konit i < n mitho nethe
+        nimhol(out, a[i]).
+        i = i + 1.
+    dit
+    yiletho out.
+dit
+
+rimli parseBig(s) nethe
+    ohetdi res = [].
+    ohetdi i = yuyem(s) - 1.
+    konit i >= 0 mitho nethe
+        nimhol(res, nelchiyul(s[i])).
+        i = i - 1.
+    dit
+    yiletho trimBig(res).
+dit
+
+rimli addBig(a, b) nethe
+    ohetdi res = [].
+    ohetdi i = 0.
+    ohetdi carry = 0.
+    konit i < yuyem(a) nime i < yuyem(b) nime carry > 0 mitho nethe
+        ohetdi da = 0.
+        ohetdi db = 0.
+        rilniro i < yuyem(a) hutro nethe
+            da = a[i].
+        dit
+        rilniro i < yuyem(b) hutro nethe
+            db = b[i].
+        dit
+        ohetdi s = da + db + carry.
+        nimhol(res, s kolethul 10).
+        carry = s / 10.
+        i = i + 1.
+    dit
+    yiletho trimBig(res).
+dit
+
+rimli mulBig(a, b) nethe
+    ohetdi la = yuyem(a).
+    ohetdi lb = yuyem(b).
+    rilniro la == 1 lotvethu a[0] == 0 hutro nethe
+        yiletho [0].
+    dit
+    rilniro lb == 1 lotvethu b[0] == 0 hutro nethe
+        yiletho [0].
+    dit
+    ohetdi res = [].
+    ohetdi i = 0.
+    konit i < la + lb + 1 mitho nethe
+        nimhol(res, 0).
+        i = i + 1.
+    dit
+    i = 0.
+    konit i < la mitho nethe
+        ohetdi carry = 0.
+        ohetdi j = 0.
+        konit j < lb mitho nethe
+            ohetdi cur = res[i + j] + a[i]*b[j] + carry.
+            res[i + j] = cur kolethul 10.
+            carry = cur / 10.
+            j = j + 1.
+        dit
+        ohetdi k = i + lb.
+        konit carry > 0 mitho nethe
+            ohetdi cur2 = res[k] + carry.
+            res[k] = cur2 kolethul 10.
+            carry = cur2 / 10.
+            k = k + 1.
+        dit
+        i = i + 1.
+    dit
+    yiletho trimBig(res).
+dit
+
+rimli writeBig(a) nethe
+    ohetdi i = yuyem(a) - 1.
+    konit i >= 0 mitho nethe
+        motdi a[i].
+        i = i - 1.
+    dit
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi toks = split(line).
+    ohetdi a = parseBig(toks[0]).
+    ohetdi b = parseBig(toks[1]).
+    writeBig(addBig(a, b)).
+    motdi " ".
+    writeBig(mulBig(a, b)).
+    miyol "".
+    line = nilhino().
+dit

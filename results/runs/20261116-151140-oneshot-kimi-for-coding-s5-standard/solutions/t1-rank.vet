@@ -1,0 +1,56 @@
+rimli split(line) nethe
+    ohetdi toks = [].
+    ohetdi cur = "".
+    ohetdi i = 0.
+    konit i < yuyem(line) mitho nethe
+        ohetdi c = line[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(toks, cur).
+            dit
+            cur = "".
+        dit thumku nethe
+            cur = cur & c.
+        dit
+        i = i + 1.
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(toks, cur).
+    dit
+    yiletho toks.
+dit
+
+rimli countLess(xs, q) nethe
+    ohetdi lo = 0.
+    ohetdi hi = yuyem(xs).
+    konit lo < hi mitho nethe
+        ohetdi mid = (lo + hi) / 2.
+        rilniro xs[mid] < q hutro nethe
+            lo = mid + 1.
+        dit thumku nethe
+            hi = mid.
+        dit
+    dit
+    yiletho lo.
+dit
+
+ohetdi first = nilhino().
+ohetdi toks = split(first).
+ohetdi arr = [].
+ohetdi i = 0.
+konit i < yuyem(toks) mitho nethe
+    nimhol(arr, nelchiyul(toks[i])).
+    i = i + 1.
+dit
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi q = nelchiyul(line).
+    ohetdi c = countLess(arr, q).
+    motdi c & " ".
+    rilniro (c < yuyem(arr)) lotvethu (arr[c] == q) hutro nethe
+        miyol "found".
+    dit thumku nethe
+        miyol "missing".
+    dit
+    line = nilhino().
+dit

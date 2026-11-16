@@ -1,0 +1,86 @@
+Ruyoyo substr(s, lo, hi)
+    Trepiho r := "";
+    Pil (Trepiho i := lo; i < hi; i := i + 1) {
+        r := r + s[i];
+    }
+    Omel r;
+Opa
+
+Ruyoyo findsp(s)
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Mushu s[i] = " " Yeshil Hupo
+            Omel i;
+        Tho
+    }
+    Omel -1;
+Opa
+
+Ruyoyo dig(s, i)
+    Mushu i < 0 Yeshil Hupo
+        Omel 0;
+    Tho
+    Omel Eshiyer(s[i]);
+Opa
+
+Ruyoyo badd(a, b)
+    Trepiho i := Purmo(a) - 1;
+    Trepiho j := Purmo(b) - 1;
+    Trepiho carry := 0;
+    Trepiho res := "";
+    Hemorhor {
+        Trepiho da := dig(a, i);
+        Trepiho db := dig(b, j);
+        Trepiho sum := da + db + carry;
+        res := Mitrer(sum % 10) + res;
+        carry := sum / 10;
+        i := i - 1;
+        j := j - 1;
+    } Rokomi (i >= 0 Hiyikra j >= 0 Hiyikra carry > 0);
+    Mushu carry > 0 Yeshil Hupo
+        res := Mitrer(carry) + res;
+    Tho
+    Omel res;
+Opa
+
+Ruyoyo bmul(a, b)
+    Trepiho la := Purmo(a);
+    Trepiho lb := Purmo(b);
+    Trepiho res := [];
+    Pil (Trepiho i := 0; i < la + lb; i := i + 1) {
+        Theki(res, 0);
+    }
+    Pil (Trepiho i := la - 1; i >= 0; i := i - 1) {
+        Pil (Trepiho j := lb - 1; j >= 0; j := j - 1) {
+            Trepiho p := Eshiyer(a[i]) * Eshiyer(b[j]);
+            Trepiho pos := i + j + 1;
+            Trepiho s := res[pos] + p;
+            res[pos] := s % 10;
+            Trepiho c := s / 10;
+            Trepiho k := pos - 1;
+            Rokomi (c > 0) {
+                Trepiho s2 := res[k] + c;
+                res[k] := s2 % 10;
+                c := s2 / 10;
+                k := k - 1;
+            }
+        }
+    }
+    Trepiho st := 0;
+    Rokomi (st < la + lb - 1 Pethe res[st] = 0) {
+        st := st + 1;
+    }
+    Trepiho out := "";
+    Pil (Trepiho i := st; i < la + lb; i := i + 1) {
+        out := out + Mitrer(res[i]);
+    }
+    Omel out;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho sp := findsp(line);
+    Trepiho a := substr(line, 0, sp);
+    Trepiho b := substr(line, sp + 1, Purmo(line));
+    Rashar badd(a, b) + " " + bmul(a, b);
+    line := Thoke();
+}

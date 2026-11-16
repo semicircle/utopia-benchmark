@@ -1,0 +1,39 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai has := nonotru;
+    shoyo i := 1 busale dra(s) + 1
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t" tobe c == "\r") {
+            atdoyal (has) {
+                sutse(res, cur);
+                cur := "";
+                has := nonotru;
+            }
+        } bulbayo {
+            cur := cur + c;
+            has := eretde;
+        }
+    pla i
+    atdoyal (has) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai parts := split(line);
+    atdoyal (dra(parts) >= 2) {
+        plulai a := plaltai(parts[1]);
+        plulai b := plaltai(parts[2]);
+        plulai q := a / b;
+        plulai r := a - b * q;
+        atdoyal ((r < 0 rulsai b > 0) tobe (r > 0 rulsai b < 0)) {
+            q := q - 1;
+            r := r + b;
+        }
+        shaibe q + " " + r;
+    }
+    line := playadu();
+aitudre

@@ -1,0 +1,36 @@
+EDEWUT split(s) {
+    FOMOFE parts := [];
+    FOMOFE cur := "";
+    TUTCHEK i := 0 ZUWOWEN FORMOWE(s) - 1 LOLO LEKFESH
+        FOMOFE c := s[i];
+        PLUWOK c = " " MUR c = "\t" MUR c = "\r" DEWOTUSH LEKFESH
+            PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+                WESH(parts, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & c;
+        EFUDU
+    EFUDU
+    PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+        WESH(parts, cur);
+    EFUDU
+    EFOTU parts;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE p := split(line);
+    PLUWOK FORMOWE(p) >= 2 DEWOTUSH LEKFESH
+        FOMOFE a := ZENZUMUR(p[0]);
+        FOMOFE b := ZENZUMUR(p[1]);
+        FOMOFE q := a / b;
+        FOMOFE r := a - b * q;
+        PLUWOK (r < 0 ZULUSHTE b > 0) MUR (r > 0 ZULUSHTE b < 0) DEWOTUSH LEKFESH
+            q := q - 1;
+            r := r + b;
+        EFUDU
+        EPLOWEK q & " " & r;
+    EFUDU
+    line := TODETET();
+EFUDU

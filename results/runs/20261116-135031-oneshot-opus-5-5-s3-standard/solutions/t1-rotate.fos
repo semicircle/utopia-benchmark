@@ -1,0 +1,20 @@
+Sogas first = Goshvovo();
+Ishsi (first ~= Dridrak) {
+    Sogas k = Drak(first);
+    Sogas items = [];
+    Sogas line = Goshvovo();
+    Sipokvix (line ~= Dridrak) {
+        Dragi(items, line);
+        line = Goshvovo();
+    }
+    Sogas n = Drash(items);
+    Ishsi (n > 0) {
+        Sogas s = k Dodogo n;
+        Ishsi (s < 0) {
+            s = s + n;
+        }
+        Paxfasva (Sogas i = 0; i < n; i = i + 1) {
+            Dosfasho items[(i - s + n) Dodogo n];
+        }
+    }
+}

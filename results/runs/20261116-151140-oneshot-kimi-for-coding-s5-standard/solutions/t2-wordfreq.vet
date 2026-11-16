@@ -1,0 +1,82 @@
+rimli isDigit(c) nethe
+    yiletho c >= "0" lotvethu c <= "9".
+dit
+
+rimli isLetter(c) nethe
+    yiletho (c >= "a" lotvethu c <= "z") nime (c >= "A" lotvethu c <= "Z").
+dit
+
+rimli lowerChar(c) nethe
+    ohetdi up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    ohetdi lo = "abcdefghijklmnopqrstuvwxyz".
+    rilniro c >= "A" lotvethu c <= "Z" hutro nethe
+        ohetdi i = 0.
+        konit i < 26 mitho nethe
+            rilniro up[i] == c hutro nethe
+                yiletho lo[i].
+            dit
+            i = i + 1.
+        dit
+    dit
+    yiletho c.
+dit
+
+rimli addWord(ws, fs, w) nethe
+    ohetdi i = 0.
+    konit i < yuyem(ws) mitho nethe
+        rilniro ws[i] == w hutro nethe
+            fs[i] = fs[i] + 1.
+            yiletho emletlel.
+        dit
+        i = i + 1.
+    dit
+    nimhol(ws, w).
+    nimhol(fs, 1).
+    yiletho emletlel.
+dit
+
+ohetdi words = [].
+ohetdi freqs = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi cur = "".
+    ohetdi i = 0.
+    konit i < yuyem(line) mitho nethe
+        ohetdi c = line[i].
+        rilniro isLetter(c) hutro nethe
+            cur = cur & lowerChar(c).
+        dit thumku nethe
+            rilniro cur <> "" hutro nethe
+                addWord(words, freqs, cur).
+            dit
+            cur = "".
+        dit
+        i = i + 1.
+    dit
+    rilniro cur <> "" hutro nethe
+        addWord(words, freqs, cur).
+    dit
+    line = nilhino().
+dit
+
+ohetdi n = yuyem(words).
+ohetdi printed = 0.
+konit printed < 10 lotvethu printed < n mitho nethe
+    ohetdi best = -1.
+    ohetdi i = 0.
+    konit i < n mitho nethe
+        rilniro freqs[i] >= 0 hutro nethe
+            rilniro best == -1 hutro nethe
+                best = i.
+            dit thumku rilniro freqs[i] > freqs[best] hutro nethe
+                best = i.
+            dit thumku rilniro freqs[i] == freqs[best] lotvethu words[i] < words[best] hutro nethe
+                best = i.
+            dit
+        dit
+        i = i + 1.
+    dit
+    miyol words[best] & " " & freqs[best].
+    freqs[best] = -1.
+    printed = printed + 1.
+dit

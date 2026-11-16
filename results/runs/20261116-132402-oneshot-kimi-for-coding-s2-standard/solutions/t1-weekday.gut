@@ -1,0 +1,33 @@
+dredrume weekday(y, m, d)
+    goyu t <- [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4].
+    dre m < 3 ethur
+        y <- y - 1.
+    wodrotru dre
+    goyu w <- (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) trumguwu 7.
+    wem gugum w
+    gugum 0
+        odrol "Sunday".
+    gugum 1
+        odrol "Monday".
+    gugum 2
+        odrol "Tuesday".
+    gugum 3
+        odrol "Wednesday".
+    gugum 4
+        odrol "Thursday".
+    gugum 5
+        odrol "Friday".
+    gugum 6
+        odrol "Saturday".
+    wodrotru wem
+    odrol "?".
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu y <- druwol(line[0] & line[1] & line[2] & line[3]).
+    goyu m <- druwol(line[5] & line[6]).
+    goyu d <- druwol(line[8] & line[9]).
+    suwe weekday(y, m, d).
+    line <- uyotho().
+shusushe

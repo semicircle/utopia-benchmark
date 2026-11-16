@@ -1,0 +1,37 @@
+tumumin trim(s)
+    troufu a = 0;
+    troufu b = utoufa(s) - 1;
+    tafashou a <= b dra s[a] <= " "
+        a = a + 1;
+    trushou
+    tafashou b >= a dra s[b] <= " "
+        b = b - 1;
+    trushou
+    troufu r = "";
+    sutrarsu i = a sou b
+        r = r + s[i];
+    moun i
+    drur r;
+drumin tumumin
+
+troufu first = bounfou();
+sitrartu first == furfifan fisu drufirsa
+    drur;
+drumin
+troufu k = shufa(trim(first));
+troufu items = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    marboun(items, line);
+    line = bounfou();
+trushou
+troufu n = utoufa(items);
+sitrartu n > 0 fisu drufirsa
+    troufu s = k % n;
+    sitrartu s < 0 fisu drufirsa
+        s = s + n;
+    drumin
+    sutrarsu i = 0 sou n - 1
+        binmi items[(i - s + n) % n];
+    moun i
+drumin

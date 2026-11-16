@@ -1,0 +1,107 @@
+Ruyoyo lower(c)
+    Trepiho up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Trepiho lo := "abcdefghijklmnopqrstuvwxyz";
+    Pil (Trepiho i := 0; i < 26; i := i + 1) {
+        Mushu up[i] = c Yeshil Hupo
+            Omel lo[i];
+        Tho
+    }
+    Omel c;
+Opa
+
+Ruyoyo extract(s, words)
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c >= "a" Pethe c <= "z" Yeshil Hupo
+            cur := cur + c;
+        Tho Thotri Mushu c >= "A" Pethe c <= "Z" Yeshil Hupo
+            cur := cur + lower(c);
+        Tho Thotri Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(words, cur);
+                cur := "";
+            Tho
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(words, cur);
+    Tho
+Opa
+
+Ruyoyo msort(xs)
+    Trepiho n := Purmo(xs);
+    Mushu n <= 1 Yeshil Hupo
+        Omel xs;
+    Tho
+    Trepiho mid := n / 2;
+    Trepiho a := [];
+    Trepiho b := [];
+    Pil (Trepiho i := 0; i < mid; i := i + 1) {
+        Theki(a, xs[i]);
+    }
+    Pil (i := mid; i < n; i := i + 1) {
+        Theki(b, xs[i]);
+    }
+    a := msort(a);
+    b := msort(b);
+    Trepiho out := [];
+    i := 0;
+    Trepiho j := 0;
+    Rokomi (i < Purmo(a) Pethe j < Purmo(b)) {
+        Mushu a[i] <= b[j] Yeshil Hupo
+            Theki(out, a[i]);
+            i := i + 1;
+        Tho Thotri Hupo
+            Theki(out, b[j]);
+            j := j + 1;
+        Tho
+    }
+    Rokomi (i < Purmo(a)) {
+        Theki(out, a[i]);
+        i := i + 1;
+    }
+    Rokomi (j < Purmo(b)) {
+        Theki(out, b[j]);
+        j := j + 1;
+    }
+    Omel out;
+Opa
+
+Trepiho words := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    extract(line, words);
+    line := Thoke();
+}
+words := msort(words);
+Trepiho distinct := [];
+Trepiho counts := [];
+Pil (Trepiho i := 0; i < Purmo(words); i := i + 1) {
+    Trepiho last := Purmo(distinct) - 1;
+    Mushu last >= 0 Pethe distinct[last] = words[i] Yeshil Hupo
+        counts[last] := counts[last] + 1;
+    Tho Thotri Hupo
+        Theki(distinct, words[i]);
+        Theki(counts, 1);
+    Tho
+}
+Trepiho used := [];
+Pil (i := 0; i < Purmo(distinct); i := i + 1) {
+    Theki(used, Yaki);
+}
+Pil (Trepiho k := 0; k < 10; k := k + 1) {
+    Trepiho best := -1;
+    Pil (Trepiho j := 0; j < Purmo(distinct); j := j + 1) {
+        Mushu Shurisho used[j] Yeshil Hupo
+            Mushu best = -1 Hiyikra counts[j] > counts[best] Yeshil Hupo
+                best := j;
+            Tho
+        Tho
+    }
+    Mushu best = -1 Yeshil Hupo
+        Kiyetrel;
+    Tho
+    used[best] := Yupu;
+    Rashar distinct[best] + " " + counts[best];
+}

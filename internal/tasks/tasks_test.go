@@ -1,11 +1,13 @@
 package tasks
 
 import (
+	"os"
 	"strings"
 	"testing"
 
 	"utopia/internal/gen"
 	"utopia/internal/lang"
+	"utopia/internal/lower"
 	"utopia/internal/vm"
 )
 
@@ -37,5 +39,45 @@ func TestReferenceSolutionsAcrossDialects(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+// TestHabitTraps reports, per task, how often a solution written by habit
+// fails: the reference translated into each dialect without compensating
+// for its semantics (index base, loop bounds, fallthrough, division). A
+// task whose rate is near zero has no trap. It is slow, so it runs only
+// when asked: UTOPIA_TRAPS=1 go test ./internal/tasks -run HabitTraps -v
+func TestHabitTraps(t *testing.T) {
+	if os.Getenv("UTOPIA_TRAPS") == "" {
+		t.Skip("set UTOPIA_TRAPS=1 to run")
+	}
+	all, err := Load("../../tasks")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const seeds = 200
+	for _, task := range all {
+		prog, err := lang.Parse(gen.Canonical(), task.Solution)
+		if err != nil {
+			t.Fatal(err)
+		}
+		failed := 0
+		for seed := uint64(1); seed <= seeds; seed++ {
+			d := gen.Generate(gen.Options{Seed: seed})
+			low, err := lower.Lower(d, prog, lower.Options{Raw: true})
+			if err != nil {
+				t.Fatal(err)
+			}
+			src := lang.Format(d, low)
+			for _, tc := range task.Tests {
+				var out strings.Builder
+				err := vm.RunSource(d, src, vm.Options{Stdin: strings.NewReader(tc.Input), Stdout: &out})
+				if err != nil || out.String() != tc.Output {
+					failed++
+					break
+				}
+			}
+		}
+		t.Logf("%-18s habit-written solution fails in %3d%% of dialects", task.ID, 100*failed/seeds)
 	}
 }

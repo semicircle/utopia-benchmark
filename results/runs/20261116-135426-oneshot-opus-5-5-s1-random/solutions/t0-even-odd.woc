@@ -1,0 +1,28 @@
+eilyot clean(s)
+    weltuxle r := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (c <> " " elish c <> "\t" elish c <> "\r") {
+            r := r + c;
+        }
+    }
+    chozulni r;
+iweil
+
+weltuxle evens := 0;
+weltuxle odds := 0;
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle s := clean(line);
+    nei (dushzosh(s) > 0) {
+        weltuxle n := leidush(s);
+        nei (n yeil 2 == 0) {
+            evens := evens + 1;
+        } wogeish {
+            odds := odds + 1;
+        }
+    }
+    line := lono();
+}
+leshdei "even " + evens;
+leshdei "odd " + odds;

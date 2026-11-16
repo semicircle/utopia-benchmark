@@ -1,0 +1,65 @@
+plulai g := plaltai(playadu());
+plulai grid := [];
+plulai w := 0;
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai row := [];
+    shoyo i := 0 busale dra(line) - 1
+        atdoyal (line[i] == "#") {
+            sutse(row, 1);
+        } bulbayo {
+            sutse(row, 0);
+        }
+    pla i
+    sutse(grid, row);
+    w := dra(line);
+    line := playadu();
+aitudre
+plulai h := dra(grid);
+shoyo gen := 1 busale g
+    plulai next := [];
+    shoyo r := 0 busale h - 1
+        plulai nrow := [];
+        shoyo c := 0 busale w - 1
+            plulai cnt := 0;
+            shoyo dr := -1 busale 1
+                shoyo dc := -1 busale 1
+                    atdoyal (dr == 0 rulsai dc == 0) {
+                        deye;
+                    }
+                    plulai nr := r + dr;
+                    plulai nc := c + dc;
+                    atdoyal (nr >= 0 rulsai nr < h rulsai nc >= 0 rulsai nc < w) {
+                        cnt := cnt + grid[nr][nc];
+                    }
+                pla dc
+            pla dr
+            atdoyal (grid[r][c] == 1) {
+                atdoyal (cnt == 2 tobe cnt == 3) {
+                    sutse(nrow, 1);
+                } bulbayo {
+                    sutse(nrow, 0);
+                }
+            } bulbayo {
+                atdoyal (cnt == 3) {
+                    sutse(nrow, 1);
+                } bulbayo {
+                    sutse(nrow, 0);
+                }
+            }
+        pla c
+        sutse(next, nrow);
+    pla r
+    grid := next;
+pla gen
+shoyo r := 0 busale h - 1
+    plulai out := "";
+    shoyo c := 0 busale w - 1
+        atdoyal (grid[r][c] == 1) {
+            out := out + "#";
+        } bulbayo {
+            out := out + ".";
+        }
+    pla c
+    shaibe out;
+pla r

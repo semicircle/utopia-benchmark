@@ -1,0 +1,55 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai i := 0;
+    edrushe (i < dra(s))
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t") {
+            atdoyal (dra(cur) > 0) {
+                sutse(res, cur);
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + c;
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (dra(cur) > 0) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+plulai first := playadu();
+atdoyal (first == aiplai) {
+    druna;
+}
+plulai toks := split(first);
+plulai arr := [];
+shoyo i := 0 busale dra(toks) - 1
+    sutse(arr, plaltai(toks[i]));
+pla i
+plulai n := dra(arr);
+plulai line := playadu();
+edrushe (line <> aiplai)
+    plulai qt := split(line);
+    atdoyal (dra(qt) > 0) {
+        plulai q := plaltai(qt[0]);
+        plulai lo := 0;
+        plulai hi := n;
+        edrushe (lo < hi)
+            plulai mid := (lo + hi) / 2;
+            atdoyal (arr[mid] < q) {
+                lo := mid + 1;
+            } bulbayo {
+                hi := mid;
+            }
+        aitudre
+        atdoyal (lo < n rulsai arr[lo] == q) {
+            shaibe lo + " found";
+        } bulbayo {
+            shaibe lo + " missing";
+        }
+    }
+    line := playadu();
+aitudre

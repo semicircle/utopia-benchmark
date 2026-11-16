@@ -1,0 +1,91 @@
+dredrume lowerch(c)
+    goyu U <- "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    goyu L <- "abcdefghijklmnopqrstuvwxyz".
+    wego i <- 0 setru 25
+        dre U[i] == c ethur
+            odrol L[i].
+        wodrotru dre
+    trer i
+    odrol c.
+wodrotru dredrume
+
+dredrume isLetter(c)
+    odrol (c >= "A" suyogur c <= "Z") drorsu (c >= "a" suyogur c <= "z").
+wodrotru dredrume
+
+dredrume before(p, q)
+    dre p[1] > q[1] ethur
+        odrol sudru.
+    wodrotru dre
+    dre p[1] < q[1] ethur
+        odrol tru.
+    wodrotru dre
+    odrol p[0] < q[0].
+wodrotru dredrume
+
+goyu words <- [].
+goyu cnts <- [].
+goyu n <- 0.
+goyu line <- uyotho().
+omethol line != gursume
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(line) - 1
+        goyu c <- line[i].
+        dre isLetter(c) ethur
+            cur <- cur & lowerch(c).
+        truthor
+            dre wumdror(cur) > 0 ethur
+                goyu idx <- -1.
+                wego j <- 0 setru n - 1
+                    dre words[j] == cur ethur
+                        idx <- j.
+                    wodrotru dre
+                trer j
+                dre idx >= 0 ethur
+                    cnts[idx] <- cnts[idx] + 1.
+                truthor
+                    dreme(words, cur).
+                    dreme(cnts, 1).
+                    n <- n + 1.
+                wodrotru dre
+                cur <- "".
+            wodrotru dre
+        wodrotru dre
+    trer i
+    dre wumdror(cur) > 0 ethur
+        goyu idx <- -1.
+        wego j <- 0 setru n - 1
+            dre words[j] == cur ethur
+                idx <- j.
+            wodrotru dre
+        trer j
+        dre idx >= 0 ethur
+            cnts[idx] <- cnts[idx] + 1.
+        truthor
+            dreme(words, cur).
+            dreme(cnts, 1).
+            n <- n + 1.
+        wodrotru dre
+    wodrotru dre
+    line <- uyotho().
+shusushe
+goyu pairs <- [].
+wego i <- 0 setru n - 1
+    dreme(pairs, [words[i], cnts[i]]).
+trer i
+wego i <- 0 setru n - 1
+    wego j <- 0 setru n - 2 - i
+        dre before(pairs[j + 1], pairs[j]) ethur
+            goyu tmp <- pairs[j].
+            pairs[j] <- pairs[j + 1].
+            pairs[j + 1] <- tmp.
+        wodrotru dre
+    trer j
+trer i
+goyu lim <- n.
+dre lim > 10 ethur
+    lim <- 10.
+wodrotru dre
+wego i <- 0 setru lim - 1
+    suwe pairs[i][0] & " " & shodrewe(pairs[i][1]).
+trer i

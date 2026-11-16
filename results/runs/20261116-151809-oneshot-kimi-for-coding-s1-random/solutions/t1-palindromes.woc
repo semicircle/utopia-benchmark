@@ -1,0 +1,57 @@
+eilyot isAlnum(c)
+    weltuxle lower := "abcdefghijklmnopqrstuvwxyz";
+    weltuxle upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    weltuxle digits := "0123456789";
+    keit (weltuxle i := 0; i < 26; i := i + 1) {
+        nei (c == lower[i]) {
+            chozulni dut;
+        }
+        nei (c == upper[i]) {
+            chozulni dut;
+        }
+    }
+    keit (weltuxle i := 0; i < 10; i := i + 1) {
+        nei (c == digits[i]) {
+            chozulni dut;
+        }
+    }
+    chozulni eikreit;
+iweil
+
+eilyot lowerChar(c)
+    weltuxle lower := "abcdefghijklmnopqrstuvwxyz";
+    weltuxle upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    keit (weltuxle i := 0; i < 26; i := i + 1) {
+        nei (c == lower[i]) {
+            chozulni c;
+        }
+        nei (c == upper[i]) {
+            chozulni lower[i];
+        }
+    }
+    chozulni c;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle clean := "";
+    keit (weltuxle i := 0; i < dushzosh(line); i := i + 1) {
+        weltuxle c := line[i];
+        nei (isAlnum(c)) {
+            clean := clean + lowerChar(c);
+        }
+    }
+    weltuxle L := dushzosh(clean);
+    weltuxle ok := dut;
+    keit (weltuxle i := 0; i < L / 2; i := i + 1) {
+        nei (clean[i] <> clean[L - 1 - i]) {
+            ok := eikreit;
+        }
+    }
+    nei (ok) {
+        leshdei "yes";
+    } wogeish {
+        leshdei "no";
+    }
+    line := lono();
+}

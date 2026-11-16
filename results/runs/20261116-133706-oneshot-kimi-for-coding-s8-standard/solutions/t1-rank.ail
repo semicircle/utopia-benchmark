@@ -1,0 +1,44 @@
+plulai nums := [];
+plulai first := playadu();
+atdoyal (first <> aiplai) {
+    plulai cur := "";
+    plulai i := 0;
+    edrushe i < dra(first)
+        atdoyal (first[i] == " ") {
+            atdoyal (cur <> "") {
+                sutse(nums, plaltai(cur));
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + first[i];
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (cur <> "") {
+        sutse(nums, plaltai(cur));
+    }
+}
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai q := plaltai(line);
+    plulai lo := 0;
+    plulai hi := dra(nums);
+    edrushe lo < hi
+        plulai mid := (lo + hi) / 2;
+        atdoyal (nums[mid] < q) {
+            lo := mid + 1;
+        } bulbayo {
+            hi := mid;
+        }
+    aitudre
+    plulai found := nonotru;
+    atdoyal (lo < dra(nums) rulsai nums[lo] == q) {
+        found := eretde;
+    }
+    atdoyal (found) {
+        shaibe lo + " found";
+    } bulbayo {
+        shaibe lo + " missing";
+    }
+    line := playadu();
+aitudre

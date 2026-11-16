@@ -1,0 +1,25 @@
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle space := 0;
+    krenul (line[space] <> " ") {
+        space := space + 1;
+    }
+    weltuxle a := leidush(substring(line, 0, space));
+    weltuxle b := leidush(substring(line, space + 1, dushzosh(line)));
+    weltuxle q := a / b;
+    weltuxle r := a - b * q;
+    nei (r <> 0 yosheil ((r > 0) <> (b > 0))) {
+        q := q - 1;
+        r := a - b * q;
+    }
+    leshdei q + " " + r;
+    line := lono();
+}
+
+eilyot substring(s, first, past)
+    weltuxle result := "";
+    keit (weltuxle i := first; i < past; i := i + 1) {
+        result := result + s[i];
+    }
+    chozulni result;
+iweil

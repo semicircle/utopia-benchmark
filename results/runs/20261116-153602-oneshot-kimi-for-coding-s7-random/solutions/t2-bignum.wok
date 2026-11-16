@@ -1,0 +1,113 @@
+EDEWUT toDig(s) {
+    FOMOFE d := [];
+    FOMOFE i := FORMOWE(s);
+    FUKCHEFE i > 0 LOLO LEKFESH
+        WESH(d, ZENZUMUR(s[i]));
+        i := i - 1;
+    EFUDU
+    EFOTU d;
+}
+
+EDEWUT trim(d) {
+    FOMOFE n := FORMOWE(d);
+    FUKCHEFE n > 0 ZULUSHTE d[n] = 0 LOLO LEKFESH
+        n := n - 1;
+    EFUDU
+    FOMOFE r := [];
+    TUTCHEK i := 1 ZUWOWEN n LOLO LEKFESH
+        WESH(r, d[i]);
+    EFUDU
+    EFOTU r;
+}
+
+EDEWUT toStr(d) {
+    FOMOFE t := trim(d);
+    FOMOFE n := FORMOWE(t);
+    PLUWOK n = 0 DEWOTUSH LEKFESH
+        EFOTU "0";
+    EFUDU
+    FOMOFE s := "";
+    FUKCHEFE n > 0 LOLO LEKFESH
+        s := s & ECHEK(t[n]);
+        n := n - 1;
+    EFUDU
+    EFOTU s;
+}
+
+EDEWUT add(a, b) {
+    FOMOFE r := [];
+    FOMOFE c := 0;
+    FOMOFE i := 1;
+    FOMOFE la := FORMOWE(a);
+    FOMOFE lb := FORMOWE(b);
+    FUKCHEFE i <= la ZULUSHTE i <= lb LOLO LEKFESH
+        FOMOFE v := a[i] + b[i] + c;
+        WESH(r, v % 10);
+        c := v / 10;
+        i := i + 1;
+    EFUDU
+    FUKCHEFE i <= la LOLO LEKFESH
+        FOMOFE v := a[i] + c;
+        WESH(r, v % 10);
+        c := v / 10;
+        i := i + 1;
+    EFUDU
+    FUKCHEFE i <= lb LOLO LEKFESH
+        FOMOFE v := b[i] + c;
+        WESH(r, v % 10);
+        c := v / 10;
+        i := i + 1;
+    EFUDU
+    PLUWOK c > 0 DEWOTUSH LEKFESH
+        WESH(r, c);
+    EFUDU
+    EFOTU r;
+}
+
+EDEWUT mul(a, b) {
+    FOMOFE la := FORMOWE(a);
+    FOMOFE lb := FORMOWE(b);
+    FOMOFE r := [];
+    TUTCHEK i := 1 ZUWOWEN la + lb + 1 LOLO LEKFESH
+        WESH(r, 0);
+    EFUDU
+    TUTCHEK i := 1 ZUWOWEN la LOLO LEKFESH
+        FOMOFE c := 0;
+        TUTCHEK j := 1 ZUWOWEN lb LOLO LEKFESH
+            FOMOFE v := r[i + j - 1] + a[i] * b[j] + c;
+            r[i + j - 1] := v % 10;
+            c := v / 10;
+        EFUDU
+        FOMOFE p := i + lb;
+        FUKCHEFE c > 0 LOLO LEKFESH
+            FOMOFE v := r[p] + c;
+            r[p] := v % 10;
+            c := v / 10;
+            p := p + 1;
+        EFUDU
+    EFUDU
+    EFOTU r;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE sp := 0;
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        PLUWOK line[i] = " " DEWOTUSH LEKFESH
+            sp := i;
+            DUTZE;
+        EFUDU
+    EFUDU
+    FOMOFE sa := "";
+    FOMOFE sb := "";
+    TUTCHEK i := 1 ZUWOWEN sp - 1 LOLO LEKFESH
+        sa := sa & line[i];
+    EFUDU
+    TUTCHEK i := sp + 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        sb := sb & line[i];
+    EFUDU
+    FOMOFE a := toDig(sa);
+    FOMOFE b := toDig(sb);
+    EPLOWEK toStr(add(a, b)) & " " & toStr(mul(a, b));
+    line := TODETET();
+EFUDU

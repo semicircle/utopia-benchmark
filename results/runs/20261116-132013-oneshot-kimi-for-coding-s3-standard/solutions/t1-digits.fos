@@ -1,0 +1,35 @@
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas start = 0;
+    Sogas neg = Fixpodri;
+    Ishsi ((Drash(line) > 0) Fas (line[0] == "-")) {
+        neg = Pigi;
+        start = 1;
+    }
+    Sogas ds = [];
+    Sogas sum = 0;
+    Paxfasva (Sogas i = start; i < Drash(line); i = i + 1) {
+        Sogas c = line[i];
+        sum = sum + Drak(c);
+        Dragi(ds, c);
+    }
+    Sogas rev = "";
+    Sogas started = Fixpodri;
+    Paxfasva (Sogas i = Drash(ds) - 1; i >= 0; i = i - 1) {
+        Ishsi (started) {
+            rev = rev + ds[i];
+        } Padri Ishsi (ds[i] ~= "0") {
+            started = Pigi;
+            rev = rev + ds[i];
+        }
+    }
+    Ishsi (rev == "") {
+        rev = "0";
+    }
+    Sogas out = rev;
+    Ishsi (neg Fas (rev ~= "0")) {
+        out = "-" + rev;
+    }
+    Dosfasho sum + " " + out;
+    line = Goshvovo();
+}

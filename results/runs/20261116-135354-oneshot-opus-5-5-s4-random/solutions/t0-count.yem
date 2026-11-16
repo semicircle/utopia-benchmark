@@ -1,0 +1,7 @@
+Trepiho line := Thoke();
+Mushu line ~= Krupelro Yeshil Hupo
+    Trepiho n := Eshiyer(line);
+    Pil (Trepiho i := 1; i <= n; i := i + 1) {
+        Rashar i;
+    }
+Tho

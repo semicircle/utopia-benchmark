@@ -1,0 +1,15 @@
+plulai k := plaltai(playadu());
+plulai items := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    sutse(items, line);
+    line := playadu();
+aitudre
+plulai m := dra(items);
+atdoyal (m > 0) {
+    plulai shift := ((k % m) + m) % m;
+    plulai start := m - shift + 1;
+    shoyo j := start busale start + m
+        shaibe items[j];
+    pla j
+}

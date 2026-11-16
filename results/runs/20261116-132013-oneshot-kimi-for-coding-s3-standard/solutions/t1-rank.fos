@@ -1,0 +1,55 @@
+Gis tokens(line) Fodashsa
+    Sogas out = [];
+    Sogas cur = "";
+    Sogas i = 0;
+    Sipokvix (i < Drash(line)) {
+        Sogas c = line[i];
+        Ishsi (c == " ") {
+            Ishsi (Drash(cur) > 0) {
+                Dragi(out, cur);
+                cur = "";
+            }
+        } Padri {
+            cur = cur + c;
+        }
+        i = i + 1;
+    }
+    Ishsi (Drash(cur) > 0) {
+        Dragi(out, cur);
+    }
+    Asdra out;
+Gosafax
+
+Gis lowerBound(xs, x) Fodashsa
+    Sogas lo = 0;
+    Sogas hi = Drash(xs);
+    Sipokvix (lo < hi) {
+        Sogas mid = (lo + hi) / 2;
+        Ishsi (xs[mid] < x) {
+            lo = mid + 1;
+        } Padri {
+            hi = mid;
+        }
+    }
+    Asdra lo;
+Gosafax
+
+Sogas first = Goshvovo();
+Ishsi (first ~= Dridrak) {
+    Sogas toks = tokens(first);
+    Sogas xs = [];
+    Paxfasva (Sogas i = 0; i < Drash(toks); i = i + 1) {
+        Dragi(xs, Drak(toks[i]));
+    }
+    Sogas line = Goshvovo();
+    Sipokvix (line ~= Dridrak) {
+        Sogas q = Drak(line);
+        Sogas idx = lowerBound(xs, q);
+        Sogas msg = "missing";
+        Ishsi ((idx < Drash(xs)) Fas (xs[idx] == q)) {
+            msg = "found";
+        }
+        Dosfasho idx + " " + msg;
+        line = Goshvovo();
+    }
+}

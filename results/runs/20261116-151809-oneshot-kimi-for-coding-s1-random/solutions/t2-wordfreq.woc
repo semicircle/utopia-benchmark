@@ -1,0 +1,96 @@
+eilyot isLetter(c)
+    nei (c >= "a") {
+        nei (c <= "z") {
+            chozulni dut;
+        }
+    }
+    nei (c >= "A") {
+        nei (c <= "Z") {
+            chozulni dut;
+        }
+    }
+    chozulni eikreit;
+iweil
+
+eilyot lowerChar(c)
+    weltuxle lower := "abcdefghijklmnopqrstuvwxyz";
+    weltuxle upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    keit (weltuxle i := 0; i < 26; i := i + 1) {
+        nei (c == lower[i]) {
+            chozulni c;
+        }
+        nei (c == upper[i]) {
+            chozulni lower[i];
+        }
+    }
+    chozulni c;
+iweil
+
+eilyot addWord(wlist, clist, w)
+    keit (weltuxle j := 0; j < dushzosh(wlist); j := j + 1) {
+        nei (wlist[j] == w) {
+            clist[j] := clist[j] + 1;
+            chozulni leitchux;
+        }
+    }
+    koshkil(wlist, w);
+    koshkil(clist, 1);
+    chozulni leitchux;
+iweil
+
+weltuxle wlist := [];
+weltuxle clist := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle cur := "";
+    keit (weltuxle i := 0; i < dushzosh(line); i := i + 1) {
+        weltuxle c := line[i];
+        nei (isLetter(c)) {
+            cur := cur + lowerChar(c);
+        } wogeish {
+            nei (cur <> "") {
+                addWord(wlist, clist, cur);
+                cur := "";
+            }
+        }
+    }
+    nei (cur <> "") {
+        addWord(wlist, clist, cur);
+    }
+    line := lono();
+}
+weltuxle printed := 0;
+krenul (printed < 10) {
+    weltuxle n := dushzosh(wlist);
+    nei (n == 0) {
+        exzulto;
+    }
+    weltuxle best := 0;
+    keit (weltuxle i := 1; i < n; i := i + 1) {
+        weltuxle better := eikreit;
+        nei (clist[i] > clist[best]) {
+            better := dut;
+        }
+        nei (clist[i] == clist[best]) {
+            nei (wlist[i] < wlist[best]) {
+                better := dut;
+            }
+        }
+        nei (better) {
+            best := i;
+        }
+    }
+    leshdei wlist[best] + " " + clist[best];
+    weltuxle nw := [];
+    weltuxle nc := [];
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        nei (i == best) {
+            weshosho;
+        }
+        koshkil(nw, wlist[i]);
+        koshkil(nc, clist[i]);
+    }
+    wlist := nw;
+    clist := nc;
+    printed := printed + 1;
+}

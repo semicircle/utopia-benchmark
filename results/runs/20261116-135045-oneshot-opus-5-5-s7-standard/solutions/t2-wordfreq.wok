@@ -1,0 +1,87 @@
+EDEWUT letterIdx(c) {
+    FOMOFE s := "";
+    PLUWOK c >= "a" ZULUSHTE c <= "z" DEWOTUSH LEKFESH
+        s := "abcdefghijklmnopqrstuvwxyz";
+    EFUDU CHEME PLUWOK c >= "A" ZULUSHTE c <= "Z" DEWOTUSH LEKFESH
+        s := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    EFUDU CHEME LEKFESH
+        EFOTU -1;
+    EFUDU
+    FOMOFE lo := 0;
+    FOMOFE hi := 25;
+    FUKCHEFE lo < hi LOLO LEKFESH
+        FOMOFE mid := (lo + hi) / 2;
+        PLUWOK s[mid] < c DEWOTUSH LEKFESH
+            lo := mid + 1;
+        EFUDU CHEME LEKFESH
+            hi := mid;
+        EFUDU
+    EFUDU
+    EFOTU lo;
+}
+
+EDEWUT addWord(words, counts, buckets, w, h) {
+    FOMOFE b := buckets[h];
+    TUTCHEK k := 0 ZUWOWEN FORMOWE(b) - 1 LOLO LEKFESH
+        FOMOFE id := b[k];
+        PLUWOK words[id] = w DEWOTUSH LEKFESH
+            counts[id] := counts[id] + 1;
+            EFOTU;
+        EFUDU
+    EFUDU
+    WESH(b, FORMOWE(words));
+    WESH(words, w);
+    WESH(counts, 1);
+}
+
+FOMOFE alpha := "abcdefghijklmnopqrstuvwxyz";
+FOMOFE words := [];
+FOMOFE counts := [];
+FOMOFE buckets := [];
+TUTCHEK i := 1 ZUWOWEN 4096 LOLO LEKFESH
+    WESH(buckets, []);
+EFUDU
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE cur := "";
+    FOMOFE h := 0;
+    FOMOFE len := FORMOWE(line);
+    TUTCHEK i := 0 ZUWOWEN len LOLO LEKFESH
+        FOMOFE idx := -1;
+        PLUWOK i < len DEWOTUSH LEKFESH
+            idx := letterIdx(line[i]);
+        EFUDU
+        PLUWOK idx >= 0 DEWOTUSH LEKFESH
+            cur := cur & alpha[idx];
+            h := (h * 31 + idx + 1) % 4096;
+        EFUDU CHEME PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+            addWord(words, counts, buckets, cur, h);
+            cur := "";
+            h := 0;
+        EFUDU
+    EFUDU
+    line := TODETET();
+EFUDU
+FOMOFE n := FORMOWE(words);
+FOMOFE used := [];
+TUTCHEK i := 1 ZUWOWEN n LOLO LEKFESH
+    WESH(used, LERLU);
+EFUDU
+FOMOFE m := 10;
+PLUWOK n < m DEWOTUSH LEKFESH
+    m := n;
+EFUDU
+TUTCHEK t := 1 ZUWOWEN m LOLO LEKFESH
+    FOMOFE best := -1;
+    TUTCHEK i := 0 ZUWOWEN n - 1 LOLO LEKFESH
+        PLUWOK used[i] = LERLU DEWOTUSH LEKFESH
+            PLUWOK best < 0 DEWOTUSH LEKFESH
+                best := i;
+            EFUDU CHEME PLUWOK counts[i] > counts[best] MUR (counts[i] = counts[best] ZULUSHTE words[i] < words[best]) DEWOTUSH LEKFESH
+                best := i;
+            EFUDU
+        EFUDU
+    EFUDU
+    used[best] := MULO;
+    EPLOWEK words[best] & " " & counts[best];
+EFUDU

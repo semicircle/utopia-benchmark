@@ -1,0 +1,99 @@
+EDEWUT split(s) {
+    FOMOFE parts := [];
+    FOMOFE cur := "";
+    TUTCHEK i := 0 ZUWOWEN FORMOWE(s) - 1 LOLO LEKFESH
+        FOMOFE c := s[i];
+        PLUWOK c = " " MUR c = "\t" MUR c = "\r" DEWOTUSH LEKFESH
+            PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+                WESH(parts, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & c;
+        EFUDU
+    EFUDU
+    PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+        WESH(parts, cur);
+    EFUDU
+    EFOTU parts;
+}
+
+EDEWUT isInt(t) {
+    FOMOFE start := 0;
+    PLUWOK t[0] = "-" DEWOTUSH LEKFESH
+        start := 1;
+    EFUDU
+    PLUWOK start >= FORMOWE(t) DEWOTUSH LEKFESH
+        EFOTU LERLU;
+    EFUDU
+    TUTCHEK i := start ZUWOWEN FORMOWE(t) - 1 LOLO LEKFESH
+        PLUWOK t[i] < "0" MUR t[i] > "9" DEWOTUSH LEKFESH
+            EFOTU LERLU;
+        EFUDU
+    EFUDU
+    EFOTU MULO;
+}
+
+EDEWUT evalLine(line) {
+    FOMOFE toks := split(line);
+    PLUWOK FORMOWE(toks) = 0 DEWOTUSH LEKFESH
+        EFOTU "error";
+    EFUDU
+    FOMOFE st := [];
+    FOMOFE sp := 0;
+    TUTCHEK i := 0 ZUWOWEN FORMOWE(toks) - 1 LOLO LEKFESH
+        FOMOFE t := toks[i];
+        FOMOFE v := 0;
+        PLUWOK isInt(t) DEWOTUSH LEKFESH
+            v := ZENZUMUR(t);
+        EFUDU CHEME PLUWOK t = "+" MUR t = "-" MUR t = "*" MUR t = "/" MUR t = "%" DEWOTUSH LEKFESH
+            PLUWOK sp < 2 DEWOTUSH LEKFESH
+                EFOTU "error";
+            EFUDU
+            FOMOFE b := st[sp - 1];
+            FOMOFE a := st[sp - 2];
+            sp := sp - 2;
+            ZET t CHU
+            "+": LEKFESH
+                v := a + b;
+            EFUDU
+            "-": LEKFESH
+                v := a - b;
+            EFUDU
+            "*": LEKFESH
+                v := a * b;
+            EFUDU
+            "/": LEKFESH
+                PLUWOK b = 0 DEWOTUSH LEKFESH
+                    EFOTU "error";
+                EFUDU
+                v := a / b;
+            EFUDU
+            "%": LEKFESH
+                PLUWOK b = 0 DEWOTUSH LEKFESH
+                    EFOTU "error";
+                EFUDU
+                v := a % b;
+            EFUDU
+            EFUDU
+        EFUDU CHEME LEKFESH
+            EFOTU "error";
+        EFUDU
+        PLUWOK sp < FORMOWE(st) DEWOTUSH LEKFESH
+            st[sp] := v;
+        EFUDU CHEME LEKFESH
+            WESH(st, v);
+        EFUDU
+        sp := sp + 1;
+    EFUDU
+    PLUWOK sp ~= 1 DEWOTUSH LEKFESH
+        EFOTU "error";
+    EFUDU
+    EFOTU st[0];
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    EPLOWEK evalLine(line);
+    line := TODETET();
+EFUDU

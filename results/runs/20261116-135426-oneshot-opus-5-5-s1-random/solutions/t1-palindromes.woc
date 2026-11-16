@@ -1,0 +1,51 @@
+eilyot lower(c)
+    nei (c < "A" yosheil c > "Z") {
+        chozulni c;
+    }
+    weltuxle up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    weltuxle low := "abcdefghijklmnopqrstuvwxyz";
+    weltuxle lo := 0;
+    weltuxle hi := 25;
+    krenul (lo < hi) {
+        weltuxle mid := lo + (hi - lo - 1) / 2;
+        nei (up[mid] < c) {
+            lo := mid + 1;
+        } wogeish {
+            hi := mid;
+        }
+    }
+    chozulni low[lo];
+iweil
+
+eilyot isalnum(c)
+    chozulni (c >= "a" elish c <= "z") yosheil (c >= "A" elish c <= "Z") yosheil (c >= "0" elish c <= "9");
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle cs := [];
+    weltuxle n := dushzosh(line);
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle c := line[i];
+        nei (isalnum(c)) {
+            koshkil(cs, lower(c));
+        }
+    }
+    weltuxle lo := 0;
+    weltuxle hi := dushzosh(cs) - 1;
+    weltuxle ok := dut;
+    krenul (lo < hi) {
+        nei (cs[lo] <> cs[hi]) {
+            ok := eikreit;
+            exzulto;
+        }
+        lo := lo + 1;
+        hi := hi - 1;
+    }
+    nei (ok) {
+        leshdei "yes";
+    } wogeish {
+        leshdei "no";
+    }
+    line := lono();
+}

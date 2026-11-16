@@ -1,0 +1,130 @@
+rimli isDigit(c) nethe
+    yiletho c >= "0" lotvethu c <= "9".
+dit
+
+rimli split(line) nethe
+    ohetdi toks = [].
+    ohetdi cur = "".
+    ohetdi i = 0.
+    konit i < yuyem(line) mitho nethe
+        ohetdi c = line[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(toks, cur).
+            dit
+            cur = "".
+        dit thumku nethe
+            cur = cur & c.
+        dit
+        i = i + 1.
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(toks, cur).
+    dit
+    yiletho toks.
+dit
+
+rimli isIntTok(t) nethe
+    ohetdi len = yuyem(t).
+    rilniro len == 0 hutro nethe
+        yiletho litthi.
+    dit
+    ohetdi i = 0.
+    rilniro t[0] == "-" hutro nethe
+        i = 1.
+    dit
+    rilniro i == len hutro nethe
+        yiletho litthi.
+    dit
+    konit i < len mitho nethe
+        rilniro yothicho isDigit(t[i]) hutro nethe
+            yiletho litthi.
+        dit
+        i = i + 1.
+    dit
+    yiletho ronuthit.
+dit
+
+rimli evalRPN(toks) nethe
+    ohetdi st = [].
+    ohetdi top = 0.
+    ohetdi i = 0.
+    konit i < yuyem(toks) mitho nethe
+        ohetdi t = toks[i].
+        rilniro isIntTok(t) hutro nethe
+            nimhol(st, nelchiyul(t)).
+            top = top + 1.
+        dit thumku rilniro t == "+" hutro nethe
+            rilniro top < 2 hutro nethe
+                yiletho emletlel.
+            dit
+            ohetdi b = st[top - 1].
+            ohetdi a = st[top - 2].
+            top = top - 2.
+            nimhol(st, a + b).
+            top = top + 1.
+        dit thumku rilniro t == "-" hutro nethe
+            rilniro top < 2 hutro nethe
+                yiletho emletlel.
+            dit
+            ohetdi b = st[top - 1].
+            ohetdi a = st[top - 2].
+            top = top - 2.
+            nimhol(st, a - b).
+            top = top + 1.
+        dit thumku rilniro t == "*" hutro nethe
+            rilniro top < 2 hutro nethe
+                yiletho emletlel.
+            dit
+            ohetdi b = st[top - 1].
+            ohetdi a = st[top - 2].
+            top = top - 2.
+            nimhol(st, a * b).
+            top = top + 1.
+        dit thumku rilniro t == "/" hutro nethe
+            rilniro top < 2 hutro nethe
+                yiletho emletlel.
+            dit
+            ohetdi b = st[top - 1].
+            ohetdi a = st[top - 2].
+            rilniro b == 0 hutro nethe
+                yiletho emletlel.
+            dit
+            top = top - 2.
+            nimhol(st, a / b).
+            top = top + 1.
+        dit thumku rilniro t == "%" hutro nethe
+            rilniro top < 2 hutro nethe
+                yiletho emletlel.
+            dit
+            ohetdi b = st[top - 1].
+            ohetdi a = st[top - 2].
+            rilniro b == 0 hutro nethe
+                yiletho emletlel.
+            dit
+            top = top - 2.
+            nimhol(st, a kolethul b).
+            top = top + 1.
+        dit thumku nethe
+            yiletho emletlel.
+        dit
+        i = i + 1.
+    dit
+    rilniro top == 1 hutro nethe
+        yiletho st[0].
+    dit thumku nethe
+        yiletho emletlel.
+    dit
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi toks = split(line).
+    ohetdi res = evalRPN(toks).
+    rilniro res == emletlel hutro nethe
+        miyol "error".
+    dit thumku nethe
+        miyol res.
+    dit
+    line = nilhino().
+dit

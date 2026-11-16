@@ -1,0 +1,98 @@
+rimli split(s) nethe
+    ohetdi res = [].
+    ohetdi cur = "".
+    lemyunom i = 0 thikutli yuyem(s) - 1 mitho nethe
+        ohetdi c = s[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(res, cur).
+                cur = "".
+            dit
+        dit thumku nethe
+            cur = cur & c.
+        dit
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(res, cur).
+    dit
+    yiletho res.
+dit
+
+rimli todig(s) nethe
+    ohetdi r = [].
+    lemyunom i = yuyem(s) - 1 thikutli 0 rodilvul -1 mitho nethe
+        nimhol(r, nelchiyul(s[i])).
+    dit
+    yiletho r.
+dit
+
+rimli add(x, y) nethe
+    ohetdi r = [].
+    ohetdi n = yuyem(x).
+    rilniro yuyem(y) > n hutro nethe
+        n = yuyem(y).
+    dit
+    ohetdi carry = 0.
+    lemyunom i = 0 thikutli n - 1 mitho nethe
+        ohetdi s = carry.
+        rilniro i < yuyem(x) hutro nethe
+            s = s + x[i].
+        dit
+        rilniro i < yuyem(y) hutro nethe
+            s = s + y[i].
+        dit
+        nimhol(r, s kolethul 10).
+        carry = s / 10.
+    dit
+    rilniro carry > 0 hutro nethe
+        nimhol(r, carry).
+    dit
+    yiletho r.
+dit
+
+rimli mul(x, y) nethe
+    ohetdi nx = yuyem(x).
+    ohetdi ny = yuyem(y).
+    ohetdi r = [].
+    lemyunom i = 0 thikutli nx + ny - 1 mitho nethe
+        nimhol(r, 0).
+    dit
+    lemyunom i = 0 thikutli nx - 1 mitho nethe
+        ohetdi xi = x[i].
+        rilniro xi <> 0 hutro nethe
+            lemyunom j = 0 thikutli ny - 1 mitho nethe
+                r[i + j] = r[i + j] + xi * y[j].
+            dit
+        dit
+    dit
+    ohetdi carry = 0.
+    lemyunom i = 0 thikutli nx + ny - 1 mitho nethe
+        ohetdi s = r[i] + carry.
+        r[i] = s kolethul 10.
+        carry = s / 10.
+    dit
+    yiletho r.
+dit
+
+rimli tostr(x) nethe
+    ohetdi top = yuyem(x) - 1.
+    konit top > 0 lotvethu x[top] == 0 mitho nethe
+        top = top - 1.
+    dit
+    ohetdi s = "".
+    lemyunom i = top thikutli 0 rodilvul -1 mitho nethe
+        s = s & x[i].
+    dit
+    yiletho s.
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi toks = split(line).
+    rilniro yuyem(toks) >= 2 hutro nethe
+        ohetdi a = todig(toks[0]).
+        ohetdi b = todig(toks[1]).
+        miyol tostr(add(a, b)) & " " & tostr(mul(a, b)).
+    dit
+    line = nilhino().
+dit

@@ -1,0 +1,44 @@
+eilyot clean(s)
+    weltuxle r := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (c <> " " elish c <> "\t" elish c <> "\r") {
+            r := r + c;
+        }
+    }
+    chozulni r;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle s := clean(line);
+    nei (dushzosh(s) > 0) {
+        weltuxle n := leidush(s);
+        yishzit n eixwo
+        1: krei
+            leshdei "Monday";
+        zushox
+        2: krei
+            leshdei "Tuesday";
+        zushox
+        3: krei
+            leshdei "Wednesday";
+        zushox
+        4: krei
+            leshdei "Thursday";
+        zushox
+        5: krei
+            leshdei "Friday";
+        zushox
+        6: krei
+            leshdei "Saturday";
+        zushox
+        7: krei
+            leshdei "Sunday";
+        zushox
+        wogeish krei
+            leshdei "invalid";
+        zushox zushox
+    }
+    line := lono();
+}

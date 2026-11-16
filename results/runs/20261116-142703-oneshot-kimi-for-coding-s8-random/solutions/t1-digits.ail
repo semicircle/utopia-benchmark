@@ -1,0 +1,42 @@
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai n := plaltai(line);
+    plulai s := sutlarai(n);
+    plulai neg := nonotru;
+    plulai digits := "";
+    atdoyal (s[1] == "-") {
+        neg := eretde;
+        shoyo i := 2 busale dra(s) + 1
+            digits := digits + s[i];
+        pla i
+    } bulbayo {
+        digits := s;
+    }
+    plulai sum := 0;
+    shoyo i := 1 busale dra(digits) + 1
+        sum := sum + plaltai(digits[i]);
+    pla i
+    plulai rev := "";
+    plulai i := dra(digits);
+    edrushe i >= 1
+        rev := rev + digits[i];
+        i := i - 1;
+    aitudre
+    plulai j := 1;
+    edrushe j < dra(rev) rulsai rev[j] == "0"
+        j := j + 1;
+    aitudre
+    plulai trimmed := "";
+    shoyo k := j busale dra(rev) + 1
+        trimmed := trimmed + rev[k];
+    pla k
+    plulai val := plaltai(trimmed);
+    plulai out := sutlarai(sum) + " ";
+    atdoyal (neg rulsai val <> 0) {
+        out := out + "-" + sutlarai(val);
+    } bulbayo {
+        out := out + sutlarai(val);
+    }
+    shaibe out;
+    line := playadu();
+aitudre

@@ -1,0 +1,75 @@
+nudro isletter(c) {
+    druna (c >= "a" rulsai c <= "z") tobe (c >= "A" rulsai c <= "Z");
+}
+
+nudro lowerchar(c) {
+    plulai ups := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    shoyo i := 1 busale 27
+        atdoyal (ups[i] == c) {
+            druna "abcdefghijklmnopqrstuvwxyz"[i];
+        }
+    pla i
+    druna c;
+}
+
+nudro addword(words, counts, w) {
+    plulai idx := 0;
+    shoyo i := 1 busale dra(words) + 1
+        atdoyal (words[i] == w) {
+            idx := i;
+        }
+    pla i
+    atdoyal (idx == 0) {
+        sutse(words, w);
+        sutse(counts, 1);
+    } bulbayo {
+        counts[idx] := counts[idx] + 1;
+    }
+}
+
+plulai words := [];
+plulai counts := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai cur := "";
+    shoyo i := 1 busale dra(line) + 1
+        plulai c := line[i];
+        atdoyal (isletter(c)) {
+            cur := cur + lowerchar(c);
+        } bulbayo {
+            atdoyal (dra(cur) > 0) {
+                addword(words, counts, cur);
+                cur := "";
+            }
+        }
+    pla i
+    atdoyal (dra(cur) > 0) {
+        addword(words, counts, cur);
+    }
+    line := playadu();
+aitudre
+plulai d := dra(words);
+plulai idx := [];
+shoyo i := 1 busale d + 1
+    sutse(idx, i);
+pla i
+shoyo i := 1 busale d + 1
+    plulai bi := i;
+    shoyo j := i + 1 busale d + 1
+        plulai a := idx[bi];
+        plulai b := idx[j];
+        atdoyal (counts[b] > counts[a] tobe (counts[b] == counts[a] rulsai words[b] < words[a])) {
+            bi := j;
+        }
+    pla j
+    plulai t := idx[i];
+    idx[i] := idx[bi];
+    idx[bi] := t;
+pla i
+plulai lim := d;
+atdoyal (lim > 10) {
+    lim := 10;
+}
+shoyo i := 1 busale lim + 1
+    shaibe words[idx[i]] + " " + counts[idx[i]];
+pla i

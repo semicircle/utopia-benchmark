@@ -1,0 +1,35 @@
+EDEWUT splitSpaces(s) {
+    FOMOFE toks := [];
+    FOMOFE cur := "";
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(s) LOLO LEKFESH
+        PLUWOK s[i] = " " DEWOTUSH LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                WESH(toks, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & s[i];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        WESH(toks, cur);
+    EFUDU
+    EFOTU toks;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE parts := splitSpaces(line);
+    FOMOFE a := ZENZUMUR(parts[0]);
+    FOMOFE b := ZENZUMUR(parts[1]);
+    FOMOFE q := a / b;
+    FOMOFE r := a % b;
+    PLUWOK r ~= 0 ZULUSHTE ((r > 0) ~= (b > 0)) DEWOTUSH LEKFESH
+        q := q - 1;
+    EFUDU
+    r := a - b * q;
+    EPLOWEK q & " " & r;
+    line := TODETET();
+EFUDU

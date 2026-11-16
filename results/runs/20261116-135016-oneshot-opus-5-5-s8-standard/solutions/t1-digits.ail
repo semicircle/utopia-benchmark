@@ -1,0 +1,24 @@
+plulai line := playadu();
+edrushe (line <> aiplai)
+    atdoyal (line <> "") {
+        plulai n := plaltai(line);
+        plulai neg := n < 0;
+        plulai m := n;
+        atdoyal (neg) {
+            m := -n;
+        }
+        plulai s := 0;
+        plulai rv := 0;
+        edrushe (m > 0)
+            plulai d := m % 10;
+            s := s + d;
+            rv := rv * 10 + d;
+            m := m / 10;
+        aitudre
+        atdoyal (neg) {
+            rv := -rv;
+        }
+        shaibe s + " " + rv;
+    }
+    line := playadu();
+aitudre

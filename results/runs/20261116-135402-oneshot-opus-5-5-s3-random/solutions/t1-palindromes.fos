@@ -1,0 +1,40 @@
+Gis lowerOf(c) Fodashsa
+    Sogas up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Sogas low = "abcdefghijklmnopqrstuvwxyz";
+    Paxfasva (Sogas i = 1; i <= 26; i = i + 1) {
+        Ishsi (up[i] == c) {
+            Asdra low[i];
+        }
+    }
+    Asdra c;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas chars = [];
+    Sogas n = Drash(line);
+    Paxfasva (Sogas i = 1; i <= n; i = i + 1) {
+        Sogas c = line[i];
+        Ishsi ((c >= "a" Fas c <= "z") Gox (c >= "0" Fas c <= "9")) {
+            Dragi(chars, c);
+        } Padri Ishsi (c >= "A" Fas c <= "Z") {
+            Dragi(chars, lowerOf(c));
+        }
+    }
+    Sogas a = 1;
+    Sogas b = Drash(chars);
+    Sogas ok = Pigi;
+    Sipokvix (a < b) {
+        Ishsi (chars[a] ~= chars[b]) {
+            ok = Fixpodri;
+        }
+        a = a + 1;
+        b = b - 1;
+    }
+    Ishsi (ok) {
+        Dosfasho "yes";
+    } Padri {
+        Dosfasho "no";
+    }
+    line = Goshvovo();
+}

@@ -1,0 +1,24 @@
+EDEWUT num(s, a, b) {
+    FOMOFE v := 0;
+    TUTCHEK i := a ZUWOWEN b LOLO LEKFESH
+        v := v * 10 + ZENZUMUR(s[i]);
+    EFUDU
+    EFOTU v;
+}
+
+FOMOFE names := ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+FOMOFE tt := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    PLUWOK FORMOWE(line) >= 10 DEWOTUSH LEKFESH
+        FOMOFE y := num(line, 0, 3);
+        FOMOFE m := num(line, 5, 6);
+        FOMOFE d := num(line, 8, 9);
+        PLUWOK m < 3 DEWOTUSH LEKFESH
+            y := y - 1;
+        EFUDU
+        FOMOFE w := (y + y / 4 - y / 100 + y / 400 + tt[m - 1] + d) % 7;
+        EPLOWEK names[w];
+    EFUDU
+    line := TODETET();
+EFUDU

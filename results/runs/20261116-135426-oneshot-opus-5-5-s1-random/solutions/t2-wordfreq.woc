@@ -1,0 +1,107 @@
+eilyot lower(c)
+    nei (c < "A" yosheil c > "Z") {
+        chozulni c;
+    }
+    weltuxle up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    weltuxle low := "abcdefghijklmnopqrstuvwxyz";
+    weltuxle lo := 0;
+    weltuxle hi := 25;
+    krenul (lo < hi) {
+        weltuxle mid := lo + (hi - lo - 1) / 2;
+        nei (up[mid] < c) {
+            lo := mid + 1;
+        } wogeish {
+            hi := mid;
+        }
+    }
+    chozulni low[lo];
+iweil
+
+eilyot before(x, y, mode)
+    nei (mode == 0) {
+        chozulni x < y;
+    }
+    nei (x[1] <> y[1]) {
+        chozulni x[1] > y[1];
+    }
+    chozulni x[0] < y[0];
+iweil
+
+eilyot msort(xs, lo, hi, mode)
+    weltuxle r := [];
+    nei (hi - lo <= 1) {
+        nei (hi - lo == 1) {
+            koshkil(r, xs[lo]);
+        }
+        chozulni r;
+    }
+    weltuxle mid := lo + (hi - lo) / 2;
+    weltuxle a := msort(xs, lo, mid, mode);
+    weltuxle b := msort(xs, mid, hi, mode);
+    weltuxle i := 0;
+    weltuxle j := 0;
+    weltuxle na := dushzosh(a);
+    weltuxle nb := dushzosh(b);
+    krenul (i < na elish j < nb) {
+        nei (before(b[j], a[i], mode)) {
+            koshkil(r, b[j]);
+            j := j + 1;
+        } wogeish {
+            koshkil(r, a[i]);
+            i := i + 1;
+        }
+    }
+    krenul (i < na) {
+        koshkil(r, a[i]);
+        i := i + 1;
+    }
+    krenul (j < nb) {
+        koshkil(r, b[j]);
+        j := j + 1;
+    }
+    chozulni r;
+iweil
+
+weltuxle words := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle cur := "";
+    weltuxle n := dushzosh(line);
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle c := line[i];
+        nei ((c >= "a" elish c <= "z") yosheil (c >= "A" elish c <= "Z")) {
+            cur := cur + lower(c);
+        } wogeish {
+            nei (dushzosh(cur) > 0) {
+                koshkil(words, cur);
+                cur := "";
+            }
+        }
+    }
+    nei (dushzosh(cur) > 0) {
+        koshkil(words, cur);
+    }
+    line := lono();
+}
+weltuxle sorted := msort(words, 0, dushzosh(words), 0);
+weltuxle pairs := [];
+weltuxle k := 0;
+weltuxle total := dushzosh(sorted);
+krenul (k < total) {
+    weltuxle w := sorted[k];
+    weltuxle cnt := 0;
+    krenul (k < total elish sorted[k] == w) {
+        cnt := cnt + 1;
+        k := k + 1;
+    }
+    koshkil(pairs, [w, cnt]);
+}
+weltuxle ranked := msort(pairs, 0, dushzosh(pairs), 1);
+weltuxle lim := dushzosh(ranked);
+nei (lim > 10) {
+    lim := 10;
+}
+keit (weltuxle i := 0; i < lim; i := i + 1) {
+    weltuxle p := ranked[i];
+    leshdei p[0] + " " + p[1];
+}

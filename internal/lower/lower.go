@@ -7,14 +7,40 @@ package lower
 import (
 	"fmt"
 
+	"utopia/internal/gen"
 	. "utopia/internal/lang"
 )
 
 type Options struct {
 	// Raw skips semantic compensation (index base, loop bounds, switch
-	// fallthrough). Documentation uses it to show a knob's raw effect.
+	// fallthrough, division rounding). Documentation uses it to show a
+	// knob's raw effect.
 	Raw bool
 }
+
+// Canonical programs divide with truncation toward zero. In a dialect that
+// rounds another way, "/" and "%" become calls to these helpers, which fix
+// the dialect's quotient up by at most one. They are lowered like any other
+// code, with compensation switched off inside them.
+const divHelpers = `
+func DIV(a, b) {
+    let q = a / b;
+    let r = a - b * q;
+    if (r != 0) {
+        if ((r < 0) != (a < 0)) {
+            if ((r < 0) == (b < 0)) {
+                q = q + 1;
+            } else {
+                q = q - 1;
+            }
+        }
+    }
+    return q;
+}
+func MOD(a, b) {
+    return a - b * DIV(a, b);
+}
+`
 
 type frameKind uint8
 
@@ -41,11 +67,18 @@ type lowerer struct {
 	frames   []*frame
 	reserved map[string]bool
 	err      error
+
+	used             map[string]bool // function names in the program
+	divName, modName string          // helper names, once a division needed compensation
+	inHelper         bool
 }
 
 // Lower rewrites prog (written in the canonical dialect) for dialect d.
 func Lower(d *Dialect, prog *Program, opt Options) (*Program, error) {
-	l := &lowerer{d: d, raw: opt.Raw, reserved: map[string]bool{}}
+	l := &lowerer{d: d, raw: opt.Raw, reserved: map[string]bool{}, used: map[string]bool{}}
+	for _, f := range prog.Funcs {
+		l.used[f.Name] = true
+	}
 	for _, w := range d.Keywords {
 		l.reserved[w] = true
 	}
@@ -62,6 +95,19 @@ func Lower(d *Dialect, prog *Program, opt Options) (*Program, error) {
 		out.Funcs = append(out.Funcs, nf)
 	}
 	out.Main = l.block(prog.Main)
+	if l.divName != "" {
+		helpers, err := Parse(gen.Canonical(), divHelpers)
+		if err != nil {
+			return nil, fmt.Errorf("lower: division helpers: %w", err)
+		}
+		l.inHelper = true
+		for _, f := range helpers.Funcs {
+			name := map[string]string{"DIV": l.divName, "MOD": l.modName}[f.Name]
+			nf := &FuncDecl{Name: name, Params: f.Params, Body: l.block(f.Body), Line: f.Line}
+			out.Funcs = append(out.Funcs, nf)
+		}
+		l.inHelper = false
+	}
 	if l.err != nil {
 		return nil, l.err
 	}
@@ -437,6 +483,13 @@ func (l *lowerer) expr(e Expr) Expr {
 		return &Unary{Op: e.Op, X: l.expr(e.X)}
 	case *Binary:
 		n := &Binary{Op: e.Op, L: l.expr(e.L), R: l.expr(e.R), Line: e.Line}
+		if (e.Op == BDiv || e.Op == BMod) && l.compensateDiv() {
+			name := l.divName
+			if e.Op == BMod {
+				name = l.modName
+			}
+			return &Call{Name: name, Args: []Expr{n.L, n.R}, Line: e.Line}
+		}
 		// When concatenation shares "+", an integer on the left would add
 		// instead of concatenating, so convert it explicitly.
 		if e.Op == BConcat && l.d.Ops.Concat == "+" && !stringy(n.L) && !stringy(n.R) {
@@ -445,7 +498,9 @@ func (l *lowerer) expr(e Expr) Expr {
 		return n
 	case *Call:
 		n := &Call{Name: e.Name, Builtin: e.Builtin, Line: e.Line}
-		if e.Builtin == BNone {
+		if e.Builtin == BNone && l.inHelper && e.Name == "DIV" {
+			n.Name = l.divName
+		} else if e.Builtin == BNone {
 			n.Name = l.name(e.Name)
 		} else {
 			n.Name = l.d.Builtins[e.Builtin]
@@ -459,6 +514,29 @@ func (l *lowerer) expr(e Expr) Expr {
 	}
 	l.fail("lower: unknown expression %T", e)
 	return e
+}
+
+// compensateDiv reports whether "/" and "%" must go through the helpers, and
+// picks their names the first time.
+func (l *lowerer) compensateDiv() bool {
+	if l.raw || l.inHelper || l.d.Sem.Div == DivTrunc {
+		return false
+	}
+	if l.divName == "" {
+		l.divName, l.modName = l.fresh("div_"), l.fresh("mod_")
+	}
+	return true
+}
+
+// fresh returns a function name that is not reserved and not used by the
+// program, by appending underscores.
+func (l *lowerer) fresh(base string) string {
+	n := l.name(base)
+	for l.used[n] {
+		n += "_"
+	}
+	l.used[n] = true
+	return n
 }
 
 // stringy reports whether an expression certainly yields a string.

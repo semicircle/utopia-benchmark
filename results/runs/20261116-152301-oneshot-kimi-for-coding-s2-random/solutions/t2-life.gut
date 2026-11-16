@@ -1,0 +1,48 @@
+goyu g <- druwol(uyotho()).
+goyu grid <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    dreme(grid, line).
+    line <- uyotho().
+shusushe
+goyu rows <- wumdror(grid).
+goyu cols <- 0.
+dre rows > 0 ethur
+    cols <- wumdror(grid[0]).
+wodrotru dre
+
+wego gen <- 1 setru g
+    goyu newgrid <- [].
+    wego r <- 0 setru rows - 1
+        goyu newrow <- "".
+        wego c <- 0 setru cols - 1
+            goyu cnt <- 0.
+            wego dr <- -1 setru 1
+                wego dc <- -1 setru 1
+                    dre (shogu ((dr == 0) suyogur (dc == 0))) suyogur (((r + dr) >= 0) suyogur ((r + dr) < rows) suyogur ((c + dc) >= 0) suyogur ((c + dc) < cols)) ethur
+                        dre grid[r + dr][c + dc] == "#" ethur
+                                cnt <- cnt + 1.
+                        wodrotru dre
+                    wodrotru dre
+                trer dc
+            trer dr
+            dre grid[r][c] == "#" ethur
+                dre (cnt == 2) drorsu (cnt == 3) ethur
+                    newrow <- newrow & "#".
+                truthor
+                    newrow <- newrow & ".".
+                wodrotru dre
+            yuyuge cnt == 3 ethur
+                newrow <- newrow & "#".
+            truthor
+                newrow <- newrow & ".".
+            wodrotru dre
+        trer c
+        dreme(newgrid, newrow).
+    trer r
+    grid <- newgrid.
+trer gen
+
+wego r <- 0 setru rows - 1
+    suwe grid[r].
+trer r

@@ -70,9 +70,25 @@ Utopia measures what is left when recall is taken away:
 
 ## Status
 
-**v0 in progress.** The dialect generator, compiler, VM, docs generator and
-seven T0 tasks work end to end. Households, seasons and the UI are not built
-yet.
+**v0 in progress.** The dialect generator, compiler, VM, docs generator,
+harness, results site and 17 tasks work end to end. Households, seasons and
+the UI are not built yet.
+
+Tasks come in tiers:
+
+- **T0** (7 tasks, 1 to 20 lines): hello, counting, FizzBuzz and the like. A
+  smoke test: every model tried so far solves all of them.
+- **T1** (6 tasks, 20 to 50 lines): digit sums, floor division, rotation,
+  palindromes, binary-search rank, weekday of a date.
+- **T2** (4 tasks, 50 to 150 lines): an RPN calculator, Game of Life,
+  100-digit arithmetic, word frequencies.
+
+Every program parses its own input character by character (there is no
+split), and T1–T2 lean on the false friends: integer division and remainder
+with negative numbers, index base, loop bounds, evaluation order and
+short-circuiting. Translated by habit, without adapting to the dialect's
+semantics, the T1–T2 reference solutions fail in 37–83% of dialects, against
+0–52% for T0 (`UTOPIA_TRAPS=1 go test ./internal/tasks -run HabitTraps -v`).
 
 What a seed varies today:
 
@@ -130,6 +146,7 @@ export OPENROUTER_API_KEY=...
     --api-key-env OPENROUTER_API_KEY --model some/model --price-in 1 --price-out 4
 
 .venv/bin/python harness/build_site.py                                    # results site in _site/
+.venv/bin/python harness/regrade.py results/runs/RUN_ID                  # re-score a saved one-shot answer
 ```
 
 Offline self-tests, no key needed:
@@ -171,10 +188,14 @@ once in the repo settings).
 - `harness/run.py`: runs a model (one-shot or agent) and records the result
 - `harness/llm.py`: Anthropic and OpenAI-compatible clients, the agent loop and its tools
 - `harness/claude_code.py`: optional Claude Code runner
+- `harness/regrade.py`: re-scores saved one-shot answers after a grading fix, without calling a model
 - `harness/build_site.py`: builds the static results site from `results/`
+- `scripts/make_tests.py`: independent Python references that generate the T1–T2 hidden tests
 
 `go test ./...` checks that every reference solution passes its tests in
-600 generated dialects. It also checks that lowered programs round-trip
+600 generated dialects (the canonical solutions are written once, with
+conventional semantics; lowering compensates for index base, loop bounds,
+switch fallthrough and division rounding). It also checks that lowered programs round-trip
 through the printer and parser, and that the reference renders for every
 seed.
 

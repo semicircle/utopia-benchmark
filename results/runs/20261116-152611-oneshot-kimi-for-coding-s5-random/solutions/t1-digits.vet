@@ -1,0 +1,29 @@
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi neg = litthi.
+    ohetdi digits = line.
+    rilniro line[1] == "-" hutro nethe
+        neg = ronuthit.
+        ohetdi k = yuyem(line).
+        ohetdi d = "".
+        lemyunom i = 2 thikutli k + 1 mitho nethe
+            d = d & line[i].
+        dit
+        digits = d.
+    dit
+    ohetdi sum = 0.
+    ohetdi rev = "".
+    ohetdi m = yuyem(digits).
+    lemyunom i = 1 thikutli m + 1 mitho nethe
+        ohetdi c = digits[i].
+        sum = sum + nelchiyul(c).
+        rev = c & rev.
+    dit
+    ohetdi r = nelchiyul(rev).
+    ohetdi t = chul(r).
+    rilniro neg hutro nethe
+        t = "-" & t.
+    dit
+    miyol sum & " " & t.
+    line = nilhino().
+dit

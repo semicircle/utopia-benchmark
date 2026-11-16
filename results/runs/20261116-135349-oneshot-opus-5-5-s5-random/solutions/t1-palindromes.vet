@@ -1,0 +1,50 @@
+rimli lowc(c) nethe
+    rilniro (c >= "A") lotvethu (c <= "Z") hutro nethe
+        ohetdi up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+        ohetdi lo = "abcdefghijklmnopqrstuvwxyz".
+        ohetdi l = 1.
+        ohetdi h = 26.
+        konit l < h mitho nethe
+            ohetdi m = (l + h) / 2.
+            rilniro up[m] < c hutro nethe
+                l = m + 1.
+            dit thumku nethe
+                h = m.
+            dit
+        dit
+        yiletho lo[l].
+    dit
+    yiletho c.
+dit
+
+rimli isan(c) nethe
+    yiletho ((c >= "a") lotvethu (c <= "z")) nime (((c >= "A") lotvethu (c <= "Z")) nime ((c >= "0") lotvethu (c <= "9"))).
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi cs = [].
+    lemyunom i = 1 thikutli yuyem(line) + 1 mitho nethe
+        ohetdi c = line[i].
+        rilniro isan(c) hutro nethe
+            nimhol(cs, lowc(c)).
+        dit
+    dit
+    ohetdi a = 1.
+    ohetdi b = yuyem(cs).
+    ohetdi ok = ronuthit.
+    konit a < b mitho nethe
+        rilniro cs[a] <> cs[b] hutro nethe
+            ok = litthi.
+            chet.
+        dit
+        a = a + 1.
+        b = b - 1.
+    dit
+    rilniro ok hutro nethe
+        miyol "yes".
+    dit thumku nethe
+        miyol "no".
+    dit
+    line = nilhino().
+dit

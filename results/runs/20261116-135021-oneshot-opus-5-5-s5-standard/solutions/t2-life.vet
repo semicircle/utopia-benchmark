@@ -1,0 +1,66 @@
+ohetdi g = nelchiyul(nilhino()).
+ohetdi grid = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    rilniro line <> "" hutro nethe
+        ohetdi row = [].
+        lemyunom j = 0 thikutli yuyem(line) - 1 mitho nethe
+            rilniro line[j] == "#" hutro nethe
+                nimhol(row, 1).
+            dit thumku nethe
+                nimhol(row, 0).
+            dit
+        dit
+        nimhol(grid, row).
+    dit
+    line = nilhino().
+dit
+ohetdi h = yuyem(grid).
+ohetdi w = 0.
+rilniro h > 0 hutro nethe
+    w = yuyem(grid[0]).
+dit
+lemyunom gen = 1 thikutli g mitho nethe
+    ohetdi ng = [].
+    lemyunom i = 0 thikutli h - 1 mitho nethe
+        ohetdi nr = [].
+        ohetdi crow = grid[i].
+        lemyunom j = 0 thikutli w - 1 mitho nethe
+            ohetdi cnt = 0.
+            lemyunom di = -1 thikutli 1 mitho nethe
+                ohetdi a = i + di.
+                rilniro a >= 0 lotvethu a < h hutro nethe
+                    ohetdi ra = grid[a].
+                    lemyunom dj = -1 thikutli 1 mitho nethe
+                        ohetdi b = j + dj.
+                        rilniro (di <> 0 nime dj <> 0) lotvethu b >= 0 lotvethu b < w hutro nethe
+                            cnt = cnt + ra[b].
+                        dit
+                    dit
+                dit
+            dit
+            ohetdi cur = crow[j].
+            rilniro cur == 1 lotvethu (cnt == 2 nime cnt == 3) hutro nethe
+                nimhol(nr, 1).
+            dit thumku rilniro cur == 0 lotvethu cnt == 3 hutro nethe
+                nimhol(nr, 1).
+            dit thumku nethe
+                nimhol(nr, 0).
+            dit
+        dit
+        nimhol(ng, nr).
+    dit
+    grid = ng.
+dit
+lemyunom i = 0 thikutli h - 1 mitho nethe
+    ohetdi prow = grid[i].
+    ohetdi s = "".
+    lemyunom j = 0 thikutli w - 1 mitho nethe
+        rilniro prow[j] == 1 hutro nethe
+            s = s & "#".
+        dit thumku nethe
+            s = s & ".".
+        dit
+    dit
+    miyol s.
+dit

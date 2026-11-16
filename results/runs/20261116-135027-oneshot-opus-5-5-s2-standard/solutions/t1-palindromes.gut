@@ -1,0 +1,50 @@
+dredrume lowerChar(c)
+    dre c >= "A" suyogur c <= "Z" ethur
+        goyu upper <- "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+        goyu lower <- "abcdefghijklmnopqrstuvwxyz".
+        goyu a <- 0.
+        goyu b <- 25.
+        omethol a < b
+            goyu m <- (a + b) / 2.
+            dre upper[m] < c ethur
+                a <- m + 1.
+            truthor
+                b <- m.
+            wodrotru dre
+        shusushe
+        odrol lower[a].
+    wodrotru dre
+    odrol c.
+wodrotru dredrume
+
+dredrume isAlnum(c)
+    odrol (c >= "a" suyogur c <= "z") drorsu (c >= "A" suyogur c <= "Z") drorsu (c >= "0" suyogur c <= "9").
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu cs <- [].
+    wego i <- 0 setru wumdror(line) - 1
+        goyu ch <- line[i].
+        dre isAlnum(ch) ethur
+            dreme(cs, lowerChar(ch)).
+        wodrotru dre
+    trer i
+    goyu p <- 0.
+    goyu q <- wumdror(cs) - 1.
+    goyu ok <- sudru.
+    omethol p < q
+        dre cs[p] != cs[q] ethur
+            ok <- tru.
+            wuyem.
+        wodrotru dre
+        p <- p + 1.
+        q <- q - 1.
+    shusushe
+    dre ok ethur
+        suwe "yes".
+    truthor
+        suwe "no".
+    wodrotru dre
+    line <- uyotho().
+shusushe

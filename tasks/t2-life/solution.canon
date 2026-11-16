@@ -1,0 +1,66 @@
+func advance(cells, h, w) {
+    let next = [];
+    for (let r = 0; r < h; r = r + 1) {
+        for (let c = 0; c < w; c = c + 1) {
+            let n = 0;
+            count dr from -1 to 1 {
+                count dc from -1 to 1 {
+                    let rr = r + dr;
+                    let cc = c + dc;
+                    if (dr != 0 or dc != 0) {
+                        if (rr >= 0) {
+                            if (rr < h) {
+                                if (cc >= 0) {
+                                    if (cc < w) {
+                                        n = n + cells[rr * w + cc];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            let alive = 0;
+            if (n == 3) {
+                alive = 1;
+            }
+            if (n == 2) {
+                alive = cells[r * w + c];
+            }
+            push(next, alive);
+        }
+    }
+    return next;
+}
+
+let g = num(readline());
+let cells = [];
+let h = 0;
+let w = 0;
+let line = readline();
+while (line != none) {
+    w = len(line);
+    for (let i = 0; i < w; i = i + 1) {
+        if (line[i] == "#") {
+            push(cells, 1);
+        } else {
+            push(cells, 0);
+        }
+    }
+    h = h + 1;
+    line = readline();
+}
+for (let k = 0; k < g; k = k + 1) {
+    cells = advance(cells, h, w);
+}
+for (let r = 0; r < h; r = r + 1) {
+    let row = "";
+    for (let c = 0; c < w; c = c + 1) {
+        if (cells[r * w + c] == 1) {
+            row = row & "#";
+        } else {
+            row = row & ".";
+        }
+    }
+    print row;
+}

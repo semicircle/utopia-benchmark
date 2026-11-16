@@ -1,0 +1,119 @@
+dredrume lowerc(c)
+    goyu up <- "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    goyu low <- "abcdefghijklmnopqrstuvwxyz".
+    goyu lo <- 0.
+    goyu hi <- 25.
+    omethol lo < hi
+        goyu mid <- (lo + hi) / 2.
+        dre up[mid] < c ethur
+            lo <- mid + 1.
+        truthor
+            hi <- mid.
+        wodrotru dre
+    shusushe
+    odrol low[lo].
+wodrotru dredrume
+
+dredrume msort(xs, lo, hi)
+    dre (hi - lo) <= 1 ethur
+        goyu r <- [].
+        dre (hi - lo) == 1 ethur
+            dreme(r, xs[lo]).
+        wodrotru dre
+        odrol r.
+    wodrotru dre
+    goyu mid <- (lo + hi) / 2.
+    goyu a <- msort(xs, lo, mid).
+    goyu b <- msort(xs, mid, hi).
+    goyu out <- [].
+    goyu i <- 0.
+    goyu j <- 0.
+    goyu na <- wumdror(a).
+    goyu nb <- wumdror(b).
+    omethol (i < na) suyogur (j < nb)
+        dre a[i] <= b[j] ethur
+            dreme(out, a[i]).
+            i <- i + 1.
+        truthor
+            dreme(out, b[j]).
+            j <- j + 1.
+        wodrotru dre
+    shusushe
+    omethol i < na
+        dreme(out, a[i]).
+        i <- i + 1.
+    shusushe
+    omethol j < nb
+        dreme(out, b[j]).
+        j <- j + 1.
+    shusushe
+    odrol out.
+wodrotru dredrume
+
+goyu words <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(line) - 1
+        goyu c <- line[i].
+        dre (c >= "a") suyogur (c <= "z") ethur
+            cur <- cur & c.
+        yuyuge (c >= "A") suyogur (c <= "Z") ethur
+            cur <- cur & lowerc(c).
+        truthor
+            dre cur != "" ethur
+                dreme(words, cur).
+                cur <- "".
+            wodrotru dre
+        wodrotru dre
+    trer i
+    dre cur != "" ethur
+        dreme(words, cur).
+    wodrotru dre
+    line <- uyotho().
+shusushe
+
+goyu sorted <- msort(words, 0, wumdror(words)).
+goyu uw <- [].
+goyu uc <- [].
+goyu k <- 0.
+goyu total <- wumdror(sorted).
+omethol k < total
+    goyu w <- sorted[k].
+    goyu j <- k + 1.
+    goyu going <- sudru.
+    omethol going
+        dre j >= total ethur
+            going <- tru.
+        truthor
+            dre sorted[j] != w ethur
+                going <- tru.
+            truthor
+                j <- j + 1.
+            wodrotru dre
+        wodrotru dre
+    shusushe
+    dreme(uw, w).
+    dreme(uc, j - k).
+    k <- j.
+shusushe
+
+goyu m <- wumdror(uw).
+goyu lim <- 10.
+dre m < 10 ethur
+    lim <- m.
+wodrotru dre
+wego t <- 1 setru lim
+    goyu bi <- -1.
+    goyu bc <- 0.
+    wego x <- 0 setru m - 1
+        dre uc[x] > bc ethur
+            bi <- x.
+            bc <- uc[x].
+        wodrotru dre
+    trer x
+    dre bi >= 0 ethur
+        suwe uw[bi] & " " & bc.
+        uc[bi] <- 0.
+    wodrotru dre
+trer t

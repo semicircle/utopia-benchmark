@@ -1,0 +1,12 @@
+troufu n = shufa(bounfou());
+sutrarsu i = 1 sou n
+    sitrartu (((i % 3) == 0) dra ((i % 5) == 0)) fisu drufirsa
+        binmi "FizzBuzz";
+    drumin tru sitrartu (i % 3) == 0 fisu drufirsa
+        binmi "Fizz";
+    drumin tru sitrartu (i % 5) == 0 fisu drufirsa
+        binmi "Buzz";
+    drumin tru drufirsa
+        binmi i;
+    drumin
+moun i

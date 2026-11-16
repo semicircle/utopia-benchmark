@@ -1,0 +1,42 @@
+EDEWUT lowerChar(c) {
+    FOMOFE up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    FOMOFE lo := "abcdefghijklmnopqrstuvwxyz";
+    PLUWOK c >= "A" ZULUSHTE c <= "Z" DEWOTUSH LEKFESH
+        TUTCHEK i := 0 ZUWOWEN 25 LOLO LEKFESH
+            PLUWOK up[i] = c DEWOTUSH LEKFESH
+                EFOTU lo[i];
+            EFUDU
+        EFUDU
+    EFUDU
+    EFOTU c;
+}
+
+EDEWUT isAlnum(c) {
+    EFOTU (c >= "a" ZULUSHTE c <= "z") MUR (c >= "0" ZULUSHTE c <= "9");
+}
+
+EDEWUT check(line) {
+    FOMOFE t := [];
+    TUTCHEK i := 0 ZUWOWEN FORMOWE(line) - 1 LOLO LEKFESH
+        FOMOFE c := lowerChar(line[i]);
+        PLUWOK isAlnum(c) DEWOTUSH LEKFESH
+            WESH(t, c);
+        EFUDU
+    EFUDU
+    FOMOFE a := 0;
+    FOMOFE b := FORMOWE(t) - 1;
+    FUKCHEFE a < b LOLO LEKFESH
+        PLUWOK t[a] ~= t[b] DEWOTUSH LEKFESH
+            EFOTU "no";
+        EFUDU
+        a := a + 1;
+        b := b - 1;
+    EFUDU
+    EFOTU "yes";
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    EPLOWEK check(line);
+    line := TODETET();
+EFUDU

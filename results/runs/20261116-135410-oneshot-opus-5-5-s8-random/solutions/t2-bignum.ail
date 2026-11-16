@@ -1,0 +1,122 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai has := nonotru;
+    shoyo i := 1 busale dra(s) + 1
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t" tobe c == "\r") {
+            atdoyal (has) {
+                sutse(res, cur);
+                cur := "";
+                has := nonotru;
+            }
+        } bulbayo {
+            cur := cur + c;
+            has := eretde;
+        }
+    pla i
+    atdoyal (has) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+nudro parse(s) {
+    plulai res := [];
+    plulai e := dra(s);
+    edrushe e >= 1
+        plulai st := e - 5;
+        atdoyal (st < 1) {
+            st := 1;
+        }
+        plulai v := 0;
+        shoyo j := st busale e + 1
+            v := v * 10 + plaltai(s[j]);
+        pla j
+        sutse(res, v);
+        e := st - 1;
+    aitudre
+    atdoyal (dra(res) == 0) {
+        sutse(res, 0);
+    }
+    druna res;
+}
+
+nudro add(a, b) {
+    plulai res := [];
+    plulai n := dra(a);
+    atdoyal (dra(b) > n) {
+        n := dra(b);
+    }
+    plulai carry := 0;
+    shoyo i := 1 busale n + 1
+        plulai s := carry;
+        atdoyal (i <= dra(a)) {
+            s := s + a[i];
+        }
+        atdoyal (i <= dra(b)) {
+            s := s + b[i];
+        }
+        sutse(res, s % 1000000);
+        carry := s / 1000000;
+    pla i
+    atdoyal (carry > 0) {
+        sutse(res, carry);
+    }
+    druna res;
+}
+
+nudro mul(a, b) {
+    plulai na := dra(a);
+    plulai nb := dra(b);
+    plulai res := [];
+    plulai cur := 0;
+    plulai carry := 0;
+    plulai k := 0;
+    shoyo i := 0 busale na + nb
+        sutse(res, 0);
+    pla i
+    shoyo i := 1 busale na + 1
+        carry := 0;
+        shoyo j := 1 busale nb + 1
+            cur := res[i + j - 1] + a[i] * b[j] + carry;
+            res[i + j - 1] := cur % 1000000;
+            carry := cur / 1000000;
+        pla j
+        k := i + nb;
+        edrushe carry > 0
+            cur := res[k] + carry;
+            res[k] := cur % 1000000;
+            carry := cur / 1000000;
+            k := k + 1;
+        aitudre
+    pla i
+    druna res;
+}
+
+nudro tostr(a) {
+    plulai n := dra(a);
+    edrushe n > 1 rulsai a[n] == 0
+        n := n - 1;
+    aitudre
+    plulai s := sutlarai(a[n]);
+    shoyo i := n - 1 busale 0 ede -1
+        plulai t := sutlarai(a[i]);
+        edrushe dra(t) < 6
+            t := "0" + t;
+        aitudre
+        s := s + t;
+    pla i
+    druna s;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai p := split(line);
+    atdoyal (dra(p) >= 2) {
+        plulai a := parse(p[1]);
+        plulai b := parse(p[2]);
+        shaibe tostr(add(a, b)) + " " + tostr(mul(a, b));
+    }
+    line := playadu();
+aitudre

@@ -1,0 +1,126 @@
+Gis substr(s, i, j) Fodashsa
+    Sogas r = "";
+    Paxfasva (Sogas k = i; k <= j; k = k + 1) {
+        r = r + s[k];
+    }
+    Asdra r;
+Gosafax
+
+Gis split(s) Fodashsa
+    Sogas parts = [];
+    Sogas cur = "";
+    Paxfasva (Sogas i = 1; i <= Drash(s); i = i + 1) {
+        Ishsi (s[i] == " ") {
+            Ishsi (cur ~= "") {
+                Dragi(parts, cur);
+            }
+            cur = "";
+        } Padri {
+            cur = cur + s[i];
+        }
+    }
+    Ishsi (cur ~= "") {
+        Dragi(parts, cur);
+    }
+    Asdra parts;
+Gosafax
+
+Gis toChunks(s) Fodashsa
+    Sogas chunks = [];
+    Sogas i = Drash(s);
+    Gosh {
+        Sogas lo = i - 3;
+        Ishsi (lo < 1) {
+            lo = 1;
+        }
+        Sogas v = 0;
+        Paxfasva (Sogas k = lo; k <= i; k = k + 1) {
+            v = v * 10 + Drak(s[k]);
+        }
+        Dragi(chunks, v);
+        i = lo - 1;
+    } Sipokvix (i >= 1);
+    Asdra chunks;
+Gosafax
+
+Gis pad4(v) Fodashsa
+    Sogas s = Igo(v);
+    Sogas r = s;
+    Paxfasva (Sogas i = Drash(s) + 1; i <= 4; i = i + 1) {
+        r = "0" + r;
+    }
+    Asdra r;
+Gosafax
+
+Gis chunksToStr(cs) Fodashsa
+    Sogas n = Drash(cs);
+    Sipokvix (n > 1) {
+        Ishsi (cs[n] == 0) {
+            n = n - 1;
+        } Padri {
+            Fosvas;
+        }
+    }
+    Sogas r = Igo(cs[n]);
+    Paxfasva (Sogas i = n - 1; i >= 1; i = i - 1) {
+        r = r + pad4(cs[i]);
+    }
+    Asdra r;
+Gosafax
+
+Gis addBig(a, b) Fodashsa
+    Sogas r = [];
+    Sogas carry = 0;
+    Sogas n = Drash(a);
+    Ishsi (Drash(b) > n) {
+        n = Drash(b);
+    }
+    Paxfasva (Sogas i = 1; i <= n; i = i + 1) {
+        Sogas av = 0;
+        Sogas bv = 0;
+        Ishsi (i <= Drash(a)) {
+            av = a[i];
+        }
+        Ishsi (i <= Drash(b)) {
+            bv = b[i];
+        }
+        Sogas cur = av + bv + carry;
+        Ishsi (cur >= 10000) {
+            cur = cur - 10000;
+            carry = 1;
+        } Padri {
+            carry = 0;
+        }
+        Dragi(r, cur);
+    }
+    Ishsi (carry == 1) {
+        Dragi(r, 1);
+    }
+    Asdra r;
+Gosafax
+
+Gis mulBig(a, b) Fodashsa
+    Sogas r = [];
+    Paxfasva (Sogas i = 1; i <= Drash(a) + Drash(b); i = i + 1) {
+        Dragi(r, 0);
+    }
+    Paxfasva (Sogas i = 1; i <= Drash(a); i = i + 1) {
+        Sogas carry = 0;
+        Paxfasva (Sogas j = 1; j <= Drash(b); j = j + 1) {
+            Sogas cur = r[i + j - 1] + a[i] * b[j] + carry;
+            r[i + j - 1] = cur Dodogo 10000;
+            carry = cur / 10000;
+        }
+        r[i + Drash(b)] = r[i + Drash(b)] + carry;
+    }
+    Asdra r;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas parts = split(line);
+    Sogas as = parts[1];
+    Sogas bs = parts[2];
+    Dosfasho chunksToStr(addBig(toChunks(as), toChunks(bs))) + " " + chunksToStr(mulBig(toChunks(as), toChunks(bs)));
+    line = Goshvovo();
+}

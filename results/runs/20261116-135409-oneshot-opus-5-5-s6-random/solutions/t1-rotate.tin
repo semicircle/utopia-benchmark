@@ -1,0 +1,20 @@
+troufu k = shufa(bounfou());
+troufu xs = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    marboun(xs, line);
+    line = bounfou();
+trushou
+troufu n = utoufa(xs);
+sitrartu n > 0 fisu drufirsa
+    troufu s = k % n;
+    sitrartu s < 0 fisu drufirsa
+        s = s + n;
+    drumin
+    sutrarsu i = ((n - s) + 1) sou n
+        binmi xs[i];
+    moun i
+    sutrarsu i = 1 sou (n - s)
+        binmi xs[i];
+    moun i
+drumin

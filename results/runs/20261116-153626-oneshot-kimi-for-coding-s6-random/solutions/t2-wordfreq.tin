@@ -1,0 +1,87 @@
+tumumin isletter(c)
+    drur (((c >= "A") dra (c <= "Z")) butrouta ((c >= "a") dra (c <= "z")));
+drumin tumumin
+
+tumumin isdigit(c)
+    drur ((c >= "0") dra (c <= "9"));
+drumin tumumin
+
+tumumin lowerchar(c)
+    troufu upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    troufu lower = "abcdefghijklmnopqrstuvwxyz";
+    sutrarsu i = 1 sou 26
+        sitrartu c == upper[i] fisu drufirsa
+            drur lower[i];
+        drumin
+    moun i
+    drur c;
+drumin tumumin
+
+tumumin findword(words, w)
+    sutrarsu i = 1 sou utoufa(words)
+        sitrartu words[i] == w fisu drufirsa
+            drur i;
+        drumin
+    moun i
+    drur 0;
+drumin tumumin
+
+troufu words = [];
+troufu counts = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu cur = "";
+    sutrarsu i = 1 sou utoufa(line)
+        troufu c = line[i];
+        sitrartu isletter(c) fisu drufirsa
+            cur = cur + lowerchar(c);
+        drumin tru sitrartu isdigit(c) fisu drufirsa
+            cur = cur + c;
+        drumin tru drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                troufu p = findword(words, cur);
+                sitrartu p == 0 fisu drufirsa
+                    marboun(words, cur);
+                    marboun(counts, 1);
+                drumin tru drufirsa
+                    counts[p] = counts[p] + 1;
+                drumin
+                cur = "";
+            drumin
+        drumin
+    moun i
+    sitrartu cur ~= "" fisu drufirsa
+        troufu p = findword(words, cur);
+        sitrartu p == 0 fisu drufirsa
+            marboun(words, cur);
+            marboun(counts, 1);
+        drumin tru drufirsa
+            counts[p] = counts[p] + 1;
+        drumin
+    drumin
+    line = bounfou();
+trushou
+troufu m = utoufa(words);
+troufu used = [];
+sutrarsu i = 1 sou m
+    marboun(used, fufir);
+moun i
+sutrarsu printed = 1 sou 10
+    troufu best = 0;
+    sutrarsu j = 1 sou m
+        sitrartu used[j] ~= sibitrou fisu drufirsa
+            sitrartu best == 0 fisu drufirsa
+                best = j;
+            drumin tru sitrartu counts[j] > counts[best] fisu drufirsa
+                best = j;
+            drumin tru sitrartu ((counts[j] == counts[best]) dra (words[j] < words[best])) fisu drufirsa
+                best = j;
+            drumin
+        drumin
+    moun j
+    sitrartu best == 0 fisu drufirsa
+        basu;
+    drumin
+    binmi (words[best] + " ") + counts[best];
+    used[best] = sibitrou;
+moun printed

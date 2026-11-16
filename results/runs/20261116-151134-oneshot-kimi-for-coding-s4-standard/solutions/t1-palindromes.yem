@@ -1,0 +1,33 @@
+Ruyoyo lowerc(c)
+    Trepiho up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Trepiho lo := "abcdefghijklmnopqrstuvwxyz";
+    Pil (Trepiho i := 0; i < 26; i := i + 1) {
+        Mushu c = up[i] Yeshil Hupo
+            Omel lo[i];
+        Tho
+    }
+    Omel c;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho f := "";
+    Pil (Trepiho i := 0; i < Purmo(line); i := i + 1) {
+        Trepiho c := line[i];
+        Mushu (c >= "a" Pethe c <= "z") Hiyikra (c >= "A" Pethe c <= "Z") Hiyikra (c >= "0" Pethe c <= "9") Yeshil Hupo
+            f := f + lowerc(c);
+        Tho
+    }
+    Trepiho ok := Yupu;
+    Pil (Trepiho i := 0; i < Purmo(f) / 2; i := i + 1) {
+        Mushu f[i] ~= f[Purmo(f) - 1 - i] Yeshil Hupo
+            ok := Yaki;
+        Tho
+    }
+    Mushu ok Yeshil Hupo
+        Rashar "yes";
+    Tho Thotri Hupo
+        Rashar "no";
+    Tho
+    line := Thoke();
+}

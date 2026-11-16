@@ -1,0 +1,35 @@
+tumumin splittok(s)
+    troufu parts = [];
+    troufu cur = "";
+    troufu i = 0;
+    tafashou i < utoufa(s)
+        troufu c = s[i];
+        sitrartu c == " " fisu drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                marboun(parts, cur);
+            drumin
+            cur = "";
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+        i = i + 1;
+    trushou
+    sitrartu cur ~= "" fisu drufirsa
+        marboun(parts, cur);
+    drumin
+    drur parts;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu parts = splittok(line);
+    troufu a = shufa(parts[0]);
+    troufu b = shufa(parts[1]);
+    troufu q = a / b;
+    sitrartu a % b ~= 0 dra ((a < 0) ~= (b < 0)) fisu drufirsa
+        q = q - 1;
+    drumin
+    troufu r = a - b * q;
+    binmi q + " " + r;
+    line = bounfou();
+trushou

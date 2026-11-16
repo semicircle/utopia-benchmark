@@ -1,0 +1,53 @@
+Ruyoyo substr(s, i, j)
+    Trepiho r := "";
+    Pil (Trepiho k := i; k < j; k := k + 1) {
+        r := r + s[k];
+    }
+    Omel r;
+Opa
+
+Ruyoyo days_from_civil(y, m, d)
+    Mushu m <= 2 Yeshil Hupo
+        y := y - 1;
+    Tho
+    Trepiho era := y / 400;
+    Mushu y < 0 Yeshil Hupo
+        era := (y - 399) / 400;
+    Tho
+    Trepiho yoe := y - era * 400;
+    Trepiho mp := (m + 9) % 12;
+    Trepiho doy := (153 * mp + 2) / 5 + d - 1;
+    Trepiho doe := yoe * 365 + yoe / 4 - yoe / 100 + doy;
+    Omel era * 146097 + doe - 719468;
+Opa
+
+Ruyoyo weekday_name(w)
+    Mushu w = 0 Yeshil Hupo
+        Omel "Sunday";
+    Tho Thotri Mushu w = 1 Yeshil Hupo
+        Omel "Monday";
+    Tho Thotri Mushu w = 2 Yeshil Hupo
+        Omel "Tuesday";
+    Tho Thotri Mushu w = 3 Yeshil Hupo
+        Omel "Wednesday";
+    Tho Thotri Mushu w = 4 Yeshil Hupo
+        Omel "Thursday";
+    Tho Thotri Mushu w = 5 Yeshil Hupo
+        Omel "Friday";
+    Tho
+    Omel "Saturday";
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho y := Eshiyer(substr(line, 0, 4));
+    Trepiho m := Eshiyer(substr(line, 5, 7));
+    Trepiho d := Eshiyer(substr(line, 8, 10));
+    Trepiho days := days_from_civil(y, m, d);
+    Trepiho w := (days + 4) % 7;
+    Mushu w < 0 Yeshil Hupo
+        w := w + 7;
+    Tho
+    Rashar weekday_name(w);
+    line := Thoke();
+}

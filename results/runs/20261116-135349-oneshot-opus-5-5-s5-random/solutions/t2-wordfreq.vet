@@ -1,0 +1,112 @@
+rimli lowc(c) nethe
+    rilniro (c >= "A") lotvethu (c <= "Z") hutro nethe
+        ohetdi up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+        ohetdi lo = "abcdefghijklmnopqrstuvwxyz".
+        ohetdi l = 1.
+        ohetdi h = 26.
+        konit l < h mitho nethe
+            ohetdi m = (l + h) / 2.
+            rilniro up[m] < c hutro nethe
+                l = m + 1.
+            dit thumku nethe
+                h = m.
+            dit
+        dit
+        yiletho lo[l].
+    dit
+    yiletho c.
+dit
+
+rimli msort(xs) nethe
+    ohetdi n = yuyem(xs).
+    rilniro n <= 1 hutro nethe
+        yiletho xs.
+    dit
+    ohetdi mid = n / 2.
+    ohetdi a = [].
+    ohetdi b = [].
+    lemyunom i = 1 thikutli mid + 1 mitho nethe
+        nimhol(a, xs[i]).
+    dit
+    lemyunom i = mid + 1 thikutli n + 1 mitho nethe
+        nimhol(b, xs[i]).
+    dit
+    a = msort(a).
+    b = msort(b).
+    ohetdi la = yuyem(a).
+    ohetdi lb = yuyem(b).
+    ohetdi res = [].
+    ohetdi p = 1.
+    ohetdi q = 1.
+    konit (p <= la) lotvethu (q <= lb) mitho nethe
+        rilniro a[p] <= b[q] hutro nethe
+            nimhol(res, a[p]).
+            p = p + 1.
+        dit thumku nethe
+            nimhol(res, b[q]).
+            q = q + 1.
+        dit
+    dit
+    konit p <= la mitho nethe
+        nimhol(res, a[p]).
+        p = p + 1.
+    dit
+    konit q <= lb mitho nethe
+        nimhol(res, b[q]).
+        q = q + 1.
+    dit
+    yiletho res.
+dit
+
+ohetdi ws = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi cur = "".
+    lemyunom i = 1 thikutli yuyem(line) + 1 mitho nethe
+        ohetdi c = line[i].
+        rilniro (c >= "a") lotvethu (c <= "z") hutro nethe
+            cur = cur & c.
+        dit thumku rilniro (c >= "A") lotvethu (c <= "Z") hutro nethe
+            cur = cur & lowc(c).
+        dit thumku rilniro yuyem(cur) > 0 hutro nethe
+            nimhol(ws, cur).
+            cur = "".
+        dit
+    dit
+    rilniro yuyem(cur) > 0 hutro nethe
+        nimhol(ws, cur).
+    dit
+    line = nilhino().
+dit
+
+ws = msort(ws).
+ohetdi n = yuyem(ws).
+ohetdi dw = [].
+ohetdi dc = [].
+ohetdi used = [].
+ohetdi k = 1.
+konit k <= n mitho nethe
+    ohetdi j = k.
+    konit (j <= n) lotvethu (ws[j] == ws[k]) mitho nethe
+        j = j + 1.
+    dit
+    nimhol(dw, ws[k]).
+    nimhol(dc, j - k).
+    nimhol(used, litthi).
+    k = j.
+dit
+ohetdi D = yuyem(dw).
+ohetdi lim = D.
+rilniro lim > 10 hutro nethe
+    lim = 10.
+dit
+lemyunom t = 0 thikutli lim mitho nethe
+    ohetdi best = 0.
+    lemyunom i = 1 thikutli D + 1 mitho nethe
+        rilniro (yothicho (used[i])) lotvethu ((best == 0) nime (dc[i] > dc[best])) hutro nethe
+            best = i.
+        dit
+    dit
+    used[best] = ronuthit.
+    miyol (dw[best] & " ") & dc[best].
+dit

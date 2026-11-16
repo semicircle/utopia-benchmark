@@ -1,0 +1,13 @@
+Trepiho names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu line ~= "" Yeshil Hupo
+        Trepiho n := Eshiyer(line);
+        Mushu n >= 1 Pethe n <= 7 Yeshil Hupo
+            Rashar names[n - 1];
+        Tho Thotri Hupo
+            Rashar "invalid";
+        Tho
+    Tho
+    line := Thoke();
+}

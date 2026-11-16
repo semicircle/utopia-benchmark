@@ -1,0 +1,86 @@
+Ruyoyo lowerc(c)
+    Trepiho up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Trepiho lo := "abcdefghijklmnopqrstuvwxyz";
+    Pil (Trepiho i := 0; i < 26; i := i + 1) {
+        Mushu c = up[i] Yeshil Hupo
+            Omel lo[i];
+        Tho
+    }
+    Omel c;
+Opa
+
+Ruyoyo mergesort(a)
+    Trepiho n := Purmo(a);
+    Mushu n <= 1 Yeshil Hupo
+        Omel a;
+    Tho
+    Trepiho mid := n / 2;
+    Trepiho left := [];
+    Trepiho right := [];
+    Pil (Trepiho i := 0; i < mid; i := i + 1) {
+        Theki(left, a[i]);
+    }
+    Pil (Trepiho i := mid; i < n; i := i + 1) {
+        Theki(right, a[i]);
+    }
+    left := mergesort(left);
+    right := mergesort(right);
+    Trepiho res := [];
+    Trepiho i := 0;
+    Trepiho j := 0;
+    Rokomi (i < Purmo(left) Hiyikra j < Purmo(right)) {
+        Mushu j >= Purmo(right) Hiyikra (i < Purmo(left) Pethe left[i] <= right[j]) Yeshil Hupo
+            Theki(res, left[i]);
+            i := i + 1;
+        Tho Thotri Hupo
+            Theki(res, right[j]);
+            j := j + 1;
+        Tho
+    }
+    Omel res;
+Opa
+
+Trepiho words := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(line); i := i + 1) {
+        Trepiho c := line[i];
+        Mushu (c >= "a" Pethe c <= "z") Hiyikra (c >= "A" Pethe c <= "Z") Yeshil Hupo
+            cur := cur + lowerc(c);
+        Tho Thotri Hupo
+            Mushu cur ~= "" Yeshil Hupo
+                Theki(words, cur);
+                cur := "";
+            Tho
+        Tho
+    }
+    Mushu cur ~= "" Yeshil Hupo
+        Theki(words, cur);
+    Tho
+    line := Thoke();
+}
+Trepiho sw := mergesort(words);
+Trepiho uq := [];
+Trepiho ct := [];
+Trepiho i := 0;
+Rokomi (i < Purmo(sw)) {
+    Trepiho w := sw[i];
+    Trepiho c := 0;
+    Rokomi (i < Purmo(sw) Pethe sw[i] = w) {
+        c := c + 1;
+        i := i + 1;
+    }
+    Theki(uq, w);
+    Theki(ct, c);
+}
+Pil (Trepiho t := 0; t < 10 Pethe t < Purmo(uq); t := t + 1) {
+    Trepiho best := 0;
+    Pil (Trepiho j := 1; j < Purmo(uq); j := j + 1) {
+        Mushu ct[j] > ct[best] Yeshil Hupo
+            best := j;
+        Tho
+    }
+    Rashar uq[best] + " " + ct[best];
+    ct[best] := -1;
+}

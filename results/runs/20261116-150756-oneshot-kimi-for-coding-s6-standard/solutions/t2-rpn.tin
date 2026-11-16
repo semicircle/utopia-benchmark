@@ -1,0 +1,108 @@
+tumumin splittok(s)
+    troufu parts = [];
+    troufu cur = "";
+    troufu i = 0;
+    tafashou i < utoufa(s)
+        troufu c = s[i];
+        sitrartu c == " " fisu drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                marboun(parts, cur);
+            drumin
+            cur = "";
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+        i = i + 1;
+    trushou
+    sitrartu cur ~= "" fisu drufirsa
+        marboun(parts, cur);
+    drumin
+    drur parts;
+drumin tumumin
+
+tumumin isint(s)
+    troufu n = utoufa(s);
+    sitrartu n == 0 fisu drufirsa
+        drur fufir;
+    drumin
+    troufu i = 0;
+    sitrartu s[0] == "-" fisu drufirsa
+        sitrartu n == 1 fisu drufirsa
+            drur fufir;
+        drumin
+        i = 1;
+    drumin
+    tafashou i < n
+        troufu c = s[i];
+        sitrartu shutoun (c >= "0" dra c <= "9") fisu drufirsa
+            drur fufir;
+        drumin
+        i = i + 1;
+    trushou
+    drur sibitrou;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu toks = splittok(line);
+    troufu st = [];
+    troufu sn = 0;
+    troufu err = fufir;
+    troufu ti = 0;
+    tafashou ti < utoufa(toks) dra shutoun err
+        troufu tok = toks[ti];
+        sitrartu isint(tok) fisu drufirsa
+            sitrartu sn < utoufa(st) fisu drufirsa
+                st[sn] = shufa(tok);
+            drumin tru drufirsa
+                marboun(st, shufa(tok));
+            drumin
+            sn = sn + 1;
+        drumin tru sitrartu (tok == "+") butrouta (tok == "-") butrouta (tok == "*") butrouta (tok == "/") butrouta (tok == "%") fisu drufirsa
+            sitrartu sn < 2 fisu drufirsa
+                err = sibitrou;
+            drumin tru drufirsa
+                troufu b = st[sn - 1];
+                troufu a = st[sn - 2];
+                sn = sn - 2;
+                troufu r = 0;
+                sitrartu tok == "+" fisu drufirsa
+                    r = a + b;
+                drumin tru sitrartu tok == "-" fisu drufirsa
+                    r = a - b;
+                drumin tru sitrartu tok == "*" fisu drufirsa
+                    r = a * b;
+                drumin tru sitrartu tok == "/" fisu drufirsa
+                    sitrartu b == 0 fisu drufirsa
+                        err = sibitrou;
+                    drumin tru drufirsa
+                        r = a / b;
+                    drumin
+                drumin tru drufirsa
+                    sitrartu b == 0 fisu drufirsa
+                        err = sibitrou;
+                    drumin tru drufirsa
+                        r = a % b;
+                    drumin
+                drumin
+                sitrartu shutoun err fisu drufirsa
+                    sitrartu sn < utoufa(st) fisu drufirsa
+                        st[sn] = r;
+                    drumin tru drufirsa
+                        marboun(st, r);
+                    drumin
+                    sn = sn + 1;
+                drumin
+            drumin
+        drumin tru drufirsa
+            err = sibitrou;
+        drumin
+        ti = ti + 1;
+    trushou
+    sitrartu err butrouta sn ~= 1 fisu drufirsa
+        binmi "error";
+    drumin tru drufirsa
+        binmi st[0];
+    drumin
+    line = bounfou();
+trushou

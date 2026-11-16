@@ -1,0 +1,24 @@
+rimli val(s, a, b) nethe
+    ohetdi v = 0.
+    lemyunom i = a thikutli b mitho nethe
+        v = v * 10 + nelchiyul(s[i]).
+    dit
+    yiletho v.
+dit
+
+ohetdi t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4].
+ohetdi names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    rilniro yuyem(line) >= 10 hutro nethe
+        ohetdi y = val(line, 0, 3).
+        ohetdi m = val(line, 5, 6).
+        ohetdi d = val(line, 8, 9).
+        rilniro m < 3 hutro nethe
+            y = y - 1.
+        dit
+        ohetdi w = (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) kolethul 7.
+        miyol names[w].
+    dit
+    line = nilhino().
+dit

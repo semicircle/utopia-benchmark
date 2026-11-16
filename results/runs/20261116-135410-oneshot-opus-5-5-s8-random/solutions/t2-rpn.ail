@@ -1,0 +1,101 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai has := nonotru;
+    shoyo i := 1 busale dra(s) + 1
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t" tobe c == "\r") {
+            atdoyal (has) {
+                sutse(res, cur);
+                cur := "";
+                has := nonotru;
+            }
+        } bulbayo {
+            cur := cur + c;
+            has := eretde;
+        }
+    pla i
+    atdoyal (has) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+nudro isint(t) {
+    plulai n := dra(t);
+    plulai st := 1;
+    atdoyal (t[1] == "-") {
+        st := 2;
+    }
+    atdoyal (st > n) {
+        druna nonotru;
+    }
+    shoyo i := st busale n + 1
+        plulai c := t[i];
+        atdoyal (tul (c >= "0" rulsai c <= "9")) {
+            druna nonotru;
+        }
+    pla i
+    druna eretde;
+}
+
+nudro evalrpn(toks) {
+    atdoyal (dra(toks) == 0) {
+        druna "error";
+    }
+    plulai stk := [];
+    plulai sp := 0;
+    plulai v := 0;
+    plulai a := 0;
+    plulai b := 0;
+    shoyo i := 1 busale dra(toks) + 1
+        plulai t := toks[i];
+        v := 0;
+        atdoyal (t == "+" tobe t == "-" tobe t == "*" tobe t == "/" tobe t == "%") {
+            atdoyal (sp < 2) {
+                druna "error";
+            }
+            b := stk[sp];
+            a := stk[sp - 1];
+            sp := sp - 2;
+            otai (t) {
+            dai "+":
+                v := a + b;
+            dai "-":
+                v := a - b;
+            dai "*":
+                v := a * b;
+            dai "/":
+                atdoyal (b == 0) {
+                    druna "error";
+                }
+                v := a / b;
+            dai "%":
+                atdoyal (b == 0) {
+                    druna "error";
+                }
+                v := a % b;
+            }
+        } bulbayo atdoyal (isint(t)) {
+            v := plaltai(t);
+        } bulbayo {
+            druna "error";
+        }
+        atdoyal (sp < dra(stk)) {
+            stk[sp + 1] := v;
+        } bulbayo {
+            sutse(stk, v);
+        }
+        sp := sp + 1;
+    pla i
+    atdoyal (sp == 1) {
+        druna stk[1];
+    }
+    druna "error";
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    shaibe evalrpn(split(line));
+    line := playadu();
+aitudre

@@ -1,0 +1,61 @@
+EDEWUT split(s) {
+    FOMOFE parts := [];
+    FOMOFE cur := "";
+    TUTCHEK i := 0 ZUWOWEN FORMOWE(s) - 1 LOLO LEKFESH
+        FOMOFE c := s[i];
+        PLUWOK c = " " MUR c = "\t" MUR c = "\r" DEWOTUSH LEKFESH
+            PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+                WESH(parts, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & c;
+        EFUDU
+    EFUDU
+    PLUWOK FORMOWE(cur) > 0 DEWOTUSH LEKFESH
+        WESH(parts, cur);
+    EFUDU
+    EFOTU parts;
+}
+
+FOMOFE first := TODETET();
+FOMOFE arr := [];
+PLUWOK first ~= LER DEWOTUSH LEKFESH
+    FOMOFE parts := split(first);
+    TUTCHEK i := 0 ZUWOWEN FORMOWE(parts) - 1 LOLO LEKFESH
+        WESH(arr, ZENZUMUR(parts[i]));
+    EFUDU
+EFUDU
+FOMOFE n := FORMOWE(arr);
+FOMOFE line := LER;
+PLUWOK first ~= LER DEWOTUSH LEKFESH
+    line := TODETET();
+EFUDU
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE qp := split(line);
+    PLUWOK FORMOWE(qp) > 0 DEWOTUSH LEKFESH
+        FOMOFE q := ZENZUMUR(qp[0]);
+        FOMOFE lo := 0;
+        FOMOFE hi := n;
+        FUKCHEFE lo < hi LOLO LEKFESH
+            FOMOFE mid := (lo + hi) / 2;
+            PLUWOK arr[mid] < q DEWOTUSH LEKFESH
+                lo := mid + 1;
+            EFUDU CHEME LEKFESH
+                hi := mid;
+            EFUDU
+        EFUDU
+        FOMOFE found := LERLU;
+        PLUWOK lo < n DEWOTUSH LEKFESH
+            PLUWOK arr[lo] = q DEWOTUSH LEKFESH
+                found := MULO;
+            EFUDU
+        EFUDU
+        PLUWOK found DEWOTUSH LEKFESH
+            EPLOWEK lo & " found";
+        EFUDU CHEME LEKFESH
+            EPLOWEK lo & " missing";
+        EFUDU
+    EFUDU
+    line := TODETET();
+EFUDU

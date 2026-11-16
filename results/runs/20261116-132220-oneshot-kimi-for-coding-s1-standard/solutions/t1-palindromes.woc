@@ -1,0 +1,46 @@
+eilyot isDigit(c)
+    chozulni (c >= "0") elish (c <= "9");
+iweil
+
+eilyot isLetter(c)
+    chozulni ((c >= "a") elish (c <= "z")) yosheil ((c >= "A") elish (c <= "Z"));
+iweil
+
+eilyot lowerChar(c)
+    weltuxle upper := ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    weltuxle lower := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    keit (weltuxle i := 0; i < 26; i := i + 1) {
+        nei (c == upper[i]) {
+            chozulni lower[i];
+        }
+    }
+    chozulni c;
+iweil
+
+eilyot normalized(s)
+    weltuxle result := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (isDigit(c) yosheil isLetter(c)) {
+            result := result + lowerChar(c);
+        }
+    }
+    chozulni result;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle s := normalized(line);
+    weltuxle yes := dut;
+    keit (weltuxle i := 0; i < dushzosh(s) / 2; i := i + 1) {
+        nei (s[i] <> s[dushzosh(s) - 1 - i]) {
+            yes := eikreit;
+        }
+    }
+    nei (yes) {
+        leshdei "yes";
+    } wogeish {
+        leshdei "no";
+    }
+    line := lono();
+}

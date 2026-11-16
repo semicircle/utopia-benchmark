@@ -1,0 +1,13 @@
+FOMOFE names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    PLUWOK FORMOWE(line) > 0 DEWOTUSH LEKFESH
+        FOMOFE n := ZENZUMUR(line);
+        PLUWOK n >= 1 ZULUSHTE n <= 7 DEWOTUSH LEKFESH
+            EPLOWEK names[n - 1];
+        EFUDU CHEME LEKFESH
+            EPLOWEK "invalid";
+        EFUDU
+    EFUDU
+    line := TODETET();
+EFUDU

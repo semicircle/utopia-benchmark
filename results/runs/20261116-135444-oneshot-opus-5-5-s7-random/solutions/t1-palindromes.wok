@@ -1,0 +1,46 @@
+EDEWUT fdiv(a, b) {
+    EFOTU -((-a) / b);
+}
+
+EDEWUT norm(c) {
+    PLUWOK c >= "a" ZULUSHTE c <= "z" DEWOTUSH LEKFESH
+        EFOTU c;
+    EFUDU
+    PLUWOK c >= "0" ZULUSHTE c <= "9" DEWOTUSH LEKFESH
+        EFOTU c;
+    EFUDU
+    PLUWOK c >= "A" ZULUSHTE c <= "Z" DEWOTUSH LEKFESH
+        FOMOFE up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        FOMOFE lo := "abcdefghijklmnopqrstuvwxyz";
+        TUTCHEK i := 1 ZUWOWEN 26 LOLO LEKFESH
+            PLUWOK up[i] = c DEWOTUSH LEKFESH
+                EFOTU lo[i];
+            EFUDU
+        EFUDU
+    EFUDU
+    EFOTU "";
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE xs := [];
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        FOMOFE k := norm(line[i]);
+        PLUWOK k ~= "" DEWOTUSH LEKFESH
+            WESH(xs, k);
+        EFUDU
+    EFUDU
+    FOMOFE n := FORMOWE(xs);
+    FOMOFE ok := MULO;
+    TUTCHEK i := 1 ZUWOWEN fdiv(n, 2) LOLO LEKFESH
+        PLUWOK xs[i] ~= xs[n + 1 - i] DEWOTUSH LEKFESH
+            ok := LERLU;
+        EFUDU
+    EFUDU
+    PLUWOK ok DEWOTUSH LEKFESH
+        EPLOWEK "yes";
+    EFUDU CHEME LEKFESH
+        EPLOWEK "no";
+    EFUDU
+    line := TODETET();
+EFUDU

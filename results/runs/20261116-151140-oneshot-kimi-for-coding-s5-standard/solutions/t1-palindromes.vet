@@ -1,0 +1,56 @@
+rimli isDigit(c) nethe
+    yiletho c >= "0" lotvethu c <= "9".
+dit
+
+rimli isLetter(c) nethe
+    yiletho (c >= "a" lotvethu c <= "z") nime (c >= "A" lotvethu c <= "Z").
+dit
+
+rimli isAlnum(c) nethe
+    yiletho isDigit(c) nime isLetter(c).
+dit
+
+rimli lowerChar(c) nethe
+    ohetdi up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    ohetdi lo = "abcdefghijklmnopqrstuvwxyz".
+    rilniro c >= "A" lotvethu c <= "Z" hutro nethe
+        ohetdi i = 0.
+        konit i < 26 mitho nethe
+            rilniro up[i] == c hutro nethe
+                yiletho lo[i].
+            dit
+            i = i + 1.
+        dit
+    dit
+    yiletho c.
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi norm = "".
+    ohetdi i = 0.
+    konit i < yuyem(line) mitho nethe
+        ohetdi c = line[i].
+        rilniro isAlnum(c) hutro nethe
+            norm = norm & lowerChar(c).
+        dit
+        i = i + 1.
+    dit
+    ohetdi ok = ronuthit.
+    ohetdi a = 0.
+    ohetdi b = yuyem(norm) - 1.
+    konit a < b mitho nethe
+        rilniro norm[a] <> norm[b] hutro nethe
+            ok = litthi.
+            chet.
+        dit
+        a = a + 1.
+        b = b - 1.
+    dit
+    rilniro ok hutro nethe
+        miyol "yes".
+    dit thumku nethe
+        miyol "no".
+    dit
+    line = nilhino().
+dit

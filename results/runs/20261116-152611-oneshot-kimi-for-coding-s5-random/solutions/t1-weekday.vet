@@ -1,0 +1,50 @@
+rimli dayName(w) nethe
+    thi torelro w
+    torelro 0
+        yiletho "Monday".
+    torelro 1
+        yiletho "Tuesday".
+    torelro 2
+        yiletho "Wednesday".
+    torelro 3
+        yiletho "Thursday".
+    torelro 4
+        yiletho "Friday".
+    torelro 5
+        yiletho "Saturday".
+    torelro 6
+        yiletho "Sunday".
+    dit thi
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi ys = (line[1] & line[2]) & (line[3] & line[4]).
+    ohetdi ms = line[6] & line[7].
+    ohetdi ds = line[9] & line[10].
+    ohetdi y = nelchiyul(ys).
+    ohetdi m = nelchiyul(ms).
+    ohetdi d = nelchiyul(ds).
+    ohetdi ly4 = (y kolethul 4) == 0.
+    ohetdi ly100 = (y kolethul 100) == 0.
+    ohetdi ly400 = (y kolethul 400) == 0.
+    ohetdi leap = (ly4 lotvethu (yothicho ly100)) nime ly400.
+    ohetdi yy = y - 1.
+    ohetdi days = 365 * yy.
+    days = days + (yy / 4).
+    days = days - (yy / 100).
+    days = days + (yy / 400).
+    ohetdi mdays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].
+    ohetdi mm = 0.
+    lemyunom i = 1 thikutli m mitho nethe
+        mm = mm + mdays[i].
+    dit
+    rilniro (m > 2) lotvethu leap hutro nethe
+        mm = mm + 1.
+    dit
+    days = days + mm.
+    days = days + (d - 1).
+    ohetdi w = days kolethul 7.
+    miyol dayName(w).
+    line = nilhino().
+dit

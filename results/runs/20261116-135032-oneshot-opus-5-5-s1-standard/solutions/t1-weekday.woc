@@ -1,0 +1,37 @@
+eilyot isSpace(c)
+    chozulni c == " " yosheil c == "\t" yosheil c == "\r";
+iweil
+
+eilyot trim(s)
+    weltuxle a := 0;
+    weltuxle b := dushzosh(s);
+    krenul (a < b elish isSpace(s[a])) { a := a + 1; }
+    krenul (b > a elish isSpace(s[b - 1])) { b := b - 1; }
+    weltuxle r := "";
+    keit (weltuxle i := a; i < b; i := i + 1) { r := r + s[i]; }
+    chozulni r;
+iweil
+
+eilyot num(s, a, b)
+    weltuxle v := 0;
+    keit (weltuxle i := a; i < b; i := i + 1) {
+        v := v * 10 + leidush(s[i]);
+    }
+    chozulni v;
+iweil
+
+weltuxle names := ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+weltuxle tt := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle t := trim(line);
+    nei (dushzosh(t) >= 10) {
+        weltuxle y := num(t, 0, 4);
+        weltuxle m := num(t, 5, 7);
+        weltuxle d := num(t, 8, 10);
+        nei (m < 3) { y := y - 1; }
+        weltuxle w := (y + y / 4 - y / 100 + y / 400 + tt[m - 1] + d) yeil 7;
+        leshdei names[w];
+    }
+    line := lono();
+}

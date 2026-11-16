@@ -1,0 +1,33 @@
+eilyot isSpace(c)
+    chozulni c == " " yosheil c == "\t" yosheil c == "\r";
+iweil
+
+eilyot trim(s)
+    weltuxle a := 0;
+    weltuxle b := dushzosh(s);
+    krenul (a < b elish isSpace(s[a])) { a := a + 1; }
+    krenul (b > a elish isSpace(s[b - 1])) { b := b - 1; }
+    weltuxle r := "";
+    keit (weltuxle i := a; i < b; i := i + 1) { r := r + s[i]; }
+    chozulni r;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle t := trim(line);
+    nei (dushzosh(t) > 0) {
+        weltuxle n := leidush(t);
+        weltuxle m := n;
+        nei (m < 0) { m := -m; }
+        weltuxle s := 0;
+        weltuxle r := 0;
+        krenul (m > 0) {
+            s := s + m yeil 10;
+            r := r * 10 + m yeil 10;
+            m := m / 10;
+        }
+        nei (n < 0) { r := -r; }
+        leshdei s + " " + r;
+    }
+    line := lono();
+}

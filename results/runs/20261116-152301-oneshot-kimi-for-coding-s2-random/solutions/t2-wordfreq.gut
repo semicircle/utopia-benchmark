@@ -1,0 +1,79 @@
+dredrume isLetter(c)
+    odrol ((c >= "a") suyogur (c <= "z")) drorsu ((c >= "A") suyogur (c <= "Z")).
+wodrotru dredrume
+
+dredrume toLower(c)
+    goyu ups <- "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    goyu los <- "abcdefghijklmnopqrstuvwxyz".
+    wego i <- 0 setru 25
+        dre c == ups[i] ethur
+            odrol los[i].
+        wodrotru dre
+    trer i
+    odrol c.
+wodrotru dredrume
+
+dredrume addWord(words, counts, w)
+    goyu m <- wumdror(words).
+    goyu idx <- -1.
+    wego i <- 0 setru m - 1
+        dre words[i] == w ethur
+            idx <- i.
+        wodrotru dre
+    trer i
+    dre idx >= 0 ethur
+        counts[idx] <- counts[idx] + 1.
+    truthor
+        dreme(words, w).
+        dreme(counts, 1).
+    wodrotru dre
+wodrotru dredrume
+
+goyu words <- [].
+goyu counts <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    goyu cur <- "".
+    goyu n <- wumdror(line).
+    wego i <- 0 setru n - 1
+        goyu c <- line[i].
+        dre isLetter(c) ethur
+            cur <- cur & toLower(c).
+        truthor
+            dre wumdror(cur) > 0 ethur
+                addWord(words, counts, cur).
+                cur <- "".
+            wodrotru dre
+        wodrotru dre
+    trer i
+    dre wumdror(cur) > 0 ethur
+        addWord(words, counts, cur).
+    wodrotru dre
+    line <- uyotho().
+shusushe
+
+goyu m <- wumdror(words).
+goyu used <- [].
+wego i <- 0 setru m - 1
+    dreme(used, tru).
+trer i
+goyu printed <- 0.
+omethol (printed < 10) suyogur (printed < m)
+    goyu bi <- -1.
+    wego i <- 0 setru m - 1
+        dre used[i] ethur
+            omgu.
+        wodrotru dre
+        dre bi < 0 ethur
+            bi <- i.
+        wodrotru dre
+        dre (counts[i] > counts[bi]) drorsu ((counts[i] == counts[bi]) suyogur (words[i] < words[bi])) ethur
+            bi <- i.
+        wodrotru dre
+    trer i
+    dre bi >= 0 ethur
+        suwe words[bi] & " " & counts[bi].
+        used[bi] <- sudru.
+        printed <- printed + 1.
+    wodrotru dre
+shusushe

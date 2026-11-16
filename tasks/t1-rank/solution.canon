@@ -1,0 +1,46 @@
+func parseInts(s) {
+    let xs = [];
+    let cur = "";
+    for (let i = 0; i < len(s); i = i + 1) {
+        if (s[i] == " ") {
+            if (cur != "") {
+                push(xs, num(cur));
+                cur = "";
+            }
+        } else {
+            cur = cur & s[i];
+        }
+    }
+    if (cur != "") {
+        push(xs, num(cur));
+    }
+    return xs;
+}
+
+let xs = parseInts(readline());
+let line = readline();
+while (line != none) {
+    let q = num(line);
+    let lo = 0;
+    let hi = len(xs);
+    while (lo < hi) {
+        let mid = (lo + hi) / 2;
+        if (xs[mid] < q) {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    let found = false;
+    if (lo < len(xs)) {
+        if (xs[lo] == q) {
+            found = true;
+        }
+    }
+    if (found) {
+        print lo & " found";
+    } else {
+        print lo & " missing";
+    }
+    line = readline();
+}

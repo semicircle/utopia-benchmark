@@ -1,0 +1,6 @@
+troufu n = shufa(bounfou());
+troufu result = 1;
+sutrarsu i = 1 sou n
+    result = result * i;
+moun i
+binmi result;

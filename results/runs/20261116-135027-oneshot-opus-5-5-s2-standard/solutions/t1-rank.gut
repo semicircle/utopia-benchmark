@@ -1,0 +1,52 @@
+dredrume split(s)
+    goyu out <- [].
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(s) - 1
+        goyu c <- s[i].
+        dre c == " " drorsu c == "\t" drorsu c == "\r" ethur
+            dre cur != "" ethur
+                dreme(out, cur).
+                cur <- "".
+            wodrotru dre
+        truthor
+            cur <- cur & c.
+        wodrotru dre
+    trer i
+    dre cur != "" ethur
+        dreme(out, cur).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+goyu first <- uyotho().
+dre first != gursume ethur
+    goyu toks <- split(first).
+    goyu arr <- [].
+    wego i <- 0 setru wumdror(toks) - 1
+        dreme(arr, druwol(toks[i])).
+    trer i
+    goyu n <- wumdror(arr).
+    goyu line <- uyotho().
+    omethol line != gursume
+        goyu qt <- split(line).
+        dre wumdror(qt) > 0 ethur
+            goyu q <- druwol(qt[0]).
+            goyu lo <- 0.
+            goyu hi <- n.
+            omethol lo < hi
+                goyu mid <- (lo + hi) / 2.
+                dre arr[mid] < q ethur
+                    lo <- mid + 1.
+                truthor
+                    hi <- mid.
+                wodrotru dre
+            shusushe
+            dre lo < n suyogur arr[lo] == q ethur
+                suwe lo & " found".
+            truthor
+                suwe lo & " missing".
+            wodrotru dre
+        wodrotru dre
+        line <- uyotho().
+    shusushe
+wodrotru dre

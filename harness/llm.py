@@ -250,7 +250,10 @@ class OpenAIClient:
             p["tools"] = [{"type": "function", "function": {
                 "name": t["name"], "description": t["description"], "parameters": t["schema"]}} for t in tools]
         try:
-            resp = self.client.chat.completions.create(**p)
+            # Streamed, so that slow answers keep bytes flowing and gateways in
+            # front of the endpoint do not time the request out (HTTP 504).
+            with self.client.chat.completions.stream(**p, stream_options={"include_usage": True}) as stream:
+                resp = stream.get_final_completion()
         except o.AuthenticationError as e:
             raise ProviderError(f"authentication failed: {e.message}") from e
         except o.BadRequestError as e:

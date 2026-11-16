@@ -1,0 +1,101 @@
+dredrume split(s)
+    goyu out <- [].
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(s) - 1
+        goyu c <- s[i].
+        dre c == " " drorsu c == "\t" drorsu c == "\r" ethur
+            dre cur != "" ethur
+                dreme(out, cur).
+                cur <- "".
+            wodrotru dre
+        truthor
+            cur <- cur & c.
+        wodrotru dre
+    trer i
+    dre cur != "" ethur
+        dreme(out, cur).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+dredrume isDigit(c)
+    odrol c >= "0" suyogur c <= "9".
+wodrotru dredrume
+
+dredrume isInt(t)
+    goyu n <- wumdror(t).
+    goyu start <- 0.
+    dre n > 0 suyogur t[0] == "-" ethur
+        start <- 1.
+    wodrotru dre
+    dre n <= start ethur
+        odrol tru.
+    wodrotru dre
+    wego i <- start setru n - 1
+        dre shogu isDigit(t[i]) ethur
+            odrol tru.
+        wodrotru dre
+    trer i
+    odrol sudru.
+wodrotru dredrume
+
+dredrume evalLine(line)
+    goyu toks <- split(line).
+    dre wumdror(toks) == 0 ethur
+        odrol "error".
+    wodrotru dre
+    goyu st <- [].
+    goyu sp <- 0.
+    wego i <- 0 setru wumdror(toks) - 1
+        goyu t <- toks[i].
+        dre isInt(t) ethur
+            goyu v <- druwol(t).
+            dre sp < wumdror(st) ethur
+                st[sp] <- v.
+            truthor
+                dreme(st, v).
+            wodrotru dre
+            sp <- sp + 1.
+        yuyuge t == "+" drorsu t == "-" drorsu t == "*" drorsu t == "/" drorsu t == "%" ethur
+            dre sp < 2 ethur
+                odrol "error".
+            wodrotru dre
+            goyu b <- st[sp - 1].
+            goyu a <- st[sp - 2].
+            sp <- sp - 2.
+            goyu r <- 0.
+            wem gugum t
+            gugum "+"
+                r <- a + b.
+            gugum "-"
+                r <- a - b.
+            gugum "*"
+                r <- a * b.
+            gugum "/"
+                dre b == 0 ethur
+                    odrol "error".
+                wodrotru dre
+                r <- a / b.
+            gugum "%"
+                dre b == 0 ethur
+                    odrol "error".
+                wodrotru dre
+                r <- a trumguwu b.
+            wodrotru wem
+            st[sp] <- r.
+            sp <- sp + 1.
+        truthor
+            odrol "error".
+        wodrotru dre
+    trer i
+    dre sp != 1 ethur
+        odrol "error".
+    wodrotru dre
+    odrol st[0].
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    suwe evalLine(line).
+    line <- uyotho().
+shusushe

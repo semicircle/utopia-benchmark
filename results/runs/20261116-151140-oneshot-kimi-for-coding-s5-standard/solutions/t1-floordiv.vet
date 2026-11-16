@@ -1,0 +1,36 @@
+rimli split(line) nethe
+    ohetdi toks = [].
+    ohetdi cur = "".
+    ohetdi i = 0.
+    konit i < yuyem(line) mitho nethe
+        ohetdi c = line[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(toks, cur).
+            dit
+            cur = "".
+        dit thumku nethe
+            cur = cur & c.
+        dit
+        i = i + 1.
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(toks, cur).
+    dit
+    yiletho toks.
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi toks = split(line).
+    ohetdi a = nelchiyul(toks[0]).
+    ohetdi b = nelchiyul(toks[1]).
+    ohetdi q = a / b.
+    ohetdi r = a kolethul b.
+    rilniro r <> 0 lotvethu ((r > 0) <> (b > 0)) hutro nethe
+        q = q - 1.
+        r = r + b.
+    dit
+    miyol q & " " & r.
+    line = nilhino().
+dit

@@ -1,0 +1,109 @@
+eilyot split(s)
+    weltuxle res := [];
+    weltuxle cur := "";
+    weltuxle n := dushzosh(s);
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle c := s[i];
+        nei (c == " " yosheil c == "\t" yosheil c == "\r") {
+            nei (dushzosh(cur) > 0) {
+                koshkil(res, cur);
+                cur := "";
+            }
+        } wogeish {
+            cur := cur + c;
+        }
+    }
+    nei (dushzosh(cur) > 0) {
+        koshkil(res, cur);
+    }
+    chozulni res;
+iweil
+
+eilyot isint(t)
+    weltuxle n := dushzosh(t);
+    weltuxle st := 0;
+    nei (t[0] == "-") {
+        st := 1;
+    }
+    nei (st >= n) {
+        chozulni eikreit;
+    }
+    keit (weltuxle i := st; i < n; i := i + 1) {
+        weltuxle c := t[i];
+        nei (c < "0" yosheil c > "9") {
+            chozulni eikreit;
+        }
+    }
+    chozulni dut;
+iweil
+
+eilyot tdiv(a, b)
+    nei ((a < 0) == (b < 0)) {
+        chozulni 0 - ((0 - a) / b);
+    }
+    chozulni a / b;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle toks := split(line);
+    weltuxle nt := dushzosh(toks);
+    weltuxle ok := nt > 0;
+    weltuxle st := [];
+    weltuxle sp := 0;
+    keit (weltuxle i := 0; i < nt elish ok; i := i + 1) {
+        weltuxle t := toks[i];
+        weltuxle isop := t == "+" yosheil t == "-" yosheil t == "*" yosheil t == "/" yosheil t == "%";
+        nei (isop) {
+            nei (sp < 2) {
+                ok := eikreit;
+                exzulto;
+            }
+            weltuxle b := st[sp - 1];
+            weltuxle a := st[sp - 2];
+            sp := sp - 2;
+            weltuxle v := 0;
+            nei (t == "+") {
+                v := a + b;
+            } wogeish nei (t == "-") {
+                v := a - b;
+            } wogeish nei (t == "*") {
+                v := a * b;
+            } wogeish {
+                nei (b == 0) {
+                    ok := eikreit;
+                    exzulto;
+                }
+                weltuxle q := tdiv(a, b);
+                nei (t == "/") {
+                    v := q;
+                } wogeish {
+                    v := a - b * q;
+                }
+            }
+            nei (sp < dushzosh(st)) {
+                st[sp] := v;
+            } wogeish {
+                koshkil(st, v);
+            }
+            sp := sp + 1;
+        } wogeish nei (isint(t)) {
+            weltuxle v2 := leidush(t);
+            nei (sp < dushzosh(st)) {
+                st[sp] := v2;
+            } wogeish {
+                koshkil(st, v2);
+            }
+            sp := sp + 1;
+        } wogeish {
+            ok := eikreit;
+            exzulto;
+        }
+    }
+    nei (ok elish sp == 1) {
+        leshdei st[0];
+    } wogeish {
+        leshdei "error";
+    }
+    line := lono();
+}

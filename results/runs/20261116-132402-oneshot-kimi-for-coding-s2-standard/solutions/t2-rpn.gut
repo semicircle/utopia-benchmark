@@ -1,0 +1,111 @@
+dredrume dig(c)
+    goyu D <- "0123456789".
+    wego i <- 0 setru 9
+        dre D[i] == c ethur
+            odrol i.
+        wodrotru dre
+    trer i
+    odrol -1.
+wodrotru dredrume
+
+dredrume splitws(s)
+    goyu toks <- [].
+    goyu cur <- "".
+    goyu n <- wumdror(s).
+    wego i <- 0 setru n - 1
+        dre s[i] == " " ethur
+            dre wumdror(cur) > 0 ethur
+                dreme(toks, cur).
+                cur <- "".
+            wodrotru dre
+        truthor
+            cur <- cur & s[i].
+        wodrotru dre
+    trer i
+    dre wumdror(cur) > 0 ethur
+        dreme(toks, cur).
+    wodrotru dre
+    odrol toks.
+wodrotru dredrume
+
+dredrume isInt(t)
+    goyu n <- wumdror(t).
+    dre n == 0 ethur
+        odrol tru.
+    wodrotru dre
+    goyu i <- 0.
+    dre t[0] == "-" ethur
+        dre n == 1 ethur
+            odrol tru.
+        wodrotru dre
+        i <- 1.
+    wodrotru dre
+    omethol i < n
+        dre dig(t[i]) < 0 ethur
+            odrol tru.
+        wodrotru dre
+        i <- i + 1.
+    shusushe
+    odrol sudru.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu toks <- splitws(line).
+    goyu bad <- wumdror(toks) == 0.
+    goyu st <- [].
+    goyu cnt <- 0.
+    wego i <- 0 setru wumdror(toks) - 1
+        dre bad ethur
+            omgu.
+        wodrotru dre
+        goyu t <- toks[i].
+        dre wumdror(t) == 1 suyogur (t == "+" drorsu t == "-" drorsu t == "*" drorsu t == "/" drorsu t == "%") ethur
+            dre cnt < 2 ethur
+                bad <- sudru.
+                omgu.
+            wodrotru dre
+            cnt <- cnt - 1.
+            goyu b <- st[cnt].
+            cnt <- cnt - 1.
+            goyu a <- st[cnt].
+            dre t == "+" ethur
+                dreme(st, a + b).
+            wodrotru dre
+            dre t == "-" ethur
+                dreme(st, a - b).
+            wodrotru dre
+            dre t == "*" ethur
+                dreme(st, a * b).
+            wodrotru dre
+            dre t == "/" ethur
+                dre b == 0 ethur
+                    bad <- sudru.
+                    omgu.
+                wodrotru dre
+                dreme(st, a / b).
+            wodrotru dre
+            dre t == "%" ethur
+                dre b == 0 ethur
+                    bad <- sudru.
+                    omgu.
+                wodrotru dre
+                dreme(st, a trumguwu b).
+            wodrotru dre
+            cnt <- cnt + 1.
+        truthor
+            dre isInt(t) ethur
+                bad <- sudru.
+                omgu.
+            wodrotru dre
+            dreme(st, druwol(t)).
+            cnt <- cnt + 1.
+        wodrotru dre
+    trer i
+    dre bad drorsu cnt != 1 ethur
+        suwe "error".
+    truthor
+        suwe st[0].
+    wodrotru dre
+    line <- uyotho().
+shusushe

@@ -1,0 +1,9 @@
+FOMOFE xs := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    WESH(xs, line);
+    line := TODETET();
+EFUDU
+TUTCHEK i := FORMOWE(xs) - 1 ZUWOWEN 0 ZEPLO -1 LOLO LEKFESH
+    EPLOWEK xs[i];
+EFUDU

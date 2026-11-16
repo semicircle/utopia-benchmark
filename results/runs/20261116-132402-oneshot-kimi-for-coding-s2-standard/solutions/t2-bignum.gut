@@ -1,0 +1,96 @@
+dredrume dig(c)
+    goyu D <- "0123456789".
+    wego i <- 0 setru 9
+        dre D[i] == c ethur
+            odrol i.
+        wodrotru dre
+    trer i
+    odrol -1.
+wodrotru dredrume
+
+dredrume splitws(s)
+    goyu toks <- [].
+    goyu cur <- "".
+    goyu n <- wumdror(s).
+    wego i <- 0 setru n - 1
+        dre s[i] == " " ethur
+            dre wumdror(cur) > 0 ethur
+                dreme(toks, cur).
+                cur <- "".
+            wodrotru dre
+        truthor
+            cur <- cur & s[i].
+        wodrotru dre
+    trer i
+    dre wumdror(cur) > 0 ethur
+        dreme(toks, cur).
+    wodrotru dre
+    odrol toks.
+wodrotru dredrume
+
+dredrume badd(a, b)
+    goyu D <- "0123456789".
+    goyu i <- wumdror(a) - 1.
+    goyu j <- wumdror(b) - 1.
+    goyu carry <- 0.
+    goyu res <- "".
+    omethol i >= 0 drorsu j >= 0 drorsu carry == 1
+        goyu da <- 0.
+        dre i >= 0 ethur
+            da <- dig(a[i]).
+        wodrotru dre
+        goyu db <- 0.
+        dre j >= 0 ethur
+            db <- dig(b[j]).
+        wodrotru dre
+        goyu s <- da + db + carry.
+        carry <- s / 10.
+        res <- D[s trumguwu 10] & res.
+        i <- i - 1.
+        j <- j - 1.
+    shusushe
+    odrol res.
+wodrotru dredrume
+
+dredrume bmul(a, b)
+    goyu D <- "0123456789".
+    goyu la <- wumdror(a).
+    goyu lb <- wumdror(b).
+    goyu n <- la + lb.
+    goyu arr <- [].
+    wego i <- 0 setru n - 1
+        dreme(arr, 0).
+    trer i
+    wego ii <- 0 setru la - 1
+        goyu da <- dig(a[ii]).
+        wego jj <- 0 setru lb - 1
+            goyu k <- (la - 1 - ii) + (lb - 1 - jj).
+            arr[k] <- arr[k] + da * dig(b[jj]).
+        trer jj
+    trer ii
+    goyu carry <- 0.
+    wego k <- 0 setru n - 1
+        goyu tot <- arr[k] + carry.
+        arr[k] <- tot trumguwu 10.
+        carry <- tot / 10.
+    trer k
+    goyu h <- n - 1.
+    omethol h > 0 suyogur arr[h] == 0
+        h <- h - 1.
+    shusushe
+    dre arr[h] == 0 ethur
+        odrol "0".
+    wodrotru dre
+    goyu res <- "".
+    wego k <- h setru 0 meshe -1
+        res <- res & D[arr[k]].
+    trer k
+    odrol res.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu t <- splitws(line).
+    suwe badd(t[0], t[1]) & " " & bmul(t[0], t[1]).
+    line <- uyotho().
+shusushe

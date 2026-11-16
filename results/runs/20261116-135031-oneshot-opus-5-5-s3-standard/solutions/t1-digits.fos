@@ -1,0 +1,24 @@
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Ishsi (Drash(line) > 0) {
+        Sogas n = Drak(line);
+        Sogas neg = n < 0;
+        Sogas m = n;
+        Ishsi (neg) {
+            m = -n;
+        }
+        Sogas s = 0;
+        Sogas r = 0;
+        Sipokvix (m > 0) {
+            Sogas d = m Dodogo 10;
+            s = s + d;
+            r = r * 10 + d;
+            m = m / 10;
+        }
+        Ishsi (neg) {
+            r = -r;
+        }
+        Dosfasho s + " " + r;
+    }
+    line = Goshvovo();
+}

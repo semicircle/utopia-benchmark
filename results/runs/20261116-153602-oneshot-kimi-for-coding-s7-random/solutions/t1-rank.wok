@@ -1,0 +1,37 @@
+FOMOFE first := TODETET();
+FOMOFE xs := [];
+PLUWOK first ~= "" DEWOTUSH LEKFESH
+    FOMOFE cur := "";
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(first) LOLO LEKFESH
+        PLUWOK first[i] = " " DEWOTUSH LEKFESH
+            WESH(xs, ZENZUMUR(cur));
+            cur := "";
+        EFUDU CHEME LEKFESH
+            cur := cur & first[i];
+        EFUDU
+    EFUDU
+    WESH(xs, ZENZUMUR(cur));
+EFUDU
+FOMOFE m := FORMOWE(xs);
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE q := ZENZUMUR(line);
+    FOMOFE cnt := 0;
+    FOMOFE found := LERLU;
+    TUTCHEK i := 1 ZUWOWEN m LOLO LEKFESH
+        PLUWOK xs[i] >= q DEWOTUSH LEKFESH
+            PLUWOK xs[i] = q DEWOTUSH LEKFESH
+                found := MULO;
+            EFUDU
+            DUTZE;
+        EFUDU
+        cnt := cnt + 1;
+    EFUDU
+    WOFE cnt & " ";
+    PLUWOK found DEWOTUSH LEKFESH
+        EPLOWEK "found";
+    EFUDU CHEME LEKFESH
+        EPLOWEK "missing";
+    EFUDU
+    line := TODETET();
+EFUDU

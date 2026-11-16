@@ -1,0 +1,64 @@
+FOMOFE g := ZENZUMUR(TODETET());
+FOMOFE grid := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    PLUWOK FORMOWE(line) > 0 DEWOTUSH LEKFESH
+        FOMOFE row := [];
+        TUTCHEK i := 0 ZUWOWEN FORMOWE(line) - 1 LOLO LEKFESH
+            PLUWOK line[i] = "#" DEWOTUSH LEKFESH
+                WESH(row, 1);
+            EFUDU CHEME LEKFESH
+                WESH(row, 0);
+            EFUDU
+        EFUDU
+        WESH(grid, row);
+    EFUDU
+    line := TODETET();
+EFUDU
+FOMOFE nrows := FORMOWE(grid);
+FOMOFE ncols := 0;
+PLUWOK nrows > 0 DEWOTUSH LEKFESH
+    ncols := FORMOWE(grid[0]);
+EFUDU
+TUTCHEK gen := 1 ZUWOWEN g LOLO LEKFESH
+    FOMOFE ng := [];
+    TUTCHEK r := 0 ZUWOWEN nrows - 1 LOLO LEKFESH
+        FOMOFE nr := [];
+        FOMOFE currow := grid[r];
+        TUTCHEK c := 0 ZUWOWEN ncols - 1 LOLO LEKFESH
+            FOMOFE cnt := 0;
+            TUTCHEK dr := -1 ZUWOWEN 1 LOLO LEKFESH
+                TUTCHEK dc := -1 ZUWOWEN 1 LOLO LEKFESH
+                    FOMOFE rr := r + dr;
+                    FOMOFE cc := c + dc;
+                    PLUWOK (dr ~= 0 MUR dc ~= 0) ZULUSHTE rr >= 0 ZULUSHTE rr < nrows ZULUSHTE cc >= 0 ZULUSHTE cc < ncols DEWOTUSH LEKFESH
+                        FOMOFE orow := grid[rr];
+                        cnt := cnt + orow[cc];
+                    EFUDU
+                EFUDU
+            EFUDU
+            FOMOFE alive := currow[c];
+            PLUWOK alive = 1 ZULUSHTE (cnt = 2 MUR cnt = 3) DEWOTUSH LEKFESH
+                WESH(nr, 1);
+            EFUDU CHEME PLUWOK alive = 0 ZULUSHTE cnt = 3 DEWOTUSH LEKFESH
+                WESH(nr, 1);
+            EFUDU CHEME LEKFESH
+                WESH(nr, 0);
+            EFUDU
+        EFUDU
+        WESH(ng, nr);
+    EFUDU
+    grid := ng;
+EFUDU
+TUTCHEK r := 0 ZUWOWEN nrows - 1 LOLO LEKFESH
+    FOMOFE s := "";
+    FOMOFE prow := grid[r];
+    TUTCHEK c := 0 ZUWOWEN ncols - 1 LOLO LEKFESH
+        PLUWOK prow[c] = 1 DEWOTUSH LEKFESH
+            s := s & "#";
+        EFUDU CHEME LEKFESH
+            s := s & ".";
+        EFUDU
+    EFUDU
+    EPLOWEK s;
+EFUDU

@@ -1,0 +1,10 @@
+ohetdi lines = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    nimhol(lines, line).
+    line = nilhino().
+dit
+ohetdi n = yuyem(lines).
+lemyunom i = n thikutli 0 rodilvul -1 mitho nethe
+    miyol lines[i].
+dit

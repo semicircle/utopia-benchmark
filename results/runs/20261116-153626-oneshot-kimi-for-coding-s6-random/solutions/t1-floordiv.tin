@@ -1,0 +1,36 @@
+tumumin split(s)
+    troufu parts = [];
+    troufu cur = "";
+    sitrartu s == "" fisu drufirsa
+        drur parts;
+    drumin
+    sutrarsu i = 1 sou utoufa(s)
+        sitrartu s[i] == " " fisu drufirsa
+            sitrartu cur ~= "" fisu drufirsa
+                marboun(parts, cur);
+            drumin
+            cur = "";
+        drumin tru drufirsa
+            cur = cur + s[i];
+        drumin
+    moun i
+    sitrartu cur ~= "" fisu drufirsa
+        marboun(parts, cur);
+    drumin
+    drur parts;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu parts = split(line);
+    troufu a = shufa(parts[1]);
+    troufu b = shufa(parts[2]);
+    troufu q = a / b;
+    troufu r = a % b;
+    sitrartu ((r ~= 0) dra ((r < 0) ~= (b < 0))) fisu drufirsa
+        q = q - 1;
+        r = r + b;
+    drumin
+    binmi (q + " ") + r;
+    line = bounfou();
+trushou

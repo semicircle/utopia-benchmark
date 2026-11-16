@@ -1,0 +1,108 @@
+Gis tokens(line) Fodashsa
+    Sogas out = [];
+    Sogas cur = "";
+    Sogas i = 0;
+    Sipokvix (i < Drash(line)) {
+        Sogas c = line[i];
+        Ishsi (c == " ") {
+            Ishsi (Drash(cur) > 0) {
+                Dragi(out, cur);
+                cur = "";
+            }
+        } Padri {
+            cur = cur + c;
+        }
+        i = i + 1;
+    }
+    Ishsi (Drash(cur) > 0) {
+        Dragi(out, cur);
+    }
+    Asdra out;
+Gosafax
+
+Gis isOp(t) Fodashsa
+    Ishsi (Drash(t) == 1) {
+        Sogas c = t[0];
+        Ishsi ((c == "+") Gox (c == "-") Gox (c == "*") Gox (c == "/") Gox (c == "%")) {
+            Asdra Pigi;
+        }
+    }
+    Asdra Fixpodri;
+Gosafax
+
+Gis isInt(t) Fodashsa
+    Sogas L = Drash(t);
+    Ishsi (L == 0) {
+        Asdra Fixpodri;
+    }
+    Sogas s = 0;
+    Ishsi (t[0] == "-") {
+        Ishsi (L < 2) {
+            Asdra Fixpodri;
+        }
+        s = 1;
+    }
+    Paxfasva (Sogas i = s; i < L; i = i + 1) {
+        Sogas c = t[i];
+        Ishsi (Ashgik ((c >= "0") Fas (c <= "9"))) {
+            Asdra Fixpodri;
+        }
+    }
+    Asdra Pigi;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas toks = tokens(line);
+    Sogas st = [];
+    Sogas top = 0;
+    Sogas bad = Fixpodri;
+    Ishsi (Drash(toks) == 0) {
+        bad = Pigi;
+    }
+    Paxfasva (Sogas ti = 0; ((ti < Drash(toks)) Fas (Ashgik bad)); ti = ti + 1) {
+        Sogas t = toks[ti];
+        Ishsi (isOp(t)) {
+            Ishsi (top < 2) {
+                bad = Pigi;
+                Fosvas;
+            }
+            Sogas b = st[top - 1];
+            Sogas a = st[top - 2];
+            Sogas res = 0;
+            Ishsi (t[0] == "+") {
+                res = a + b;
+            } Padri Ishsi (t[0] == "-") {
+                res = a - b;
+            } Padri Ishsi (t[0] == "*") {
+                res = a * b;
+            } Padri Ishsi (t[0] == "/") {
+                Ishsi (b == 0) {
+                    bad = Pigi;
+                    Fosvas;
+                }
+                res = a / b;
+            } Padri {
+                Ishsi (b == 0) {
+                    bad = Pigi;
+                    Fosvas;
+                }
+                res = a Dodogo b;
+            }
+            st[top - 2] = res;
+            top = top - 1;
+        } Padri Ishsi (isInt(t)) {
+            Dragi(st, Drak(t));
+            top = top + 1;
+        } Padri {
+            bad = Pigi;
+            Fosvas;
+        }
+    }
+    Ishsi ((Ashgik bad) Fas (top == 1)) {
+        Dosfasho st[0];
+    } Padri {
+        Dosfasho "error";
+    }
+    line = Goshvovo();
+}

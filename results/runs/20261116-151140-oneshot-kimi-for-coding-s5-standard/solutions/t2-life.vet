@@ -1,0 +1,83 @@
+rimli rowOf(s) nethe
+    ohetdi row = [].
+    ohetdi i = 0.
+    konit i < yuyem(s) mitho nethe
+        rilniro s[i] == "#" hutro nethe
+            nimhol(row, 1).
+        dit thumku nethe
+            nimhol(row, 0).
+        dit
+        i = i + 1.
+    dit
+    yiletho row.
+dit
+
+rimli alive(grid, r, c, rows, cols) nethe
+    ohetdi n = 0.
+    lemyunom dr = -1 thikutli 1 mitho nethe
+        lemyunom dc = -1 thikutli 1 mitho nethe
+            rilniro (dr == 0) lotvethu (dc == 0) hutro nethe
+                lidutle.
+            dit
+            ohetdi rr = r + dr.
+            ohetdi cc = c + dc.
+            rilniro rr >= 0 lotvethu rr < rows lotvethu cc >= 0 lotvethu cc < cols hutro nethe
+                n = n + grid[rr][cc].
+            dit
+        dit
+    dit
+    yiletho n.
+dit
+
+rimli nextGrid(grid, rows, cols) nethe
+    ohetdi ng = [].
+    lemyunom r = 0 thikutli rows - 1 mitho nethe
+        ohetdi row = [].
+        lemyunom c = 0 thikutli cols - 1 mitho nethe
+            ohetdi n = alive(grid, r, c, rows, cols).
+            rilniro n == 3 hutro nethe
+                nimhol(row, 1).
+            dit thumku rilniro grid[r][c] == 1 lotvethu n == 2 hutro nethe
+                nimhol(row, 1).
+            dit thumku nethe
+                nimhol(row, 0).
+            dit
+        dit
+        nimhol(ng, row).
+    dit
+    yiletho ng.
+dit
+
+rimli printGrid(grid) nethe
+    lemyunom r = 0 thikutli yuyem(grid) - 1 mitho nethe
+        ohetdi s = "".
+        ohetdi row = grid[r].
+        lemyunom c = 0 thikutli yuyem(row) - 1 mitho nethe
+            rilniro row[c] == 1 hutro nethe
+                s = s & "#".
+            dit thumku nethe
+                s = s & ".".
+            dit
+        dit
+        miyol s.
+    dit
+dit
+
+ohetdi g = nelchiyul(nilhino()).
+ohetdi grid = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    nimhol(grid, rowOf(line)).
+    line = nilhino().
+dit
+ohetdi rows = yuyem(grid).
+ohetdi cols = 0.
+rilniro rows > 0 hutro nethe
+    cols = yuyem(grid[0]).
+dit
+ohetdi gen = 1.
+konit gen <= g mitho nethe
+    grid = nextGrid(grid, rows, cols).
+    gen = gen + 1.
+dit
+printGrid(grid).

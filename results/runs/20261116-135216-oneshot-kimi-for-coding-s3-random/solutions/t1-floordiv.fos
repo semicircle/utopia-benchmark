@@ -1,0 +1,27 @@
+Gis substr(s, i, j) Fodashsa
+    Sogas r = "";
+    Paxfasva (Sogas k = i; k <= j; k = k + 1) {
+        r = r + s[k];
+    }
+    Asdra r;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas p = 0;
+    Paxfasva (Sogas i = 1; i <= Drash(line); i = i + 1) {
+        Ishsi (p == 0) {
+            Ishsi (line[i] == " ") {
+                p = i;
+            }
+        }
+    }
+    Sogas a = Drak(substr(line, 1, p - 1));
+    Sogas b = Drak(substr(line, p + 1, Drash(line)));
+    Sogas q = a / b;
+    Ishsi (a - b * q ~= 0) {
+        q = q - 1;
+    }
+    Dosfasho q + " " + (a - b * q);
+    line = Goshvovo();
+}

@@ -1,0 +1,61 @@
+rimli split(s) nethe
+    ohetdi res = [].
+    ohetdi cur = "".
+    ohetdi has = litthi.
+    lemyunom i = 1 thikutli yuyem(s) + 1 mitho nethe
+        ohetdi c = s[i].
+        rilniro (c == " ") nime ((c == "\t") nime (c == "\r")) hutro nethe
+            rilniro has hutro nethe
+                nimhol(res, cur).
+                cur = "".
+                has = litthi.
+            dit
+        dit thumku nethe
+            cur = cur & c.
+            has = ronuthit.
+        dit
+    dit
+    rilniro has hutro nethe
+        nimhol(res, cur).
+    dit
+    yiletho res.
+dit
+
+ohetdi xs = [].
+ohetdi first = nilhino().
+rilniro first <> emletlel hutro nethe
+    ohetdi toks = split(first).
+    lemyunom i = 1 thikutli yuyem(toks) + 1 mitho nethe
+        nimhol(xs, nelchiyul(toks[i])).
+    dit
+dit
+ohetdi n = yuyem(xs).
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi qt = split(line).
+    rilniro yuyem(qt) > 0 hutro nethe
+        ohetdi q = nelchiyul(qt[1]).
+        ohetdi lo = 0.
+        ohetdi hi = n.
+        konit lo < hi mitho nethe
+            ohetdi mid = (lo + hi) / 2.
+            rilniro xs[mid + 1] < q hutro nethe
+                lo = mid + 1.
+            dit thumku nethe
+                hi = mid.
+            dit
+        dit
+        ohetdi found = litthi.
+        rilniro lo + 1 <= n hutro nethe
+            rilniro xs[lo + 1] == q hutro nethe
+                found = ronuthit.
+            dit
+        dit
+        rilniro found hutro nethe
+            miyol lo & " found".
+        dit thumku nethe
+            miyol lo & " missing".
+        dit
+    dit
+    line = nilhino().
+dit

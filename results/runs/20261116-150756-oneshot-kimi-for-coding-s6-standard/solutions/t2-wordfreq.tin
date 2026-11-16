@@ -1,0 +1,84 @@
+tumumin lower(c)
+    troufu ups = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    troufu los = "abcdefghijklmnopqrstuvwxyz";
+    troufu i = 0;
+    troufu r = c;
+    tafashou i < 26
+        sitrartu c == ups[i] fisu drufirsa
+            r = los[i];
+        drumin
+        i = i + 1;
+    trushou
+    drur r;
+drumin tumumin
+
+tumumin isaz(c)
+    drur (c >= "a" dra c <= "z") butrouta (c >= "A" dra c <= "Z");
+drumin tumumin
+
+tumumin addword(words, counts, w)
+    troufu j = 0;
+    troufu found = fufir;
+    tafashou j < utoufa(words) dra shutoun found
+        sitrartu words[j] == w fisu drufirsa
+            found = sibitrou;
+        drumin
+        j = j + 1;
+    trushou
+    sitrartu found fisu drufirsa
+        counts[j - 1] = counts[j - 1] + 1;
+    drumin tru drufirsa
+        marboun(words, w);
+        marboun(counts, 1);
+    drumin
+drumin tumumin
+
+troufu words = [];
+troufu counts = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu cur = "";
+    troufu i = 0;
+    troufu n = utoufa(line);
+    tafashou i < n
+        troufu c = line[i];
+        sitrartu isaz(c) fisu drufirsa
+            cur = cur + lower(c);
+        drumin tru sitrartu cur ~= "" fisu drufirsa
+            addword(words, counts, cur);
+            cur = "";
+        drumin
+        i = i + 1;
+    trushou
+    sitrartu cur ~= "" fisu drufirsa
+        addword(words, counts, cur);
+    drumin
+    line = bounfou();
+trushou
+
+troufu m = utoufa(words);
+troufu idx = [];
+sutrarsu i = 0 sou m - 1
+    marboun(idx, i);
+moun i
+sutrarsu i = 0 sou m - 2
+    troufu bi = i;
+    sutrarsu j = i + 1 sou m - 1
+        troufu a = idx[bi];
+        troufu b = idx[j];
+        sitrartu (counts[b] > counts[a]) butrouta (counts[b] == counts[a] dra words[b] < words[a]) fisu drufirsa
+            bi = j;
+        drumin
+    moun j
+    troufu tmp = idx[i];
+    idx[i] = idx[bi];
+    idx[bi] = tmp;
+moun i
+
+troufu lim = m;
+sitrartu lim > 10 fisu drufirsa
+    lim = 10;
+drumin
+sutrarsu i = 0 sou lim - 1
+    binmi words[idx[i]] + " " + counts[idx[i]];
+moun i

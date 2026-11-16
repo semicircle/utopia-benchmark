@@ -1,0 +1,36 @@
+Ruyoyo split(s)
+    Trepiho out := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c = " " Hiyikra c = "\t" Hiyikra c = "\r" Yeshil Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(out, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + c;
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(out, cur);
+    Tho
+    Omel out;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho toks := split(line);
+    Mushu Purmo(toks) >= 2 Yeshil Hupo
+        Trepiho a := Eshiyer(toks[0]);
+        Trepiho b := Eshiyer(toks[1]);
+        Trepiho q := a / b;
+        Trepiho r := a - b * q;
+        Mushu (r < 0 Pethe b > 0) Hiyikra (r > 0 Pethe b < 0) Yeshil Hupo
+            q := q - 1;
+            r := r + b;
+        Tho
+        Rashar "" + q + " " + r;
+    Tho
+    line := Thoke();
+}

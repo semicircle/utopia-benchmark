@@ -1,0 +1,68 @@
+Gis cell(grid, r, c) Fodashsa
+    Ishsi (r < 1) {
+        Asdra ".";
+    }
+    Ishsi (r > Drash(grid)) {
+        Asdra ".";
+    }
+    Sogas row = grid[r];
+    Ishsi (c < 1) {
+        Asdra ".";
+    }
+    Ishsi (c > Drash(row)) {
+        Asdra ".";
+    }
+    Asdra row[c];
+Gosafax
+
+Gis ncount(grid, r, c) Fodashsa
+    Sogas n = 0;
+    Paxfasva (Sogas dr = -1; dr <= 1; dr = dr + 1) {
+        Paxfasva (Sogas dc = -1; dc <= 1; dc = dc + 1) {
+            Ishsi (dr ~= 0 Gox dc ~= 0) {
+                Ishsi (cell(grid, r + dr, c + dc) == "#") {
+                    n = n + 1;
+                }
+            }
+        }
+    }
+    Asdra n;
+Gosafax
+
+Sogas gline = Goshvovo();
+Ishsi (gline ~= Dridrak) {
+    Sogas g = Drak(gline);
+    Sogas grid = [];
+    Sogas line = Goshvovo();
+    Sipokvix (line ~= Dridrak) {
+        Dragi(grid, line);
+        line = Goshvovo();
+    }
+    Paxfasva (Sogas gen = 1; gen <= g; gen = gen + 1) {
+        Sogas next = [];
+        Paxfasva (Sogas r = 1; r <= Drash(grid); r = r + 1) {
+            Sogas row = "";
+            Paxfasva (Sogas c = 1; c <= Drash(grid[r]); c = c + 1) {
+                Sogas n = ncount(grid, r, c);
+                Ishsi (grid[r][c] == "#") {
+                    Ishsi (n == 2 Gox n == 3) {
+                        row = row + "#";
+                    } Padri {
+                        row = row + ".";
+                    }
+                } Padri {
+                    Ishsi (n == 3) {
+                        row = row + "#";
+                    } Padri {
+                        row = row + ".";
+                    }
+                }
+            }
+            Dragi(next, row);
+        }
+        grid = next;
+    }
+    Paxfasva (Sogas r = 1; r <= Drash(grid); r = r + 1) {
+        Dosfasho grid[r];
+    }
+}

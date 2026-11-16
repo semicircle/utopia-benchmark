@@ -1,0 +1,102 @@
+func tokens(s) {
+    let out = [];
+    let cur = "";
+    for (let i = 0; i < len(s); i = i + 1) {
+        if (s[i] == " ") {
+            if (cur != "") {
+                push(out, cur);
+                cur = "";
+            }
+        } else {
+            cur = cur & s[i];
+        }
+    }
+    if (cur != "") {
+        push(out, cur);
+    }
+    return out;
+}
+
+func isDigit(c) {
+    let digits = "0123456789";
+    for (let i = 0; i < 10; i = i + 1) {
+        if (digits[i] == c) {
+            return true;
+        }
+    }
+    return false;
+}
+
+func isNumber(t) {
+    let start = 0;
+    if (t[0] == "-") {
+        start = 1;
+    }
+    if (start >= len(t)) {
+        return false;
+    }
+    for (let i = start; i < len(t); i = i + 1) {
+        if (not isDigit(t[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+func evaluate(line) {
+    let ts = tokens(line);
+    if (len(ts) == 0) {
+        return "error";
+    }
+    let stack = [];
+    let top = 0;
+    for (let i = 0; i < len(ts); i = i + 1) {
+        let t = ts[i];
+        if (isNumber(t)) {
+            if (top < len(stack)) {
+                stack[top] = num(t);
+            } else {
+                push(stack, num(t));
+            }
+            top = top + 1;
+        } else {
+            if (top < 2) {
+                return "error";
+            }
+            let b = stack[top - 1];
+            let a = stack[top - 2];
+            let r = 0;
+            if (t == "+") {
+                r = a + b;
+            } else if (t == "-") {
+                r = a - b;
+            } else if (t == "*") {
+                r = a * b;
+            } else if (t == "/") {
+                if (b == 0) {
+                    return "error";
+                }
+                r = a / b;
+            } else if (t == "%") {
+                if (b == 0) {
+                    return "error";
+                }
+                r = a % b;
+            } else {
+                return "error";
+            }
+            top = top - 1;
+            stack[top - 1] = r;
+        }
+    }
+    if (top != 1) {
+        return "error";
+    }
+    return str(stack[0]);
+}
+
+let line = readline();
+while (line != none) {
+    print evaluate(line);
+    line = readline();
+}

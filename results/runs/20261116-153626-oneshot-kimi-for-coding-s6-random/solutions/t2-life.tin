@@ -1,0 +1,53 @@
+tumumin nextcell(alive, neighbors)
+    sitrartu alive fisu drufirsa
+        sitrartu ((neighbors == 2) butrouta (neighbors == 3)) fisu drufirsa
+            drur "#";
+        drumin
+        drur ".";
+    drumin
+    sitrartu neighbors == 3 fisu drufirsa
+        drur "#";
+    drumin
+    drur ".";
+drumin tumumin
+
+troufu g = shufa(bounfou());
+troufu grid = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    marboun(grid, line);
+    line = bounfou();
+trushou
+troufu rows = utoufa(grid);
+troufu cols = utoufa(grid[1]);
+troufu gen = 0;
+tafashou gen < g
+    troufu nextgrid = [];
+    sutrarsu r = 1 sou rows
+        troufu nextrow = "";
+        sutrarsu c = 1 sou cols
+            troufu neighbors = 0;
+            sutrarsu dr = -1 sou 1
+                sutrarsu dc = -1 sou 1
+                    sitrartu (dr == 0) dra (dc == 0) fisu drufirsa
+                        samu;
+                    drumin
+                    troufu rr = r + dr;
+                    troufu cc = c + dc;
+                    sitrartu ((rr >= 1) dra ((rr <= rows) dra ((cc >= 1) dra (cc <= cols)))) fisu drufirsa
+                        sitrartu grid[rr][cc] == "#" fisu drufirsa
+                            neighbors = neighbors + 1;
+                        drumin
+                    drumin
+                moun dc
+            moun dr
+            nextrow = nextrow + nextcell(grid[r][c] == "#", neighbors);
+        moun c
+        marboun(nextgrid, nextrow);
+    moun r
+    grid = nextgrid;
+    gen = gen + 1;
+trushou
+sutrarsu r = 1 sou rows
+    binmi grid[r];
+moun r

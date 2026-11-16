@@ -1,0 +1,33 @@
+Ruyoyo blank(s)
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Mushu s[i] ~= " " Pethe s[i] ~= "\t" Pethe s[i] ~= "\r" Yeshil Hupo
+            Omel Yaki;
+        Tho
+    }
+    Omel Yupu;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu Shurisho blank(line) Yeshil Hupo
+        Trepiho n := Eshiyer(line);
+        Trepiho neg := n < 0;
+        Trepiho m := n;
+        Mushu neg Yeshil Hupo
+            m := -m;
+        Tho
+        Trepiho s := 0;
+        Trepiho r := 0;
+        Rokomi (m > 0) {
+            Trepiho d := m % 10;
+            s := s + d;
+            r := r * 10 + d;
+            m := m / 10;
+        }
+        Mushu neg Yeshil Hupo
+            r := -r;
+        Tho
+        Rashar "" + s + " " + r;
+    Tho
+    line := Thoke();
+}

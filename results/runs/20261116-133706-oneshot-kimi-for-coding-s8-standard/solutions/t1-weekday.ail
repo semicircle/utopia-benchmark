@@ -1,0 +1,28 @@
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai y := plaltai(line[0] + line[1] + line[2] + line[3]);
+    plulai m := plaltai(line[5] + line[6]);
+    plulai d := plaltai(line[8] + line[9]);
+    atdoyal (m < 3) {
+        y := y - 1;
+    }
+    plulai t := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+    plulai w := (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) % 7;
+    otai (w) {
+    dai 0:
+        shaibe "Sunday";
+    dai 1:
+        shaibe "Monday";
+    dai 2:
+        shaibe "Tuesday";
+    dai 3:
+        shaibe "Wednesday";
+    dai 4:
+        shaibe "Thursday";
+    dai 5:
+        shaibe "Friday";
+    dai 6:
+        shaibe "Saturday";
+    }
+    line := playadu();
+aitudre

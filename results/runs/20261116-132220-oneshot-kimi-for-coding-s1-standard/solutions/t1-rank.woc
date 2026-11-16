@@ -1,0 +1,58 @@
+eilyot substring(s, first, past)
+    weltuxle result := "";
+    keit (weltuxle i := first; i < past; i := i + 1) {
+        result := result + s[i];
+    }
+    chozulni result;
+iweil
+
+eilyot parseInts(line)
+    weltuxle result := [];
+    weltuxle i := 0;
+    krenul (i < dushzosh(line)) {
+        krenul (i < dushzosh(line) yosheil line[i] == " ") {
+            i := i + 1;
+        }
+        nei (i >= dushzosh(line)) {
+            exzulto;
+        }
+        weltuxle first := i;
+        krenul (i < dushzosh(line) yosheil line[i] <> " ") {
+            i := i + 1;
+        }
+        koshkil(result, leidush(substring(line, first, i)));
+    }
+    chozulni result;
+iweil
+
+eilyot lowerBound(xs, query)
+    weltuxle lo := 0;
+    weltuxle hi := dushzosh(xs);
+    krenul (lo < hi) {
+        weltuxle mid := (lo + hi) / 2;
+        nei (xs[mid] < query) {
+            lo := mid + 1;
+        } wogeish {
+            hi := mid;
+        }
+    }
+    chozulni lo;
+iweil
+
+weltuxle firstLine := lono();
+nei (firstLine <> leitchux) {
+    weltuxle values := parseInts(firstLine);
+    weltuxle line := lono();
+    krenul (line <> leitchux) {
+        weltuxle q := leidush(line);
+        weltuxle pos := lowerBound(values, q);
+        weltuxle found := pos < dushzosh(values) yosheil values[pos] == q;
+        zulkucho pos + " ";
+        nei (found) {
+            leshdei "found";
+        } wogeish {
+            leshdei "missing";
+        }
+        line := lono();
+    }
+}

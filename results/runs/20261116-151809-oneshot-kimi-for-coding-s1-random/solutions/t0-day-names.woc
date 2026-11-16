@@ -1,0 +1,30 @@
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle n := leidush(line);
+    yishzit n eixwo
+    1: krei
+        leshdei "Monday";
+    zushox
+    2: krei
+        leshdei "Tuesday";
+    zushox
+    3: krei
+        leshdei "Wednesday";
+    zushox
+    4: krei
+        leshdei "Thursday";
+    zushox
+    5: krei
+        leshdei "Friday";
+    zushox
+    6: krei
+        leshdei "Saturday";
+    zushox
+    7: krei
+        leshdei "Sunday";
+    zushox
+    wogeish krei
+        leshdei "invalid";
+    zushox zushox
+    line := lono();
+}

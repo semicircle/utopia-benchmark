@@ -1,0 +1,31 @@
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho n := Eshiyer(line);
+    Trepiho s := Mitrer(n);
+    Trepiho sum := 0;
+    Trepiho rev := "";
+    Trepiho neg := Yaki;
+    Trepiho L := Purmo(s);
+    Pil (Trepiho i := 0; i < L; i := i + 1) {
+        Trepiho ch := s[i];
+        Mushu ch = "-" Yeshil Hupo
+            neg := Yupu;
+        Tho Thotri Mushu ch >= "0" Pethe ch <= "9" Yeshil Hupo
+            sum := sum + Eshiyer(ch);
+        Tho
+    }
+    Pil (Trepiho i := L - 1; i >= 0; i := i - 1) {
+        Trepiho ch := s[i];
+        Mushu ch >= "0" Pethe ch <= "9" Yeshil Hupo
+            rev := rev + ch;
+        Tho
+    }
+    Trepiho r := Eshiyer(rev);
+    Rurmopa sum + " ";
+    Mushu neg Pethe r ~= 0 Yeshil Hupo
+        Rashar "-" + r;
+    Tho Thotri Hupo
+        Rashar r;
+    Tho
+    line := Thoke();
+}

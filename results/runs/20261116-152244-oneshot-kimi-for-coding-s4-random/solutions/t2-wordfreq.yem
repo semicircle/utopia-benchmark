@@ -1,0 +1,66 @@
+Ruyoyo lower(c)
+    Trepiho ups := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Trepiho los := "abcdefghijklmnopqrstuvwxyz";
+    Mushu c >= "A" Pethe c <= "Z" Yeshil Hupo
+        Pil (Trepiho i := 0; i < 26; i := i + 1) {
+            Mushu c = ups[i] Yeshil Hupo
+                Omel los[i];
+            Tho
+        }
+    Tho
+    Omel c;
+Opa
+
+Trepiho words := [];
+Trepiho counts := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i <= Purmo(line); i := i + 1) {
+        Trepiho c := " ";
+        Trepiho isletter := Yaki;
+        Mushu i < Purmo(line) Yeshil Hupo
+            c := line[i];
+            Mushu (c >= "a" Pethe c <= "z") Hiyikra (c >= "A" Pethe c <= "Z") Yeshil Hupo
+                isletter := Yupu;
+            Tho
+        Tho
+        Mushu isletter Yeshil Hupo
+            cur := cur + lower(c);
+        Tho Thotri Mushu cur ~= "" Yeshil Hupo
+            Trepiho idx := -1;
+            Pil (Trepiho j := 0; j < Purmo(words); j := j + 1) {
+                Mushu words[j] = cur Yeshil Hupo
+                    idx := j;
+                Tho
+            }
+            Mushu idx >= 0 Yeshil Hupo
+                counts[idx] := counts[idx] + 1;
+            Tho Thotri Hupo
+                Theki(words, cur);
+                Theki(counts, 1);
+            Tho
+            cur := "";
+        Tho
+    }
+    line := Thoke();
+}
+
+Pil (Trepiho t := 0; t < 10; t := t + 1) {
+    Trepiho best := -1;
+    Pil (Trepiho j := 0; j < Purmo(words); j := j + 1) {
+        Mushu counts[j] >= 0 Yeshil Hupo
+            Mushu best < 0 Yeshil Hupo
+                best := j;
+            Tho Thotri Mushu counts[j] > counts[best] Yeshil Hupo
+                best := j;
+            Tho Thotri Mushu counts[j] = counts[best] Pethe words[j] < words[best] Yeshil Hupo
+                best := j;
+            Tho
+        Tho
+    }
+    Mushu best >= 0 Yeshil Hupo
+        Rashar words[best] + " " + counts[best];
+        counts[best] := -1;
+    Tho
+}

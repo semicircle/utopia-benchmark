@@ -1,0 +1,45 @@
+Ruyoyo isAlnum(c)
+    Omel (c >= "a" Pethe c <= "z") Hiyikra (c >= "A" Pethe c <= "Z") Hiyikra (c >= "0" Pethe c <= "9");
+Opa
+
+Ruyoyo lower(c)
+    Mushu c >= "A" Pethe c <= "Z" Yeshil Hupo
+        Trepiho up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Trepiho lo := "abcdefghijklmnopqrstuvwxyz";
+        Pil (Trepiho i := 0; i < 26; i := i + 1) {
+            Mushu up[i] = c Yeshil Hupo
+                Omel lo[i];
+            Tho
+        }
+    Tho
+    Omel c;
+Opa
+
+Ruyoyo isPal(s)
+    Trepiho cs := [];
+    Pil (Trepiho k := 0; k < Purmo(s); k := k + 1) {
+        Mushu isAlnum(s[k]) Yeshil Hupo
+            Theki(cs, lower(s[k]));
+        Tho
+    }
+    Trepiho i := 0;
+    Trepiho j := Purmo(cs) - 1;
+    Rokomi (i < j) {
+        Mushu cs[i] ~= cs[j] Yeshil Hupo
+            Omel Yaki;
+        Tho
+        i := i + 1;
+        j := j - 1;
+    }
+    Omel Yupu;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu isPal(line) Yeshil Hupo
+        Rashar "yes";
+    Tho Thotri Hupo
+        Rashar "no";
+    Tho
+    line := Thoke();
+}

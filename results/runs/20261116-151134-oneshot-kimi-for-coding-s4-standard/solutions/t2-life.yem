@@ -1,0 +1,50 @@
+Trepiho g := Eshiyer(Thoke());
+Trepiho grid := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Theki(grid, line);
+    line := Thoke();
+}
+Trepiho rows := Purmo(grid);
+Trepiho cols := Purmo(grid[0]);
+Pil (Trepiho gen := 0; gen < g; gen := gen + 1) {
+    Trepiho next := [];
+    Pil (Trepiho r := 0; r < rows; r := r + 1) {
+        Trepiho row := "";
+        Pil (Trepiho c := 0; c < cols; c := c + 1) {
+            Trepiho cnt := 0;
+            Pil (Trepiho dr := -1; dr <= 1; dr := dr + 1) {
+                Pil (Trepiho dc := -1; dc <= 1; dc := dc + 1) {
+                    Mushu dr = 0 Pethe dc = 0 Yeshil Hupo
+                        Tril;
+                    Tho
+                    Trepiho rr := r + dr;
+                    Trepiho cc := c + dc;
+                    Mushu rr >= 0 Pethe rr < rows Pethe cc >= 0 Pethe cc < cols Yeshil Hupo
+                        Mushu grid[rr][cc] = "#" Yeshil Hupo
+                            cnt := cnt + 1;
+                        Tho
+                    Tho
+                }
+            }
+            Mushu grid[r][c] = "#" Yeshil Hupo
+                Mushu cnt = 2 Hiyikra cnt = 3 Yeshil Hupo
+                    row := row + "#";
+                Tho Thotri Hupo
+                    row := row + ".";
+                Tho
+            Tho Thotri Hupo
+                Mushu cnt = 3 Yeshil Hupo
+                    row := row + "#";
+                Tho Thotri Hupo
+                    row := row + ".";
+                Tho
+            Tho
+        }
+        Theki(next, row);
+    }
+    grid := next;
+}
+Pil (Trepiho r := 0; r < rows; r := r + 1) {
+    Rashar grid[r];
+}

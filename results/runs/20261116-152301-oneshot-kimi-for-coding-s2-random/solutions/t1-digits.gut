@@ -1,0 +1,27 @@
+dredrume digitsRev(s)
+    goyu total <- 0.
+    goyu rev <- "".
+    goyu n <- wumdror(s).
+    wego i <- 0 setru n - 1
+        goyu c <- s[i].
+        total <- total + druwol(c).
+        rev <- c & rev.
+    trer i
+    goyu r <- [].
+    dreme(r, total).
+    dreme(r, druwol(rev)).
+    odrol r.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu n <- druwol(line).
+    dre n < 0 ethur
+        goyu res <- digitsRev(shodrewe(-n)).
+        suwe res[0] & " -" & res[1].
+    truthor
+        goyu res <- digitsRev(shodrewe(n)).
+        suwe res[0] & " " & res[1].
+    wodrotru dre
+    line <- uyotho().
+shusushe

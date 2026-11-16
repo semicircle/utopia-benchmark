@@ -1,0 +1,24 @@
+dredrume sub(s, a, b)
+    goyu r <- "".
+    wego i <- a setru b - 1
+        r <- r & s[i].
+    trer i
+    odrol r.
+wodrotru dredrume
+
+goyu names <- ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].
+goyu offs <- [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4].
+goyu line <- uyotho().
+omethol line != gursume
+    dre wumdror(line) >= 10 ethur
+        goyu y <- druwol(sub(line, 0, 4)).
+        goyu m <- druwol(sub(line, 5, 7)).
+        goyu d <- druwol(sub(line, 8, 10)).
+        dre m < 3 ethur
+            y <- y - 1.
+        wodrotru dre
+        goyu w <- (y + y / 4 - y / 100 + y / 400 + offs[m - 1] + d) trumguwu 7.
+        suwe names[w].
+    wodrotru dre
+    line <- uyotho().
+shusushe

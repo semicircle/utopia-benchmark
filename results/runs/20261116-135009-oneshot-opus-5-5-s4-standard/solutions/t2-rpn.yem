@@ -1,0 +1,94 @@
+Ruyoyo split(s)
+    Trepiho res := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c = " " Hiyikra c = "\t" Hiyikra c = "\r" Yeshil Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(res, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + c;
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(res, cur);
+    Tho
+    Omel res;
+Opa
+
+Ruyoyo isInt(t)
+    Trepiho start := 0;
+    Mushu Purmo(t) > 0 Pethe t[0] = "-" Yeshil Hupo
+        start := 1;
+    Tho
+    Mushu start >= Purmo(t) Yeshil Hupo
+        Omel Yaki;
+    Tho
+    Pil (Trepiho i := start; i < Purmo(t); i := i + 1) {
+        Trepiho c := t[i];
+        Mushu Shurisho (c >= "0" Pethe c <= "9") Yeshil Hupo
+            Omel Yaki;
+        Tho
+    }
+    Omel Yupu;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho toks := split(line);
+    Trepiho st := [];
+    Trepiho sp := 0;
+    Trepiho err := Purmo(toks) = 0;
+    Pil (Trepiho i := 0; i < Purmo(toks) Pethe Shurisho err; i := i + 1) {
+        Trepiho t := toks[i];
+        Trepiho havev := Yaki;
+        Trepiho v := 0;
+        Mushu t = "+" Hiyikra t = "-" Hiyikra t = "*" Hiyikra t = "/" Hiyikra t = "%" Yeshil Hupo
+            Mushu sp < 2 Yeshil Hupo
+                err := Yupu;
+            Tho Thotri Hupo
+                Trepiho b := st[sp - 1];
+                Trepiho a := st[sp - 2];
+                sp := sp - 2;
+                Pakru Sher t
+                Sher "+"
+                    v := a + b;
+                Sher "-"
+                    v := a - b;
+                Sher "*"
+                    v := a * b;
+                Sher "/", "%"
+                    Mushu b = 0 Yeshil Hupo
+                        err := Yupu;
+                    Tho Thotri Mushu t = "/" Yeshil Hupo
+                        v := a / b;
+                    Tho Thotri Hupo
+                        v := a % b;
+                    Tho
+                Tho Pakru
+                havev := Yupu;
+            Tho
+        Tho Thotri Mushu isInt(t) Yeshil Hupo
+            v := Eshiyer(t);
+            havev := Yupu;
+        Tho Thotri Hupo
+            err := Yupu;
+        Tho
+        Mushu havev Pethe Shurisho err Yeshil Hupo
+            Mushu sp < Purmo(st) Yeshil Hupo
+                st[sp] := v;
+            Tho Thotri Hupo
+                Theki(st, v);
+            Tho
+            sp := sp + 1;
+        Tho
+    }
+    Mushu err Hiyikra sp ~= 1 Yeshil Hupo
+        Rashar "error";
+    Tho Thotri Hupo
+        Rashar st[0];
+    Tho
+    line := Thoke();
+}

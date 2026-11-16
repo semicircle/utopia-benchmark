@@ -1,0 +1,28 @@
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE sp := 0;
+    TUTCHEK i := 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        PLUWOK line[i] = " " DEWOTUSH LEKFESH
+            sp := i;
+            DUTZE;
+        EFUDU
+    EFUDU
+    FOMOFE sa := "";
+    FOMOFE sb := "";
+    TUTCHEK i := 1 ZUWOWEN sp - 1 LOLO LEKFESH
+        sa := sa & line[i];
+    EFUDU
+    TUTCHEK i := sp + 1 ZUWOWEN FORMOWE(line) LOLO LEKFESH
+        sb := sb & line[i];
+    EFUDU
+    FOMOFE a := ZENZUMUR(sa);
+    FOMOFE b := ZENZUMUR(sb);
+    FOMOFE q := a / b;
+    FOMOFE r := a - b * q;
+    PLUWOK r ~= 0 DEWOTUSH LEKFESH
+        q := q - 1;
+        r := r + b;
+    EFUDU
+    EPLOWEK q & " " & r;
+    line := TODETET();
+EFUDU

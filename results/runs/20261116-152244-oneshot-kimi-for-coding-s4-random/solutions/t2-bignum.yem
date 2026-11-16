@@ -1,0 +1,95 @@
+Ruyoyo substr(s, i, j)
+    Trepiho r := "";
+    Pil (Trepiho k := i; k < j; k := k + 1) {
+        r := r + s[k];
+    }
+    Omel r;
+Opa
+
+Ruyoyo srev(s)
+    Trepiho r := "";
+    Pil (Trepiho i := Purmo(s) - 1; i >= 0; i := i - 1) {
+        r := r + s[i];
+    }
+    Omel r;
+Opa
+
+Ruyoyo strip(s)
+    Trepiho i := 0;
+    Rokomi (i < Purmo(s) - 1 Pethe s[i] = "0") {
+        i := i + 1;
+    }
+    Omel substr(s, i, Purmo(s));
+Opa
+
+Ruyoyo add(a, b)
+    Trepiho ra := srev(a);
+    Trepiho rb := srev(b);
+    Trepiho res := "";
+    Trepiho carry := 0;
+    Trepiho n := Purmo(ra);
+    Mushu Purmo(rb) > n Yeshil Hupo
+        n := Purmo(rb);
+    Tho
+    Pil (Trepiho i := 0; i < n; i := i + 1) {
+        Trepiho da := 0;
+        Trepiho db := 0;
+        Mushu i < Purmo(ra) Yeshil Hupo
+            da := Eshiyer(ra[i]);
+        Tho
+        Mushu i < Purmo(rb) Yeshil Hupo
+            db := Eshiyer(rb[i]);
+        Tho
+        Trepiho t := da + db + carry;
+        res := res + Mitrer(t % 10);
+        carry := t / 10;
+    }
+    Mushu carry > 0 Yeshil Hupo
+        res := res + Mitrer(carry);
+    Tho
+    Omel srev(res);
+Opa
+
+Ruyoyo mul(a, b)
+    Trepiho ra := srev(a);
+    Trepiho rb := srev(b);
+    Trepiho res := [];
+    Pil (Trepiho i := 0; i < Purmo(ra) + Purmo(rb); i := i + 1) {
+        Theki(res, 0);
+    }
+    Pil (Trepiho i := 0; i < Purmo(ra); i := i + 1) {
+        Pil (Trepiho j := 0; j < Purmo(rb); j := j + 1) {
+            res[i + j] := res[i + j] + Eshiyer(ra[i]) * Eshiyer(rb[j]);
+        }
+    }
+    Pil (Trepiho i := 0; i < Purmo(res); i := i + 1) {
+        Trepiho v := res[i];
+        res[i] := v % 10;
+        Mushu v / 10 > 0 Yeshil Hupo
+            Mushu i + 1 < Purmo(res) Yeshil Hupo
+                res[i + 1] := res[i + 1] + v / 10;
+            Tho Thotri Hupo
+                Theki(res, v / 10);
+            Tho
+        Tho
+    }
+    Trepiho s := "";
+    Pil (Trepiho i := Purmo(res) - 1; i >= 0; i := i - 1) {
+        s := s + Mitrer(res[i]);
+    }
+    Omel strip(s);
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho sp := 0;
+    Pil (Trepiho i := 0; i < Purmo(line); i := i + 1) {
+        Mushu line[i] = " " Yeshil Hupo
+            sp := i;
+        Tho
+    }
+    Trepiho a := substr(line, 0, sp);
+    Trepiho b := substr(line, sp + 1, Purmo(line));
+    Rashar add(a, b) + " " + mul(a, b);
+    line := Thoke();
+}

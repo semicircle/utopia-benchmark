@@ -1,0 +1,119 @@
+rimli isLetter(c) nethe
+    yiletho ((c >= "A") lotvethu (c <= "Z")) nime ((c >= "a") lotvethu (c <= "z")).
+dit
+
+rimli lower(c) nethe
+    thi torelro c
+    torelro "A"
+        yiletho "a".
+    torelro "B"
+        yiletho "b".
+    torelro "C"
+        yiletho "c".
+    torelro "D"
+        yiletho "d".
+    torelro "E"
+        yiletho "e".
+    torelro "F"
+        yiletho "f".
+    torelro "G"
+        yiletho "g".
+    torelro "H"
+        yiletho "h".
+    torelro "I"
+        yiletho "i".
+    torelro "J"
+        yiletho "j".
+    torelro "K"
+        yiletho "k".
+    torelro "L"
+        yiletho "l".
+    torelro "M"
+        yiletho "m".
+    torelro "N"
+        yiletho "n".
+    torelro "O"
+        yiletho "o".
+    torelro "P"
+        yiletho "p".
+    torelro "Q"
+        yiletho "q".
+    torelro "R"
+        yiletho "r".
+    torelro "S"
+        yiletho "s".
+    torelro "T"
+        yiletho "t".
+    torelro "U"
+        yiletho "u".
+    torelro "V"
+        yiletho "v".
+    torelro "W"
+        yiletho "w".
+    torelro "X"
+        yiletho "x".
+    torelro "Y"
+        yiletho "y".
+    torelro "Z"
+        yiletho "z".
+    torelro thumku
+        yiletho c.
+    dit thi
+dit
+
+rimli addWord(words, counts, w) nethe
+    ohetdi nw = yuyem(words).
+    ohetdi idx = 0.
+    lemyunom i = 1 thikutli nw + 1 mitho nethe
+        rilniro words[i] == w hutro nethe
+            idx = i.
+        dit
+    dit
+    rilniro idx == 0 hutro nethe
+        nimhol(words, w).
+        nimhol(counts, 1).
+    dit thumku nethe
+        counts[idx] = counts[idx] + 1.
+    dit
+dit
+
+ohetdi words = [].
+ohetdi counts = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi cur = "".
+    ohetdi n = yuyem(line).
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        ohetdi c = line[i].
+        rilniro isLetter(c) hutro nethe
+            cur = cur & lower(c).
+        dit thumku rilniro cur <> "" hutro nethe
+            addWord(words, counts, cur).
+            cur = "".
+        dit
+    dit
+    rilniro cur <> "" hutro nethe
+        addWord(words, counts, cur).
+    dit
+    line = nilhino().
+dit
+ohetdi nw = yuyem(words).
+lemyunom k = 1 thikutli 11 mitho nethe
+    ohetdi bi = 0.
+    lemyunom i = 1 thikutli nw + 1 mitho nethe
+        rilniro counts[i] >= 0 hutro nethe
+            rilniro bi == 0 hutro nethe
+                bi = i.
+            dit thumku nethe
+                rilniro (counts[i] > counts[bi]) nime ((counts[i] == counts[bi]) lotvethu (words[i] < words[bi])) hutro nethe
+                    bi = i.
+                dit
+            dit
+        dit
+    dit
+    rilniro bi == 0 hutro nethe
+        chet.
+    dit
+    miyol words[bi] & " " & counts[bi].
+    counts[bi] = -1.
+dit

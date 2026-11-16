@@ -1,0 +1,101 @@
+Gis intToDigit(n) Fodashsa
+    Sogas ds = "0123456789";
+    Asdra ds[n];
+Gosafax
+
+Gis addNums(a, b) Fodashsa
+    Sogas i = Drash(a) - 1;
+    Sogas j = Drash(b) - 1;
+    Sogas carry = 0;
+    Sogas rev = "";
+    Gosh {
+        Sogas s = carry;
+        Ishsi (i >= 0) {
+            s = s + Drak(a[i]);
+            i = i - 1;
+        }
+        Ishsi (j >= 0) {
+            s = s + Drak(b[j]);
+            j = j - 1;
+        }
+        rev = rev + intToDigit(s Dodogo 10);
+        carry = s / 10;
+    } Sipokvix ((i >= 0) Gox (j >= 0) Gox (carry > 0));
+    Sogas res = "";
+    Sogas started = Fixpodri;
+    Paxfasva (Sogas k = Drash(rev) - 1; k >= 0; k = k - 1) {
+        Ishsi (started) {
+            res = res + rev[k];
+        } Padri Ishsi (rev[k] ~= "0") {
+            started = Pigi;
+            res = res + rev[k];
+        }
+    }
+    Ishsi (res == "") {
+        res = "0";
+    }
+    Asdra res;
+Gosafax
+
+Gis mulNums(a, b) Fodashsa
+    Sogas la = Drash(a);
+    Sogas lb = Drash(b);
+    Sogas res = [];
+    Paxfasva (Sogas i = 0; i < la + lb; i = i + 1) {
+        Dragi(res, 0);
+    }
+    Paxfasva (Sogas ii = la - 1; ii >= 0; ii = ii - 1) {
+        Sogas carry = 0;
+        Paxfasva (Sogas jj = lb - 1; jj >= 0; jj = jj - 1) {
+            Sogas cur = res[ii + jj + 1] + Drak(a[ii]) * Drak(b[jj]) + carry;
+            res[ii + jj + 1] = cur Dodogo 10;
+            carry = cur / 10;
+        }
+        res[ii] = res[ii] + carry;
+    }
+    Sogas out = "";
+    Sogas started = Fixpodri;
+    Paxfasva (Sogas i = 0; i < la + lb; i = i + 1) {
+        Ishsi (started) {
+            out = out + intToDigit(res[i]);
+        } Padri Ishsi (res[i] ~= 0) {
+            started = Pigi;
+            out = out + intToDigit(res[i]);
+        }
+    }
+    Ishsi (out == "") {
+        out = "0";
+    }
+    Asdra out;
+Gosafax
+
+Gis tokens(line) Fodashsa
+    Sogas out = [];
+    Sogas cur = "";
+    Sogas i = 0;
+    Sipokvix (i < Drash(line)) {
+        Sogas c = line[i];
+        Ishsi (c == " ") {
+            Ishsi (Drash(cur) > 0) {
+                Dragi(out, cur);
+                cur = "";
+            }
+        } Padri {
+            cur = cur + c;
+        }
+        i = i + 1;
+    }
+    Ishsi (Drash(cur) > 0) {
+        Dragi(out, cur);
+    }
+    Asdra out;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas t = tokens(line);
+    Ishsi (Drash(t) == 2) {
+        Dosfasho addNums(t[0], t[1]) + " " + mulNums(t[0], t[1]);
+    }
+    line = Goshvovo();
+}

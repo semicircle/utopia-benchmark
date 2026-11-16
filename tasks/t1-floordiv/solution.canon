@@ -1,0 +1,35 @@
+func before(s, sep) {
+    let out = "";
+    let i = 0;
+    while (s[i] != sep) {
+        out = out & s[i];
+        i = i + 1;
+    }
+    return out;
+}
+
+func after(s, sep) {
+    let i = 0;
+    while (s[i] != sep) {
+        i = i + 1;
+    }
+    let out = "";
+    for (let j = i + 1; j < len(s); j = j + 1) {
+        out = out & s[j];
+    }
+    return out;
+}
+
+let line = readline();
+while (line != none) {
+    let a = num(before(line, " "));
+    let b = num(after(line, " "));
+    let q = a / b;
+    if (a % b != 0) {
+        if ((a < 0) != (b < 0)) {
+            q = q - 1;
+        }
+    }
+    print q & " " & (a - b * q);
+    line = readline();
+}

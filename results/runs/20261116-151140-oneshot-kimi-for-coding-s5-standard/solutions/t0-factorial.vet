@@ -1,0 +1,8 @@
+ohetdi n = nelchiyul(nilhino()).
+ohetdi f = 1.
+ohetdi i = 1.
+konit i <= n mitho nethe
+    f = f * i.
+    i = i + 1.
+dit
+miyol f.

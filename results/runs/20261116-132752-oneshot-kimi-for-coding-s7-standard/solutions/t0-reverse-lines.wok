@@ -1,0 +1,11 @@
+FOMOFE lines := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    WESH(lines, line);
+    line := TODETET();
+EFUDU
+FOMOFE i := FORMOWE(lines) - 1;
+FUKCHEFE i >= 0 LOLO LEKFESH
+    EPLOWEK lines[i];
+    i := i - 1;
+EFUDU

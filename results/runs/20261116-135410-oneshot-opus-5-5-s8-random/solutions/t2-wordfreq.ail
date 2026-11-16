@@ -1,0 +1,110 @@
+nudro lowerc(c) {
+    plulai U := "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    plulai L := "abcdefghijklmnopqrstuvwxyz";
+    plulai lo := 1;
+    plulai hi := 26;
+    edrushe lo < hi
+        plulai mid := (lo + hi) / 2;
+        atdoyal (U[mid] < c) {
+            lo := mid + 1;
+        } bulbayo {
+            hi := mid;
+        }
+    aitudre
+    druna L[lo];
+}
+
+nudro msort(xs) {
+    plulai n := dra(xs);
+    atdoyal (n <= 1) {
+        druna xs;
+    }
+    plulai mid := n / 2;
+    plulai left := [];
+    plulai right := [];
+    shoyo i := 1 busale mid + 1
+        sutse(left, xs[i]);
+    pla i
+    shoyo i := mid + 1 busale n + 1
+        sutse(right, xs[i]);
+    pla i
+    left := msort(left);
+    right := msort(right);
+    plulai res := [];
+    plulai p := 1;
+    plulai q := 1;
+    plulai nl := dra(left);
+    plulai nr := dra(right);
+    edrushe p <= nl rulsai q <= nr
+        atdoyal (right[q] < left[p]) {
+            sutse(res, right[q]);
+            q := q + 1;
+        } bulbayo {
+            sutse(res, left[p]);
+            p := p + 1;
+        }
+    aitudre
+    edrushe p <= nl
+        sutse(res, left[p]);
+        p := p + 1;
+    aitudre
+    edrushe q <= nr
+        sutse(res, right[q]);
+        q := q + 1;
+    aitudre
+    druna res;
+}
+
+plulai words := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai cur := "";
+    shoyo i := 1 busale dra(line) + 1
+        plulai c := line[i];
+        atdoyal (c >= "A" rulsai c <= "Z") {
+            cur := cur + lowerc(c);
+        } bulbayo atdoyal (c >= "a" rulsai c <= "z") {
+            cur := cur + c;
+        } bulbayo {
+            atdoyal (cur <> "") {
+                sutse(words, cur);
+                cur := "";
+            }
+        }
+    pla i
+    atdoyal (cur <> "") {
+        sutse(words, cur);
+    }
+    line := playadu();
+aitudre
+
+plulai sorted := msort(words);
+plulai dw := [];
+plulai dc := [];
+shoyo i := 1 busale dra(sorted) + 1
+    atdoyal (dra(dw) > 0 rulsai dw[dra(dw)] == sorted[i]) {
+        dc[dra(dc)] := dc[dra(dc)] + 1;
+    } bulbayo {
+        sutse(dw, sorted[i]);
+        sutse(dc, 1);
+    }
+pla i
+
+plulai used := [];
+shoyo i := 1 busale dra(dw) + 1
+    sutse(used, nonotru);
+pla i
+
+shoyo t := 0 busale 10
+    plulai best := 0;
+    shoyo i := 1 busale dra(dw) + 1
+        atdoyal (tul (used[i]) rulsai (best == 0 tobe dc[i] > dc[best])) {
+            best := i;
+        }
+    pla i
+    atdoyal (best == 0) {
+        sonaidel;
+    }
+    used[best] := eretde;
+    shaibe dw[best] + " " + dc[best];
+pla t

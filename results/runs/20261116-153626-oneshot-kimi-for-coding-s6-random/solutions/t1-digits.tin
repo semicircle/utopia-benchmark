@@ -1,0 +1,21 @@
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu n = shufa(line);
+    troufu m = n;
+    sitrartu n < 0 fisu drufirsa
+        m = 0 - n;
+    drumin
+    troufu sum = 0;
+    troufu rev = 0;
+    tafashou m > 0
+        sum = sum + (m % 10);
+        rev = (rev * 10) + (m % 10);
+        m = m / 10;
+    trushou
+    sitrartu n < 0 fisu drufirsa
+        binmi (sum + " ") + (0 - rev);
+    drumin tru drufirsa
+        binmi (sum + " ") + rev;
+    drumin
+    line = bounfou();
+trushou

@@ -1,0 +1,48 @@
+Ruyoyo substr(s, lo, hi)
+    Trepiho r := "";
+    Pil (Trepiho i := lo; i < hi; i := i + 1) {
+        r := r + s[i];
+    }
+    Omel r;
+Opa
+
+Ruyoyo isleap(y)
+    Omel (y % 4 = 0 Pethe y % 100 ~= 0) Hiyikra y % 400 = 0;
+Opa
+
+Ruyoyo daysbefore(y, m)
+    Trepiho t := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    Trepiho d := t[m - 1];
+    Mushu m > 2 Pethe isleap(y) Yeshil Hupo
+        d := d + 1;
+    Tho
+    Omel d;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho y := Eshiyer(substr(line, 0, 4));
+    Trepiho m := Eshiyer(substr(line, 5, 7));
+    Trepiho d := Eshiyer(substr(line, 8, 10));
+    Trepiho y1 := y - 1;
+    Trepiho leaps := y1 / 4 - y1 / 100 + y1 / 400;
+    Trepiho days := 365 * y1 + leaps + daysbefore(y, m) + (d - 1);
+    Trepiho w := days % 7;
+    Pakru Sher w
+    Sher 0
+        Rashar "Monday";
+    Sher 1
+        Rashar "Tuesday";
+    Sher 2
+        Rashar "Wednesday";
+    Sher 3
+        Rashar "Thursday";
+    Sher 4
+        Rashar "Friday";
+    Sher 5
+        Rashar "Saturday";
+    Sher Thotri
+        Rashar "Sunday";
+    Tho Pakru
+    line := Thoke();
+}

@@ -1,0 +1,61 @@
+Gis split(s) Fodashsa
+    Sogas res = [];
+    Sogas cur = "";
+    Sogas i = 1;
+    Sogas n = Drash(s);
+    Sipokvix (i <= n) {
+        Sogas c = s[i];
+        Ishsi (c == " " Gox c == "\t" Gox c == "\r") {
+            Ishsi (cur ~= "") {
+                Dragi(res, cur);
+                cur = "";
+            }
+        } Padri {
+            cur = cur + c;
+        }
+        i = i + 1;
+    }
+    Ishsi (cur ~= "") {
+        Dragi(res, cur);
+    }
+    Asdra res;
+Gosafax
+
+Sogas first = Goshvovo();
+Sogas arr = [];
+Ishsi (first ~= Dridrak) {
+    Sogas toks = split(first);
+    Paxfasva (Sogas i = 1; i <= Drash(toks); i = i + 1) {
+        Dragi(arr, Drak(toks[i]));
+    }
+}
+Sogas n = Drash(arr);
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas qt = split(line);
+    Ishsi (Drash(qt) > 0) {
+        Sogas q = Drak(qt[1]);
+        Sogas lo = 1;
+        Sogas hi = n + 1;
+        Sipokvix (lo < hi) {
+            Sogas mid = (lo + hi - 1) / 2;
+            Ishsi (arr[mid] < q) {
+                lo = mid + 1;
+            } Padri {
+                hi = mid;
+            }
+        }
+        Sogas found = Fixpodri;
+        Ishsi (lo <= n) {
+            Ishsi (arr[lo] == q) {
+                found = Pigi;
+            }
+        }
+        Ishsi (found) {
+            Dosfasho (lo - 1) + " found";
+        } Padri {
+            Dosfasho (lo - 1) + " missing";
+        }
+    }
+    line = Goshvovo();
+}

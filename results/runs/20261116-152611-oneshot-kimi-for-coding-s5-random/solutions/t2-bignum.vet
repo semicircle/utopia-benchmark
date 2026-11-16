@@ -1,0 +1,96 @@
+rimli parseBig(s) nethe
+    ohetdi ds = [].
+    ohetdi n = yuyem(s).
+    lemyunom i = n thikutli 0 rodilvul -1 mitho nethe
+        nimhol(ds, nelchiyul(s[i])).
+    dit
+    yiletho ds.
+dit
+
+rimli addBig(a, b) nethe
+    ohetdi res = [].
+    ohetdi carry = 0.
+    ohetdi na = yuyem(a).
+    ohetdi nb = yuyem(b).
+    ohetdi n = na.
+    rilniro nb > na hutro nethe
+        n = nb.
+    dit
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        ohetdi s = carry.
+        rilniro i <= na hutro nethe
+            s = s + a[i].
+        dit
+        rilniro i <= nb hutro nethe
+            s = s + b[i].
+        dit
+        nimhol(res, s kolethul 10).
+        carry = s / 10.
+    dit
+    rilniro carry > 0 hutro nethe
+        nimhol(res, carry).
+    dit
+    yiletho res.
+dit
+
+rimli mulBig(a, b) nethe
+    ohetdi na = yuyem(a).
+    ohetdi nb = yuyem(b).
+    ohetdi res = [].
+    lemyunom i = 1 thikutli na + nb + 1 mitho nethe
+        nimhol(res, 0).
+    dit
+    lemyunom i = 1 thikutli na + 1 mitho nethe
+        lemyunom j = 1 thikutli nb + 1 mitho nethe
+            ohetdi p = a[i] * b[j].
+            ohetdi pos = (i + j) - 1.
+            res[pos] = res[pos] + p.
+        dit
+    dit
+    lemyunom i = 1 thikutli na + nb mitho nethe
+        ohetdi c = res[i] / 10.
+        res[i] = res[i] kolethul 10.
+        res[i + 1] = res[i + 1] + c.
+    dit
+    yiletho res.
+dit
+
+rimli bigToString(ds) nethe
+    ohetdi n = yuyem(ds).
+    ohetdi top = n.
+    konit (top > 1) lotvethu (ds[top] == 0) mitho nethe
+        top = top - 1.
+    dit
+    ohetdi s = "".
+    lemyunom i = top thikutli 0 rodilvul -1 mitho nethe
+        s = s & chul(ds[i]).
+    dit
+    yiletho s.
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi n = yuyem(line).
+    ohetdi sp = 0.
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        rilniro sp == 0 hutro nethe
+            rilniro line[i] == " " hutro nethe
+                sp = i.
+            dit
+        dit
+    dit
+    ohetdi sa = "".
+    ohetdi sb = "".
+    lemyunom i = 1 thikutli sp mitho nethe
+        sa = sa & line[i].
+    dit
+    lemyunom i = sp + 1 thikutli n + 1 mitho nethe
+        sb = sb & line[i].
+    dit
+    ohetdi a = parseBig(sa).
+    ohetdi b = parseBig(sb).
+    ohetdi s = addBig(a, b).
+    ohetdi p = mulBig(a, b).
+    miyol bigToString(s) & " " & bigToString(p).
+    line = nilhino().
+dit

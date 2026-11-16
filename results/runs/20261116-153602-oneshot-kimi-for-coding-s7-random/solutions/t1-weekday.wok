@@ -1,0 +1,28 @@
+EDEWUT fdiv(a, b) {
+    FOMOFE q := a / b;
+    PLUWOK a - b * q ~= 0 DEWOTUSH LEKFESH
+        q := q - 1;
+    EFUDU
+    EFOTU q;
+}
+
+EDEWUT leap(y) {
+    EFOTU (y % 4 = 0) ZULUSHTE (y % 100 ~= 0 MUR y % 400 = 0);
+}
+
+FOMOFE cum := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+FOMOFE names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE y := ZENZUMUR(line[1] & line[2] & line[3] & line[4]);
+    FOMOFE mo := ZENZUMUR(line[6] & line[7]);
+    FOMOFE d := ZENZUMUR(line[9] & line[10]);
+    FOMOFE yy := y - 1;
+    FOMOFE doy := cum[mo] + d;
+    PLUWOK leap(y) ZULUSHTE mo > 2 DEWOTUSH LEKFESH
+        doy := doy + 1;
+    EFUDU
+    FOMOFE days := yy * 365 + fdiv(yy, 4) - fdiv(yy, 100) + fdiv(yy, 400) + doy - 1;
+    EPLOWEK names[(days % 7) + 1];
+    line := TODETET();
+EFUDU

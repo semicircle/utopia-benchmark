@@ -1,0 +1,69 @@
+Trepiho g := Eshiyer(Thoke());
+Trepiho grid := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu line ~= "" Yeshil Hupo
+        Trepiho row := [];
+        Pil (Trepiho j := 0; j < Purmo(line); j := j + 1) {
+            Mushu line[j] = "#" Yeshil Hupo
+                Theki(row, 1);
+            Tho Thotri Mushu line[j] = "." Yeshil Hupo
+                Theki(row, 0);
+            Tho
+        }
+        Theki(grid, row);
+    Tho
+    line := Thoke();
+}
+Trepiho h := Purmo(grid);
+Trepiho w := 0;
+Mushu h > 0 Yeshil Hupo
+    w := Purmo(grid[0]);
+Tho
+Pil (Trepiho gen := 0; gen < g; gen := gen + 1) {
+    Trepiho ng := [];
+    Pil (Trepiho i := 0; i < h; i := i + 1) {
+        Trepiho nr := [];
+        Trepiho cr := grid[i];
+        Pil (Trepiho j := 0; j < w; j := j + 1) {
+            Trepiho cnt := 0;
+            Pil (Trepiho di := -1; di <= 1; di := di + 1) {
+                Pil (Trepiho dj := -1; dj <= 1; dj := dj + 1) {
+                    Trepiho ii := i + di;
+                    Trepiho jj := j + dj;
+                    Mushu (di ~= 0 Hiyikra dj ~= 0) Pethe ii >= 0 Pethe ii < h Pethe jj >= 0 Pethe jj < w Yeshil Hupo
+                        Trepiho rr := grid[ii];
+                        cnt := cnt + rr[jj];
+                    Tho
+                }
+            }
+            Mushu cr[j] = 1 Yeshil Hupo
+                Mushu cnt = 2 Hiyikra cnt = 3 Yeshil Hupo
+                    Theki(nr, 1);
+                Tho Thotri Hupo
+                    Theki(nr, 0);
+                Tho
+            Tho Thotri Hupo
+                Mushu cnt = 3 Yeshil Hupo
+                    Theki(nr, 1);
+                Tho Thotri Hupo
+                    Theki(nr, 0);
+                Tho
+            Tho
+        }
+        Theki(ng, nr);
+    }
+    grid := ng;
+}
+Pil (Trepiho i := 0; i < h; i := i + 1) {
+    Trepiho s := "";
+    Trepiho cr := grid[i];
+    Pil (Trepiho j := 0; j < w; j := j + 1) {
+        Mushu cr[j] = 1 Yeshil Hupo
+            s := s + "#";
+        Tho Thotri Hupo
+            s := s + ".";
+        Tho
+    }
+    Rashar s;
+}

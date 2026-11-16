@@ -1,0 +1,105 @@
+eilyot substr(s, a, b)
+    weltuxle r := "";
+    keit (weltuxle i := a; i < b; i := i + 1) {
+        r := r + s[i];
+    }
+    chozulni r;
+iweil
+
+eilyot splitTwo(line)
+    weltuxle i := 0;
+    weltuxle len := dushzosh(line);
+    krenul (i < len) {
+        nei (line[i] == " ") {
+            exzulto;
+        }
+        i := i + 1;
+    }
+    chozulni [substr(line, 0, i), substr(line, i + 1, len)];
+iweil
+
+eilyot parseBig(s)
+    weltuxle ds := [];
+    keit (weltuxle i := dushzosh(s) - 1; i >= 0; i := i - 1) {
+        koshkil(ds, leidush(s[i]));
+    }
+    chozulni ds;
+iweil
+
+eilyot dig(a, i)
+    nei (i < dushzosh(a)) {
+        chozulni a[i];
+    }
+    chozulni 0;
+iweil
+
+eilyot addBig(a, b)
+    weltuxle res := [];
+    weltuxle carry := 0;
+    weltuxle n := dushzosh(a);
+    nei (dushzosh(b) > n) {
+        n := dushzosh(b);
+    }
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle s := dig(a, i) + dig(b, i) + carry;
+        koshkil(res, s yeil 10);
+        carry := s / 10;
+    }
+    nei (carry > 0) {
+        koshkil(res, carry);
+    }
+    chozulni res;
+iweil
+
+eilyot mulBig(a, b)
+    weltuxle la := dushzosh(a);
+    weltuxle lb := dushzosh(b);
+    weltuxle res := [];
+    keit (weltuxle i := 0; i < la + lb; i := i + 1) {
+        koshkil(res, 0);
+    }
+    keit (weltuxle i := 0; i < la; i := i + 1) {
+        weltuxle carry := 0;
+        keit (weltuxle j := 0; j < lb; j := j + 1) {
+            weltuxle cur := res[i + j] + a[i] * b[j] + carry;
+            res[i + j] := cur yeil 10;
+            carry := cur / 10;
+        }
+        weltuxle k := i + lb;
+        krenul (carry > 0) {
+            weltuxle cur := res[k] + carry;
+            res[k] := cur yeil 10;
+            carry := cur / 10;
+            k := k + 1;
+        }
+    }
+    chozulni res;
+iweil
+
+eilyot bigToString(a)
+    weltuxle n := dushzosh(a);
+    weltuxle top := n - 1;
+    krenul (top > 0) {
+        nei (a[top] == 0) {
+            top := top - 1;
+        } wogeish {
+            exzulto;
+        }
+    }
+    weltuxle s := "";
+    keit (weltuxle i := top; i >= 0; i := i - 1) {
+        s := s + sheiyidi(a[i]);
+    }
+    chozulni s;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle parts := splitTwo(line);
+    weltuxle a := parseBig(parts[0]);
+    weltuxle b := parseBig(parts[1]);
+    weltuxle s := addBig(a, b);
+    weltuxle p := mulBig(a, b);
+    leshdei bigToString(s) + " " + bigToString(p);
+    line := lono();
+}

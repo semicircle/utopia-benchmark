@@ -297,7 +297,8 @@ function sortedRuns() {
 }
 
 function runLabel(r) {
-  return r.arm === "python" ? "Python" : `${r.language} · seed ${r.seed}`;
+  return r.arm === "python" ? "Python"
+    : `${r.language} · seed ${r.seed}${r.semantics === "random" ? " · false friends" : ""}`;
 }
 
 function renderMatrix() {

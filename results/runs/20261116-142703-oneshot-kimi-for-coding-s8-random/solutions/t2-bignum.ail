@@ -1,0 +1,112 @@
+nudro split(s) {
+    plulai parts := [];
+    plulai cur := "";
+    plulai i := 1;
+    edrushe i <= dra(s)
+        plulai c := s[i];
+        atdoyal (c == " ") {
+            atdoyal (dra(cur) > 0) {
+                sutse(parts, cur);
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + c;
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (dra(cur) > 0) {
+        sutse(parts, cur);
+    }
+    druna parts;
+}
+
+nudro toLSB(s) {
+    plulai r := [];
+    plulai i := dra(s);
+    edrushe i >= 1
+        sutse(r, plaltai(s[i]));
+        i := i - 1;
+    aitudre
+    druna r;
+}
+
+nudro lsbToStr(x) {
+    plulai s := "";
+    plulai i := dra(x);
+    edrushe i >= 1
+        s := s + sutlarai(x[i]);
+        i := i - 1;
+    aitudre
+    druna s;
+}
+
+nudro bigadd(a, b) {
+    plulai la := dra(a);
+    plulai lb := dra(b);
+    plulai n := la;
+    atdoyal (lb > la) {
+        n := lb;
+    }
+    plulai res := [];
+    plulai carry := 0;
+    shoyo i := 1 busale n + 1
+        plulai da := 0;
+        plulai db := 0;
+        atdoyal (i <= la) {
+            da := a[i];
+        }
+        atdoyal (i <= lb) {
+            db := b[i];
+        }
+        plulai t := da + db + carry;
+        sutse(res, t % 10);
+        carry := t / 10;
+    pla i
+    atdoyal (carry > 0) {
+        sutse(res, carry);
+    }
+    druna res;
+}
+
+nudro bigmul(a, b) {
+    plulai la := dra(a);
+    plulai lb := dra(b);
+    plulai res := [];
+    shoyo p := 1 busale la + lb + 1
+        sutse(res, 0);
+    pla p
+    shoyo i := 1 busale la + 1
+        plulai carry := 0;
+        shoyo j := 1 busale lb + 1
+            plulai p := i + j - 1;
+            plulai t := res[p] + a[i] * b[j] + carry;
+            res[p] := t % 10;
+            carry := t / 10;
+        pla j
+        plulai p := i + lb;
+        edrushe carry > 0
+            plulai t := res[p] + carry;
+            res[p] := t % 10;
+            carry := t / 10;
+            p := p + 1;
+        aitudre
+    pla i
+    plulai n := dra(res);
+    edrushe n > 1 rulsai res[n] == 0
+        n := n - 1;
+    aitudre
+    plulai out := [];
+    shoyo i := 1 busale n + 1
+        sutse(out, res[i]);
+    pla i
+    druna out;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai parts := split(line);
+    plulai a := toLSB(parts[1]);
+    plulai b := toLSB(parts[2]);
+    shaibe lsbToStr(bigadd(a, b)) + " " + lsbToStr(bigmul(a, b));
+    line := playadu();
+aitudre

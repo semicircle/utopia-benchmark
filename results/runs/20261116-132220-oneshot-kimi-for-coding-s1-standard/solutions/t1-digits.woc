@@ -1,0 +1,27 @@
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle n := leidush(line);
+    nei (n == 0) {
+        leshdei "0 0";
+    } wogeish {
+        weltuxle neg := n < 0;
+        weltuxle x := n;
+        nei (neg) {
+            x := -x;
+        }
+        weltuxle sum := 0;
+        weltuxle rev := 0;
+        krenul (x > 0) {
+            weltuxle d := x yeil 10;
+            sum := sum + d;
+            rev := rev * 10 + d;
+            x := x / 10;
+        }
+        nei (neg) {
+            leshdei sum + " -" + rev;
+        } wogeish {
+            leshdei sum + " " + rev;
+        }
+    }
+    line := lono();
+}

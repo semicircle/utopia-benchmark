@@ -1,0 +1,104 @@
+Ruyoyo tokenize(line)
+    Trepiho toks := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(line); i := i + 1) {
+        Mushu line[i] = " " Yeshil Hupo
+            Mushu cur ~= "" Yeshil Hupo
+                Theki(toks, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + line[i];
+        Tho
+    }
+    Mushu cur ~= "" Yeshil Hupo
+        Theki(toks, cur);
+    Tho
+    Omel toks;
+Opa
+
+Ruyoyo is_number(t)
+    Trepiho L := Purmo(t);
+    Mushu L = 0 Yeshil Hupo
+        Omel Yaki;
+    Tho
+    Trepiho start := 0;
+    Mushu t[0] = "-" Yeshil Hupo
+        Mushu L = 1 Yeshil Hupo
+            Omel Yaki;
+        Tho
+        start := 1;
+    Tho
+    Pil (Trepiho i := start; i < L; i := i + 1) {
+        Mushu Shurisho (t[i] >= "0" Pethe t[i] <= "9") Yeshil Hupo
+            Omel Yaki;
+        Tho
+    }
+    Omel Yupu;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho toks := tokenize(line);
+    Trepiho err := Yaki;
+    Trepiho stack := [];
+    Pil (Trepiho j := 0; j < Purmo(toks); j := j + 1) {
+        Theki(stack, 0);
+    }
+    Trepiho top := 0;
+    Mushu Purmo(toks) = 0 Yeshil Hupo
+        err := Yupu;
+    Tho
+    Trepiho i := 0;
+    Rokomi (i < Purmo(toks) Pethe Shurisho err) {
+        Trepiho t := toks[i];
+        Mushu is_number(t) Yeshil Hupo
+            stack[top] := Eshiyer(t);
+            top := top + 1;
+        Tho Thotri Mushu t = "+" Hiyikra t = "-" Hiyikra t = "*" Hiyikra t = "/" Hiyikra t = "%" Yeshil Hupo
+            Mushu top < 2 Yeshil Hupo
+                err := Yupu;
+            Tho Thotri Hupo
+                top := top - 1;
+                Trepiho b := stack[top];
+                top := top - 1;
+                Trepiho a := stack[top];
+                Mushu t = "+" Yeshil Hupo
+                    stack[top] := a + b;
+                    top := top + 1;
+                Tho Thotri Mushu t = "-" Yeshil Hupo
+                    stack[top] := a - b;
+                    top := top + 1;
+                Tho Thotri Mushu t = "*" Yeshil Hupo
+                    stack[top] := a * b;
+                    top := top + 1;
+                Tho Thotri Mushu t = "/" Yeshil Hupo
+                    Mushu b = 0 Yeshil Hupo
+                        err := Yupu;
+                    Tho Thotri Hupo
+                        stack[top] := a / b;
+                        top := top + 1;
+                    Tho
+                Tho Thotri Hupo
+                    Mushu b = 0 Yeshil Hupo
+                        err := Yupu;
+                    Tho Thotri Hupo
+                        stack[top] := a % b;
+                        top := top + 1;
+                    Tho
+                Tho
+            Tho
+        Tho Thotri Hupo
+            err := Yupu;
+        Tho
+        i := i + 1;
+    }
+    Mushu err Yeshil Hupo
+        Rashar "error";
+    Tho Thotri Mushu top ~= 1 Yeshil Hupo
+        Rashar "error";
+    Tho Thotri Hupo
+        Rashar stack[0];
+    Tho
+    line := Thoke();
+}

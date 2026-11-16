@@ -1,0 +1,9 @@
+Trepiho xs := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Theki(xs, line);
+    line := Thoke();
+}
+Pil (Trepiho i := Purmo(xs) - 1; i >= 0; i := i - 1) {
+    Rashar xs[i];
+}

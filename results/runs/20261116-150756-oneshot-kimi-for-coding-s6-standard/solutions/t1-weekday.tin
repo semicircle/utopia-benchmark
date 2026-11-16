@@ -1,0 +1,38 @@
+tumumin substr(s, a, b)
+    troufu r = "";
+    troufu i = a;
+    tafashou i <= b
+        r = r + s[i];
+        i = i + 1;
+    trushou
+    drur r;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu y = shufa(substr(line, 0, 3));
+    troufu m = shufa(substr(line, 5, 6));
+    troufu d = shufa(substr(line, 8, 9));
+    sitrartu m < 3 fisu drufirsa
+        y = y - 1;
+    drumin
+    troufu t = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+    troufu w = (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) % 7;
+    utir (w) {
+    sourmar 0:
+        binmi "Sunday";
+    sourmar 1:
+        binmi "Monday";
+    sourmar 2:
+        binmi "Tuesday";
+    sourmar 3:
+        binmi "Wednesday";
+    sourmar 4:
+        binmi "Thursday";
+    sourmar 5:
+        binmi "Friday";
+    sourmar 6:
+        binmi "Saturday";
+    }
+    line = bounfou();
+trushou

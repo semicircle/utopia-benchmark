@@ -1,0 +1,104 @@
+rimli lowerc(c) nethe
+    ohetdi up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    ohetdi lo = "abcdefghijklmnopqrstuvwxyz".
+    lemyunom k = 0 thikutli 25 mitho nethe
+        rilniro up[k] == c hutro nethe
+            yiletho lo[k].
+        dit
+    dit
+    yiletho c.
+dit
+
+rimli msort(xs) nethe
+    ohetdi n = yuyem(xs).
+    rilniro n <= 1 hutro nethe
+        yiletho xs.
+    dit
+    ohetdi mid = n / 2.
+    ohetdi left = [].
+    ohetdi right = [].
+    lemyunom i = 0 thikutli mid - 1 mitho nethe
+        nimhol(left, xs[i]).
+    dit
+    lemyunom i2 = mid thikutli n - 1 mitho nethe
+        nimhol(right, xs[i2]).
+    dit
+    left = msort(left).
+    right = msort(right).
+    ohetdi res = [].
+    ohetdi p = 0.
+    ohetdi q = 0.
+    ohetdi nl = yuyem(left).
+    ohetdi nr = yuyem(right).
+    konit p < nl lotvethu q < nr mitho nethe
+        rilniro left[p] <= right[q] hutro nethe
+            nimhol(res, left[p]).
+            p = p + 1.
+        dit thumku nethe
+            nimhol(res, right[q]).
+            q = q + 1.
+        dit
+    dit
+    konit p < nl mitho nethe
+        nimhol(res, left[p]).
+        p = p + 1.
+    dit
+    konit q < nr mitho nethe
+        nimhol(res, right[q]).
+        q = q + 1.
+    dit
+    yiletho res.
+dit
+
+ohetdi words = [].
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi cur = "".
+    lemyunom i = 0 thikutli yuyem(line) - 1 mitho nethe
+        ohetdi c = line[i].
+        rilniro c >= "A" lotvethu c <= "Z" hutro nethe
+            c = lowerc(c).
+        dit
+        rilniro c >= "a" lotvethu c <= "z" hutro nethe
+            cur = cur & c.
+        dit thumku rilniro cur <> "" hutro nethe
+            nimhol(words, cur).
+            cur = "".
+        dit
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(words, cur).
+    dit
+    line = nilhino().
+dit
+
+ohetdi sw = msort(words).
+ohetdi dw = [].
+ohetdi dc = [].
+lemyunom i = 0 thikutli yuyem(sw) - 1 mitho nethe
+    ohetdi nd = yuyem(dw).
+    rilniro nd > 0 lotvethu dw[nd - 1] == sw[i] hutro nethe
+        dc[nd - 1] = dc[nd - 1] + 1.
+    dit thumku nethe
+        nimhol(dw, sw[i]).
+        nimhol(dc, 1).
+    dit
+dit
+
+ohetdi used = [].
+lemyunom i = 0 thikutli yuyem(dw) - 1 mitho nethe
+    nimhol(used, litthi).
+dit
+lemyunom k = 1 thikutli 10 mitho nethe
+    ohetdi best = -1.
+    lemyunom i = 0 thikutli yuyem(dw) - 1 mitho nethe
+        rilniro used[i] == litthi lotvethu (best == -1 nime dc[i] > dc[best]) hutro nethe
+            best = i.
+        dit
+    dit
+    rilniro best == -1 hutro nethe
+        chet.
+    dit
+    miyol dw[best] & " " & dc[best].
+    used[best] = ronuthit.
+dit

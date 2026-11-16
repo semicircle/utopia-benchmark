@@ -1,0 +1,109 @@
+rimli split(s) nethe
+    ohetdi res = [].
+    ohetdi cur = "".
+    ohetdi has = litthi.
+    lemyunom i = 1 thikutli yuyem(s) + 1 mitho nethe
+        ohetdi c = s[i].
+        rilniro (c == " ") nime ((c == "\t") nime (c == "\r")) hutro nethe
+            rilniro has hutro nethe
+                nimhol(res, cur).
+                cur = "".
+                has = litthi.
+            dit
+        dit thumku nethe
+            cur = cur & c.
+            has = ronuthit.
+        dit
+    dit
+    rilniro has hutro nethe
+        nimhol(res, cur).
+    dit
+    yiletho res.
+dit
+
+rimli parse(s) nethe
+    ohetdi r = [].
+    lemyunom i = yuyem(s) thikutli 0 rodilvul -1 mitho nethe
+        nimhol(r, nelchiyul(s[i])).
+    dit
+    yiletho r.
+dit
+
+rimli tostr(d) nethe
+    ohetdi n = yuyem(d).
+    konit (n > 1) lotvethu (d[n] == 0) mitho nethe
+        n = n - 1.
+    dit
+    ohetdi s = "".
+    lemyunom i = n thikutli 0 rodilvul -1 mitho nethe
+        s = s & d[i].
+    dit
+    yiletho s.
+dit
+
+rimli add(a, b) nethe
+    ohetdi la = yuyem(a).
+    ohetdi lb = yuyem(b).
+    ohetdi n = la.
+    rilniro lb > n hutro nethe
+        n = lb.
+    dit
+    ohetdi r = [].
+    ohetdi c = 0.
+    lemyunom i = 1 thikutli n + 1 mitho nethe
+        ohetdi x = c.
+        rilniro i <= la hutro nethe
+            x = x + a[i].
+        dit
+        rilniro i <= lb hutro nethe
+            x = x + b[i].
+        dit
+        nimhol(r, x kolethul 10).
+        c = x / 10.
+    dit
+    rilniro c > 0 hutro nethe
+        nimhol(r, c).
+    dit
+    yiletho r.
+dit
+
+rimli mul(a, b) nethe
+    ohetdi la = yuyem(a).
+    ohetdi lb = yuyem(b).
+    ohetdi tot = la + lb.
+    ohetdi r = [].
+    lemyunom i = 0 thikutli tot mitho nethe
+        nimhol(r, 0).
+    dit
+    lemyunom i = 1 thikutli la + 1 mitho nethe
+        ohetdi ai = a[i].
+        rilniro ai <> 0 hutro nethe
+            lemyunom j = 1 thikutli lb + 1 mitho nethe
+                ohetdi k = (i + j) - 1.
+                r[k] = r[k] + (ai * b[j]).
+            dit
+        dit
+    dit
+    ohetdi c = 0.
+    lemyunom k = 1 thikutli tot + 1 mitho nethe
+        ohetdi x = r[k] + c.
+        r[k] = x kolethul 10.
+        c = x / 10.
+    dit
+    konit c > 0 mitho nethe
+        nimhol(r, c kolethul 10).
+        c = c / 10.
+    dit
+    yiletho r.
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    ohetdi p = split(line).
+    rilniro yuyem(p) >= 2 hutro nethe
+        ohetdi a = parse(p[1]).
+        ohetdi b = parse(p[2]).
+        miyol (tostr(add(a, b)) & " ") & tostr(mul(a, b)).
+    dit
+    line = nilhino().
+dit

@@ -1,0 +1,23 @@
+Sogas kline = Goshvovo();
+Ishsi (kline == Dridrak) {
+    Asdra;
+}
+Sogas k = Drak(kline);
+Sogas items = [];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Dragi(items, line);
+    line = Goshvovo();
+}
+Sogas n = Drash(items);
+Ishsi (n > 0) {
+    Sogas fq = -((-k) / n);
+    Sogas shift = k - n * fq;
+    Paxfasva (Sogas j = 0; j < n; j = j + 1) {
+        Sogas idx = j - shift;
+        Ishsi (idx < 0) {
+            idx = idx + n;
+        }
+        Dosfasho items[idx + 1];
+    }
+}

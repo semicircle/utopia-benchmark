@@ -1,0 +1,13 @@
+Sogas names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Ishsi (Drash(line) > 0) {
+        Sogas n = Drak(line);
+        Ishsi (n >= 1 Fas n <= 7) {
+            Dosfasho names[n - 1];
+        } Padri {
+            Dosfasho "invalid";
+        }
+    }
+    line = Goshvovo();
+}

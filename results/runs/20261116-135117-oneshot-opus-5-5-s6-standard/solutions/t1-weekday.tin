@@ -1,0 +1,51 @@
+tumumin trim(s)
+    troufu a = 0;
+    troufu b = utoufa(s) - 1;
+    tafashou a <= b dra s[a] <= " "
+        a = a + 1;
+    trushou
+    tafashou b >= a dra s[b] <= " "
+        b = b - 1;
+    trushou
+    troufu r = "";
+    sutrarsu i = a sou b
+        r = r + s[i];
+    moun i
+    drur r;
+drumin tumumin
+
+tumumin dval(c)
+    troufu ds = "0123456789";
+    sutrarsu i = 0 sou 9
+        sitrartu ds[i] == c fisu drufirsa
+            drur i;
+        drumin
+    moun i
+    drur 0;
+drumin tumumin
+
+tumumin num(s, a, b)
+    troufu v = 0;
+    sutrarsu i = a sou b
+        v = v * 10 + dval(s[i]);
+    moun i
+    drur v;
+drumin tumumin
+
+troufu names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+troufu tt = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu t = trim(line);
+    sitrartu utoufa(t) >= 10 fisu drufirsa
+        troufu y = num(t, 0, 3);
+        troufu m = num(t, 5, 6);
+        troufu d = num(t, 8, 9);
+        sitrartu m < 3 fisu drufirsa
+            y = y - 1;
+        drumin
+        troufu w = (y + y / 4 - y / 100 + y / 400 + tt[m - 1] + d) % 7;
+        binmi names[w];
+    drumin
+    line = bounfou();
+trushou

@@ -1,0 +1,109 @@
+EDEWUT splitSpaces(s) {
+    FOMOFE toks := [];
+    FOMOFE cur := "";
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(s) LOLO LEKFESH
+        PLUWOK s[i] = " " DEWOTUSH LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                WESH(toks, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & s[i];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        WESH(toks, cur);
+    EFUDU
+    EFOTU toks;
+}
+
+EDEWUT toDigits(s) {
+    FOMOFE ds := [];
+    FOMOFE i := FORMOWE(s) - 1;
+    FUKCHEFE i >= 0 LOLO LEKFESH
+        WESH(ds, ZENZUMUR(s[i]));
+        i := i - 1;
+    EFUDU
+    EFOTU ds;
+}
+
+EDEWUT trim(ds) {
+    FOMOFE i := FORMOWE(ds);
+    FUKCHEFE i > 1 ZULUSHTE ds[i - 1] = 0 LOLO LEKFESH
+        i := i - 1;
+    EFUDU
+    FOMOFE r := [];
+    FOMOFE j := 0;
+    FUKCHEFE j < i LOLO LEKFESH
+        WESH(r, ds[j]);
+        j := j + 1;
+    EFUDU
+    EFOTU r;
+}
+
+EDEWUT addBig(a, b) {
+    FOMOFE r := [];
+    FOMOFE i := 0;
+    FOMOFE carry := 0;
+    FOMOFE la := FORMOWE(a);
+    FOMOFE lb := FORMOWE(b);
+    FUKCHEFE i < la MUR i < lb MUR carry > 0 LOLO LEKFESH
+        FOMOFE s := carry;
+        PLUWOK i < la DEWOTUSH LEKFESH
+            s := s + a[i];
+        EFUDU
+        PLUWOK i < lb DEWOTUSH LEKFESH
+            s := s + b[i];
+        EFUDU
+        WESH(r, s % 10);
+        carry := s / 10;
+        i := i + 1;
+    EFUDU
+    EFOTU trim(r);
+}
+
+EDEWUT mulBig(a, b) {
+    FOMOFE la := FORMOWE(a);
+    FOMOFE lb := FORMOWE(b);
+    FOMOFE r := [];
+    TUTCHEK i := 0 ZUWOWEN la + lb - 1 LOLO LEKFESH
+        WESH(r, 0);
+    EFUDU
+    TUTCHEK i := 0 ZUWOWEN la - 1 LOLO LEKFESH
+        FOMOFE carry := 0;
+        TUTCHEK j := 0 ZUWOWEN lb - 1 LOLO LEKFESH
+            FOMOFE s := r[i + j] + a[i] * b[j] + carry;
+            r[i + j] := s % 10;
+            carry := s / 10;
+        EFUDU
+        FOMOFE k := i + lb;
+        FUKCHEFE carry > 0 LOLO LEKFESH
+            FOMOFE s := r[k] + carry;
+            r[k] := s % 10;
+            carry := s / 10;
+            k := k + 1;
+        EFUDU
+    EFUDU
+    EFOTU trim(r);
+}
+
+EDEWUT toStr(ds) {
+    FOMOFE s := "";
+    FOMOFE i := FORMOWE(ds) - 1;
+    FUKCHEFE i >= 0 LOLO LEKFESH
+        s := s & ECHEK(ds[i]);
+        i := i - 1;
+    EFUDU
+    EFOTU s;
+}
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE parts := splitSpaces(line);
+    FOMOFE a := toDigits(parts[0]);
+    FOMOFE b := toDigits(parts[1]);
+    EPLOWEK toStr(addBig(a, b)) & " " & toStr(mulBig(a, b));
+    line := TODETET();
+EFUDU

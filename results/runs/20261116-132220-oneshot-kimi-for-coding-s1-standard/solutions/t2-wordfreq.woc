@@ -1,0 +1,82 @@
+eilyot substring(s, first, past)
+    weltuxle result := "";
+    keit (weltuxle i := first; i < past; i := i + 1) {
+        result := result + s[i];
+    }
+    chozulni result;
+iweil
+
+eilyot isLetter(c)
+    chozulni ((c >= "a") elish (c <= "z")) yosheil ((c >= "A") elish (c <= "Z"));
+iweil
+
+eilyot lowerChar(c)
+    weltuxle upper := ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    weltuxle lower := ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    keit (weltuxle i := 0; i < 26; i := i + 1) {
+        nei (c == upper[i]) {
+            chozulni lower[i];
+        }
+    }
+    chozulni c;
+iweil
+
+eilyot lowerWord(word)
+    weltuxle result := "";
+    keit (weltuxle i := 0; i < dushzosh(word); i := i + 1) {
+        result := result + lowerChar(word[i]);
+    }
+    chozulni result;
+iweil
+
+weltuxle words := [];
+weltuxle counts := [];
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle i := 0;
+    krenul (i < dushzosh(line)) {
+        krenul (i < dushzosh(line) yosheil tilteiyo isLetter(line[i])) {
+            i := i + 1;
+        }
+        nei (i >= dushzosh(line)) {
+            exzulto;
+        }
+        weltuxle first := i;
+        krenul (i < dushzosh(line) yosheil isLetter(line[i])) {
+            i := i + 1;
+        }
+        weltuxle word := lowerWord(substring(line, first, i));
+        weltuxle foundAt := -1;
+        keit (weltuxle j := 0; j < dushzosh(words); j := j + 1) {
+            nei (words[j] == word) {
+                foundAt := j;
+            }
+        }
+        nei (foundAt < 0) {
+            koshkil(words, word);
+            koshkil(counts, 1);
+        } wogeish {
+            counts[foundAt] := counts[foundAt] + 1;
+        }
+    }
+    line := lono();
+}
+weltuxle used := [];
+keit (weltuxle i := 0; i < dushzosh(words); i := i + 1) {
+    koshkil(used, eikreit);
+}
+keit (weltuxle rank := 0; rank < 10 yosheil rank < dushzosh(words); rank := rank + 1) {
+    weltuxle best := -1;
+    keit (weltuxle i := 0; i < dushzosh(words); i := i + 1) {
+        nei (tilteiyo used[i]) {
+            nei (best < 0 yosheil counts[i] > counts[best] yosheil (counts[i] == counts[best] yosheil words[i] < words[best])) {
+                best := i;
+            }
+        }
+    }
+    nei (best < 0) {
+        exzulto;
+    }
+    leshdei words[best] + " " + counts[best];
+    used[best] := dut;
+}

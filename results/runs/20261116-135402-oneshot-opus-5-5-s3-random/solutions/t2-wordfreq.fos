@@ -1,0 +1,121 @@
+Gis lowerOf(c) Fodashsa
+    Sogas up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Sogas low = "abcdefghijklmnopqrstuvwxyz";
+    Sogas lo = 1;
+    Sogas hi = 26;
+    Sipokvix (lo < hi) {
+        Sogas mid = (lo + hi - 1) / 2;
+        Ishsi (up[mid] < c) {
+            lo = mid + 1;
+        } Padri {
+            hi = mid;
+        }
+    }
+    Asdra low[lo];
+Gosafax
+
+Gis msort(xs) Fodashsa
+    Sogas n = Drash(xs);
+    Ishsi (n <= 1) {
+        Asdra xs;
+    }
+    Sogas h = n / 2;
+    Sogas left = [];
+    Sogas right = [];
+    Paxfasva (Sogas i = 1; i <= h; i = i + 1) {
+        Dragi(left, xs[i]);
+    }
+    Paxfasva (Sogas i = h + 1; i <= n; i = i + 1) {
+        Dragi(right, xs[i]);
+    }
+    left = msort(left);
+    right = msort(right);
+    Sogas ln = Drash(left);
+    Sogas rn = Drash(right);
+    Sogas res = [];
+    Sogas a = 1;
+    Sogas b = 1;
+    Sipokvix (a <= ln Fas b <= rn) {
+        Ishsi (left[a] <= right[b]) {
+            Dragi(res, left[a]);
+            a = a + 1;
+        } Padri {
+            Dragi(res, right[b]);
+            b = b + 1;
+        }
+    }
+    Sipokvix (a <= ln) {
+        Dragi(res, left[a]);
+        a = a + 1;
+    }
+    Sipokvix (b <= rn) {
+        Dragi(res, right[b]);
+        b = b + 1;
+    }
+    Asdra res;
+Gosafax
+
+Sogas words = [];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas cur = "";
+    Sogas n = Drash(line);
+    Paxfasva (Sogas i = 1; i <= n; i = i + 1) {
+        Sogas c = line[i];
+        Ishsi (c >= "a" Fas c <= "z") {
+            cur = cur + c;
+        } Padri Ishsi (c >= "A" Fas c <= "Z") {
+            cur = cur + lowerOf(c);
+        } Padri {
+            Ishsi (cur ~= "") {
+                Dragi(words, cur);
+                cur = "";
+            }
+        }
+    }
+    Ishsi (cur ~= "") {
+        Dragi(words, cur);
+    }
+    line = Goshvovo();
+}
+Sogas sorted = msort(words);
+Sogas uniq = [];
+Sogas cnts = [];
+Paxfasva (Sogas i = 1; i <= Drash(sorted); i = i + 1) {
+    Sogas w = sorted[i];
+    Sogas k = Drash(uniq);
+    Sogas same = Fixpodri;
+    Ishsi (k > 0) {
+        Ishsi (uniq[k] == w) {
+            same = Pigi;
+        }
+    }
+    Ishsi (same) {
+        cnts[k] = cnts[k] + 1;
+    } Padri {
+        Dragi(uniq, w);
+        Dragi(cnts, 1);
+    }
+}
+Sogas D = Drash(uniq);
+Sogas used = [];
+Paxfasva (Sogas i = 1; i <= D; i = i + 1) {
+    Dragi(used, 0);
+}
+Paxfasva (Sogas round = 1; round <= 10; round = round + 1) {
+    Sogas best = 0;
+    Paxfasva (Sogas i = 1; i <= D; i = i + 1) {
+        Ishsi (used[i] == 0) {
+            Ishsi (best == 0) {
+                best = i;
+            } Padri Ishsi (cnts[i] > cnts[best]) {
+                best = i;
+            }
+        }
+    }
+    Ishsi (best == 0) {
+        Fosvas;
+    }
+    used[best] = 1;
+    Dosfasho uniq[best] + " " + cnts[best];
+}

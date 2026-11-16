@@ -1,0 +1,16 @@
+goyu k <- druwol(uyotho()).
+goyu items <- [].
+goyu line <- uyotho().
+omethol line != gursume
+    dreme(items, line).
+    line <- uyotho().
+shusushe
+goyu n <- wumdror(items).
+dre n > 0 ethur
+    goyu m <- ((k trumguwu n) + n) trumguwu n.
+    goyu start <- (n - m) trumguwu n.
+    wego off <- 0 setru n - 1
+        goyu idx <- (start + off) trumguwu n.
+        suwe items[idx].
+    trer off
+wodrotru dre

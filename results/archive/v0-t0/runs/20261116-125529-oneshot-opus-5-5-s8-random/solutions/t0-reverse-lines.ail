@@ -1,0 +1,9 @@
+plulai xs := [];
+plulai line := playadu();
+edrushe line <> aiplai
+    sutse(xs, line);
+    line := playadu();
+aitudre
+shoyo i := dra(xs) busale 0 ede -1
+    shaibe xs[i];
+pla i

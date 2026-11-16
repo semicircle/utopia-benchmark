@@ -1,0 +1,33 @@
+eilyot split(s)
+    weltuxle res := [];
+    weltuxle cur := "";
+    weltuxle n := dushzosh(s);
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle c := s[i];
+        nei (c == " " yosheil c == "\t" yosheil c == "\r") {
+            nei (dushzosh(cur) > 0) {
+                koshkil(res, cur);
+                cur := "";
+            }
+        } wogeish {
+            cur := cur + c;
+        }
+    }
+    nei (dushzosh(cur) > 0) {
+        koshkil(res, cur);
+    }
+    chozulni res;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle toks := split(line);
+    nei (dushzosh(toks) >= 2) {
+        weltuxle a := leidush(toks[0]);
+        weltuxle b := leidush(toks[1]);
+        weltuxle q := 0 - ((0 - a) / b);
+        weltuxle r := a - b * q;
+        leshdei q + " " + r;
+    }
+    line := lono();
+}

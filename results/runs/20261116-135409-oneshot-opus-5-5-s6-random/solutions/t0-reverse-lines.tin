@@ -1,0 +1,9 @@
+troufu xs = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    marboun(xs, line);
+    line = bounfou();
+trushou
+sutrarsu i = utoufa(xs) sou 1 suntru -1
+    binmi xs[i];
+moun i

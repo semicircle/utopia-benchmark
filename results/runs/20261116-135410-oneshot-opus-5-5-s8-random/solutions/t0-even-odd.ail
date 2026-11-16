@@ -1,0 +1,40 @@
+nudro split(s) {
+    plulai res := [];
+    plulai cur := "";
+    plulai has := nonotru;
+    shoyo i := 1 busale dra(s) + 1
+        plulai c := s[i];
+        atdoyal (c == " " tobe c == "\t" tobe c == "\r") {
+            atdoyal (has) {
+                sutse(res, cur);
+                cur := "";
+                has := nonotru;
+            }
+        } bulbayo {
+            cur := cur + c;
+            has := eretde;
+        }
+    pla i
+    atdoyal (has) {
+        sutse(res, cur);
+    }
+    druna res;
+}
+
+plulai ev := 0;
+plulai od := 0;
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai parts := split(line);
+    atdoyal (dra(parts) > 0) {
+        plulai n := plaltai(parts[1]);
+        atdoyal (n % 2 == 0) {
+            ev := ev + 1;
+        } bulbayo {
+            od := od + 1;
+        }
+    }
+    line := playadu();
+aitudre
+shaibe "even " + ev;
+shaibe "odd " + od;

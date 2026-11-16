@@ -1,0 +1,117 @@
+Ruyoyo splitstr(s)
+    Trepiho toks := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Mushu s[i] = " " Yeshil Hupo
+            Mushu cur ~= "" Yeshil Hupo
+                Theki(toks, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + s[i];
+        Tho
+    }
+    Mushu cur ~= "" Yeshil Hupo
+        Theki(toks, cur);
+    Tho
+    Omel toks;
+Opa
+
+Ruyoyo isnum(t)
+    Trepiho n := Purmo(t);
+    Mushu n = 0 Yeshil Hupo
+        Omel Yaki;
+    Tho
+    Trepiho i := 0;
+    Mushu t[0] = "-" Yeshil Hupo
+        Mushu n = 1 Yeshil Hupo
+            Omel Yaki;
+        Tho
+        i := 1;
+    Tho
+    Pil (; i < n; i := i + 1) {
+        Mushu Shurisho (t[i] >= "0" Pethe t[i] <= "9") Yeshil Hupo
+            Omel Yaki;
+        Tho
+    }
+    Omel Yupu;
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Trepiho toks := splitstr(line);
+    Trepiho st := [];
+    Trepiho sn := 0;
+    Trepiho bad := Yaki;
+    Trepiho i := 0;
+    Rokomi (i < Purmo(toks) Pethe Shurisho bad) {
+        Trepiho t := toks[i];
+        Mushu isnum(t) Yeshil Hupo
+            Theki(st, Eshiyer(t));
+            sn := sn + 1;
+        Tho Thotri Mushu t = "+" Yeshil Hupo
+            Mushu sn < 2 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Hupo
+                Trepiho b := st[sn - 1];
+                Trepiho a := st[sn - 2];
+                sn := sn - 2;
+                Theki(st, a + b);
+                sn := sn + 1;
+            Tho
+        Tho Thotri Mushu t = "-" Yeshil Hupo
+            Mushu sn < 2 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Hupo
+                Trepiho b := st[sn - 1];
+                Trepiho a := st[sn - 2];
+                sn := sn - 2;
+                Theki(st, a - b);
+                sn := sn + 1;
+            Tho
+        Tho Thotri Mushu t = "*" Yeshil Hupo
+            Mushu sn < 2 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Hupo
+                Trepiho b := st[sn - 1];
+                Trepiho a := st[sn - 2];
+                sn := sn - 2;
+                Theki(st, a * b);
+                sn := sn + 1;
+            Tho
+        Tho Thotri Mushu t = "/" Yeshil Hupo
+            Mushu sn < 2 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Mushu st[sn - 1] = 0 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Hupo
+                Trepiho b := st[sn - 1];
+                Trepiho a := st[sn - 2];
+                sn := sn - 2;
+                Theki(st, a / b);
+                sn := sn + 1;
+            Tho
+        Tho Thotri Mushu t = "%" Yeshil Hupo
+            Mushu sn < 2 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Mushu st[sn - 1] = 0 Yeshil Hupo
+                bad := Yupu;
+            Tho Thotri Hupo
+                Trepiho b := st[sn - 1];
+                Trepiho a := st[sn - 2];
+                sn := sn - 2;
+                Theki(st, a % b);
+                sn := sn + 1;
+            Tho
+        Tho Thotri Hupo
+            bad := Yupu;
+        Tho
+        i := i + 1;
+    }
+    Mushu bad Hiyikra sn ~= 1 Yeshil Hupo
+        Rashar "error";
+    Tho Thotri Hupo
+        Rashar st[0];
+    Tho
+    line := Thoke();
+}

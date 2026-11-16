@@ -1,0 +1,21 @@
+FOMOFE kl := TODETET();
+PLUWOK kl = LER DEWOTUSH LEKFESH
+    EFOTU;
+EFUDU
+FOMOFE k := ZENZUMUR(kl);
+FOMOFE items := [];
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    WESH(items, line);
+    line := TODETET();
+EFUDU
+FOMOFE n := FORMOWE(items);
+PLUWOK n > 0 DEWOTUSH LEKFESH
+    FOMOFE s := k % n;
+    PLUWOK s < 0 DEWOTUSH LEKFESH
+        s := s + n;
+    EFUDU
+    TUTCHEK i := 0 ZUWOWEN n - 1 LOLO LEKFESH
+        EPLOWEK items[(i - s + n) % n];
+    EFUDU
+EFUDU

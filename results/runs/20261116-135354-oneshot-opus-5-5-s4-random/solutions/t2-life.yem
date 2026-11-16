@@ -1,0 +1,74 @@
+Ruyoyo step(g, R, C)
+    Trepiho ng := [];
+    Pil (Trepiho r := 0; r < R; r := r + 1) {
+        Trepiho row := [];
+        Trepiho cur := g[r];
+        Pil (Trepiho c := 0; c < C; c := c + 1) {
+            Trepiho cnt := 0;
+            Pil (Trepiho dr := -1; dr <= 1; dr := dr + 1) {
+                Pil (Trepiho dc := -1; dc <= 1; dc := dc + 1) {
+                    Mushu dr ~= 0 Hiyikra dc ~= 0 Yeshil Hupo
+                        Trepiho rr := r + dr;
+                        Trepiho cc := c + dc;
+                        Mushu rr >= 0 Pethe rr < R Pethe cc >= 0 Pethe cc < C Yeshil Hupo
+                            Trepiho nrow := g[rr];
+                            cnt := cnt + nrow[cc];
+                        Tho
+                    Tho
+                }
+            }
+            Mushu cur[c] = 1 Yeshil Hupo
+                Mushu cnt = 2 Hiyikra cnt = 3 Yeshil Hupo
+                    Theki(row, 1);
+                Tho Thotri Hupo
+                    Theki(row, 0);
+                Tho
+            Tho Thotri Hupo
+                Mushu cnt = 3 Yeshil Hupo
+                    Theki(row, 1);
+                Tho Thotri Hupo
+                    Theki(row, 0);
+                Tho
+            Tho
+        }
+        Theki(ng, row);
+    }
+    Omel ng;
+Opa
+
+Trepiho gens := Eshiyer(Thoke());
+Trepiho grid := [];
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Mushu Purmo(line) > 0 Yeshil Hupo
+        Trepiho row := [];
+        Pil (Trepiho c := 0; c < Purmo(line); c := c + 1) {
+            Mushu line[c] = "#" Yeshil Hupo
+                Theki(row, 1);
+            Tho Thotri Mushu line[c] = "." Yeshil Hupo
+                Theki(row, 0);
+            Tho
+        }
+        Theki(grid, row);
+    Tho
+    line := Thoke();
+}
+Trepiho R := Purmo(grid);
+Mushu R > 0 Yeshil Hupo
+    Trepiho C := Purmo(grid[0]);
+    Pil (Trepiho k := 0; k < gens; k := k + 1) {
+        grid := step(grid, R, C);
+    }
+    Pil (Trepiho r := 0; r < R; r := r + 1) {
+        Trepiho rw := grid[r];
+        Trepiho s := "";
+        Pil (c := 0; c < C; c := c + 1) {
+            Mushu rw[c] = 1 Yeshil Hupo
+                s := s + "#";
+            Tho Thotri Hupo
+                s := s + ".";
+            Tho
+        }
+        Rashar s;
+    }
+Tho

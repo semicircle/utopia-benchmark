@@ -1,0 +1,88 @@
+nudro isNumber(s) {
+    plulai i := 0;
+    atdoyal (dra(s) > 0 rulsai s[0] == "-") {
+        i := 1;
+    }
+    atdoyal (i >= dra(s)) {
+        druna nonotru;
+    }
+    edrushe i < dra(s)
+        atdoyal (s[i] < "0" tobe s[i] > "9") {
+            druna nonotru;
+        }
+        i := i + 1;
+    aitudre
+    druna eretde;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai toks := [];
+    plulai cur := "";
+    shoyo i := 0 busale dra(line) - 1
+        atdoyal (line[i] == " ") {
+            atdoyal (cur <> "") {
+                sutse(toks, cur);
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + line[i];
+        }
+    pla i
+    atdoyal (cur <> "") {
+        sutse(toks, cur);
+    }
+    plulai stack := [];
+    plulai sz := 0;
+    plulai ok := eretde;
+    plulai ti := 0;
+    edrushe ti < dra(toks) rulsai ok
+        plulai t := toks[ti];
+        atdoyal (isNumber(t)) {
+            sutse(stack, plaltai(t));
+            sz := sz + 1;
+        } bulbayo atdoyal (t == "+" tobe t == "-" tobe t == "*" tobe t == "/" tobe t == "%") {
+            atdoyal (sz < 2) {
+                ok := nonotru;
+            } bulbayo {
+                sz := sz - 1;
+                plulai b := stack[sz];
+                sz := sz - 1;
+                plulai a := stack[sz];
+                atdoyal (t == "+") {
+                    sutse(stack, a + b);
+                    sz := sz + 1;
+                } bulbayo atdoyal (t == "-") {
+                    sutse(stack, a - b);
+                    sz := sz + 1;
+                } bulbayo atdoyal (t == "*") {
+                    sutse(stack, a * b);
+                    sz := sz + 1;
+                } bulbayo atdoyal (t == "/") {
+                    atdoyal (b == 0) {
+                        ok := nonotru;
+                    } bulbayo {
+                        sutse(stack, a / b);
+                        sz := sz + 1;
+                    }
+                } bulbayo {
+                    atdoyal (b == 0) {
+                        ok := nonotru;
+                    } bulbayo {
+                        sutse(stack, a % b);
+                        sz := sz + 1;
+                    }
+                }
+            }
+        } bulbayo {
+            ok := nonotru;
+        }
+        ti := ti + 1;
+    aitudre
+    atdoyal (ok rulsai sz == 1) {
+        shaibe stack[sz - 1];
+    } bulbayo {
+        shaibe "error";
+    }
+    line := playadu();
+aitudre

@@ -1,0 +1,120 @@
+nudro split(s) {
+    plulai parts := [];
+    plulai cur := "";
+    plulai i := 1;
+    edrushe i <= dra(s)
+        plulai c := s[i];
+        atdoyal (c == " ") {
+            atdoyal (dra(cur) > 0) {
+                sutse(parts, cur);
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + c;
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (dra(cur) > 0) {
+        sutse(parts, cur);
+    }
+    druna parts;
+}
+
+nudro isop(tok) {
+    druna tok == "+" tobe tok == "-" tobe tok == "*" tobe tok == "/" tobe tok == "%";
+}
+
+nudro isnum(tok) {
+    plulai n := dra(tok);
+    atdoyal (n == 0) {
+        druna nonotru;
+    }
+    plulai i := 1;
+    atdoyal (tok[1] == "-") {
+        atdoyal (n == 1) {
+            druna nonotru;
+        }
+        i := 2;
+    }
+    edrushe i <= n
+        plulai c := tok[i];
+        atdoyal (tul (c >= "0" rulsai c <= "9")) {
+            druna nonotru;
+        }
+        i := i + 1;
+    aitudre
+    druna eretde;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai toks := split(line);
+    plulai vals := [];
+    plulai sp := 0;
+    plulai err := nonotru;
+    atdoyal (dra(toks) == 0) {
+        err := eretde;
+    }
+    plulai ti := 1;
+    edrushe ti <= dra(toks) rulsai tul err
+        plulai tok := toks[ti];
+        atdoyal (isop(tok)) {
+            atdoyal (sp < 2) {
+                err := eretde;
+            } bulbayo {
+                plulai b := vals[sp];
+                sp := sp - 1;
+                plulai a := vals[sp];
+                sp := sp - 1;
+                plulai r := 0;
+                plulai bad := nonotru;
+                otai (tok) {
+                dai "+":
+                    r := a + b;
+                dai "-":
+                    r := a - b;
+                dai "*":
+                    r := a * b;
+                dai "/":
+                    atdoyal (b == 0) {
+                        bad := eretde;
+                    } bulbayo {
+                        r := a / b;
+                    }
+                dai "%":
+                    atdoyal (b == 0) {
+                        bad := eretde;
+                    } bulbayo {
+                        r := a % b;
+                    }
+                }
+                atdoyal (bad) {
+                    err := eretde;
+                } bulbayo {
+                    sp := sp + 1;
+                    atdoyal (sp > dra(vals)) {
+                        sutse(vals, r);
+                    } bulbayo {
+                        vals[sp] := r;
+                    }
+                }
+            }
+        } bulbayo atdoyal (isnum(tok)) {
+            sp := sp + 1;
+            atdoyal (sp > dra(vals)) {
+                sutse(vals, plaltai(tok));
+            } bulbayo {
+                vals[sp] := plaltai(tok);
+            }
+        } bulbayo {
+            err := eretde;
+        }
+        ti := ti + 1;
+    aitudre
+    atdoyal (err tobe sp <> 1) {
+        shaibe "error";
+    } bulbayo {
+        shaibe vals[1];
+    }
+    line := playadu();
+aitudre

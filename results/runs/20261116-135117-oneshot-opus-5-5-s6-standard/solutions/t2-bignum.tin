@@ -1,0 +1,134 @@
+tumumin split(s)
+    troufu res = [];
+    troufu cur = "";
+    sutrarsu i = 0 sou utoufa(s) - 1
+        troufu c = s[i];
+        sitrartu c <= " " fisu drufirsa
+            sitrartu utoufa(cur) > 0 fisu drufirsa
+                marboun(res, cur);
+                cur = "";
+            drumin
+        drumin tru drufirsa
+            cur = cur + c;
+        drumin
+    moun i
+    sitrartu utoufa(cur) > 0 fisu drufirsa
+        marboun(res, cur);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin dval(c)
+    troufu ds = "0123456789";
+    sutrarsu i = 0 sou 9
+        sitrartu ds[i] == c fisu drufirsa
+            drur i;
+        drumin
+    moun i
+    drur 0;
+drumin tumumin
+
+tumumin toLimbs(s)
+    troufu res = [];
+    troufu cur = 0;
+    troufu p = 1;
+    sutrarsu i = utoufa(s) - 1 sou 0 suntru -1
+        cur = cur + dval(s[i]) * p;
+        p = p * 10;
+        sitrartu p == 10000 fisu drufirsa
+            marboun(res, cur);
+            cur = 0;
+            p = 1;
+        drumin
+    moun i
+    sitrartu p > 1 fisu drufirsa
+        marboun(res, cur);
+    drumin
+    sitrartu utoufa(res) == 0 fisu drufirsa
+        marboun(res, 0);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin add(a, b)
+    troufu res = [];
+    troufu carry = 0;
+    troufu n = utoufa(a);
+    sitrartu utoufa(b) > n fisu drufirsa
+        n = utoufa(b);
+    drumin
+    sutrarsu i = 0 sou n - 1
+        troufu s = carry;
+        sitrartu i < utoufa(a) fisu drufirsa
+            s = s + a[i];
+        drumin
+        sitrartu i < utoufa(b) fisu drufirsa
+            s = s + b[i];
+        drumin
+        marboun(res, s % 10000);
+        carry = s / 10000;
+    moun i
+    sitrartu carry > 0 fisu drufirsa
+        marboun(res, carry);
+    drumin
+    drur res;
+drumin tumumin
+
+tumumin mul(a, b)
+    troufu res = [];
+    troufu la = utoufa(a);
+    troufu lb = utoufa(b);
+    sutrarsu i = 0 sou la + lb - 1
+        marboun(res, 0);
+    moun i
+    sutrarsu i = 0 sou la - 1
+        troufu carry = 0;
+        troufu ai = a[i];
+        sutrarsu j = 0 sou lb - 1
+            troufu cur = res[i + j] + ai * b[j] + carry;
+            res[i + j] = cur % 10000;
+            carry = cur / 10000;
+        moun j
+        troufu k = i + lb;
+        tafashou carry > 0
+            troufu cur2 = res[k] + carry;
+            res[k] = cur2 % 10000;
+            carry = cur2 / 10000;
+            k = k + 1;
+        trushou
+    moun i
+    drur res;
+drumin tumumin
+
+tumumin toStr(a)
+    troufu top = utoufa(a) - 1;
+    tafashou top > 0 dra a[top] == 0
+        top = top - 1;
+    trushou
+    troufu s = moufunsa(a[top]);
+    sutrarsu i = top - 1 sou 0 suntru -1
+        troufu v = a[i];
+        sitrartu v < 1000 fisu drufirsa
+            s = s + "0";
+        drumin
+        sitrartu v < 100 fisu drufirsa
+            s = s + "0";
+        drumin
+        sitrartu v < 10 fisu drufirsa
+            s = s + "0";
+        drumin
+        s = s + v;
+    moun i
+    drur s;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu toks = split(line);
+    sitrartu utoufa(toks) >= 2 fisu drufirsa
+        troufu x = toLimbs(toks[0]);
+        troufu y = toLimbs(toks[1]);
+        binmi toStr(add(x, y)) + " " + toStr(mul(x, y));
+    drumin
+    line = bounfou();
+trushou

@@ -1,0 +1,52 @@
+EDEWUT splitSpaces(s) {
+    FOMOFE toks := [];
+    FOMOFE cur := "";
+    FOMOFE i := 0;
+    FUKCHEFE i < FORMOWE(s) LOLO LEKFESH
+        PLUWOK s[i] = " " DEWOTUSH LEKFESH
+            PLUWOK cur ~= "" DEWOTUSH LEKFESH
+                WESH(toks, cur);
+                cur := "";
+            EFUDU
+        EFUDU CHEME LEKFESH
+            cur := cur & s[i];
+        EFUDU
+        i := i + 1;
+    EFUDU
+    PLUWOK cur ~= "" DEWOTUSH LEKFESH
+        WESH(toks, cur);
+    EFUDU
+    EFOTU toks;
+}
+
+FOMOFE first := TODETET();
+FOMOFE parts := splitSpaces(first);
+FOMOFE xs := [];
+FOMOFE i := 0;
+FUKCHEFE i < FORMOWE(parts) LOLO LEKFESH
+    WESH(xs, ZENZUMUR(parts[i]));
+    i := i + 1;
+EFUDU
+
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE q := ZENZUMUR(line);
+    FOMOFE n := FORMOWE(xs);
+    FOMOFE lo := 0;
+    FOMOFE hi := n;
+    FUKCHEFE lo < hi LOLO LEKFESH
+        FOMOFE mid := (lo + hi) / 2;
+        PLUWOK xs[mid] < q DEWOTUSH LEKFESH
+            lo := mid + 1;
+        EFUDU CHEME LEKFESH
+            hi := mid;
+        EFUDU
+    EFUDU
+    WOFE lo & " ";
+    PLUWOK lo < n ZULUSHTE xs[lo] = q DEWOTUSH LEKFESH
+        EPLOWEK "found";
+    EFUDU CHEME LEKFESH
+        EPLOWEK "missing";
+    EFUDU
+    line := TODETET();
+EFUDU

@@ -1,0 +1,52 @@
+rimli split(s) nethe
+    ohetdi res = [].
+    ohetdi cur = "".
+    lemyunom i = 0 thikutli yuyem(s) - 1 mitho nethe
+        ohetdi c = s[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(res, cur).
+                cur = "".
+            dit
+        dit thumku nethe
+            cur = cur & c.
+        dit
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(res, cur).
+    dit
+    yiletho res.
+dit
+
+ohetdi first = nilhino().
+ohetdi arr = [].
+rilniro first <> emletlel hutro nethe
+    ohetdi toks = split(first).
+    lemyunom i = 0 thikutli yuyem(toks) - 1 mitho nethe
+        nimhol(arr, nelchiyul(toks[i])).
+    dit
+    ohetdi n = yuyem(arr).
+    ohetdi line = nilhino().
+    konit line <> emletlel mitho nethe
+        ohetdi qt = split(line).
+        rilniro yuyem(qt) > 0 hutro nethe
+            ohetdi q = nelchiyul(qt[0]).
+            ohetdi lo = 0.
+            ohetdi hi = n.
+            konit lo < hi mitho nethe
+                ohetdi mid = (lo + hi) / 2.
+                rilniro arr[mid] < q hutro nethe
+                    lo = mid + 1.
+                dit thumku nethe
+                    hi = mid.
+                dit
+            dit
+            rilniro lo < n lotvethu arr[lo] == q hutro nethe
+                miyol lo & " found".
+            dit thumku nethe
+                miyol lo & " missing".
+            dit
+        dit
+        line = nilhino().
+    dit
+dit

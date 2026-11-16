@@ -1,0 +1,122 @@
+dredrume split(s)
+    goyu out <- [].
+    goyu cur <- "".
+    goyu has <- tru.
+    wego i <- 0 setru wumdror(s) - 1
+        goyu c <- s[i].
+        dre ((c == " ") drorsu (c == "\t")) drorsu (c == "\r") ethur
+            dre has ethur
+                dreme(out, cur).
+                cur <- "".
+                has <- tru.
+            wodrotru dre
+        truthor
+            cur <- cur & c.
+            has <- sudru.
+        wodrotru dre
+    trer i
+    dre has ethur
+        dreme(out, cur).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+dredrume parse(s)
+    goyu out <- [].
+    goyu i <- wumdror(s) - 1.
+    omethol i >= 0
+        goyu v <- 0.
+        goyu start <- i - 3.
+        dre start < 0 ethur
+            start <- 0.
+        wodrotru dre
+        wego j <- start setru i
+            v <- (v * 10) + druwol(s[j]).
+        trer j
+        dreme(out, v).
+        i <- start - 1.
+    shusushe
+    dre wumdror(out) == 0 ethur
+        dreme(out, 0).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+dredrume add(a, b)
+    goyu out <- [].
+    goyu n <- wumdror(a).
+    dre wumdror(b) > n ethur
+        n <- wumdror(b).
+    wodrotru dre
+    goyu carry <- 0.
+    wego i <- 0 setru n - 1
+        goyu s <- carry.
+        dre i < wumdror(a) ethur
+            s <- s + a[i].
+        wodrotru dre
+        dre i < wumdror(b) ethur
+            s <- s + b[i].
+        wodrotru dre
+        dreme(out, s trumguwu 10000).
+        carry <- s / 10000.
+    trer i
+    dre carry > 0 ethur
+        dreme(out, carry).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+dredrume mul(a, b)
+    goyu la <- wumdror(a).
+    goyu lb <- wumdror(b).
+    goyu out <- [].
+    wego k <- 1 setru la + lb
+        dreme(out, 0).
+    trer k
+    wego i <- 0 setru la - 1
+        goyu ai <- a[i].
+        wego j <- 0 setru lb - 1
+            out[i + j] <- out[i + j] + (ai * b[j]).
+        trer j
+    trer i
+    goyu carry <- 0.
+    wego x <- 0 setru (la + lb) - 1
+        goyu s <- out[x] + carry.
+        out[x] <- s trumguwu 10000.
+        carry <- s / 10000.
+    trer x
+    odrol out.
+wodrotru dredrume
+
+dredrume tostr(a)
+    goyu top <- wumdror(a) - 1.
+    omethol (top > 0) suyogur (a[top] == 0)
+        top <- top - 1.
+    shusushe
+    goyu s <- "" & a[top].
+    wego i <- top - 1 setru 0 meshe -1
+        goyu v <- a[i].
+        dre v < 10 ethur
+            s <- s & "000".
+        yuyuge v < 100 ethur
+            s <- s & "00".
+        yuyuge v < 1000 ethur
+            s <- s & "0".
+        wodrotru dre
+        s <- s & v.
+    trer i
+    odrol s.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu p <- split(line).
+    dre wumdror(p) >= 2 ethur
+        goyu a <- parse(p[0]).
+        goyu b <- parse(p[1]).
+        goyu sm <- tostr(add(a, b)).
+        goyu pr <- tostr(mul(a, b)).
+        suwe sm & " " & pr.
+    wodrotru dre
+    line <- uyotho().
+shusushe

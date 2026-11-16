@@ -1,0 +1,28 @@
+nudro substr(s, a, b) {
+    plulai r := "";
+    shoyo i := a busale b + 1
+        r := r + s[i];
+    pla i
+    druna r;
+}
+
+nudro isleap(y) {
+    druna (y % 4 == 0 rulsai y % 100 <> 0) tobe y % 400 == 0;
+}
+
+plulai mdays := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+plulai names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai y := plaltai(substr(line, 1, 4));
+    plulai m := plaltai(substr(line, 6, 7));
+    plulai d := plaltai(substr(line, 9, 10));
+    plulai leaps := (y - 1) / 4 - (y - 1) / 100 + (y - 1) / 400;
+    plulai n := 365 * (y - 1) + leaps + mdays[m] + (d - 1);
+    atdoyal (isleap(y) rulsai m > 2) {
+        n := n + 1;
+    }
+    shaibe names[n % 7 + 1];
+    line := playadu();
+aitudre

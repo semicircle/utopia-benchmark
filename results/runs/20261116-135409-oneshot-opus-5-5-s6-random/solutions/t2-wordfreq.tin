@@ -1,0 +1,112 @@
+tumumin lowerc(c)
+    troufu up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    troufu lo = "abcdefghijklmnopqrstuvwxyz";
+    sutrarsu k = 1 sou 26
+        sitrartu up[k] == c fisu drufirsa
+            drur lo[k];
+        drumin
+    moun k
+    drur c;
+drumin tumumin
+
+tumumin msort(xs)
+    troufu n = utoufa(xs);
+    sitrartu n <= 1 fisu drufirsa
+        drur xs;
+    drumin
+    troufu mid = n / 2;
+    troufu left = [];
+    troufu right = [];
+    sutrarsu i = 1 sou mid
+        marboun(left, xs[i]);
+    moun i
+    sutrarsu i = (mid + 1) sou n
+        marboun(right, xs[i]);
+    moun i
+    left = msort(left);
+    right = msort(right);
+    troufu nl = utoufa(left);
+    troufu nr = utoufa(right);
+    troufu res = [];
+    troufu a = 1;
+    troufu b = 1;
+    tafashou (a <= nl) dra (b <= nr)
+        sitrartu left[a] <= right[b] fisu drufirsa
+            marboun(res, left[a]);
+            a = a + 1;
+        drumin tru drufirsa
+            marboun(res, right[b]);
+            b = b + 1;
+        drumin
+    trushou
+    tafashou a <= nl
+        marboun(res, left[a]);
+        a = a + 1;
+    trushou
+    tafashou b <= nr
+        marboun(res, right[b]);
+        b = b + 1;
+    trushou
+    drur res;
+drumin tumumin
+
+troufu words = [];
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu cur = "";
+    sutrarsu i = 1 sou utoufa(line)
+        troufu c = line[i];
+        sitrartu (c >= "a") dra (c <= "z") fisu drufirsa
+            cur = cur + c;
+        drumin tru sitrartu (c >= "A") dra (c <= "Z") fisu drufirsa
+            cur = cur + lowerc(c);
+        drumin tru drufirsa
+            sitrartu utoufa(cur) > 0 fisu drufirsa
+                marboun(words, cur);
+                cur = "";
+            drumin
+        drumin
+    moun i
+    sitrartu utoufa(cur) > 0 fisu drufirsa
+        marboun(words, cur);
+    drumin
+    line = bounfou();
+trushou
+
+troufu sorted = msort(words);
+troufu uw = [];
+troufu uc = [];
+troufu m = 0;
+sutrarsu i = 1 sou utoufa(sorted)
+    sitrartu (m > 0) dra (uw[m] == sorted[i]) fisu drufirsa
+        uc[m] = uc[m] + 1;
+    drumin tru drufirsa
+        marboun(uw, sorted[i]);
+        marboun(uc, 1);
+        m = m + 1;
+    drumin
+moun i
+
+troufu used = [];
+sutrarsu i = 1 sou m
+    marboun(used, fufir);
+moun i
+troufu lim = 10;
+sitrartu m < lim fisu drufirsa
+    lim = m;
+drumin
+sutrarsu r = 1 sou lim
+    troufu best = 0;
+    sutrarsu i = 1 sou m
+        troufu u = used[i];
+        sitrartu shutoun u fisu drufirsa
+            sitrartu best == 0 fisu drufirsa
+                best = i;
+            drumin tru sitrartu uc[i] > uc[best] fisu drufirsa
+                best = i;
+            drumin
+        drumin
+    moun i
+    used[best] = sibitrou;
+    binmi (uw[best] + " ") + moufunsa(uc[best]);
+moun r

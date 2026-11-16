@@ -1,0 +1,93 @@
+dredrume slice(s, i, j)
+    goyu r <- "".
+    wego k <- i setru j - 1
+        r <- r & s[k].
+    trer k
+    odrol r.
+wodrotru dredrume
+
+dredrume parseBig(s)
+    goyu n <- wumdror(s).
+    goyu ds <- [].
+    wego i <- 0 setru n - 1
+        dreme(ds, druwol(s[n - 1 - i])).
+    trer i
+    odrol ds.
+wodrotru dredrume
+
+dredrume bigToString(ds)
+    goyu n <- wumdror(ds).
+    dre n == 0 ethur
+        odrol "0".
+    wodrotru dre
+    goyu hi <- n - 1.
+    omethol (hi > 0) suyogur (ds[hi] == 0)
+        hi <- hi - 1.
+    shusushe
+    goyu r <- "".
+    wego i <- hi setru 0 meshe -1
+        r <- r & shodrewe(ds[i]).
+    trer i
+    odrol r.
+wodrotru dredrume
+
+dredrume bigAdd(a, b)
+    goyu r <- [].
+    goyu carry <- 0.
+    goyu i <- 0.
+    goyu na <- wumdror(a).
+    goyu nb <- wumdror(b).
+    omethol (i < na) drorsu (i < nb) drorsu (carry != 0)
+        goyu s <- carry.
+        dre i < na ethur
+            s <- s + a[i].
+        wodrotru dre
+        dre i < nb ethur
+            s <- s + b[i].
+        wodrotru dre
+        dreme(r, s trumguwu 10).
+        carry <- s / 10.
+        i <- i + 1.
+    shusushe
+    odrol r.
+wodrotru dredrume
+
+dredrume bigMul(a, b)
+    goyu na <- wumdror(a).
+    goyu nb <- wumdror(b).
+    goyu r <- [].
+    wego i <- 0 setru na + nb - 1
+        dreme(r, 0).
+    trer i
+    wego i <- 0 setru na - 1
+        goyu carry <- 0.
+        wego j <- 0 setru nb - 1
+            goyu cur <- r[i + j] + (a[i] * b[j]) + carry.
+            r[i + j] <- cur trumguwu 10.
+            carry <- cur / 10.
+        trer j
+        goyu p <- i + nb.
+        omethol carry > 0
+            goyu cur <- r[p] + carry.
+            r[p] <- cur trumguwu 10.
+            carry <- cur / 10.
+            p <- p + 1.
+        shusushe
+    trer i
+    odrol r.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu n <- wumdror(line).
+    goyu sp <- 0.
+    wego i <- 0 setru n - 1
+        dre line[i] == " " ethur
+            sp <- i.
+        wodrotru dre
+    trer i
+    goyu a <- parseBig(slice(line, 0, sp)).
+    goyu b <- parseBig(slice(line, sp + 1, n)).
+    suwe bigToString(bigAdd(a, b)) & " " & bigToString(bigMul(a, b)).
+    line <- uyotho().
+shusushe

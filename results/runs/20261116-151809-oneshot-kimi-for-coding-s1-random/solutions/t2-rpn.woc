@@ -1,0 +1,152 @@
+eilyot isInt(t)
+    weltuxle n := dushzosh(t);
+    nei (n == 0) {
+        chozulni eikreit;
+    }
+    weltuxle i := 0;
+    nei (t[0] == "-") {
+        nei (n == 1) {
+            chozulni eikreit;
+        }
+        i := 1;
+    }
+    krenul (i < n) {
+        weltuxle c := t[i];
+        nei (c >= "0") {
+            nei (c <= "9") {
+                i := i + 1;
+                weshosho;
+            }
+        }
+        chozulni eikreit;
+    }
+    chozulni dut;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle toks := [];
+    weltuxle cur := "";
+    keit (weltuxle i := 0; i < dushzosh(line); i := i + 1) {
+        weltuxle c := line[i];
+        nei (c == " ") {
+            nei (cur <> "") {
+                koshkil(toks, cur);
+                cur := "";
+            }
+        } wogeish {
+            cur := cur + c;
+        }
+    }
+    nei (cur <> "") {
+        koshkil(toks, cur);
+    }
+    weltuxle stack := [];
+    weltuxle size := 0;
+    weltuxle bad := eikreit;
+    keit (weltuxle i := 0; i < dushzosh(toks); i := i + 1) {
+        weltuxle t := toks[i];
+        nei (bad) {
+            weshosho;
+        }
+        weltuxle isop := eikreit;
+        weltuxle op := "";
+        nei (t == "+") {
+            isop := dut;
+            op := "+";
+        }
+        nei (t == "-") {
+            isop := dut;
+            op := "-";
+        }
+        nei (t == "*") {
+            isop := dut;
+            op := "*";
+        }
+        nei (t == "/") {
+            isop := dut;
+            op := "/";
+        }
+        nei (t == "%") {
+            isop := dut;
+            op := "%";
+        }
+        nei (isop) {
+            nei (size < 2) {
+                bad := dut;
+            } wogeish {
+                weltuxle b := stack[size - 1];
+                size := size - 1;
+                weltuxle a := stack[size - 1];
+                size := size - 1;
+                weltuxle res := 0;
+                nei (op == "+") {
+                    res := a + b;
+                }
+                nei (op == "-") {
+                    res := a - b;
+                }
+                nei (op == "*") {
+                    res := a * b;
+                }
+                nei (op == "/") {
+                    nei (b == 0) {
+                        bad := dut;
+                    } wogeish {
+                        weltuxle q := a / b;
+                        weltuxle rr := a - b * q;
+                        nei (rr <> 0) {
+                            nei ((a < 0) == (b < 0)) {
+                                q := q - 1;
+                            }
+                        }
+                        res := q;
+                    }
+                }
+                nei (op == "%") {
+                    nei (b == 0) {
+                        bad := dut;
+                    } wogeish {
+                        weltuxle q := a / b;
+                        weltuxle rr := a - b * q;
+                        nei (rr <> 0) {
+                            nei ((a < 0) == (b < 0)) {
+                                q := q - 1;
+                            }
+                        }
+                        res := a - b * q;
+                    }
+                }
+                nei (bad) {
+                } wogeish {
+                    nei (size < dushzosh(stack)) {
+                        stack[size] := res;
+                    } wogeish {
+                        koshkil(stack, res);
+                    }
+                    size := size + 1;
+                }
+            }
+        } wogeish {
+            nei (isInt(t)) {
+                weltuxle v := leidush(t);
+                nei (size < dushzosh(stack)) {
+                    stack[size] := v;
+                } wogeish {
+                    koshkil(stack, v);
+                }
+                size := size + 1;
+            } wogeish {
+                bad := dut;
+            }
+        }
+    }
+    nei (bad) {
+        leshdei "error";
+    } wogeish nei (size <> 1) {
+        leshdei "error";
+    } wogeish {
+        leshdei stack[size - 1];
+    }
+    line := lono();
+}

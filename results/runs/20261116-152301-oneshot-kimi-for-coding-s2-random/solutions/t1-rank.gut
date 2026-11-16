@@ -1,0 +1,39 @@
+goyu first <- uyotho().
+goyu xs <- [].
+goyu cur <- "".
+goyu n <- wumdror(first).
+wego i <- 0 setru n - 1
+    dre first[i] == " " ethur
+        dre wumdror(cur) > 0 ethur
+            dreme(xs, druwol(cur)).
+        wodrotru dre
+        cur <- "".
+    truthor
+        cur <- cur & first[i].
+    wodrotru dre
+trer i
+dre wumdror(cur) > 0 ethur
+    dreme(xs, druwol(cur)).
+wodrotru dre
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu q <- druwol(line).
+    goyu smaller <- 0.
+    goyu present <- tru.
+    goyu m <- wumdror(xs).
+    wego i <- 0 setru m - 1
+        dre xs[i] < q ethur
+            smaller <- smaller + 1.
+        wodrotru dre
+        dre xs[i] == q ethur
+            present <- sudru.
+        wodrotru dre
+    trer i
+    dre present ethur
+        suwe smaller & " found".
+    truthor
+        suwe smaller & " missing".
+    wodrotru dre
+    line <- uyotho().
+shusushe

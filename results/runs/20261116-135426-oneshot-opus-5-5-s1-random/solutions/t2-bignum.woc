@@ -1,0 +1,128 @@
+eilyot split(s)
+    weltuxle res := [];
+    weltuxle cur := "";
+    weltuxle n := dushzosh(s);
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle c := s[i];
+        nei (c == " " yosheil c == "\t" yosheil c == "\r") {
+            nei (dushzosh(cur) > 0) {
+                koshkil(res, cur);
+                cur := "";
+            }
+        } wogeish {
+            cur := cur + c;
+        }
+    }
+    nei (dushzosh(cur) > 0) {
+        koshkil(res, cur);
+    }
+    chozulni res;
+iweil
+
+eilyot fd(a, b)
+    chozulni 0 - ((0 - a) / b);
+iweil
+
+eilyot parse(s)
+    weltuxle res := [];
+    weltuxle i := dushzosh(s);
+    krenul (i > 0) {
+        weltuxle st := i - 4;
+        nei (st < 0) {
+            st := 0;
+        }
+        weltuxle v := 0;
+        keit (weltuxle j := st; j < i; j := j + 1) {
+            v := v * 10 + leidush(s[j]);
+        }
+        koshkil(res, v);
+        i := st;
+    }
+    nei (dushzosh(res) == 0) {
+        koshkil(res, 0);
+    }
+    chozulni res;
+iweil
+
+eilyot add(a, b)
+    weltuxle res := [];
+    weltuxle carry := 0;
+    weltuxle la := dushzosh(a);
+    weltuxle lb := dushzosh(b);
+    weltuxle n := la;
+    nei (lb > n) {
+        n := lb;
+    }
+    keit (weltuxle i := 0; i < n; i := i + 1) {
+        weltuxle x := carry;
+        nei (i < la) {
+            x := x + a[i];
+        }
+        nei (i < lb) {
+            x := x + b[i];
+        }
+        nei (x >= 10000) {
+            koshkil(res, x - 10000);
+            carry := 1;
+        } wogeish {
+            koshkil(res, x);
+            carry := 0;
+        }
+    }
+    nei (carry > 0) {
+        koshkil(res, carry);
+    }
+    chozulni res;
+iweil
+
+eilyot mul(a, b)
+    weltuxle la := dushzosh(a);
+    weltuxle lb := dushzosh(b);
+    weltuxle res := [];
+    keit (weltuxle k := 0; k < la + lb; k := k + 1) {
+        koshkil(res, 0);
+    }
+    keit (weltuxle i := 0; i < la; i := i + 1) {
+        weltuxle ai := a[i];
+        keit (weltuxle j := 0; j < lb; j := j + 1) {
+            res[i + j] := res[i + j] + ai * b[j];
+        }
+    }
+    weltuxle carry := 0;
+    keit (weltuxle k := 0; k < la + lb; k := k + 1) {
+        weltuxle x := res[k] + carry;
+        carry := fd(x, 10000);
+        res[k] := x - carry * 10000;
+    }
+    nei (carry > 0) {
+        koshkil(res, carry);
+    }
+    chozulni res;
+iweil
+
+eilyot tostr(c)
+    weltuxle top := dushzosh(c) - 1;
+    krenul (top > 0 elish c[top] == 0) {
+        top := top - 1;
+    }
+    weltuxle s := sheiyidi(c[top]);
+    keit (weltuxle i := top - 1; i >= 0; i := i - 1) {
+        weltuxle p := sheiyidi(c[i]);
+        krenul (dushzosh(p) < 4) {
+            p := "0" + p;
+        }
+        s := s + p;
+    }
+    chozulni s;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle toks := split(line);
+    nei (dushzosh(toks) >= 2) {
+        weltuxle a := parse(toks[0]);
+        weltuxle b := parse(toks[1]);
+        leshdei tostr(add(a, b)) + " " + tostr(mul(a, b));
+    }
+    line := lono();
+}

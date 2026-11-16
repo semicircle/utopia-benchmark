@@ -1,0 +1,94 @@
+Ruyoyo split(s)
+    Trepiho out := [];
+    Trepiho cur := "";
+    Pil (Trepiho i := 0; i < Purmo(s); i := i + 1) {
+        Trepiho c := s[i];
+        Mushu c = " " Yeshil Hupo
+            Mushu Purmo(cur) > 0 Yeshil Hupo
+                Theki(out, cur);
+                cur := "";
+            Tho
+        Tho Thotri Hupo
+            cur := cur + c;
+        Tho
+    }
+    Mushu Purmo(cur) > 0 Yeshil Hupo
+        Theki(out, cur);
+    Tho
+    Omel out;
+Opa
+
+Ruyoyo isInt(t)
+    Trepiho st := 0;
+    Mushu t[0] = "-" Yeshil Hupo
+        st := 1;
+    Tho
+    Mushu Purmo(t) <= st Yeshil Hupo
+        Omel Yaki;
+    Tho
+    Pil (Trepiho i := st; i < Purmo(t); i := i + 1) {
+        Mushu t[i] < "0" Hiyikra t[i] > "9" Yeshil Hupo
+            Omel Yaki;
+        Tho
+    }
+    Omel Yupu;
+Opa
+
+Ruyoyo evalRpn(s)
+    Trepiho toks := split(s);
+    Mushu Purmo(toks) = 0 Yeshil Hupo
+        Omel "error";
+    Tho
+    Trepiho st := [];
+    Trepiho sp := 0;
+    Pil (Trepiho i := 0; i < Purmo(toks); i := i + 1) {
+        Trepiho t := toks[i];
+        Trepiho v := 0;
+        Mushu t = "+" Hiyikra t = "-" Hiyikra t = "*" Hiyikra t = "/" Hiyikra t = "%" Yeshil Hupo
+            Mushu sp < 2 Yeshil Hupo
+                Omel "error";
+            Tho
+            Trepiho b := st[sp - 1];
+            Trepiho a := st[sp - 2];
+            sp := sp - 2;
+            Pakru Sher t
+            Sher "+"
+                v := a + b;
+            Sher "-"
+                v := a - b;
+            Sher "*"
+                v := a * b;
+            Sher "/"
+                Mushu b = 0 Yeshil Hupo
+                    Omel "error";
+                Tho
+                v := a / b;
+            Sher "%"
+                Mushu b = 0 Yeshil Hupo
+                    Omel "error";
+                Tho
+                v := a % b;
+            Tho Pakru
+        Tho Thotri Mushu isInt(t) Yeshil Hupo
+            v := Eshiyer(t);
+        Tho Thotri Hupo
+            Omel "error";
+        Tho
+        Mushu sp < Purmo(st) Yeshil Hupo
+            st[sp] := v;
+        Tho Thotri Hupo
+            Theki(st, v);
+        Tho
+        sp := sp + 1;
+    }
+    Mushu sp ~= 1 Yeshil Hupo
+        Omel "error";
+    Tho
+    Omel Mitrer(st[0]);
+Opa
+
+Trepiho line := Thoke();
+Rokomi (line ~= Krupelro) {
+    Rashar evalRpn(line);
+    line := Thoke();
+}

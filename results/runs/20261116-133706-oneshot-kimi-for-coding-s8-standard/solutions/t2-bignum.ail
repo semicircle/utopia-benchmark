@@ -1,0 +1,96 @@
+nudro toDigits(s) {
+    plulai ds := [];
+    shoyo i := 0 busale dra(s) - 1
+        sutse(ds, plaltai(s[i]));
+    pla i
+    druna ds;
+}
+
+nudro dsToString(ds) {
+    plulai i := 0;
+    edrushe i < dra(ds) - 1 rulsai ds[i] == 0
+        i := i + 1;
+    aitudre
+    plulai out := "";
+    edrushe i < dra(ds)
+        out := out + sutlarai(ds[i]);
+        i := i + 1;
+    aitudre
+    druna out;
+}
+
+nudro addBig(a, b) {
+    plulai i := dra(a) - 1;
+    plulai j := dra(b) - 1;
+    plulai carry := 0;
+    plulai rev := [];
+    edrushe i >= 0 tobe j >= 0 tobe carry > 0
+        plulai s := carry;
+        atdoyal (i >= 0) {
+            s := s + a[i];
+            i := i - 1;
+        }
+        atdoyal (j >= 0) {
+            s := s + b[j];
+            j := j - 1;
+        }
+        sutse(rev, s % 10);
+        carry := s / 10;
+    aitudre
+    plulai out := [];
+    plulai k := dra(rev) - 1;
+    edrushe k >= 0
+        sutse(out, rev[k]);
+        k := k - 1;
+    aitudre
+    druna out;
+}
+
+nudro mulBig(a, b) {
+    plulai L := dra(a) + dra(b);
+    plulai res := [];
+    shoyo i := 0 busale L - 1
+        sutse(res, 0);
+    pla i
+    plulai i := dra(a) - 1;
+    edrushe i >= 0
+        plulai j := dra(b) - 1;
+        edrushe j >= 0
+            plulai rp := L - 1 - i - j;
+            res[rp] := res[rp] + a[i] * b[j];
+            j := j - 1;
+        aitudre
+        i := i - 1;
+    aitudre
+    plulai k := L - 1;
+    edrushe k > 0
+        res[k - 1] := res[k - 1] + res[k] / 10;
+        res[k] := res[k] % 10;
+        k := k - 1;
+    aitudre
+    druna res;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai sp := 0;
+    edrushe line[sp] <> " "
+        sp := sp + 1;
+    aitudre
+    plulai sa := "";
+    plulai sb := "";
+    plulai i := 0;
+    edrushe i < sp
+        sa := sa + line[i];
+        i := i + 1;
+    aitudre
+    i := sp + 1;
+    edrushe i < dra(line)
+        sb := sb + line[i];
+        i := i + 1;
+    aitudre
+    plulai da := toDigits(sa);
+    plulai db := toDigits(sb);
+    shaibe dsToString(addBig(da, db)) + " " + dsToString(mulBig(da, db));
+    line := playadu();
+aitudre

@@ -1,0 +1,98 @@
+dredrume split(s)
+    goyu out <- [].
+    goyu cur <- "".
+    wego i <- 0 setru wumdror(s) - 1
+        goyu c <- s[i].
+        dre c == " " drorsu c == "\t" drorsu c == "\r" ethur
+            dre cur != "" ethur
+                dreme(out, cur).
+                cur <- "".
+            wodrotru dre
+        truthor
+            cur <- cur & c.
+        wodrotru dre
+    trer i
+    dre cur != "" ethur
+        dreme(out, cur).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+dredrume toDigits(s)
+    goyu out <- [].
+    wego i <- wumdror(s) - 1 setru 0 meshe -1
+        dreme(out, druwol(s[i])).
+    trer i
+    odrol out.
+wodrotru dredrume
+
+dredrume addBig(a, b)
+    goyu out <- [].
+    goyu carry <- 0.
+    goyu la <- wumdror(a).
+    goyu lb <- wumdror(b).
+    goyu n <- la.
+    dre lb > n ethur
+        n <- lb.
+    wodrotru dre
+    wego i <- 0 setru n - 1
+        goyu s <- carry.
+        dre i < la ethur
+            s <- s + a[i].
+        wodrotru dre
+        dre i < lb ethur
+            s <- s + b[i].
+        wodrotru dre
+        dreme(out, s trumguwu 10).
+        carry <- s / 10.
+    trer i
+    dre carry > 0 ethur
+        dreme(out, carry).
+    wodrotru dre
+    odrol out.
+wodrotru dredrume
+
+dredrume mulBig(a, b)
+    goyu la <- wumdror(a).
+    goyu lb <- wumdror(b).
+    goyu res <- [].
+    wego i <- 1 setru la + lb
+        dreme(res, 0).
+    trer i
+    wego i <- 0 setru la - 1
+        goyu ai <- a[i].
+        wego j <- 0 setru lb - 1
+            res[i + j] <- res[i + j] + ai * b[j].
+        trer j
+    trer i
+    goyu carry <- 0.
+    wego i <- 0 setru la + lb - 1
+        goyu t <- res[i] + carry.
+        res[i] <- t trumguwu 10.
+        carry <- t / 10.
+    trer i
+    odrol res.
+wodrotru dredrume
+
+dredrume bigStr(d)
+    goyu top <- wumdror(d) - 1.
+    omethol top > 0 suyogur d[top] == 0
+        top <- top - 1.
+    shusushe
+    goyu r <- "".
+    wego i <- top setru 0 meshe -1
+        r <- r & d[i].
+    trer i
+    odrol r.
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu toks <- split(line).
+    dre wumdror(toks) >= 2 ethur
+        goyu a <- toDigits(toks[0]).
+        goyu b <- toDigits(toks[1]).
+        suwe bigStr(addBig(a, b)) & " " & bigStr(mulBig(a, b)).
+    wodrotru dre
+    line <- uyotho().
+shusushe

@@ -1,0 +1,6 @@
+Trepiho n := Eshiyer(Thoke());
+Trepiho r := 1;
+Pil (Trepiho i := 2; i <= n; i := i + 1) {
+    r := r * i;
+}
+Rashar r;

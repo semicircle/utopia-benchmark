@@ -1,0 +1,41 @@
+dredrume lowerc(c)
+    goyu up <- "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    goyu low <- "abcdefghijklmnopqrstuvwxyz".
+    goyu lo <- 0.
+    goyu hi <- 25.
+    omethol lo < hi
+        goyu mid <- (lo + hi) / 2.
+        dre up[mid] < c ethur
+            lo <- mid + 1.
+        truthor
+            hi <- mid.
+        wodrotru dre
+    shusushe
+    odrol low[lo].
+wodrotru dredrume
+
+goyu line <- uyotho().
+omethol line != gursume
+    goyu cs <- [].
+    wego i <- 0 setru wumdror(line) - 1
+        goyu c <- line[i].
+        dre ((c >= "a") suyogur (c <= "z")) drorsu ((c >= "0") suyogur (c <= "9")) ethur
+            dreme(cs, c).
+        yuyuge (c >= "A") suyogur (c <= "Z") ethur
+            dreme(cs, lowerc(c)).
+        wodrotru dre
+    trer i
+    goyu n <- wumdror(cs).
+    goyu ok <- sudru.
+    wego i <- 0 setru (n / 2) - 1
+        dre cs[i] != cs[(n - 1) - i] ethur
+            ok <- tru.
+        wodrotru dre
+    trer i
+    dre ok ethur
+        suwe "yes".
+    truthor
+        suwe "no".
+    wodrotru dre
+    line <- uyotho().
+shusushe

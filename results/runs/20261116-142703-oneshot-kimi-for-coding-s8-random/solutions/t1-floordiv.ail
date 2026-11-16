@@ -1,0 +1,36 @@
+nudro split(s) {
+    plulai parts := [];
+    plulai cur := "";
+    plulai i := 1;
+    edrushe i <= dra(s)
+        plulai c := s[i];
+        atdoyal (c == " ") {
+            atdoyal (dra(cur) > 0) {
+                sutse(parts, cur);
+                cur := "";
+            }
+        } bulbayo {
+            cur := cur + c;
+        }
+        i := i + 1;
+    aitudre
+    atdoyal (dra(cur) > 0) {
+        sutse(parts, cur);
+    }
+    druna parts;
+}
+
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai parts := split(line);
+    plulai a := plaltai(parts[1]);
+    plulai b := plaltai(parts[2]);
+    plulai q := a / b;
+    plulai r := a % b;
+    atdoyal (r <> 0 rulsai (a < 0) <> (b < 0)) {
+        q := q - 1;
+        r := r + b;
+    }
+    shaibe sutlarai(q) + " " + sutlarai(r);
+    line := playadu();
+aitudre

@@ -1,0 +1,100 @@
+eilyot substring(s, first, past)
+    weltuxle result := "";
+    keit (weltuxle i := first; i < past; i := i + 1) {
+        result := result + s[i];
+    }
+    chozulni result;
+iweil
+
+eilyot parseBig(line, first, past)
+    weltuxle digits := [];
+    keit (weltuxle i := past - 1; i >= first; i := i - 1) {
+        koshkil(digits, leidush(line[i]));
+    }
+    chozulni digits;
+iweil
+
+eilyot bigString(digits)
+    weltuxle result := "";
+    keit (weltuxle i := dushzosh(digits) - 1; i >= 0; i := i - 1) {
+        result := result + sheiyidi(digits[i]);
+    }
+    chozulni result;
+iweil
+
+eilyot bigAdd(a, b)
+    weltuxle result := [];
+    weltuxle carry := 0;
+    weltuxle i := 0;
+    krenul (i < dushzosh(a) yosheil i < dushzosh(b) yosheil carry <> 0) {
+        weltuxle da := 0;
+        weltuxle db := 0;
+        nei (i < dushzosh(a)) {
+            da := a[i];
+        }
+        nei (i < dushzosh(b)) {
+            db := b[i];
+        }
+        weltuxle total := da + db + carry;
+        koshkil(result, total yeil 10);
+        carry := total / 10;
+        i := i + 1;
+    }
+    chozulni result;
+iweil
+
+eilyot bigMul(a, b)
+    weltuxle result := [];
+    keit (weltuxle i := 0; i < dushzosh(a); i := i + 1) {
+        weltuxle carry := 0;
+        keit (weltuxle j := 0; j < dushzosh(b); j := j + 1) {
+            weltuxle p := i + j;
+            weltuxle current := 0;
+            nei (p < dushzosh(result)) {
+                current := result[p];
+            }
+            weltuxle total := current + a[i] * b[j] + carry;
+            nei (p < dushzosh(result)) {
+                result[p] := total yeil 10;
+            } wogeish {
+                koshkil(result, total yeil 10);
+            }
+            carry := total / 10;
+        }
+        weltuxle p := i + dushzosh(b);
+        krenul (carry <> 0) {
+            weltuxle current := 0;
+            nei (p < dushzosh(result)) {
+                current := result[p];
+            }
+            weltuxle total := current + carry;
+            nei (p < dushzosh(result)) {
+                result[p] := total yeil 10;
+            } wogeish {
+                koshkil(result, total yeil 10);
+            }
+            carry := total / 10;
+            p := p + 1;
+        }
+    }
+    krenul (dushzosh(result) > 1 yosheil result[dushzosh(result) - 1] == 0) {
+        weltuxle shorter := [];
+        keit (weltuxle i := 0; i < dushzosh(result) - 1; i := i + 1) {
+            koshkil(shorter, result[i]);
+        }
+        result := shorter;
+    }
+    chozulni result;
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    weltuxle space := 0;
+    krenul (line[space] <> " ") {
+        space := space + 1;
+    }
+    weltuxle a := parseBig(line, 0, space);
+    weltuxle b := parseBig(line, space + 1, dushzosh(line));
+    leshdei bigString(bigAdd(a, b)) + " " + bigString(bigMul(a, b));
+    line := lono();
+}

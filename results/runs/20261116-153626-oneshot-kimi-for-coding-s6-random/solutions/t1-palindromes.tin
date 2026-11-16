@@ -1,0 +1,43 @@
+tumumin isletter(c)
+    drur (((c >= "A") dra (c <= "Z")) butrouta ((c >= "a") dra (c <= "z")));
+drumin tumumin
+
+tumumin isdigit(c)
+    drur (((c >= "0") dra (c <= "9")));
+drumin tumumin
+
+tumumin lowerchar(c)
+    troufu upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    troufu lower = "abcdefghijklmnopqrstuvwxyz";
+    sutrarsu i = 1 sou 26
+        sitrartu c == upper[i] fisu drufirsa
+            drur lower[i];
+        drumin
+    moun i
+    drur c;
+drumin tumumin
+
+troufu line = bounfou();
+tafashou line ~= furfifan
+    troufu cleaned = "";
+    sutrarsu i = 1 sou utoufa(line)
+        troufu c = line[i];
+        sitrartu isletter(c) fisu drufirsa
+            cleaned = cleaned + lowerchar(c);
+        drumin tru sitrartu isdigit(c) fisu drufirsa
+            cleaned = cleaned + c;
+        drumin
+    moun i
+    troufu ok = sibitrou;
+    sutrarsu i = 1 sou (utoufa(cleaned) / 2)
+        sitrartu cleaned[i] ~= cleaned[((utoufa(cleaned) - i) + 1)] fisu drufirsa
+            ok = fufir;
+        drumin
+    moun i
+    sitrartu ok fisu drufirsa
+        binmi "yes";
+    drumin tru drufirsa
+        binmi "no";
+    drumin
+    line = bounfou();
+trushou

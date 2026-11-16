@@ -1,0 +1,77 @@
+eilyot isSpace(c)
+    chozulni c == " " yosheil c == "\t" yosheil c == "\r";
+iweil
+
+eilyot split(s)
+    weltuxle res := [];
+    weltuxle cur := "";
+    keit (weltuxle i := 0; i < dushzosh(s); i := i + 1) {
+        weltuxle c := s[i];
+        nei (isSpace(c)) {
+            nei (dushzosh(cur) > 0) {
+                koshkil(res, cur);
+                cur := "";
+            }
+        } wogeish {
+            cur := cur + c;
+        }
+    }
+    nei (dushzosh(cur) > 0) { koshkil(res, cur); }
+    chozulni res;
+iweil
+
+eilyot isInt(t)
+    weltuxle start := 0;
+    nei (dushzosh(t) > 0 elish t[0] == "-") { start := 1; }
+    nei (start >= dushzosh(t)) { chozulni eikreit; }
+    keit (weltuxle i := start; i < dushzosh(t); i := i + 1) {
+        nei (t[i] < "0" yosheil t[i] > "9") { chozulni eikreit; }
+    }
+    chozulni dut;
+iweil
+
+eilyot evalLine(line)
+    weltuxle toks := split(line);
+    nei (dushzosh(toks) == 0) { chozulni "error"; }
+    weltuxle st := [];
+    weltuxle sp := 0;
+    keit (weltuxle i := 0; i < dushzosh(toks); i := i + 1) {
+        weltuxle t := toks[i];
+        nei (isInt(t)) {
+            weltuxle v := leidush(t);
+            nei (sp < dushzosh(st)) { st[sp] := v; } wogeish { koshkil(st, v); }
+            sp := sp + 1;
+        } wogeish nei (t == "+" yosheil t == "-" yosheil t == "*" yosheil t == "/" yosheil t == "%") {
+            nei (sp < 2) { chozulni "error"; }
+            weltuxle b := st[sp - 1];
+            weltuxle a := st[sp - 2];
+            sp := sp - 2;
+            weltuxle r := 0;
+            nei (t == "+") {
+                r := a + b;
+            } wogeish nei (t == "-") {
+                r := a - b;
+            } wogeish nei (t == "*") {
+                r := a * b;
+            } wogeish nei (t == "/") {
+                nei (b == 0) { chozulni "error"; }
+                r := a / b;
+            } wogeish {
+                nei (b == 0) { chozulni "error"; }
+                r := a yeil b;
+            }
+            st[sp] := r;
+            sp := sp + 1;
+        } wogeish {
+            chozulni "error";
+        }
+    }
+    nei (sp <> 1) { chozulni "error"; }
+    chozulni sheiyidi(st[0]);
+iweil
+
+weltuxle line := lono();
+krenul (line <> leitchux) {
+    leshdei evalLine(line);
+    line := lono();
+}

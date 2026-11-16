@@ -1,0 +1,27 @@
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai n := plaltai(line);
+    plulai s := sutlarai(n);
+    plulai start := 0;
+    atdoyal (n < 0) {
+        start := 1;
+    }
+    plulai sum := 0;
+    plulai i := start;
+    edrushe i < dra(s)
+        sum := sum + plaltai(s[i]);
+        i := i + 1;
+    aitudre
+    plulai rev := "";
+    plulai j := dra(s) - 1;
+    edrushe j >= start
+        rev := rev + s[j];
+        j := j - 1;
+    aitudre
+    plulai r := plaltai(rev);
+    atdoyal (n < 0) {
+        r := -r;
+    }
+    shaibe sum + " " + r;
+    line := playadu();
+aitudre

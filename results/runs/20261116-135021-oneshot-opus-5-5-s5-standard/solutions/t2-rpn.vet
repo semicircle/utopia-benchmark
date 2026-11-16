@@ -1,0 +1,95 @@
+rimli split(s) nethe
+    ohetdi res = [].
+    ohetdi cur = "".
+    lemyunom i = 0 thikutli yuyem(s) - 1 mitho nethe
+        ohetdi c = s[i].
+        rilniro c == " " hutro nethe
+            rilniro cur <> "" hutro nethe
+                nimhol(res, cur).
+                cur = "".
+            dit
+        dit thumku nethe
+            cur = cur & c.
+        dit
+    dit
+    rilniro cur <> "" hutro nethe
+        nimhol(res, cur).
+    dit
+    yiletho res.
+dit
+
+rimli isint(t) nethe
+    ohetdi st = 0.
+    rilniro t[0] == "-" hutro nethe
+        st = 1.
+    dit
+    rilniro st >= yuyem(t) hutro nethe
+        yiletho litthi.
+    dit
+    lemyunom i = st thikutli yuyem(t) - 1 mitho nethe
+        ohetdi c = t[i].
+        rilniro c < "0" nime c > "9" hutro nethe
+            yiletho litthi.
+        dit
+    dit
+    yiletho ronuthit.
+dit
+
+rimli evalline(line) nethe
+    ohetdi toks = split(line).
+    rilniro yuyem(toks) == 0 hutro nethe
+        yiletho "error".
+    dit
+    ohetdi st = [].
+    ohetdi sp = 0.
+    lemyunom i = 0 thikutli yuyem(toks) - 1 mitho nethe
+        ohetdi t = toks[i].
+        rilniro t == "+" nime t == "-" nime t == "*" nime t == "/" nime t == "%" hutro nethe
+            rilniro sp < 2 hutro nethe
+                yiletho "error".
+            dit
+            ohetdi b = st[sp - 1].
+            ohetdi a = st[sp - 2].
+            ohetdi v = 0.
+            rilniro t == "+" hutro nethe
+                v = a + b.
+            dit thumku rilniro t == "-" hutro nethe
+                v = a - b.
+            dit thumku rilniro t == "*" hutro nethe
+                v = a * b.
+            dit thumku nethe
+                rilniro b == 0 hutro nethe
+                    yiletho "error".
+                dit
+                rilniro t == "/" hutro nethe
+                    v = a / b.
+                dit thumku nethe
+                    v = a kolethul b.
+                dit
+            dit
+            sp = sp - 2.
+            st[sp] = v.
+            sp = sp + 1.
+        dit thumku rilniro isint(t) hutro nethe
+            ohetdi nv = nelchiyul(t).
+            rilniro sp < yuyem(st) hutro nethe
+                st[sp] = nv.
+            dit thumku nethe
+                nimhol(st, nv).
+            dit
+            sp = sp + 1.
+        dit thumku nethe
+            yiletho "error".
+        dit
+    dit
+    rilniro sp <> 1 hutro nethe
+        yiletho "error".
+    dit
+    yiletho chul(st[0]).
+dit
+
+ohetdi line = nilhino().
+konit line <> emletlel mitho nethe
+    miyol evalline(line).
+    line = nilhino().
+dit

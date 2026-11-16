@@ -1,0 +1,28 @@
+plulai line := playadu();
+edrushe line <> aiplai
+    plulai sp := 0;
+    edrushe line[sp] <> " "
+        sp := sp + 1;
+    aitudre
+    plulai sa := "";
+    plulai sb := "";
+    plulai i := 0;
+    edrushe i < sp
+        sa := sa + line[i];
+        i := i + 1;
+    aitudre
+    i := sp + 1;
+    edrushe i < dra(line)
+        sb := sb + line[i];
+        i := i + 1;
+    aitudre
+    plulai a := plaltai(sa);
+    plulai b := plaltai(sb);
+    plulai q := a / b;
+    atdoyal (a % b <> 0 rulsai ((a < 0) <> (b < 0))) {
+        q := q - 1;
+    }
+    plulai r := a - b * q;
+    shaibe q + " " + r;
+    line := playadu();
+aitudre

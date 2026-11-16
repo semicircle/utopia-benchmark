@@ -1,0 +1,11 @@
+Sogas lines = [];
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Dragi(lines, line);
+    line = Goshvovo();
+}
+Sogas i = Drash(lines);
+Sipokvix (i >= 1) {
+    Dosfasho lines[i];
+    i = i - 1;
+}

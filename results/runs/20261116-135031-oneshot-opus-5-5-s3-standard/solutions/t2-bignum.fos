@@ -1,0 +1,126 @@
+Gis split(s) Fodashsa
+    Sogas res = [];
+    Sogas cur = "";
+    Sogas has = Fixpodri;
+    Paxfasva (Sogas i = 0; i < Drash(s); i = i + 1) {
+        Sogas c = s[i];
+        Ishsi (c == " " Gox c == "\t") {
+            Ishsi (has) {
+                Dragi(res, cur);
+                cur = "";
+                has = Fixpodri;
+            }
+        } Padri {
+            cur = cur + c;
+            has = Pigi;
+        }
+    }
+    Ishsi (has) {
+        Dragi(res, cur);
+    }
+    Asdra res;
+Gosafax
+
+Gis parse(s) Fodashsa
+    Sogas res = [];
+    Sogas e = Drash(s);
+    Sipokvix (e > 0) {
+        Sogas st = e - 4;
+        Ishsi (st < 0) {
+            st = 0;
+        }
+        Sogas v = 0;
+        Paxfasva (Sogas i = st; i < e; i = i + 1) {
+            v = v * 10 + Drak(s[i]);
+        }
+        Dragi(res, v);
+        e = st;
+    }
+    Ishsi (Drash(res) == 0) {
+        Dragi(res, 0);
+    }
+    Asdra res;
+Gosafax
+
+Gis show(x) Fodashsa
+    Sogas top = Drash(x) - 1;
+    Sipokvix (top > 0 Fas x[top] == 0) {
+        top = top - 1;
+    }
+    Sogas out = Igo(x[top]);
+    Paxfasva (Sogas i = top - 1; i >= 0; i = i - 1) {
+        Sogas v = x[i];
+        Ishsi (v < 1000) {
+            out = out + "0";
+        }
+        Ishsi (v < 100) {
+            out = out + "0";
+        }
+        Ishsi (v < 10) {
+            out = out + "0";
+        }
+        out = out + v;
+    }
+    Asdra out;
+Gosafax
+
+Gis add(a, b) Fodashsa
+    Sogas res = [];
+    Sogas carry = 0;
+    Sogas la = Drash(a);
+    Sogas lb = Drash(b);
+    Sogas n = la;
+    Ishsi (lb > n) {
+        n = lb;
+    }
+    Paxfasva (Sogas i = 0; i < n; i = i + 1) {
+        Sogas s = carry;
+        Ishsi (i < la) {
+            s = s + a[i];
+        }
+        Ishsi (i < lb) {
+            s = s + b[i];
+        }
+        Dragi(res, s Dodogo 10000);
+        carry = s / 10000;
+    }
+    Ishsi (carry > 0) {
+        Dragi(res, carry);
+    }
+    Asdra res;
+Gosafax
+
+Gis mul(a, b) Fodashsa
+    Sogas la = Drash(a);
+    Sogas lb = Drash(b);
+    Sogas res = [];
+    Paxfasva (Sogas k = 0; k < la + lb; k = k + 1) {
+        Dragi(res, 0);
+    }
+    Paxfasva (Sogas i = 0; i < la; i = i + 1) {
+        Sogas x = a[i];
+        Ishsi (x ~= 0) {
+            Paxfasva (Sogas j = 0; j < lb; j = j + 1) {
+                res[i + j] = res[i + j] + x * b[j];
+            }
+        }
+    }
+    Sogas carry = 0;
+    Paxfasva (Sogas k = 0; k < la + lb; k = k + 1) {
+        Sogas v = res[k] + carry;
+        res[k] = v Dodogo 10000;
+        carry = v / 10000;
+    }
+    Asdra res;
+Gosafax
+
+Sogas line = Goshvovo();
+Sipokvix (line ~= Dridrak) {
+    Sogas toks = split(line);
+    Ishsi (Drash(toks) >= 2) {
+        Sogas a = parse(toks[0]);
+        Sogas b = parse(toks[1]);
+        Dosfasho show(add(a, b)) + " " + show(mul(a, b));
+    }
+    line = Goshvovo();
+}

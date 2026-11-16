@@ -1,0 +1,22 @@
+FOMOFE line := TODETET();
+FUKCHEFE line ~= LER LOLO LEKFESH
+    FOMOFE n := ZENZUMUR(line);
+    FOMOFE neg := n < 0;
+    FOMOFE m := n;
+    PLUWOK neg DEWOTUSH LEKFESH
+        m := -n;
+    EFUDU
+    FOMOFE sum := 0;
+    FOMOFE rev := 0;
+    FUKCHEFE m > 0 LOLO LEKFESH
+        sum := sum + m % 10;
+        rev := rev * 10 + m % 10;
+        m := m / 10;
+    EFUDU
+    FOMOFE out := rev;
+    PLUWOK neg DEWOTUSH LEKFESH
+        out := -rev;
+    EFUDU
+    EPLOWEK sum & " " & out;
+    line := TODETET();
+EFUDU
