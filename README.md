@@ -179,9 +179,9 @@ python3 harness/run.py agent --provider scripted --seeds 1-4 --out /tmp/selftest
 Keys are read from the environment only. They are stripped from the agent's
 shell environment and redacted from everything saved. Each run lands in
 `results/runs/RUN_ID/` (scores, usage, cost, prompt, response or transcript,
-solutions). Pushing to `main` rebuilds the site and publishes it with GitHub
-Pages (`.github/workflows/pages.yml`; set Pages' source to "GitHub Actions"
-once in the repo settings).
+solutions). Pushing to `main` rebuilds the site and publishes it with Vercel
+at https://utopia-benchmark.vercel.app (`vercel.json` runs
+`scripts/vercel_build.sh`).
 
 ### Layout
 

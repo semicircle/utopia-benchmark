@@ -16,7 +16,7 @@ The goal is one striking chart, as early as possible.
 - [x] Grader (`harness/grade.py`)
 - [x] Harness: give the docs and toolchain to an agent, run it, score it (`harness/run.py`)
 - [x] One-shot mode (docs + tasks in one prompt, no tools) and a Python control arm
-- [x] Results site (`harness/build_site.py`, deployed by GitHub Pages)
+- [x] Results site (`harness/build_site.py`, deployed by Vercel)
 - [ ] Babel lexicon (metaphorical keywords from human languages)
 - [ ] Run about 4 models and record full transcripts
 

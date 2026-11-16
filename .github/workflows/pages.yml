@@ -1,9 +1,9 @@
 name: Publish results site
 
+# The site is published by Vercel (vercel.json). This GitHub Pages build is a
+# manual alternative: run it from the Actions tab after enabling Pages for the
+# repo (Settings → Pages → Source: GitHub Actions).
 on:
-  push:
-    branches: [main]
-    paths: ["results/**", "harness/**", "tasks/**", "internal/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
