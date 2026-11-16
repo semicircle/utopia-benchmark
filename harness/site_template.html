@@ -131,6 +131,35 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
   <p class="muted" id="stamp"></p>
 </header>
 
+<section>
+  <h2>What a Utopia language looks like</h2>
+  <p class="sub">The same FizzBuzz reference solution, generated into different dialects.</p>
+  <div class="tabs" id="sample-tabs" role="tablist"></div>
+  <pre id="sample-code"></pre>
+</section>
+
+<section>
+  <h2>Method</h2>
+  <ol class="method">
+    <li><strong>Generate.</strong> A seed produces a whole language: a conlang lexicon, independent
+      syntax styles for functions, conditionals, switches and loops (C-like, Pascal-like, BASIC-like or
+      assembly-like), operator spellings, and ten semantic knobs. A reference manual is generated from a
+      fixed template, and every example in it is executed to produce the output shown.</li>
+    <li><strong>One-shot mode.</strong> The model receives the manual and all tasks in one prompt, with no
+      tools, and must write every solution without running anything. It is cheap and measures pure
+      in-context learning.</li>
+    <li><strong>Agent mode.</strong> The model works as a coding agent in a fresh workspace with the
+      manual, the tasks and the language's toolchain, using three tools (run a shell command, read a
+      file, write a file), the same for every provider. The workspace sits outside the benchmark's
+      source tree, and every shell command is audited for attempts to look elsewhere. Grading rebuilds
+      the toolchain, so nothing the agent touched is trusted.</li>
+    <li><strong>Grade.</strong> Solutions run against hidden tests; a task passes only if every test's
+      output matches exactly.</li>
+  </ol>
+  <p class="muted">Caveats: 17 tasks in three tiers, few runs per arm, so differences of a task or two
+    are noise. Any Anthropic or OpenAI-compatible endpoint can be run with an API key and a model name.</p>
+</section>
+
 <section id="release-section" hidden>
   <h2 id="release-title">Release</h2>
   <p class="sub">Fixed languages, published with their manuals, so every result here can be reproduced.
@@ -169,35 +198,6 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
   <p class="sub">Open a run to see its language, the false friends it had, process metrics and the
     full prompt, response or agent transcript.</p>
   <div id="runs"></div>
-</section>
-
-<section>
-  <h2>What a Utopia language looks like</h2>
-  <p class="sub">The same FizzBuzz reference solution, generated into different dialects.</p>
-  <div class="tabs" id="sample-tabs" role="tablist"></div>
-  <pre id="sample-code"></pre>
-</section>
-
-<section>
-  <h2>Method</h2>
-  <ol class="method">
-    <li><strong>Generate.</strong> A seed produces a whole language: a conlang lexicon, independent
-      syntax styles for functions, conditionals, switches and loops (C-like, Pascal-like, BASIC-like or
-      assembly-like), operator spellings, and ten semantic knobs. A reference manual is generated from a
-      fixed template, and every example in it is executed to produce the output shown.</li>
-    <li><strong>One-shot mode.</strong> The model receives the manual and all tasks in one prompt, with no
-      tools, and must write every solution without running anything. It is cheap and measures pure
-      in-context learning.</li>
-    <li><strong>Agent mode.</strong> The model works as a coding agent in a fresh workspace with the
-      manual, the tasks and the language's toolchain, using three tools (run a shell command, read a
-      file, write a file), the same for every provider. The workspace sits outside the benchmark's
-      source tree, and every shell command is audited for attempts to look elsewhere. Grading rebuilds
-      the toolchain, so nothing the agent touched is trusted.</li>
-    <li><strong>Grade.</strong> Solutions run against hidden tests; a task passes only if every test's
-      output matches exactly.</li>
-  </ol>
-  <p class="muted">Caveats: 17 tasks in three tiers, few runs per arm, so differences of a task or two
-    are noise. Any Anthropic or OpenAI-compatible endpoint can be run with an API key and a model name.</p>
 </section>
 
 <footer class="muted">Utopia is an open, AI-native benchmark. Release languages are fixed and public; other seeds are practice seeds.</footer>
