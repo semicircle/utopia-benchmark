@@ -63,6 +63,7 @@ def slim(meta, files):
     return {
         "id": meta["run_id"], "mode": meta["mode"], "arm": meta["arm"], "model": meta["model"],
         "seed": meta.get("seed"), "semantics": meta.get("semantics"), "language": meta.get("language"),
+        "release": meta.get("release"),
         "date": meta.get("date"), "duration_s": meta.get("duration_s"),
         "passed": meta["score"]["passed"], "total": meta["score"]["total"], "tasks": meta["score"]["tasks"],
         "styles": d.get("styles"), "friends": false_friends(d.get("semantics")),
@@ -124,7 +125,11 @@ def main():
 
     notes_path = ROOT / "results" / "notes.md"
     notes = notes_path.read_text() if notes_path.exists() else ""
-    data = {"runs": runs, "samples": samples(), "notes": notes}
+    releases = []
+    for rel_path in sorted((ROOT / "releases").glob("*/release.json")):
+        releases.append(json.loads(rel_path.read_text()))
+        shutil.copytree(rel_path.parent, out / "releases" / rel_path.parent.name)
+    data = {"runs": runs, "samples": samples(), "notes": notes, "releases": releases[::-1]}
     page = TEMPLATE.read_text().replace("/*__DATA__*/null", json.dumps(data).replace("</", "<\\/"))
     (out / "index.html").write_text(page)
     (out / ".nojekyll").write_text("")

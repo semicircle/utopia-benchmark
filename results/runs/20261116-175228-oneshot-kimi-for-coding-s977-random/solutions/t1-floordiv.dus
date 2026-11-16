@@ -1,0 +1,33 @@
+Yokyi fdiv(a, b) {
+    Koke q := a / b.
+    Koke r := a - (b * q).
+    Yopok (r == 0) Dak ((r < 0) == (b < 0)), ok.
+    q := q - 1.
+    r := a - (b * q).
+ok:
+    Pohuwu q.
+}
+
+Yokyi fmod(a, b) {
+    Koke q := fdiv(a, b).
+    Pohuwu a - (b * q).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke sp := 0.
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Yopok line[i] == " ", foundsp.
+        Uxdrush contsp.
+foundsp:
+        sp := i.
+        Kewi.
+contsp:
+    Kobihek
+    Koke a := Bupuxbo(line[1] ++ line[sp - 1]).
+    Koke b := Bupuxbo(line[sp + 1] ++ line[Yik(line)]).
+    Koke q := fdiv(a, b).
+    Koke r := a - (b * q).
+    Ebi q ++ " " ++ r.
+    line := Pewexpo().
+Kobihek

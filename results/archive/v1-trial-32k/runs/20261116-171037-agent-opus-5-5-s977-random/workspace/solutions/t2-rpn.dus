@@ -1,0 +1,89 @@
+Yokyi split(s) {
+    Koke out := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sp.
+        cur := cur ++ c.
+        Gosh.
+    sp:
+        Yopok cur == "", nx.
+        Oxba(out, cur).
+        cur := "".
+    nx:
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(out, cur).
+done:
+    Pohuwu out.
+}
+Yokyi isnum(t) {
+    Koke n := Yik(t).
+    Koke st := 1.
+    Yopok t[1] /= "-", nm.
+    st := 2.
+nm:
+    Yopok st > n, bad.
+    Gipolu i := st Wexdush n Gihe Hehokgi
+        Koke c := t[i].
+        Yopok (c < "0") Dak (c > "9"), bad.
+    Kobihek
+    Pohuwu Geklabik.
+bad:
+    Pohuwu Lesh.
+}
+Yokyi tdiv(a, b) {
+    Yopok (a < 0) /= (b < 0), neg.
+    Pohuwu -((-a) / b).
+neg:
+    Pohuwu a / b.
+}
+Yokyi evalline(line) {
+    Koke toks := split(line).
+    Yopok Yik(toks) == 0, err.
+    Koke st := [].
+    Koke sp := 0.
+    Gipolu i := 1 Wexdush Yik(toks) Gihe Hehokgi
+        Koke t := toks[i].
+        Koke v := 0.
+        Yopok isnum(t), push.
+        Yopok sp < 2, err.
+        Koke b := st[sp].
+        Koke a := st[sp - 1].
+        sp := sp - 2.
+        Dru t Ihedrux
+        "+": Hehokgi v := a + b. Kobihek
+        "-": Hehokgi v := a - b. Kobihek
+        "*": Hehokgi v := a * b. Kobihek
+        "/": Hehokgi
+            Yopok b == 0, err.
+            v := tdiv(a, b).
+        Kobihek
+        "%": Hehokgi
+            Yopok b == 0, err.
+            v := a - (b * tdiv(a, b)).
+        Kobihek
+        Hishyeko Hehokgi
+            Uxdrush err.
+        Kobihek Kobihek
+        Uxdrush store.
+    push:
+        v := Bupuxbo(t).
+    store:
+        sp := sp + 1.
+        Yopok sp <= Yik(st), over.
+        Oxba(st, v).
+        Gosh.
+    over:
+        st[sp] := v.
+    Kobihek
+    Yopok sp /= 1, err.
+    Pohuwu Yawishbo(st[1]).
+err:
+    Pohuwu "error".
+}
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi evalline(line).
+    line := Pewexpo().
+Kobihek

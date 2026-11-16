@@ -1,4 +1,17 @@
-**T1–T2 finding: the harder tier separates models, and the first thing it catches is habit, not logic.** Ten new tasks (digit sums, floor division, rotation, palindromes, binary search, weekdays, an RPN calculator, Life, big-number arithmetic, word frequencies) were added to the seven T0 tasks, written so that the false friends matter: integer division with negative numbers, index base, inclusive loop bounds, precedence. One-shot, no tools, 17 tasks per dialect, 8 dialects per arm, Python as the control. Claude Opus 5.5 (effort high): Python 17/17, standard semantics 108/136 (79%), false friends 94/136 (69%). Kimi (`kimi-for-coding`): Python 17/17, standard semantics 120/136 (88%), false friends 125/136 (92%). Both models now drop from Python; the T0 tier never separated them from it.
+**Release v1: Opus 64/68, Kimi 45/68.** Two fixed, published languages (Reslil and Dushpek, chosen by a rule that never looks at results), the same 17 tasks, and the same budget for every model: 64,000 output tokens per request and 150 agent steps. One run per model, mode and language.
+
+| | Reslil | Dushpek | Total |
+|---|---|---|---|
+| Opus 5.5, one-shot | 17/17 | 13/17 | 30/34 |
+| Opus 5.5, agent | 17/17 | 17/17 | 34/34 |
+| Kimi, one-shot | 13/17 | 9/17 | 22/34 |
+| Kimi, agent | 15/17 | 8/17 | 23/34 |
+
+**Opus's four one-shot misses are `"\r"` again.** The manual's four escapes don't include it. As an agent, Opus hit the compile error, fixed it, and finished both languages in 13 and 21 requests for about $0.50 each. **Kimi fails on the language itself, and tools barely help it.** Its Dushpek answers are mostly silently wrong output: indexes start at 1 and wrap around instead of failing, and division rounds up, so off-by-one and rounding mistakes run without error. Its Reslil one-shot also had syntax errors. As an agent it used all 150 requests in both languages and ended one task better than one-shot. One Kimi shell command was flagged by the audit (`../../bin/dushpek` run from `.tmp/t`); it resolves to the workspace's own toolchain, so it is a false positive. Dushpek, with its 1-based wrapping indexes and its `if` written as labels and jumps, is the harder language for both models.
+
+An earlier v1 attempt used a 32,000-token budget. Kimi spent about 30,000 of it thinking and was cut off before answering, and the harness raised an error instead of grading the cut-off answer. Both are fixed: cut-off answers are now graded as they stand, and the release fixes the budget. The attempt is archived in `results/archive/v1-trial-32k/`. Cost of the v1 Opus runs: $2.14.
+
+**Earlier probe, T1–T2 on practice seeds 1–8: the harder tier separates models, and the first thing it catches is habit, not logic.** Ten new tasks (digit sums, floor division, rotation, palindromes, binary search, weekdays, an RPN calculator, Life, big-number arithmetic, word frequencies) were added to the seven T0 tasks, written so that the false friends matter: integer division with negative numbers, index base, inclusive loop bounds, precedence. One-shot, no tools, 17 tasks per dialect, 8 dialects per arm, Python as the control. Claude Opus 5.5 (effort high): Python 17/17, standard semantics 108/136 (79%), false friends 94/136 (69%). Kimi (`kimi-for-coding`): Python 17/17, standard semantics 120/136 (88%), false friends 125/136 (92%). Both models now drop from Python; the T0 tier never separated them from it.
 
 **Every one of Opus's 70 failed tasks has the same cause: `"\r"`.** Opus habitually treats a carriage return as whitespace when it splits input lines. The manual lists exactly four escapes (`\n`, `\t`, `\"`, `\\`), so `"\r"` is a compile error and every task sharing the helper fails. With only that slip patched (`\r` → `\t`, scored offline and not counted), Opus would pass 271 of 272: it handled floor-versus-truncating division, 1-based indexing, exclusive loop bounds and fall-through switches correctly in every dialect. The one remaining miss is a genuine false friend: in a dialect with flat right-to-left precedence it wrote `lo + 1 <= n`, which parses as `lo + (1 <= n)`.
 
@@ -6,4 +19,4 @@
 
 **Reading the numbers.** Opus's lower score is almost entirely one habit applied consistently; Kimi's is many unrelated slips. A pass rate alone hides that difference; each run's `grade.json` keeps the error of every failing test. The arm gap is not yet meaningful: with 8 dialects per arm, one recurring habit moves the score by tens of points.
 
-Cost: the Opus probe was about $7.60 for 17 runs; Kimi ran on its subscription plan. Earlier T0 results (both models 100% in every arm) are archived in `results/archive/v0-t0/`.
+Cost: the Opus probe was about $7.60 for 17 runs; Kimi ran on its subscription plan. On the probe Kimi scored higher; on v1, with tools and a fixed budget, Opus did. Both are small samples. Earlier T0 results (both models 100% in every arm) are archived in `results/archive/v0-t0/`.

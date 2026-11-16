@@ -1,0 +1,68 @@
+{
+  "builtins": {
+    "len": "Yik",
+    "num": "Bupuxbo",
+    "push": "Oxba",
+    "readline": "Pewexpo",
+    "str": "Yawishbo"
+  },
+  "comment": "//",
+  "ext": "dus",
+  "keywords": {
+    "and": "Okdro",
+    "begin": "Hehokgi",
+    "break": "Kewi",
+    "case": "Dru",
+    "continue": "Gosh",
+    "do": "Gihe",
+    "else": "Hishyeko",
+    "end": "Kobihek",
+    "false": "Lesh",
+    "for": "Gipolu",
+    "func": "Yokyi",
+    "goto": "Uxdrush",
+    "jumpif": "Yopok",
+    "let": "Koke",
+    "none": "Liliga",
+    "not": "Gukdidok",
+    "of": "Ihedrux",
+    "or": "Dak",
+    "print": "Ebi",
+    "repeat": "Eshdoyi",
+    "return": "Pohuwu",
+    "step": "Drix",
+    "to": "Wexdush",
+    "true": "Geklabik",
+    "until": "Peshdro",
+    "while": "Puwadish",
+    "write": "Wuhadi"
+  },
+  "name": "Dushpek",
+  "ops": {
+    "Assign": ":=",
+    "Eq": "==",
+    "Ne": "/=",
+    "Concat": "++",
+    "Mod": "%"
+  },
+  "seed": 977,
+  "semantics": {
+    "ArgOrder": "right-to-left",
+    "OperandOrder": "right-to-left",
+    "Div": "toward-positive-infinity",
+    "IndexBase": 1,
+    "OutOfRange": "wrap",
+    "CountInclusive": true,
+    "ShortCircuit": true,
+    "SwitchFallthrough": false,
+    "ListEqStructural": true,
+    "Prec": "flat-left"
+  },
+  "styles": {
+    "Func": "c",
+    "If": "asm",
+    "Switch": "pascal",
+    "Loop": "pascal"
+  },
+  "terminator": "."
+}

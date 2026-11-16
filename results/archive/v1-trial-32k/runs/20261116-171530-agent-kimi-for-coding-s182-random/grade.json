@@ -1,0 +1,371 @@
+{
+  "tasks": [
+    {
+      "id": "t0-count",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-day-names",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-even-odd",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-factorial",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-fizzbuzz",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-hello",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-reverse-lines",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-digits",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-floordiv",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-palindromes",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rank",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-rotate",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        },
+        {
+          "name": "08",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-weekday",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-bignum",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-life",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t2-rpn",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "7\n14\n3\nerror\nerror\nerror\nerror\n14\n5\nerror\nerror\nerror\nerror\nerror\n20\nerror\nerror\nerror\n-3\nerror\nerror\n0\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "error\nerror\nerror\nerror\nerror\nerror\nerror\n14\n5\nerror\nerror\nerror\nerror\nerror\n20\n1\nerror\nerror\nerror\nerror\nerror\nerror\n0\nerror\n7\nerror\nerror\nerror\nerror\nerror\nerror\nerror\nerror\nerror\nerror\n-4\nerror\nerror\nerror\nerror\nerror\n8\nerror\nerror\n-15\nerror\nerror\nerror\nerror\nerror\nerror\nerror\n9\nerror\n13\n13\nerror"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-wordfreq",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 86: `odresdra` cannot convert \"T\" to an integer\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 86: `odresdra` cannot convert \"N\" to an integer\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 112: index -1 is out of range (valid: 0 to 2)\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "passed_tasks": 15,
+  "total_tasks": 17
+}

@@ -1,0 +1,119 @@
+Yokyi lower(c) {
+    Koke U := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke L := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := ((lo + hi) - 1) / 2.
+        Yopok U[mid] < c, right.
+        hi := mid.
+        Gosh.
+    right:
+        lo := mid + 1.
+    Kobihek
+    Pohuwu L[lo].
+}
+
+Yokyi extract(s, ws) {
+    Koke cur := "".
+    Koke i := 1.
+    Koke n := Yik(s).
+    Puwadish i <= n Gihe Hehokgi
+        Koke c := s[i].
+        i := i + 1.
+        Yopok (c >= "a") Okdro (c <= "z"), lw.
+        Yopok (c >= "A") Okdro (c <= "Z"), up.
+        Yopok cur == "", nx.
+        Oxba(ws, cur).
+        cur := "".
+        Gosh.
+    lw:
+        cur := cur ++ c.
+        Gosh.
+    up:
+        cur := cur ++ lower(c).
+        Gosh.
+    nx:
+        Gosh.
+    Kobihek
+    Yopok cur == "", fin.
+    Oxba(ws, cur).
+fin:
+    Pohuwu.
+}
+
+Yokyi msort(xs) {
+    Koke n := Yik(xs).
+    Yopok n > 1, go.
+    Pohuwu xs.
+go:
+    Koke m := n / 2.
+    Koke a := [].
+    Koke b := [].
+    Koke i := 1.
+    Puwadish i <= m Gihe Hehokgi
+        Oxba(a, xs[i]).
+        i := i + 1.
+    Kobihek
+    Puwadish i <= n Gihe Hehokgi
+        Oxba(b, xs[i]).
+        i := i + 1.
+    Kobihek
+    a := msort(a).
+    b := msort(b).
+    Koke r := [].
+    i := 1.
+    Koke j := 1.
+    Koke na := Yik(a).
+    Koke nb := Yik(b).
+    Puwadish (i <= na) Dak (j <= nb) Gihe Hehokgi
+        Yopok (i <= na) Okdro ((j > nb) Dak (a[i] <= b[j])), ta.
+        Oxba(r, b[j]).
+        j := j + 1.
+        Gosh.
+    ta:
+        Oxba(r, a[i]).
+        i := i + 1.
+    Kobihek
+    Pohuwu r.
+}
+
+Koke words := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    extract(line, words).
+    line := Pewexpo().
+Kobihek
+Koke sorted := msort(words).
+Koke uw := [].
+Koke uc := [].
+Koke k := 0.
+Koke i := 1.
+Koke ns := Yik(sorted).
+Puwadish i <= ns Gihe Hehokgi
+    Koke w := sorted[i].
+    i := i + 1.
+    Yopok (k > 0) Okdro (uw[k] == w), same.
+    Oxba(uw, w).
+    Oxba(uc, 1).
+    k := k + 1.
+    Gosh.
+same:
+    uc[k] := uc[k] + 1.
+Kobihek
+Koke t := 1.
+Puwadish (t <= 10) Okdro (t <= k) Gihe Hehokgi
+    Koke best := 0.
+    Koke x := 1.
+    Puwadish x <= k Gihe Hehokgi
+        Koke cx := x.
+        x := x + 1.
+        Yopok (best == 0) Dak (uc[cx] > uc[best]), setb.
+        Gosh.
+    setb:
+        best := cx.
+    Kobihek
+    Ebi uw[best] ++ " " ++ uc[best].
+    uc[best] := -1.
+    t := t + 1.
+Kobihek

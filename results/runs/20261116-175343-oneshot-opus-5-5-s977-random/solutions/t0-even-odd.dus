@@ -1,0 +1,16 @@
+Koke ev := 0.
+Koke od := 0.
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Yik(line) == 0, skip.
+    Koke n := Bupuxbo(line).
+    Yopok (n % 2) == 0, isev.
+    od := od + 1.
+    Uxdrush skip.
+isev:
+    ev := ev + 1.
+skip:
+    line := Pewexpo().
+Kobihek
+Ebi "even " ++ ev.
+Ebi "odd " ++ od.

@@ -1,0 +1,16 @@
+Koke n := Bupuxbo(Pewexpo()).
+Gipolu i := 1 Wexdush n Gihe Hehokgi
+    Yopok (i % 15) /= 0, not15.
+    Ebi "FizzBuzz".
+    Gosh.
+not15:
+    Yopok (i % 3) /= 0, not3.
+    Ebi "Fizz".
+    Gosh.
+not3:
+    Yopok (i % 5) /= 0, not5.
+    Ebi "Buzz".
+    Gosh.
+not5:
+    Ebi i.
+Kobihek

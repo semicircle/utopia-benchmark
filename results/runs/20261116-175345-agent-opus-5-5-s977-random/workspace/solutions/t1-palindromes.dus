@@ -1,0 +1,36 @@
+Yokyi norm(c) {
+    Koke up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lo := "abcdefghijklmnopqrstuvwxyz".
+    Yopok (c >= "a") Okdro (c <= "z"), keep.
+    Yopok (c >= "0") Okdro (c <= "9"), keep.
+    Yopok (c >= "A") Okdro (c <= "Z"), upper.
+    Pohuwu "".
+upper:
+    Gipolu i := 1 Wexdush 26 Gihe Hehokgi
+        Yopok up[i] == c, found.
+    Kobihek
+found:
+    Pohuwu lo[i].
+keep:
+    Pohuwu c.
+}
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke cs := [].
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke c := norm(line[i]).
+        Yopok c == "", skip.
+        Oxba(cs, c).
+    skip:
+    Kobihek
+    Koke n := Yik(cs).
+    Koke ok := "yes".
+    Gipolu i := 1 Wexdush n / 2 Gihe Hehokgi
+        Yopok cs[i] == cs[n + 1 - i], same.
+        ok := "no".
+        Kewi.
+    same:
+    Kobihek
+    Ebi ok.
+    line := Pewexpo().
+Kobihek

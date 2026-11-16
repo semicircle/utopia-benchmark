@@ -1,0 +1,83 @@
+Yokyi substr(s, lo, hi) {
+    Koke out := "".
+    Koke t := lo.
+    Puwadish t <= hi Gihe Hehokgi
+        out := out ++ s[t].
+        t := t + 1.
+Kobihek
+    Pohuwu out.
+}
+
+Koke first := Pewexpo().
+Koke arr := [].
+Koke cnt := 0.
+
+// parse the first line into arr (numbers in non-decreasing order)
+Koke i := 1.
+Koke len := Yik(first).
+Puwadish i <= len Gihe Hehokgi
+    Yopok first[i] == " ", skip1.
+    Koke j := i.
+    Puwadish j <= len Gihe Hehokgi
+        Yopok first[j] == " ", tok1.
+        j := j + 1.
+        Gosh.
+tok1:
+        Kewi.
+Kobihek
+    Yopok j > len, at1.
+    Oxba(arr, Bupuxbo(substr(first, i, j - 1))).
+    Uxdrush got1.
+at1:
+    Oxba(arr, Bupuxbo(substr(first, i, len))).
+got1:
+    cnt := cnt + 1.
+    Yopok j > len, skip1.
+    i := j.
+skip1:
+    i := i + 1.
+Kobihek
+
+Yokyi upper(arr, cnt, q) {
+    // first index with arr[i] > q, in [lo, hi]
+    Koke lo := 1.
+    Koke hi := cnt + 1.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi) / 2.
+        Yopok arr[mid] > q, up1.
+        lo := mid + 1.
+        Gosh.
+up1:
+        hi := mid.
+Kobihek
+    Pohuwu lo.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke q := Bupuxbo(line).
+    Koke u := upper(arr, cnt, q).
+    Koke lo := 1.
+    Koke hi := cnt.
+    Puwadish lo <= hi Gihe Hehokgi
+        Koke mid := (lo + hi) / 2.
+        Yopok arr[mid] >= q, up2.
+        lo := mid + 1.
+        Gosh.
+up2:
+            hi := mid - 1.
+Kobihek
+    // lo = lower bound (first index with arr[i] >= q)
+    Yopok lo <= cnt, chk1.
+    Yopok arr[u] == q, f1.
+chk1:
+    Yopok lo <= cnt, miss1.
+    Yopok arr[u] == q, f1.
+miss1:
+    Ebi (u - 1) ++ " missing".
+    Uxdrush next1.
+f1:
+    Ebi (u - 1) ++ " found".
+next1:
+    line := Pewexpo().
+Kobihek

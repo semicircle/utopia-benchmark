@@ -1,0 +1,36 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke len := Yik(line).
+    Koke neg := Lesh.
+    Koke start := 1.
+    Yopok line[1] == "-", negset.
+    Uxdrush go.
+negset:
+    neg := Geklabik.
+    start := 2.
+go:
+    Koke sum := 0.
+    Koke rev := "".
+    Koke seenNonZero := Lesh.
+    Gipolu i := len Wexdush start Drix -1 Gihe Hehokgi
+        Koke ch := line[i].
+        sum := sum + Bupuxbo(ch).
+        Yopok (seenNonZero == Geklabik) Dak (ch /= "0"), keep.
+        Uxdrush cont.
+keep:
+        seenNonZero := Geklabik.
+        rev := rev ++ ch.
+cont:
+    Kobihek
+    Yopok rev == "", zero.
+    Yopok neg, negout.
+    Ebi sum ++ " " ++ rev.
+    Uxdrush next.
+negout:
+    Ebi sum ++ " -" ++ rev.
+    Uxdrush next.
+zero:
+    Ebi sum ++ " 0".
+next:
+    line := Pewexpo().
+Kobihek

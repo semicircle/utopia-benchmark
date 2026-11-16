@@ -1,0 +1,10 @@
+Ebi -7 / 2.
+Ebi 7 / -2.
+Ebi -7 / -2.
+Ebi 7 % -2.
+Ebi -(3) - 2.
+Koke s := "ab".
+Ebi s == "ab".
+Ebi "a" < "b".
+Ebi Bupuxbo(" -12 ").
+Ebi Bupuxbo("+3").

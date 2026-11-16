@@ -1,0 +1,52 @@
+Yokyi split(s) {
+    Koke parts := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok Yik(cur) == 0, skip.
+        Oxba(parts, cur).
+        cur := "".
+    skip:
+        Gosh.
+    Kobihek
+    Yopok Yik(cur) == 0, fin.
+    Oxba(parts, cur).
+fin:
+    Pohuwu parts.
+}
+
+Koke first := Pewexpo().
+Yopok first == Liliga, endp.
+Koke p := split(first).
+Koke xs := [].
+Gipolu i := 1 Wexdush Yik(p) Gihe Hehokgi
+    Oxba(xs, Bupuxbo(p[i])).
+Kobihek
+Koke n := Yik(xs).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Yik(line) == 0, next.
+    Koke q := Bupuxbo(line).
+    Koke lo := 1.
+    Koke hi := n + 1.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok xs[mid] >= q, left.
+        lo := mid + 1.
+        Gosh.
+    left:
+        hi := mid.
+    Kobihek
+    Yopok (lo <= n) Okdro (xs[lo] == q), fnd.
+    Ebi (lo - 1) ++ " missing".
+    Uxdrush next.
+fnd:
+    Ebi (lo - 1) ++ " found".
+next:
+    line := Pewexpo().
+Kobihek
+endp:

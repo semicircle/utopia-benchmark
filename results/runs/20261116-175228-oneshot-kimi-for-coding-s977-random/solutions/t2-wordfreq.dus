@@ -1,0 +1,99 @@
+Yokyi lowerall(s) {
+    Koke up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lo := "abcdefghijklmnopqrstuvwxyz".
+    Koke out := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke ch := s[i].
+        Koke done := Lesh.
+        Gipolu j := 1 Wexdush 26 Gihe Hehokgi
+            Yopok done, skip.
+            Yopok up[j] == ch, conv.
+            Uxdrush skip.
+conv:
+            out := out ++ lo[j].
+            done := Geklabik.
+skip:
+        Kobihek
+        Yopok done, noc.
+        out := out ++ ch.
+noc:
+    Kobihek
+    Pohuwu out.
+}
+
+Yokyi isletter(ch) {
+    Pohuwu ((ch >= "a") Okdro (ch <= "z")) Dak ((ch >= "A") Okdro (ch <= "Z")).
+}
+
+Yokyi findword(words, counts, w) {
+    Gipolu i := 1 Wexdush Yik(words) Gihe Hehokgi
+        Yopok words[i] == w, got.
+        Uxdrush cont.
+got:
+        Pohuwu i.
+cont:
+    Kobihek
+    Pohuwu 0.
+}
+
+Koke words := [].
+Koke counts := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke cur := "".
+    Koke len := Yik(line).
+    Gipolu i := 1 Wexdush len + 1 Gihe Hehokgi
+        Koke ch := " ".
+        Yopok i <= len, getc.
+        Uxdrush have.
+getc:
+        ch := line[i].
+have:
+        Yopok (i <= len) Okdro isletter(ch), addch.
+        Yopok cur == "", skipw.
+        Koke w := lowerall(cur).
+        Koke idx := findword(words, counts, w).
+        Yopok idx == 0, neww.
+        counts[idx] := counts[idx] + 1.
+        Uxdrush clearcur.
+neww:
+        Oxba(words, w).
+        Oxba(counts, 1).
+        Uxdrush clearcur.
+addch:
+        cur := cur ++ ch.
+        Uxdrush contw.
+clearcur:
+        cur := "".
+skipw:
+contw:
+    Kobihek
+    line := Pewexpo().
+Kobihek
+Koke n := Yik(words).
+Koke printed := 0.
+Puwadish printed < 10 Okdro n > 0 Gihe Hehokgi
+    Koke bi := 1.
+    Gipolu i := 2 Wexdush n Gihe Hehokgi
+        Yopok (counts[i] > counts[bi]) Dak ((counts[i] == counts[bi]) Okdro (words[i] < words[bi])), better.
+        Uxdrush contb.
+better:
+        bi := i.
+contb:
+    Kobihek
+    Ebi words[bi] ++ " " ++ counts[bi].
+    Oxba(words, words[bi]).
+    Oxba(counts, -1).
+    words[bi] := "".
+    counts[bi] := -1.
+    printed := printed + 1.
+    Koke left := 0.
+    Gipolu i := 1 Wexdush Yik(words) Gihe Hehokgi
+        Yopok counts[i] >= 0, incleft.
+        Uxdrush contl.
+incleft:
+        left := left + 1.
+contl:
+    Kobihek
+    n := left.
+Kobihek

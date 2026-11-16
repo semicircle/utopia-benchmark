@@ -1,0 +1,440 @@
+{
+  "tasks": [
+    {
+      "id": "t0-count",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-day-names",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-even-odd",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-factorial",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-fizzbuzz",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-hello",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t0-reverse-lines",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-digits",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 19: `Bupuxbo` cannot convert \"-\" to an integer\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 19: `Bupuxbo` cannot convert \"-\" to an integer\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 19: `Bupuxbo` cannot convert \"-\" to an integer\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t1-floordiv",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "id": "t1-palindromes",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "no\nyes\nno\nno\nyes\nyes\nno\nyes\nno\nyes\nyes\nno\nno\nno\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "yes\nno\nno\nyes\nyes\nno\nyes\nno\nyes\nyes\nno\nno\nno\nyes\nyes\nyes\nyes\nyes\nyes\nno\nyes\nyes\nyes\nyes\nyes\nyes\nyes\nyes\nyes\nno\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t1-rank",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 45: step limit exceeded (50000000 steps); is there an infinite loop?\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 72: index 1 is out of range: the value is empty\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 46: step limit exceeded (50000000 steps); is there an infinite loop?\n",
+          "stdout_head": "3 missing\n"
+        },
+        {
+          "name": "04",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 47: step limit exceeded (50000000 steps); is there an infinite loop?\n",
+          "stdout_head": "665 missing\n782 missing\n"
+        },
+        {
+          "name": "05",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "2 found\n2 missing\n2 missing\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t1-rotate",
+      "tests": [
+        {
+          "name": "01",
+          "passed": true
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "c\na\nb\n"
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "y\nx\ny\n"
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "grapes\napple\nbread\ncider\ndates\neggs\nfigs\n"
+        },
+        {
+          "name": "06",
+          "passed": true
+        },
+        {
+          "name": "07",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "cider3\nbread0\ngrapes1\neggs2\ncider3\n"
+        },
+        {
+          "name": "08",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "only\nonly\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t1-weekday",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "Sunday\nFriday\nMonday\nThursday\nMonday\nMonday\nWednesday\nWednesday\nWednesday\nMonday\nSaturday\nMonday\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "Monday\nSunday\nSunday\nWednesday\nMonday\nTuesday\nSunday\nMonday\nTuesday\nFriday\nWednesday\nSaturday\nSunday\nFriday\nSaturday\nFriday\nFriday\nTuesday\nMonday\nWednesday\nMonday\nSunday\nFriday\nFriday\nMonday\nSunday\nMonday\nThursday\nSunday\nFriday\nFriday\nWednesday\nWednesday\nThursday\nMonday\nTuesday\nSunday\nTuesday\nFriday"
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "Saturday\nTuesday\nWednesday\nTuesday\nMonday\nThursday\nThursday\nSunday\nThursday\nSaturday\nMonday\nSaturday\nThursday\nThursday\nFriday\nTuesday\nFriday\nSunday\nTuesday\nSaturday\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-bignum",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 47: step limit exceeded (50000000 steps); is there an infinite loop?\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 49: step limit exceeded (50000000 steps); is there an infinite loop?\n",
+          "stdout_head": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-life",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": ".#....\n..#...\n###...\n......\n......\n......\n"
+        },
+        {
+          "name": "02",
+          "passed": true
+        },
+        {
+          "name": "03",
+          "passed": true
+        },
+        {
+          "name": "04",
+          "passed": true
+        },
+        {
+          "name": "05",
+          "passed": true
+        },
+        {
+          "name": "06",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "...............##\n..#..........##..\n##............#..\n.#.....#.........\n......##.....##..\n.......#......#.#\n...........##.##.\n............#....\n..#.#.#.........#\n.##..#.##......#.\n...#.#.##.....#..\n...#..#.##..#..#.\n....##..#..##.#..\n"
+        },
+        {
+          "name": "07",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": ".........\n.........\n....##...\n...#.#.#.\n....###..\n....#....\n.........\n.......#.\n........#\n.#.......\n#........\n.#.....#.\n........#\n.........\n.........\n.........\n.........\n..###....\n...#.....\n.........\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-rpn",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "7\n5\n3\n-3\n-3\n-1\n1\n14\n6\nerror\nerror\nerror\nerror\nerror\n20\n12\nerror\nerror\n-3\nerror\nerror\n0\n"
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 0,
+          "stderr": "",
+          "stdout_head": "error\n-1\nerror\nerror\nerror\n0\nerror\nerror\n5\n-2\n0\n-11\n-406\n9\nerror\n1\n-2\nerror\nerror\nerror\nerror\n-2\n0\n-8\n7\nerror\nerror\n-1\n-40\n-252\nerror\n2\nerror\n-1\nerror\n-12\n0\n-7\nerror\nerror\n0\n8\nerror\nerror\n-15\n-12\n11\n-160\n0\n-6\n-95\n0\n9\nerror\nerror\nerror\n5\n0\n16\nerror\n"
+        }
+      ],
+      "passed": false
+    },
+    {
+      "id": "t2-wordfreq",
+      "tests": [
+        {
+          "name": "01",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 59: index 0 is out of range: the value is empty\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "02",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 59: index 0 is out of range: the value is empty\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "03",
+          "passed": false,
+          "exit": 1,
+          "stderr": "error: line 59: index 0 is out of range: the value is empty\n",
+          "stdout_head": ""
+        },
+        {
+          "name": "04",
+          "passed": true
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "passed_tasks": 8,
+  "total_tasks": 17
+}

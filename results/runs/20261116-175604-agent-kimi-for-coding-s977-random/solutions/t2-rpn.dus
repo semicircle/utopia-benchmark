@@ -1,0 +1,125 @@
+Yokyi substr(s, lo, hi) {
+    Koke out := "".
+    Koke t := lo.
+    Puwadish t <= hi Gihe Hehokgi
+        out := out ++ s[t].
+        t := t + 1.
+Kobihek
+    Pohuwu out.
+}
+
+Yokyi evalrpn(line) {
+    Koke st := [].
+    Koke top := 0.
+    Koke i := 1.
+    Koke len := Yik(line).
+    Puwadish i <= len Gihe Hehokgi
+        Yopok line[i] == " ", skip1.
+        Koke j := i.
+        Puwadish j <= len Gihe Hehokgi
+            Yopok line[j] == " ", tok1.
+            j := j + 1.
+            Gosh.
+tok1:
+            Kewi.
+Kobihek
+        Koke tok := "".
+        Yopok j > len, at1.
+        tok := substr(line, i, j - 1).
+        Uxdrush got1.
+at1:
+        tok := substr(line, i, len).
+got1:
+        // number or operator?
+        Koke p := 1.
+        Yopok tok[1] == "-", p2.
+        Uxdrush p3.
+p2:
+        p := 2.
+p3:
+        Koke isn := Yik(tok) >= p.
+        Koke t := p.
+        Puwadish t <= Yik(tok) Gihe Hehokgi
+            Yopok tok[t] >= "0", c1.
+            isn := Lesh.
+            Kewi.
+c1:
+            Yopok tok[t] <= "9", c2.
+            isn := Lesh.
+            Kewi.
+c2:
+            t := t + 1.
+Kobihek
+        Yopok isn, num1.
+        // operator
+        Yopok Yik(tok) /= 1, err1.
+        Yopok top < 2, err1.
+        top := top - 1.
+        Koke b := st[top + 1].
+        top := top - 1.
+        Koke a := st[top + 1].
+        Yopok tok == "+", op1.
+        Yopok tok == "-", op2.
+        Yopok tok == "*", op3.
+        Yopok tok == "/", op4.
+        Yopok tok == "%", op5.
+        Uxdrush err1.
+op1:
+        top := top + 1.
+        st[top] := a + b.
+        Uxdrush pushed1.
+op2:
+        top := top + 1.
+        st[top] := a - b.
+        Uxdrush pushed1.
+op3:
+        top := top + 1.
+        st[top] := a * b.
+        Uxdrush pushed1.
+op4:
+        Yopok b == 0, err1.
+        Koke q := a / b.
+        Koke rr := a - (b * q).
+        Yopok rr == 0, z4.
+        Yopok (rr < 0) == (a < 0), z4.
+        q := q - 1.
+        rr := a - (b * q).
+z4:
+        top := top + 1.
+        st[top] := q.
+        Uxdrush pushed1.
+op5:
+        Yopok b == 0, err1.
+        Koke q := a / b.
+        Koke rr := a - (b * q).
+        Yopok rr == 0, z5.
+        Yopok (rr < 0) == (a < 0), z5.
+        q := q - 1.
+        rr := a - (b * q).
+z5:
+        top := top + 1.
+        st[top] := rr.
+        Uxdrush pushed1.
+num1:
+        Oxba(st, Bupuxbo(tok)).
+        top := top + 1.
+pushed1:
+        Yopok j > len, skip1.
+        i := j.
+skip1:
+        i := i + 1.
+Kobihek
+    Yopok top == 1, ok1.
+    Uxdrush err2.
+ok1:
+    Pohuwu Yawishbo(st[1]).
+err1:
+err2:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi evalrpn(line).
+    line := Pewexpo().
+Kobihek

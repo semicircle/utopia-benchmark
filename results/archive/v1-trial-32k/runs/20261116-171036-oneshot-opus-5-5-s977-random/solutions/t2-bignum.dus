@@ -1,0 +1,115 @@
+Yokyi fdiv(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Yokyi split(s) {
+    Koke parts := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok Yik(cur) == 0, skip.
+        Oxba(parts, cur).
+        cur := "".
+    skip:
+        Gosh.
+    Kobihek
+    Yopok Yik(cur) == 0, fin.
+    Oxba(parts, cur).
+fin:
+    Pohuwu parts.
+}
+
+Yokyi digits(s) {
+    Koke r := [].
+    Gipolu i := Yik(s) Wexdush 1 Drix -1 Gihe Hehokgi
+        Oxba(r, Bupuxbo(s[i])).
+    Kobihek
+    Pohuwu r.
+}
+
+Yokyi tostr(r) {
+    Koke n := Yik(r).
+    Puwadish (n > 1) Okdro (r[n] == 0) Gihe Hehokgi
+        n := n - 1.
+    Kobihek
+    Koke s := "".
+    Gipolu i := n Wexdush 1 Drix -1 Gihe Hehokgi
+        s := s ++ r[i].
+    Kobihek
+    Pohuwu s.
+}
+
+Yokyi add(a, b) {
+    Koke r := [].
+    Koke n := Yik(a).
+    Yopok Yik(b) <= n, ok.
+    n := Yik(b).
+ok:
+    Koke c := 0.
+    Gipolu i := 1 Wexdush n Gihe Hehokgi
+        Koke s := c.
+        Yopok i > Yik(a), noa.
+        s := s + a[i].
+    noa:
+        Yopok i > Yik(b), nob.
+        s := s + b[i].
+    nob:
+        c := 0.
+        Yopok s < 10, nc.
+        s := s - 10.
+        c := 1.
+    nc:
+        Oxba(r, s).
+    Kobihek
+    Yopok c == 0, fin.
+    Oxba(r, c).
+fin:
+    Pohuwu r.
+}
+
+Yokyi mul(a, b) {
+    Koke la := Yik(a).
+    Koke lb := Yik(b).
+    Koke r := [].
+    Gipolu i := 1 Wexdush (la + lb) Gihe Hehokgi
+        Oxba(r, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush la Gihe Hehokgi
+        Koke ai := a[i].
+        Yopok ai == 0, skipi.
+        Gipolu j := 1 Wexdush lb Gihe Hehokgi
+            Koke k := (i + j) - 1.
+            r[k] := r[k] + (ai * b[j]).
+        Kobihek
+    skipi:
+        Gosh.
+    Kobihek
+    Koke c := 0.
+    Gipolu i := 1 Wexdush (la + lb) Gihe Hehokgi
+        Koke v := r[i] + c.
+        c := fdiv(v, 10).
+        r[i] := v - (c * 10).
+    Kobihek
+    Pohuwu r.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke p := split(line).
+    Yopok Yik(p) < 2, next.
+    Koke a := digits(p[1]).
+    Koke b := digits(p[2]).
+    Koke sm := tostr(add(a, b)).
+    Koke pr := tostr(mul(a, b)).
+    Ebi sm ++ " " ++ pr.
+next:
+    line := Pewexpo().
+Kobihek

@@ -1,0 +1,56 @@
+Yokyi substr(s, lo, hi) {
+    Koke out := "".
+    Koke t := lo.
+    Puwadish t <= hi Gihe Hehokgi
+        out := out ++ s[t].
+        t := t + 1.
+Kobihek
+    Pohuwu out.
+}
+
+Yokyi days(y, m) {
+    Yopok m == 2, feb1.
+    Koke leap := 0.
+    Yopok y % 4 == 0, c1.
+    Uxdrush c4.
+c1:
+    Yopok y % 100 /= 0, c2.
+    Yopok y % 400 /= 0, c4.
+c2:
+    leap := 1.
+c4:
+    Yopok leap == 1, feb2.
+    Pohuwu 28.
+feb2:
+    Pohuwu 29.
+feb1:
+    Koke md := m % 2 == 1.
+    Yopok m <= 7, half1.
+    md := m % 2 == 0.
+half1:
+    Yopok md, odd1.
+    Pohuwu 30.
+odd1:
+    Pohuwu 31.
+}
+
+Koke name := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke y := Bupuxbo(substr(line, 1, 4)).
+    Koke m := Bupuxbo(substr(line, 6, 7)).
+    Koke d := Bupuxbo(substr(line, 9, 10)).
+    // days before year y
+    Koke t1 := y - 1.
+    Koke days := t1 * 365 + (t1 / 4) - (t1 / 100) + (t1 / 400).
+    // days in months before m
+    Koke i := 1.
+    Puwadish i < m Gihe Hehokgi
+        days := days + days(y, i).
+        i := i + 1.
+Kobihek
+    days := days + d - 1.
+    Ebi name[days % 7 + 1].
+    line := Pewexpo().
+Kobihek

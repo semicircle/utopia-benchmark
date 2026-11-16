@@ -1,0 +1,16 @@
+wami 2 + 3 * 4;
+wami 10 - 4 - 3;
+wami -7 / 2;
+wami -7 drossou 2;
+wami 7 drossou -2;
+sheye g <- [[1,2],[3,4]];
+wami g[1][0];
+wami odresdra(" -12 ");
+wami "a" < "b";
+wami "abc" < "abd";
+wami -2 * 3;
+wami - 2 + 3;
+sheye s <- "x";
+wami s = "x";
+wami 1 = "1";
+wami odresdra("+5");

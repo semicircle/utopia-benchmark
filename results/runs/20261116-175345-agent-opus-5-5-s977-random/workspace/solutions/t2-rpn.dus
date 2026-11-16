@@ -1,0 +1,87 @@
+Yokyi split(s) {
+    Koke out := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok cur == "", skip.
+        Oxba(out, cur).
+        cur := "".
+    skip:
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(out, cur).
+done:
+    Pohuwu out.
+}
+Yokyi isint(t) {
+    Koke st := 1.
+    Yopok t[1] /= "-", nosign.
+    st := 2.
+nosign:
+    Yopok Yik(t) < st, bad.
+    Gipolu i := st Wexdush Yik(t) Gihe Hehokgi
+        Koke c := t[i].
+        Yopok (c < "0") Dak (c > "9"), bad.
+    Kobihek
+    Pohuwu Geklabik.
+bad:
+    Pohuwu Lesh.
+}
+Yokyi tdiv(a, b) {
+    Yopok (a < 0) == (b < 0), samesign.
+    Pohuwu a / b.
+samesign:
+    Pohuwu -((-a) / b).
+}
+// returns string result or "error"
+Yokyi evalline(line) {
+    Koke toks := split(line).
+    Yopok Yik(toks) == 0, err.
+    Koke st := [].
+    Koke sp := 0.
+    Gipolu i := 1 Wexdush Yik(toks) Gihe Hehokgi
+        Koke t := toks[i].
+        Yopok isint(t), num.
+        Yopok sp < 2, err.
+        Koke b := st[sp].
+        Koke a := st[sp - 1].
+        sp := sp - 1.
+        Koke r := 0.
+        Dru t Ihedrux
+        "+": Hehokgi r := a + b. Kobihek
+        "-": Hehokgi r := a - b. Kobihek
+        "*": Hehokgi r := a * b. Kobihek
+        "/": Hehokgi
+            Yopok b == 0, err.
+            r := tdiv(a, b).
+        Kobihek
+        "%": Hehokgi
+            Yopok b == 0, err.
+            r := a - (b * tdiv(a, b)).
+        Kobihek
+        Hishyeko Hehokgi
+            Uxdrush err.
+        Kobihek Kobihek
+        st[sp] := r.
+        Gosh.
+    num:
+        sp := sp + 1.
+        Yopok Yik(st) >= sp, have.
+        Oxba(st, 0).
+    have:
+        st[sp] := Bupuxbo(t).
+    Kobihek
+    Yopok sp /= 1, err.
+    Pohuwu Yawishbo(st[1]).
+err:
+    Pohuwu "error".
+}
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi evalline(line).
+    line := Pewexpo().
+Kobihek

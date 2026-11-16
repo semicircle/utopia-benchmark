@@ -235,6 +235,7 @@ def base_meta(cfg, run, mode, run_id):
         "effort": cfg.effort, "thinking": cfg.thinking, "max_tokens": cfg.max_tokens,
         "seed": None if cfg.arm == "python" else run.seed,
         "semantics": None if cfg.arm == "python" else cfg.semantics,
+        "release": cfg.release,
         "language": run.info["name"], "dialect": None if cfg.arm == "python" else run.info,
         "date": dt.datetime.now().isoformat(timespec="seconds"),
         "commit": git_commit(),
@@ -492,6 +493,8 @@ def main():
     ap.add_argument("--arm", choices=["utopia", "python"], default="utopia")
     ap.add_argument("--seeds", default="42", help="e.g. 42 or 1-8 or 3,5,9 (ignored for python)")
     ap.add_argument("--semantics", choices=["random", "standard"], default="random")
+    ap.add_argument("--release", default=None,
+                    help="run a published release's fixed languages (e.g. v1); sets --seeds and --semantics")
     ap.add_argument("--effort", default="high",
                     help="anthropic: output_config.effort; openai: reasoning_effort ('' to omit)")
     ap.add_argument("--no-thinking", action="store_true", help="anthropic: do not request adaptive thinking")
@@ -507,6 +510,17 @@ def main():
     ap.add_argument("--out", default=None, help="results directory (default results/runs)")
     args = ap.parse_args()
     args.effort = args.effort or None
+    if args.release:
+        rel_path = ROOT / "releases" / args.release / "release.json"
+        if not rel_path.exists():
+            sys.exit(f"error: no release {args.release!r} (expected {rel_path})")
+        if args.arm != "utopia":
+            sys.exit("error: --release applies to the utopia arm")
+        rel = json.loads(rel_path.read_text())
+        args.seeds = ",".join(str(l["seed"]) for l in rel["languages"])
+        args.semantics = rel["semantics"]
+        for k, v in rel.get("protocol", {}).items():  # every model gets the same budget
+            setattr(args, k, v)
     if args.provider in ("reference", "scripted"):
         args.model = args.provider
 

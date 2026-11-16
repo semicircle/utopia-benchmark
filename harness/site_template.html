@@ -131,6 +131,14 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
   <p class="muted" id="stamp"></p>
 </header>
 
+<section id="release-section" hidden>
+  <h2 id="release-title">Release</h2>
+  <p class="sub">Fixed languages, published with their manuals, so every result here can be reproduced.
+    Fresh seeds below test the same skill on languages no model can have seen.</p>
+  <p id="release-langs"></p>
+  <div id="release"></div>
+</section>
+
 <section id="notes-section" hidden>
   <h2>Findings</h2>
   <div id="notes"></div>
@@ -138,7 +146,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
 
 <section>
   <h2>Headline: how much of the skill was recall?</h2>
-  <p class="sub">Share of tasks whose solution passed every hidden test. <strong>Python</strong> is the
+  <p class="sub">Practice seeds only (release runs are in the table above). Share of tasks whose solution passed every hidden test. <strong>Python</strong> is the
     control: the same tasks in a language the model knows. <strong>Utopia, standard semantics</strong>
     changes only words and syntax. <strong>Utopia, false friends</strong> also changes behavior.</p>
   <div id="headline"></div>
@@ -180,19 +188,19 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
     <li><strong>One-shot mode.</strong> The model receives the manual and all tasks in one prompt, with no
       tools, and must write every solution without running anything. It is cheap and measures pure
       in-context learning.</li>
-    <li><strong>Agent mode.</strong> The model works as a coding agent (Claude Code, headless) in a fresh
-      workspace with the manual, the tasks and the language's toolchain, and may experiment freely.
-      Web access is disabled, the workspace sits outside the benchmark's source tree, and every file
-      path and shell command in the transcript is audited for attempts to look elsewhere.</li>
+    <li><strong>Agent mode.</strong> The model works as a coding agent in a fresh workspace with the
+      manual, the tasks and the language's toolchain, using three tools (run a shell command, read a
+      file, write a file), the same for every provider. The workspace sits outside the benchmark's
+      source tree, and every shell command is audited for attempts to look elsewhere. Grading rebuilds
+      the toolchain, so nothing the agent touched is trusted.</li>
     <li><strong>Grade.</strong> Solutions run against hidden tests; a task passes only if every test's
       output matches exactly.</li>
   </ol>
-  <p class="muted">v0 caveats: only seven T0 tasks (small programs), public practice seeds, few runs per
-    arm, so differences of one task are noise. Models are driven through the <code>claude</code> CLI;
-    other providers are not wired up yet.</p>
+  <p class="muted">Caveats: 17 tasks in three tiers, few runs per arm, so differences of a task or two
+    are noise. Any Anthropic or OpenAI-compatible endpoint can be run with an API key and a model name.</p>
 </section>
 
-<footer class="muted">Utopia is an open, AI-native benchmark. Seeds shown here are public practice seeds.</footer>
+<footer class="muted">Utopia is an open, AI-native benchmark. Release languages are fixed and public; other seeds are practice seeds.</footer>
 </main>
 <div class="tooltip" id="tip" role="tooltip"></div>
 
@@ -221,9 +229,11 @@ function bindTip(el, html) {
   el.addEventListener("mouseleave", () => { tip.style.opacity = 0; });
 }
 
-function groups() {
+const practice = runs.filter(r => !r.release);
+
+function groups(list = practice) {
   const g = new Map();
-  for (const r of runs) {
+  for (const r of list) {
     const k = r.model + "|" + r.mode;
     if (!g.has(k)) g.set(k, { model: r.model, mode: r.mode, runs: [] });
     g.get(k).runs.push(r);
@@ -365,15 +375,55 @@ function renderSamples() {
   show(Math.min(1, samples.length - 1));
 }
 
+function renderRelease() {
+  const rel = ((DATA && DATA.releases) || [])[0];
+  if (!rel) return;
+  const rs = runs.filter(r => r.release === rel.release);
+  document.getElementById("release-title").textContent = `Release ${rel.release}: ${rel.languages.map(l => l.name).join(" and ")}`;
+  document.getElementById("release-langs").innerHTML = "Manuals: " + rel.languages.map(l =>
+    `<a href="releases/${encodeURIComponent(rel.release)}/${encodeURIComponent(l.dir)}/reference.md">${esc(l.name)}</a> (seed ${l.seed})`).join(" · ") +
+    ` · <a href="releases/${encodeURIComponent(rel.release)}/README.md">how they were chosen</a>`;
+  const root = document.getElementById("release");
+  document.getElementById("release-section").hidden = false;
+  if (!rs.length) { root.innerHTML = '<div class="empty-note">No runs on this release yet.</div>'; return; }
+  const rows = [];
+  for (const g of groups(rs)) {
+    const mine = rs.filter(r => r.model === g.model && r.mode === g.mode);
+    if (!mine.length) continue;
+    let p = 0, t = 0;
+    const cells = rel.languages.map(l => {
+      const r = mine.filter(x => x.seed === l.seed).sort((a, b) => (a.date || "").localeCompare(b.date || "")).pop();
+      if (!r) return '<td class="num muted">—</td>';
+      p += r.passed; t += r.total;
+      return `<td class="num ${r.passed === r.total ? "cell ok" : ""}">${r.passed}/${r.total}</td>`;
+    }).join("");
+    rows.push({ p, t, html: `<tr><td>${esc(g.model)}</td><td>${esc(MODE_LABEL[g.mode] || g.mode)}</td>${cells}
+      <td class="num"><strong>${p}/${t}</strong> (${pct(p, t)}%)</td></tr>` });
+  }
+  rows.sort((a, b) => b.p / b.t - a.p / a.t);
+  root.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Model</th><th>Mode</th>
+    ${rel.languages.map(l => `<th class="num">${esc(l.name)}</th>`).join("")}<th class="num">Total</th></tr></thead>
+    <tbody>${rows.map(r => r.html).join("")}</tbody></table></div>`;
+}
+
 function renderNotes() {
   const text = (DATA && DATA.notes || "").trim();
   if (!text) return;
   const inline = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/`(.+?)`/g, "<code>$1</code>");
-  document.getElementById("notes").innerHTML = text.split(/\n\s*\n/).map(p => `<p>${inline(p.replace(/\n/g, " "))}</p>`).join("");
+  const table = block => {
+    const rows = block.trim().split("\n").filter(l => !/^\|[\s|:-]+\|$/.test(l.trim()))
+      .map(l => l.trim().replace(/^\||\|$/g, "").split("|").map(c => c.trim()));
+    const [head, ...body] = rows;
+    const cell = (c, i, tag) => `<${tag}${i ? ' class="num"' : ""}>${inline(c)}</${tag}>`;
+    return `<div class="table-wrap"><table><thead><tr>${head.map((c, i) => cell(c, i, "th")).join("")}</tr></thead>
+      <tbody>${body.map(r => `<tr>${r.map((c, i) => cell(c, i, "td")).join("")}</tr>`).join("")}</tbody></table></div>`;
+  };
+  document.getElementById("notes").innerHTML = text.split(/\n\s*\n/).map(p => p.trim().startsWith("|")
+    ? table(p) : `<p>${inline(p.replace(/\n/g, " "))}</p>`).join("");
   document.getElementById("notes-section").hidden = false;
 }
 
-renderNotes(); renderStamp(); renderHeadline(); renderSummary(); renderMatrix(); renderRuns(); renderSamples();
+renderRelease(); renderNotes(); renderStamp(); renderHeadline(); renderSummary(); renderMatrix(); renderRuns(); renderSamples();
 </script>
 </body>
 </html>

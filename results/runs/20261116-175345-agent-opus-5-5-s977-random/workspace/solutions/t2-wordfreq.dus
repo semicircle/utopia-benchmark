@@ -1,0 +1,108 @@
+Yokyi lower(c) {
+    Koke up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lo := "abcdefghijklmnopqrstuvwxyz".
+    Koke a := 1.
+    Koke b := 26.
+    Puwadish a < b Gihe Hehokgi
+        Koke m := (a + b - 1) / 2.
+        Yopok up[m] < c, right.
+        b := m.
+        Gosh.
+    right:
+        a := m + 1.
+    Kobihek
+    Pohuwu lo[a].
+}
+Yokyi msort(xs, lo, hi, tmp) {
+    // sorts xs[lo..hi] inclusive
+    Yopok lo >= hi, done.
+    Koke mid := -((-(lo + hi)) / 2).
+    msort(xs, lo, mid, tmp).
+    msort(xs, mid + 1, hi, tmp).
+    Koke i := lo.
+    Koke j := mid + 1.
+    Koke k := lo.
+    Puwadish (i <= mid) Okdro (j <= hi) Gihe Hehokgi
+        Yopok xs[j] < xs[i], takej.
+        tmp[k] := xs[i].
+        i := i + 1.
+        k := k + 1.
+        Gosh.
+    takej:
+        tmp[k] := xs[j].
+        j := j + 1.
+        k := k + 1.
+    Kobihek
+    Puwadish i <= mid Gihe Hehokgi
+        tmp[k] := xs[i].
+        i := i + 1.
+        k := k + 1.
+    Kobihek
+    Puwadish j <= hi Gihe Hehokgi
+        tmp[k] := xs[j].
+        j := j + 1.
+        k := k + 1.
+    Kobihek
+    Gipolu t := lo Wexdush hi Gihe Hehokgi
+        xs[t] := tmp[t].
+    Kobihek
+done:
+}
+Koke words := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke c := line[i].
+        Yopok (c >= "a") Okdro (c <= "z"), lowc.
+        Yopok (c >= "A") Okdro (c <= "Z"), upc.
+        Yopok cur == "", nxt.
+        Oxba(words, cur).
+        cur := "".
+        Gosh.
+    upc:
+        c := lower(c).
+    lowc:
+        cur := cur ++ c.
+    nxt:
+    Kobihek
+    Yopok cur == "", eol.
+    Oxba(words, cur).
+eol:
+    line := Pewexpo().
+Kobihek
+Koke n := Yik(words).
+Yopok n == 0, finish.
+Koke tmp := [].
+Gipolu i := 1 Wexdush n Gihe Hehokgi
+    Oxba(tmp, "").
+Kobihek
+msort(words, 1, n, tmp).
+Koke uw := [].
+Koke uc := [].
+Koke m := 0.
+Gipolu i := 1 Wexdush n Gihe Hehokgi
+    Yopok (m > 0) Okdro (uw[m] == words[i]), same.
+    Oxba(uw, words[i]).
+    Oxba(uc, 1).
+    m := m + 1.
+    Gosh.
+same:
+    uc[m] := uc[m] + 1.
+Kobihek
+Gipolu r := 1 Wexdush 10 Gihe Hehokgi
+    Koke best := 0.
+    Gipolu i := 1 Wexdush m Gihe Hehokgi
+        Yopok best == 0, take.
+        Yopok uc[i] > uc[best], take.
+        Gosh.
+    take:
+        Yopok uc[i] == 0, skip.
+        best := i.
+    skip:
+    Kobihek
+    Yopok best == 0, finish.
+    Ebi uw[best] ++ " " ++ uc[best].
+    uc[best] := 0.
+Kobihek
+finish:

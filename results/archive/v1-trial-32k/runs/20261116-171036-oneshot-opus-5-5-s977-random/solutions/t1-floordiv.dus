@@ -1,0 +1,40 @@
+Yokyi fdiv(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Yokyi split(s) {
+    Koke parts := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok Yik(cur) == 0, skip.
+        Oxba(parts, cur).
+        cur := "".
+    skip:
+        Gosh.
+    Kobihek
+    Yopok Yik(cur) == 0, fin.
+    Oxba(parts, cur).
+fin:
+    Pohuwu parts.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke p := split(line).
+    Yopok Yik(p) < 2, next.
+    Koke a := Bupuxbo(p[1]).
+    Koke b := Bupuxbo(p[2]).
+    Koke q := fdiv(a, b).
+    Ebi q ++ " " ++ (a - (b * q)).
+next:
+    line := Pewexpo().
+Kobihek

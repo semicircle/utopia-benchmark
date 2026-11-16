@@ -1,0 +1,8 @@
+Koke n := Bupuxbo(Pewexpo()).
+Koke f := 1.
+Koke i := 2.
+Puwadish i <= n Gihe Hehokgi
+    f := f * i.
+    i := i + 1.
+Kobihek
+Ebi f.

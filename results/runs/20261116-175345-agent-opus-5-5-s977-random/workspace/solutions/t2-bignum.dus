@@ -1,0 +1,95 @@
+Yokyi fdiv(a, b) {
+    Pohuwu -((-a) / b).
+}
+Yokyi split(s) {
+    Koke out := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok cur == "", skip.
+        Oxba(out, cur).
+        cur := "".
+    skip:
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(out, cur).
+done:
+    Pohuwu out.
+}
+// little-endian digit list
+Yokyi digits(s) {
+    Koke out := [].
+    Gipolu i := Yik(s) Wexdush 1 Drix -1 Gihe Hehokgi
+        Oxba(out, Bupuxbo(s[i])).
+    Kobihek
+    Pohuwu out.
+}
+Yokyi zeros(n) {
+    Koke out := [].
+    Gipolu i := 1 Wexdush n Gihe Hehokgi
+        Oxba(out, 0).
+    Kobihek
+    Pohuwu out.
+}
+Yokyi normalize(r) {
+    // propagate carries, r has enough room
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush Yik(r) Gihe Hehokgi
+        Koke x := r[i] + carry.
+        carry := fdiv(x, 10).
+        r[i] := x - (10 * carry).
+    Kobihek
+    Puwadish carry > 0 Gihe Hehokgi
+        Oxba(r, carry - (10 * fdiv(carry, 10))).
+        carry := fdiv(carry, 10).
+    Kobihek
+    Pohuwu r.
+}
+Yokyi tostr(r) {
+    Koke n := Yik(r).
+    Puwadish (n > 1) Okdro (r[n] == 0) Gihe Hehokgi
+        n := n - 1.
+    Kobihek
+    Koke s := "".
+    Gipolu i := n Wexdush 1 Drix -1 Gihe Hehokgi
+        s := s ++ r[i].
+    Kobihek
+    Pohuwu s.
+}
+Yokyi add(a, b) {
+    Koke n := Yik(a).
+    Yopok Yik(b) <= n, ok.
+    n := Yik(b).
+ok:
+    Koke r := zeros(n + 1).
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        r[i] := r[i] + a[i].
+    Kobihek
+    Gipolu i := 1 Wexdush Yik(b) Gihe Hehokgi
+        r[i] := r[i] + b[i].
+    Kobihek
+    Pohuwu normalize(r).
+}
+Yokyi mul(a, b) {
+    Koke r := zeros(Yik(a) + Yik(b) + 1).
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        Koke ai := a[i].
+        Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+            Koke k := i + j - 1.
+            r[k] := r[k] + (ai * b[j]).
+        Kobihek
+    Kobihek
+    Pohuwu normalize(r).
+}
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke t := split(line).
+    Koke a := digits(t[1]).
+    Koke b := digits(t[2]).
+    Ebi tostr(add(a, b)) ++ " " ++ tostr(mul(a, b)).
+    line := Pewexpo().
+Kobihek

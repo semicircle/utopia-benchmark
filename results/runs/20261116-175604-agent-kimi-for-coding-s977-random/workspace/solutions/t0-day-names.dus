@@ -1,0 +1,33 @@
+Yokyi dayname(d) {
+    Dru d Ihedrux
+    1: Hehokgi
+        Pohuwu "Monday".
+    Kobihek
+    2: Hehokgi
+        Pohuwu "Tuesday".
+    Kobihek
+    3: Hehokgi
+        Pohuwu "Wednesday".
+    Kobihek
+    4: Hehokgi
+        Pohuwu "Thursday".
+    Kobihek
+    5: Hehokgi
+        Pohuwu "Friday".
+    Kobihek
+    6: Hehokgi
+        Pohuwu "Saturday".
+    Kobihek
+    7: Hehokgi
+        Pohuwu "Sunday".
+    Kobihek
+    Hishyeko Hehokgi
+        Pohuwu "invalid".
+    Kobihek Kobihek
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi dayname(Bupuxbo(line)).
+    line := Pewexpo().
+Kobihek

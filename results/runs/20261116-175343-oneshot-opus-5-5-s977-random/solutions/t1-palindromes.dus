@@ -1,0 +1,54 @@
+Yokyi isal(c) {
+    Pohuwu ((c >= "a") Okdro (c <= "z")) Dak ((c >= "A") Okdro (c <= "Z")) Dak ((c >= "0") Okdro (c <= "9")).
+}
+
+Yokyi lower(c) {
+    Yopok (c >= "A") Okdro (c <= "Z"), up.
+    Pohuwu c.
+up:
+    Koke U := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke L := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := ((lo + hi) - 1) / 2.
+        Yopok U[mid] < c, right.
+        hi := mid.
+        Gosh.
+    right:
+        lo := mid + 1.
+    Kobihek
+    Pohuwu L[lo].
+}
+
+Yokyi ispal(s) {
+    Koke cs := [].
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok isal(c), add.
+        Gosh.
+    add:
+        Oxba(cs, lower(c)).
+    Kobihek
+    Koke i := 1.
+    Koke j := Yik(cs).
+    Puwadish i < j Gihe Hehokgi
+        Yopok cs[i] == cs[j], ok.
+        Pohuwu Lesh.
+    ok:
+        i := i + 1.
+        j := j - 1.
+    Kobihek
+    Pohuwu Geklabik.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok ispal(line), y.
+    Ebi "no".
+    Uxdrush nx.
+y:
+    Ebi "yes".
+nx:
+    line := Pewexpo().
+Kobihek

@@ -1,0 +1,112 @@
+Yokyi lower(c) {
+    Yopok c < "A", no1.
+    Yopok c > "Z", no1.
+    Pohuwu Yawishbo(Yik("A") + (Yik(c) - Yik("A"))).
+no1:
+    Pohuwu c.
+}
+
+Yokyi isletter(c) {
+    Yopok c >= "a", lo1.
+    Yopok c > "Z", no1.
+lo1:
+    Yopok c < "A", no1.
+    Yopok c > "9", yes1.
+    Yopok c < "0", no1.
+yes1:
+    Pohuwu Geklabik.
+no1:
+    Pohuwu Lesh.
+}
+
+Yokyi removeat(xs, idx) {
+    Koke res := [].
+    Koke t := 1.
+    Puwadish t <= Yik(xs) Gihe Hehokgi
+        Yopok t == idx, skip1.
+        Oxba(res, xs[t]).
+skip1:
+        t := t + 1.
+Kobihek
+    Pohuwu res.
+}
+
+Koke words := [].
+Koke freqs := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke w := "".
+    Koke j := 1.
+    Puwadish j <= Yik(line) Gihe Hehokgi
+        Koke c := line[j].
+        Yopok isletter(c), add1.
+        Yopok Yik(w) == 0, cont1.
+        Koke idx := 0.
+        Koke t := 1.
+        Puwadish t <= Yik(words) Gihe Hehokgi
+            Yopok words[t] == w, hit1.
+            t := t + 1.
+            Gosh.
+hit1:
+            idx := t.
+            Kewi.
+Kobihek
+        Yopok idx == 0, new1.
+        Oxba(words, w).
+        Oxba(freqs, 1).
+        Uxdrush cont2.
+new1:
+        freqs[idx] := freqs[idx] + 1.
+cont2:
+        w := "".
+        Uxdrush cont1.
+add1:
+        w := w ++ lower(c).
+cont1:
+        j := j + 1.
+Kobihek
+    Yopok Yik(w) == 0, cont3.
+    Koke idx := 0.
+    Koke t := 1.
+    Puwadish t <= Yik(words) Gihe Hehokgi
+        Yopok words[t] == w, hit2.
+        t := t + 1.
+        Gosh.
+hit2:
+        idx := t.
+        Kewi.
+Kobihek
+    Yopok idx == 0, new2.
+    Oxba(words, w).
+    Oxba(freqs, 1).
+    Uxdrush cont3.
+new2:
+    freqs[idx] := freqs[idx] + 1.
+cont3:
+    line := Pewexpo().
+Kobihek
+
+Koke n := Yik(words).
+Gipolu k := 1 Wexdush 10 Gihe Hehokgi
+    Yopok n == 0, done1.
+    Koke bi := 0.
+    Koke bf := 0.
+    Koke bt := "".
+    Koke t := 1.
+    Puwadish t <= n Gihe Hehokgi
+        Yopok bi == 0, take1.
+        Yopok freqs[t] > bf, take1.
+        t := t + 1.
+        Gosh.
+take1:
+        bi := t.
+        bf := freqs[t].
+        bt := words[t].
+        t := t + 1.
+Kobihek
+    Ebi bt ++ " " ++ bf.
+    words := removeat(words, bi).
+    freqs := removeat(freqs, bi).
+    n := n - 1.
+Kobihek
+done1:

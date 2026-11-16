@@ -1,0 +1,26 @@
+Yokyi fdiv(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Yokyi fmod(a, b) {
+    Pohuwu a - (b * fdiv(a, b)).
+}
+
+Koke first := Pewexpo().
+Yopok first == Liliga, endp.
+Koke k := Bupuxbo(first).
+Koke items := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(items, line).
+    line := Pewexpo().
+Kobihek
+Koke n := Yik(items).
+Gipolu j := 1 Wexdush n Gihe Hehokgi
+    Ebi items[fmod((j - 1) - k, n) + 1].
+Kobihek
+endp:

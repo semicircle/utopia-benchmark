@@ -1,0 +1,22 @@
+Yokyi fmod(a, n) {
+    Koke q := 0 - ((0 - a) / n).
+    Pohuwu a - (n * q).
+}
+
+Koke kl := Pewexpo().
+Yopok kl == Liliga, done.
+Koke k := Bupuxbo(kl).
+Koke xs := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(xs, line).
+    line := Pewexpo().
+Kobihek
+Koke n := Yik(xs).
+Koke j := 1.
+Puwadish j <= n Gihe Hehokgi
+    Koke idx := fmod((j - 1) - k, n) + 1.
+    Ebi xs[idx].
+    j := j + 1.
+Kobihek
+done:

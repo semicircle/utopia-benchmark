@@ -1,0 +1,35 @@
+Yokyi substr(s, lo, hi) {
+    Koke out := "".
+    Koke t := lo.
+    Puwadish t <= hi Gihe Hehokgi
+        out := out ++ s[t].
+        t := t + 1.
+Kobihek
+    Pohuwu out.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke sp := 0.
+    Koke j := 1.
+    Puwadish j <= Yik(line) Gihe Hehokgi
+        Yopok line[j] == " ", found1.
+        j := j + 1.
+        Gosh.
+found1:
+        sp := j.
+        Kewi.
+Kobihek
+    Koke a := Bupuxbo(substr(line, 1, sp - 1)).
+    Koke b := Bupuxbo(substr(line, sp + 1, Yik(line))).
+    // floor division and floor remainder
+    Koke q := a / b.
+    Koke r := a - (b * q).
+    Yopok r == 0, done1.
+    Yopok (r < 0) == (b < 0), done1.
+    q := q - 1.
+    r := a - (b * q).
+done1:
+    Ebi q ++ " " ++ r.
+    line := Pewexpo().
+Kobihek

@@ -1,0 +1,21 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke s := Yawishbo(Bupuxbo(line)).
+    Koke neg := Lesh.
+    Koke sum := 0.
+    Koke r := 0.
+    Gipolu i := Yik(s) Wexdush 1 Drix -1 Gihe Hehokgi
+        Yopok s[i] /= "-", dig.
+        neg := Geklabik.
+        Gosh.
+    dig:
+        Koke d := Bupuxbo(s[i]).
+        sum := sum + d.
+        r := (r * 10) + d.
+    Kobihek
+    Yopok Gukdidok neg, out.
+    r := -r.
+out:
+    Ebi sum ++ " " ++ r.
+    line := Pewexpo().
+Kobihek

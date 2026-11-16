@@ -1,0 +1,19 @@
+Koke n := Bupuxbo(Pewexpo()).
+Gipolu i := 1 Wexdush n Gihe Hehokgi
+    Koke d3 := i % 3 == 0.
+    Koke d5 := i % 5 == 0.
+    Yopok d3, f3.
+    Yopok d5, b5.
+    Ebi i.
+    Uxdrush done1.
+f3:
+    Yopok d5, fb.
+    Ebi "Fizz".
+    Uxdrush done1.
+b5:
+    Ebi "Buzz".
+    Uxdrush done1.
+fb:
+    Ebi "FizzBuzz".
+done1:
+Kobihek

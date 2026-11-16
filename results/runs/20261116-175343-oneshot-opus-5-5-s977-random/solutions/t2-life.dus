@@ -1,0 +1,65 @@
+Yokyi step(cur, H, W) {
+    Koke nx := [].
+    Gipolu r := 1 Wexdush H Gihe Hehokgi
+        Gipolu c := 1 Wexdush W Gihe Hehokgi
+            Koke cnt := 0.
+            Gipolu dr := -1 Wexdush 1 Gihe Hehokgi
+                Gipolu dc := -1 Wexdush 1 Gihe Hehokgi
+                    Koke rr := r + dr.
+                    Koke cc := c + dc.
+                    Yopok (rr >= 1) Okdro (rr <= H) Okdro (cc >= 1) Okdro (cc <= W), inside.
+                    Gosh.
+                inside:
+                    cnt := cnt + cur[((rr - 1) * W) + cc].
+                Kobihek
+            Kobihek
+            Koke me := cur[((r - 1) * W) + c].
+            cnt := cnt - me.
+            Koke v := 0.
+            Yopok (cnt == 3) Dak ((me == 1) Okdro (cnt == 2)), alive.
+            Uxdrush put.
+        alive:
+            v := 1.
+        put:
+            Oxba(nx, v).
+        Kobihek
+    Kobihek
+    Pohuwu nx.
+}
+
+Koke g := Bupuxbo(Pewexpo()).
+Koke rows := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Yik(line) == 0, sk.
+    Oxba(rows, line).
+sk:
+    line := Pewexpo().
+Kobihek
+Koke H := Yik(rows).
+Koke W := Yik(rows[1]).
+Koke cur := [].
+Gipolu r := 1 Wexdush H Gihe Hehokgi
+    Koke row := rows[r].
+    Gipolu c := 1 Wexdush W Gihe Hehokgi
+        Yopok row[c] == "#", live.
+        Oxba(cur, 0).
+        Gosh.
+    live:
+        Oxba(cur, 1).
+    Kobihek
+Kobihek
+Koke gen := 0.
+Puwadish gen < g Gihe Hehokgi
+    cur := step(cur, H, W).
+    gen := gen + 1.
+Kobihek
+Koke sym := [".", "#"].
+Gipolu r := 1 Wexdush H Gihe Hehokgi
+    Koke s := "".
+    Gipolu c := 1 Wexdush W Gihe Hehokgi
+        Koke v := cur[((r - 1) * W) + c].
+        s := s ++ sym[v + 1].
+    Kobihek
+    Ebi s.
+Kobihek

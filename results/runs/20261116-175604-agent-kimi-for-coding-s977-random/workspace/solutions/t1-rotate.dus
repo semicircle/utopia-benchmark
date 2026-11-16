@@ -1,0 +1,30 @@
+Koke k := Bupuxbo(Pewexpo()).
+Koke items := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(items, line).
+    line := Pewexpo().
+Kobihek
+Koke m := Yik(items).
+Yopok m == 0, done1.
+Koke r := k % m.
+Yopok r < 0, neg1.
+Yopok r /= 0, pos1.
+Ebi items[m].
+r := r - 1.
+pos1:
+Gipolu i := m - r Wexdush m Gihe Hehokgi
+    Ebi items[i].
+Kobihek
+Gipolu i := 1 Wexdush m - r - 1 Gihe Hehokgi
+    Ebi items[i].
+Kobihek
+Uxdrush end1.
+neg1:
+r := r + m.
+Ebi items[m].
+Gipolu i := 1 Wexdush m - 1 Gihe Hehokgi
+    Ebi items[i].
+Kobihek
+end1:
+done1:

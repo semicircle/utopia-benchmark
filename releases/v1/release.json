@@ -1,0 +1,20 @@
+{
+  "release": "v1",
+  "semantics": "random",
+  "protocol": {
+    "max_tokens": 64000,
+    "max_steps": 150
+  },
+  "languages": [
+    {
+      "seed": 182,
+      "name": "Reslil",
+      "dir": "reslil"
+    },
+    {
+      "seed": 977,
+      "name": "Dushpek",
+      "dir": "dushpek"
+    }
+  ]
+}

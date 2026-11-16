@@ -1,0 +1,107 @@
+// Big numbers as little-endian lists of base-1000000 limbs.
+Yokyi fdiv(a, b) {
+    Pohuwu -((-a) / b).
+}
+Yokyi limbs(s) {
+    Koke out := [].
+    Koke i := Yik(s).
+    Puwadish i >= 1 Gihe Hehokgi
+        Koke lo := i - 5.
+        Yopok lo >= 1, okl.
+        lo := 1.
+    okl:
+        Koke v := 0.
+        Gipolu j := lo Wexdush i Gihe Hehokgi
+            v := (v * 10) + Bupuxbo(s[j]).
+        Kobihek
+        Oxba(out, v).
+        i := lo - 1.
+    Kobihek
+    Pohuwu out.
+}
+Yokyi show(ds) {
+    Koke n := Yik(ds).
+    Puwadish (n > 1) Okdro (ds[n] == 0) Gihe Hehokgi
+        n := n - 1.
+    Kobihek
+    Koke s := Yawishbo(ds[n]).
+    Gipolu i := n - 1 Wexdush 1 Drix -1 Gihe Hehokgi
+        Koke p := Yawishbo(ds[i]).
+        Puwadish Yik(p) < 6 Gihe Hehokgi
+            p := "0" ++ p.
+        Kobihek
+        s := s ++ p.
+    Kobihek
+    Pohuwu s.
+}
+Yokyi add(a, b) {
+    Koke out := [].
+    Koke na := Yik(a).
+    Koke nb := Yik(b).
+    Koke n := na.
+    Yopok nb <= na, ok.
+    n := nb.
+ok:
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush n Gihe Hehokgi
+        Koke v := carry.
+        Yopok i > na, s1.
+        v := v + a[i].
+    s1:
+        Yopok i > nb, s2.
+        v := v + b[i].
+    s2:
+        carry := fdiv(v, 1000000).
+        Oxba(out, v - (carry * 1000000)).
+    Kobihek
+    Oxba(out, carry).
+    Pohuwu out.
+}
+Yokyi mul(a, b) {
+    Koke na := Yik(a).
+    Koke nb := Yik(b).
+    Koke out := [].
+    Gipolu i := 1 Wexdush (na + nb + 1) Gihe Hehokgi
+        Oxba(out, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush na Gihe Hehokgi
+        Koke ai := a[i].
+        Yopok ai == 0, nexti.
+        Gipolu j := 1 Wexdush nb Gihe Hehokgi
+            Koke k := i + j - 1.
+            out[k] := out[k] + (ai * b[j]).
+        Kobihek
+    nexti:
+    Kobihek
+    Koke carry := 0.
+    Gipolu k := 1 Wexdush Yik(out) Gihe Hehokgi
+        Koke v := out[k] + carry.
+        carry := fdiv(v, 1000000).
+        out[k] := v - (carry * 1000000).
+    Kobihek
+    Pohuwu out.
+}
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke sa := "".
+    Koke sb := "".
+    Koke second := Lesh.
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke c := line[i].
+        Yopok c /= " ", nsp.
+        Yopok sa == "", skip.
+        second := Geklabik.
+        Uxdrush skip.
+    nsp:
+        Yopok second, sec.
+        sa := sa ++ c.
+        Uxdrush skip.
+    sec:
+        sb := sb ++ c.
+    skip:
+    Kobihek
+    Koke a := limbs(sa).
+    Koke b := limbs(sb).
+    Ebi show(add(a, b)) ++ " " ++ show(mul(a, b)).
+    line := Pewexpo().
+Kobihek

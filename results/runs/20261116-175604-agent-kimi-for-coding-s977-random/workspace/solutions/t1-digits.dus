@@ -1,0 +1,29 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke n := Bupuxbo(line).
+    Koke neg := n < 0.
+    Koke m := n.
+    Yopok neg, else1.
+    m := 0 - n.
+    Uxdrush endif1.
+else1:
+endif1:
+    // build reversed digits string and sum
+    Koke s := Yawishbo(m).
+    Koke rev := "".
+    Koke sum := 0.
+    Koke i := Yik(s).
+    Puwadish i >= 1 Gihe Hehokgi
+        Koke ch := s[i].
+        rev := ch ++ rev.
+        sum := sum + (Bupuxbo(ch) - 48).
+        i := i - 1.
+    Kobihek
+    Yopok neg, else2.
+    Ebi sum ++ " -" ++ Bupuxbo(rev).
+    Uxdrush done1.
+else2:
+    Ebi sum ++ " " ++ Bupuxbo(rev).
+done1:
+    line := Pewexpo().
+Kobihek

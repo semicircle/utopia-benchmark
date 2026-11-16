@@ -1,0 +1,28 @@
+Yokyi fdiv(a, b) {
+    Pohuwu 0 - ((0 - a) / b).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Yik(line) == 0, skip.
+    Koke n := Bupuxbo(line).
+    Koke m := n.
+    Yopok m >= 0, pos.
+    m := 0 - m.
+pos:
+    Koke s := 0.
+    Koke r := 0.
+    Puwadish m > 0 Gihe Hehokgi
+        Koke q := fdiv(m, 10).
+        Koke d := m - (q * 10).
+        s := s + d.
+        r := (r * 10) + d.
+        m := q.
+    Kobihek
+    Yopok n >= 0, pos2.
+    r := 0 - r.
+pos2:
+    Ebi s ++ " " ++ r.
+skip:
+    line := Pewexpo().
+Kobihek

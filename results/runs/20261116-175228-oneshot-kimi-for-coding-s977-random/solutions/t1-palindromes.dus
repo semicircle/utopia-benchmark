@@ -1,0 +1,45 @@
+Yokyi lower(ch) {
+    Koke up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lo := "abcdefghijklmnopqrstuvwxyz".
+    Gipolu i := 1 Wexdush 26 Gihe Hehokgi
+        Yopok up[i] == ch, got.
+        Uxdrush cont.
+got:
+        Pohuwu lo[i].
+cont:
+    Kobihek
+    Pohuwu ch.
+}
+
+Yokyi alnum(ch) {
+    Yopok (((ch >= "a") Okdro (ch <= "z")) Dak ((ch >= "A") Okdro (ch <= "Z"))), yes.
+    Yopok ((ch >= "0") Okdro (ch <= "9")), yes.
+    Pohuwu Lesh.
+yes:
+    Pohuwu Geklabik.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke xs := [].
+    Koke len := Yik(line).
+    Gipolu i := 1 Wexdush len Gihe Hehokgi
+        Koke ch := line[i].
+        Yopok alnum(ch), keep.
+        Uxdrush cont.
+keep:
+        Oxba(xs, lower(ch)).
+cont:
+    Kobihek
+    Koke n := Yik(xs).
+    Koke ans := "yes".
+    Koke half := n / 2.
+    Gipolu i := 1 Wexdush half Gihe Hehokgi
+        Yopok xs[i] == xs[n - i + 1], same.
+        ans := "no".
+        Kewi.
+same:
+    Kobihek
+    Ebi ans.
+    line := Pewexpo().
+Kobihek

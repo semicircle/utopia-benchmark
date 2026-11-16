@@ -252,8 +252,10 @@ class OpenAIClient:
         try:
             # Streamed, so that slow answers keep bytes flowing and gateways in
             # front of the endpoint do not time the request out (HTTP 504).
-            with self.client.chat.completions.stream(**p, stream_options={"include_usage": True}) as stream:
-                resp = stream.get_final_completion()
+            # Accumulated by hand: an answer cut off at the token limit must be
+            # recorded and graded like any other, not raised as an error.
+            resp = self._accumulate(self.client.chat.completions.create(
+                **p, stream=True, stream_options={"include_usage": True}))
         except o.AuthenticationError as e:
             raise ProviderError(f"authentication failed: {e.message}") from e
         except o.BadRequestError as e:
@@ -270,6 +272,38 @@ class OpenAIClient:
         else:
             usage.add()
         return resp
+
+    def _accumulate(self, chunks):
+        from openai.types.chat import ChatCompletion
+        head, text, reasoning, calls, finish, usage = {}, [], [], {}, None, None
+        for ch in chunks:
+            head = head or {"id": ch.id, "created": ch.created, "model": ch.model}
+            if ch.usage:
+                usage = ch.usage.model_dump()
+            for c in ch.choices:
+                d = c.delta
+                if d.content:
+                    text.append(d.content)
+                r = getattr(d, "reasoning_content", None) or (d.model_extra or {}).get("reasoning_content")
+                if r:
+                    reasoning.append(r)
+                for tc in d.tool_calls or []:
+                    slot = calls.setdefault(tc.index, {"id": None, "type": "function",
+                                                       "function": {"name": "", "arguments": ""}})
+                    slot["id"] = tc.id or slot["id"]
+                    if tc.function:
+                        slot["function"]["name"] += tc.function.name or ""
+                        slot["function"]["arguments"] += tc.function.arguments or ""
+                finish = c.finish_reason or finish
+        msg = {"role": "assistant", "content": "".join(text) or None}
+        if calls:
+            msg["tool_calls"] = [calls[i] for i in sorted(calls)]
+        if reasoning:
+            msg["reasoning_content"] = "".join(reasoning)
+        return ChatCompletion.model_validate({
+            "id": head.get("id") or "", "object": "chat.completion", "created": head.get("created") or 0,
+            "model": head.get("model") or self.model, "usage": usage,
+            "choices": [{"index": 0, "finish_reason": finish or "stop", "message": msg}]})
 
     def oneshot(self, system, prompt):
         usage = Usage(self.model, self.price_in, self.price_out)

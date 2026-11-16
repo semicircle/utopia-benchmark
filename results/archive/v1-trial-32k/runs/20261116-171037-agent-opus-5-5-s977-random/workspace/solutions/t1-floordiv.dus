@@ -1,0 +1,28 @@
+Yokyi split(s) {
+    Koke out := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sp.
+        cur := cur ++ c.
+        Gosh.
+    sp:
+        Yopok cur == "", nx.
+        Oxba(out, cur).
+        cur := "".
+    nx:
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(out, cur).
+done:
+    Pohuwu out.
+}
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke p := split(line).
+    Koke a := Bupuxbo(p[1]).
+    Koke b := Bupuxbo(p[2]).
+    Koke q := -((-a) / b).
+    Ebi q ++ " " ++ (a - (b * q)).
+    line := Pewexpo().
+Kobihek

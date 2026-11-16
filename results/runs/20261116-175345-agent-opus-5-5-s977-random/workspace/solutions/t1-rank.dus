@@ -1,0 +1,50 @@
+Yokyi split(s) {
+    Koke out := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok cur == "", skip.
+        Oxba(out, cur).
+        cur := "".
+    skip:
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(out, cur).
+done:
+    Pohuwu out.
+}
+Koke first := Pewexpo().
+Yopok first == Liliga, finish.
+Koke toks := split(first).
+Koke xs := [].
+Gipolu i := 1 Wexdush Yik(toks) Gihe Hehokgi
+    Oxba(xs, Bupuxbo(toks[i])).
+Kobihek
+Koke n := Yik(xs).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke q := Bupuxbo(line).
+    // lower bound: count of elements < q
+    Koke lo := 0.
+    Koke hi := n.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := -((-(lo + hi)) / 2).
+        Yopok xs[mid + 1] < q, right.
+        hi := mid.
+        Gosh.
+    right:
+        lo := mid + 1.
+    Kobihek
+    Koke st := "missing".
+    Yopok lo >= n, out.
+    Yopok xs[lo + 1] /= q, out.
+    st := "found".
+out:
+    Ebi lo ++ " " ++ st.
+    line := Pewexpo().
+Kobihek
+finish:

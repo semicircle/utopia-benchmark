@@ -1,0 +1,66 @@
+Koke g := Bupuxbo(Pewexpo()).
+Koke grid := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok line == "", nx.
+    Koke row := [].
+    Gipolu j := 1 Wexdush Yik(line) Gihe Hehokgi
+        Yopok line[j] == "#", live.
+        Oxba(row, 0).
+        Gosh.
+    live:
+        Oxba(row, 1).
+    Kobihek
+    Oxba(grid, row).
+nx:
+    line := Pewexpo().
+Kobihek
+Koke h := Yik(grid).
+Yopok h > 0, go.
+Pohuwu.
+go:
+Koke w := Yik(grid[1]).
+Gipolu gen := 1 Wexdush g Gihe Hehokgi
+    Koke ng := [].
+    Gipolu i := 1 Wexdush h Gihe Hehokgi
+        Koke nrow := [].
+        Gipolu j := 1 Wexdush w Gihe Hehokgi
+            Koke cnt := 0.
+            Gipolu di := -1 Wexdush 1 Gihe Hehokgi
+                Koke ii := i + di.
+                Yopok (ii < 1) Dak (ii > h), skiprow.
+                Koke r := grid[ii].
+                Gipolu dj := -1 Wexdush 1 Gihe Hehokgi
+                    Koke jj := j + dj.
+                    Yopok (jj < 1) Dak (jj > w), skipc.
+                    cnt := cnt + r[jj].
+                skipc:
+                Kobihek
+            skiprow:
+            Kobihek
+            Koke me := grid[i][j].
+            cnt := cnt - me.
+            Koke nv := 0.
+            Yopok cnt == 3, alive.
+            Yopok (cnt == 2) Okdro (me == 1), alive.
+            Uxdrush put.
+        alive:
+            nv := 1.
+        put:
+            Oxba(nrow, nv).
+        Kobihek
+        Oxba(ng, nrow).
+    Kobihek
+    grid := ng.
+Kobihek
+Gipolu i := 1 Wexdush h Gihe Hehokgi
+    Koke s := "".
+    Gipolu j := 1 Wexdush w Gihe Hehokgi
+        Yopok grid[i][j] == 1, l2.
+        s := s ++ ".".
+        Gosh.
+    l2:
+        s := s ++ "#".
+    Kobihek
+    Ebi s.
+Kobihek

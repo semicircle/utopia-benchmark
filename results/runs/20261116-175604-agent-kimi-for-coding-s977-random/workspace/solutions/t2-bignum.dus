@@ -1,0 +1,116 @@
+Yokyi substr(s, lo, hi) {
+    Koke out := "".
+    Koke t := lo.
+    Puwadish t <= hi Gihe Hehokgi
+        out := out ++ s[t].
+        t := t + 1.
+Kobihek
+    Pohuwu out.
+}
+
+// Big integer addition and multiplication on digit strings.
+// Digits are stored in lists, least significant first, as integers.
+
+Yokyi fromstr(s) {
+    Koke ds := [].
+    Koke i := Yik(s).
+    Puwadish i >= 1 Gihe Hehokgi
+        Oxba(ds, Yik(s[i])).
+        i := i - 1.
+Kobihek
+    Pohuwu ds.
+}
+
+Yokyi tostr(ds) {
+    Koke out := "".
+    Koke i := Yik(ds).
+    Puwadish i >= 1 Gihe Hehokgi
+        out := out ++ Yawishbo(ds[i]).
+        i := i - 1.
+Kobihek
+    Pohuwu out.
+}
+
+Yokyi addb(a, b) {
+    Koke res := [].
+    Koke i := 1.
+    Koke carry := 0.
+    Puwadish Geklabik Gihe Hehokgi
+        Koke da := 0.
+        Yopok i > Yik(a), noa.
+        da := a[i].
+noa:
+        Koke db := 0.
+        Yopok i > Yik(b), nob.
+        db := b[i].
+nob:
+        Koke s := da + db + carry.
+        Oxba(res, s % 10).
+        carry := s / 10.
+        Yopok i < Yik(a), goa.
+        Yopok i < Yik(b), goa.
+        Yopok carry /= 0, goa.
+        Kewi.
+goa:
+        i := i + 1.
+Kobihek
+    Pohuwu res.
+}
+
+Yokyi poplast(ds) {
+    Koke res := [].
+    Koke i := 1.
+    Puwadish i < Yik(ds) Gihe Hehokgi
+        Oxba(res, ds[i]).
+        i := i + 1.
+Kobihek
+    Pohuwu res.
+}
+
+Yokyi mulb(a, b) {
+    Koke res := [0].
+    Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+        Koke shifted := [].
+        Gipolu t := 2 Wexdush j Gihe Hehokgi
+            Oxba(shifted, 0).
+        Kobihek
+        Koke carry := 0.
+        Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+            Koke s := a[i] * b[j] + carry.
+            Oxba(shifted, s % 10).
+            carry := s / 10.
+        Kobihek
+        Yopok carry == 0, nc1.
+        Oxba(shifted, carry).
+nc1:
+        res := addb(res, shifted).
+    Kobihek
+    Koke i := Yik(res).
+    Puwadish i >= 2 Gihe Hehokgi
+        Yopok res[i] /= 0, dn1.
+        res := poplast(res).
+        i := i - 1.
+        Gosh.
+dn1:
+        Kewi.
+Kobihek
+    Pohuwu res.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke sp := 0.
+    Koke j := 1.
+    Puwadish j <= Yik(line) Gihe Hehokgi
+        Yopok line[j] == " ", found1.
+        j := j + 1.
+        Gosh.
+found1:
+        sp := j.
+        Kewi.
+Kobihek
+    Koke a := fromstr(substr(line, 1, sp - 1)).
+    Koke b := fromstr(substr(line, sp + 1, Yik(line))).
+    Ebi tostr(addb(a, b)) ++ " " ++ tostr(mulb(a, b)).
+    line := Pewexpo().
+Kobihek

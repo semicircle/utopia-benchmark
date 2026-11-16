@@ -1,0 +1,56 @@
+Koke g := Bupuxbo(Pewexpo()).
+Koke rows := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Yik(line) == 0, sk.
+    Oxba(rows, line).
+sk:
+    line := Pewexpo().
+Kobihek
+Koke R := Yik(rows).
+Yopok R == 0, endp.
+Koke C := Yik(rows[1]).
+Koke W := C + 2.
+Koke H := R + 2.
+Koke cur := [].
+Gipolu k := 1 Wexdush (W * H) Gihe Hehokgi
+    Oxba(cur, 0).
+Kobihek
+Gipolu i := 1 Wexdush R Gihe Hehokgi
+    Koke s := rows[i].
+    Gipolu j := 1 Wexdush C Gihe Hehokgi
+        Yopok s[j] /= "#", dead.
+        cur[((i * W) + j) + 1] := 1.
+    dead:
+        Gosh.
+    Kobihek
+Kobihek
+Gipolu t := 1 Wexdush g Gihe Hehokgi
+    Koke nxt := [].
+    Gipolu k := 1 Wexdush (W * H) Gihe Hehokgi
+        Oxba(nxt, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush R Gihe Hehokgi
+        Gipolu j := 1 Wexdush C Gihe Hehokgi
+            Koke p := ((i * W) + j) + 1.
+            Koke nb := cur[p - 1] + cur[p + 1] + cur[p - W] + cur[p + W] + cur[(p - W) - 1] + cur[(p - W) + 1] + cur[(p + W) - 1] + cur[(p + W) + 1].
+            Yopok (nb == 3) Dak ((nb == 2) Okdro (cur[p] == 1)), live.
+            Gosh.
+        live:
+            nxt[p] := 1.
+        Kobihek
+    Kobihek
+    cur := nxt.
+Kobihek
+Gipolu i := 1 Wexdush R Gihe Hehokgi
+    Koke s := "".
+    Gipolu j := 1 Wexdush C Gihe Hehokgi
+        Yopok cur[((i * W) + j) + 1] == 1, al.
+        s := s ++ ".".
+        Gosh.
+    al:
+        s := s ++ "#".
+    Kobihek
+    Ebi s.
+Kobihek
+endp:

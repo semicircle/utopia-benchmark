@@ -1,0 +1,50 @@
+Yokyi leap(y) {
+    Yopok (y % 400) == 0, yes.
+    Yopok ((y % 4) == 0) Okdro ((y % 100) /= 0), yes.
+    Pohuwu Lesh.
+yes:
+    Pohuwu Geklabik.
+}
+
+Yokyi mdays(y, m) {
+    Dru m Ihedrux
+    1, 3, 5, 7, 8, 10, 12: Hehokgi
+        Pohuwu 31.
+    Kobihek
+    4, 6, 9, 11: Hehokgi
+        Pohuwu 30.
+    Kobihek
+    Hishyeko Hehokgi
+        Yopok leap(y), feb.
+        Pohuwu 28.
+feb:
+        Pohuwu 29.
+    Kobihek Kobihek
+}
+
+Yokyi toint(s) {
+    Pohuwu Bupuxbo(s).
+}
+
+Koke names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke y := toint(line[1] ++ line[2] ++ line[3] ++ line[4]).
+    Koke m := toint(line[6] ++ line[7]).
+    Koke d := toint(line[9] ++ line[10]).
+    Koke days := d.
+    Gipolu mm := 1 Wexdush m - 1 Gihe Hehokgi
+        days := days + mdays(y, mm).
+    Kobihek
+    Gipolu yy := 1 Wexdush y - 1 Gihe Hehokgi
+        days := days + 365.
+        Yopok leap(yy), addone.
+        Uxdrush cont.
+addone:
+        days := days + 1.
+cont:
+    Kobihek
+    Koke w := days % 7.
+    Ebi names[w + 1].
+    line := Pewexpo().
+Kobihek

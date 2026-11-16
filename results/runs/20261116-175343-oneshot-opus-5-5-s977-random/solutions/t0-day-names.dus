@@ -1,0 +1,32 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Yik(line) == 0, skip.
+    Koke n := Bupuxbo(line).
+    Dru n Ihedrux
+    1: Hehokgi
+        Ebi "Monday".
+    Kobihek
+    2: Hehokgi
+        Ebi "Tuesday".
+    Kobihek
+    3: Hehokgi
+        Ebi "Wednesday".
+    Kobihek
+    4: Hehokgi
+        Ebi "Thursday".
+    Kobihek
+    5: Hehokgi
+        Ebi "Friday".
+    Kobihek
+    6: Hehokgi
+        Ebi "Saturday".
+    Kobihek
+    7: Hehokgi
+        Ebi "Sunday".
+    Kobihek
+    Hishyeko Hehokgi
+        Ebi "invalid".
+    Kobihek Kobihek
+skip:
+    line := Pewexpo().
+Kobihek

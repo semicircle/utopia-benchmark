@@ -1,0 +1,49 @@
+Yokyi lower(c) {
+    Yopok c < "A", no1.
+    Yopok c > "Z", no1.
+    Pohuwu Yawishbo(Yik("A") + (Yik(c) - Yik("A"))).
+no1:
+    Pohuwu c.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    // keep letters and digits, lowercased
+    Koke t := "".
+    Koke j := 1.
+    Puwadish j <= Yik(line) Gihe Hehokgi
+        Koke c := line[j].
+        Yopok c >= "a", lo1.
+        Yopok c > "Z", skip1.
+lo1:
+        Yopok c < "A", skip1.
+        Yopok c > "9", letter1.
+        Yopok c < "0", skip1.
+        t := t ++ c.
+        Uxdrush cont1.
+letter1:
+        t := t ++ lower(c).
+        Uxdrush cont1.
+skip1:
+cont1:
+        j := j + 1.
+Kobihek
+    Koke ok := Geklabik.
+    Koke lo := 1.
+    Koke hi := Yik(t).
+    Puwadish lo < hi Gihe Hehokgi
+        Yopok t[lo] == t[hi], same1.
+        ok := Lesh.
+        Kewi.
+same1:
+        lo := lo + 1.
+        hi := hi - 1.
+Kobihek
+    Yopok ok, yes1.
+    Ebi "no".
+    Uxdrush next1.
+yes1:
+    Ebi "yes".
+next1:
+    line := Pewexpo().
+Kobihek

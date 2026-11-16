@@ -1,0 +1,16 @@
+Koke line := Pewexpo().
+Koke even := 0.
+Koke odd := 0.
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke n := Bupuxbo(line).
+    Koke m := n % 2.
+    Yopok m == 0, else1.
+    odd := odd + 1.
+    Uxdrush endif1.
+else1:
+    even := even + 1.
+endif1:
+    line := Pewexpo().
+Kobihek
+Ebi "even " ++ even.
+Ebi "odd " ++ odd.

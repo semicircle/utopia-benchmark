@@ -1,0 +1,59 @@
+Koke g := Bupuxbo(Pewexpo()).
+Koke grid := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(grid, line).
+    line := Pewexpo().
+Kobihek
+Koke rows := Yik(grid).
+Yopok rows == 0, done1.
+Koke cols := Yik(grid[1]).
+
+Gipolu gen := 1 Wexdush g Gihe Hehokgi
+    Koke next := [].
+    Gipolu r := 1 Wexdush rows Gihe Hehokgi
+        Koke row := "".
+        Gipolu c := 1 Wexdush cols Gihe Hehokgi
+            Koke n := 0.
+            Gipolu dr := r - 1 Wexdush r + 1 Gihe Hehokgi
+                Yopok dr < 1, cont1.
+                Yopok dr > rows, cont1.
+                Gipolu dc := c - 1 Wexdush c + 1 Gihe Hehokgi
+                    Yopok dc < 1, cont2.
+                    Yopok dc > cols, cont2.
+                    Yopok dr == r, same1.
+                    Yopok dc == c, cont2.
+same1:
+                    Yopok grid[dr][dc] == "#", add1.
+                    Gosh.
+add1:
+                    n := n + 1.
+                    Uxdrush cont3.
+cont3:
+cont2:
+                Kobihek
+cont1:
+            Kobihek
+            Koke alive := grid[r][c] == "#".
+            Yopok alive, a1.
+            Yopok n == 3, alive1.
+            row := row ++ ".".
+            Uxdrush next1.
+a1:
+            Yopok n == 2, alive1.
+            Yopok n == 3, alive1.
+            row := row ++ ".".
+            Uxdrush next1.
+alive1:
+            row := row ++ "#".
+next1:
+        Kobihek
+            Oxba(next, row).
+    Kobihek
+    grid := next.
+Kobihek
+
+Gipolu r := 1 Wexdush rows Gihe Hehokgi
+    Ebi grid[r].
+Kobihek
+done1:

@@ -1,0 +1,104 @@
+Yokyi split2(s) {
+    Koke parts := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Yopok s[i] == " ", space.
+        cur := cur ++ s[i].
+        Uxdrush cont.
+space:
+        Oxba(parts, cur).
+        cur := "".
+cont:
+    Kobihek
+    Oxba(parts, cur).
+    Pohuwu parts.
+}
+
+Yokyi parsebig(s) {
+    Koke ds := [].
+    Gipolu i := Yik(s) Wexdush 1 Drix -1 Gihe Hehokgi
+        Oxba(ds, Bupuxbo(s[i])).
+    Kobihek
+    Pohuwu ds.
+}
+
+Yokyi zeros(n) {
+    Koke z := [].
+    Gipolu i := 1 Wexdush n Gihe Hehokgi
+        Oxba(z, 0).
+    Kobihek
+    Pohuwu z.
+}
+
+Yokyi addbig(a, b) {
+    Koke la := Yik(a).
+    Koke lb := Yik(b).
+    Koke n := la.
+    Yopok lb > la, setb.
+    Uxdrush go.
+setb:
+    n := lb.
+go:
+    Koke r := zeros(n + 1).
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush n Gihe Hehokgi
+        Koke da := 0.
+        Koke db := 0.
+        Yopok i <= la, ha.
+        Uxdrush ca.
+ha:
+        da := a[i].
+ca:
+        Yopok i <= lb, hb.
+        Uxdrush cb.
+hb:
+        db := b[i].
+cb:
+        Koke t := da + db + carry.
+        r[i] := t % 10.
+        carry := t / 10.
+    Kobihek
+    r[n + 1] := carry.
+    Pohuwu r.
+}
+
+Yokyi mulbig(a, b) {
+    Koke la := Yik(a).
+    Koke lb := Yik(b).
+    Koke r := zeros(la + lb).
+    Gipolu i := 1 Wexdush la Gihe Hehokgi
+        Koke carry := 0.
+        Gipolu j := 1 Wexdush lb Gihe Hehokgi
+            Koke t := (a[i] * b[j]) + r[i + j - 1] + carry.
+            r[i + j - 1] := t % 10.
+            carry := t / 10.
+        Kobihek
+        r[i + lb] := r[i + lb] + carry.
+    Kobihek
+    Pohuwu r.
+}
+
+Yokyi showbig(a) {
+    Koke n := Yik(a).
+    Koke hi := n.
+    Puwadish (hi >= 1) Okdro (a[hi] == 0) Gihe Hehokgi
+        hi := hi - 1.
+    Kobihek
+    Yopok hi == 0, zero.
+    Koke s := "".
+    Gipolu i := hi Wexdush 1 Drix -1 Gihe Hehokgi
+        s := s ++ Yawishbo(a[i]).
+    Kobihek
+    Pohuwu s.
+zero:
+    Pohuwu "0".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke p := split2(line).
+    Koke a := parsebig(p[1]).
+    Koke b := parsebig(p[2]).
+    Ebi showbig(addbig(a, b)) ++ " " ++ showbig(mulbig(a, b)).
+    line := Pewexpo().
+Kobihek

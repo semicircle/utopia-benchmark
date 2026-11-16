@@ -90,6 +90,13 @@ short-circuiting. Translated by habit, without adapting to the dialect's
 semantics, the T1–T2 reference solutions fail in 37–83% of dialects, against
 0–52% for T0 (`UTOPIA_TRAPS=1 go test ./internal/tasks -run HabitTraps -v`).
 
+**Release v1** fixes two languages, Reslil (seed 182) and Dushpek (seed 977),
+so results are comparable and anyone can reproduce them: run
+`harness/run.py --release v1`. A rule that never looks at model results
+picked the pair. Between them they flip every false friend.
+[releases/v1/](releases/v1/README.md) has the manuals, the rule and how to
+verify a result. Fresh seeds remain the contamination-proof check.
+
 What a seed varies today:
 
 - **Lexicon**: every keyword and builtin name is a fresh conlang word, from
@@ -191,6 +198,8 @@ once in the repo settings).
 - `harness/regrade.py`: re-scores saved one-shot answers after a grading fix, without calling a model
 - `harness/build_site.py`: builds the static results site from `results/`
 - `scripts/make_tests.py`: independent Python references that generate the T1–T2 hidden tests
+- `scripts/pick_languages.py`: the rule that picks a release's fixed languages
+- `releases/`: published releases (fixed languages and their manuals); `go test` keeps them frozen
 
 `go test ./...` checks that every reference solution passes its tests in
 600 generated dialects (the canonical solutions are written once, with

@@ -1,0 +1,101 @@
+Yokyi split(s) {
+    Koke parts := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Koke c := s[i].
+        Yopok c == " ", sep.
+        cur := cur ++ c.
+        Gosh.
+    sep:
+        Yopok Yik(cur) == 0, skip.
+        Oxba(parts, cur).
+        cur := "".
+    skip:
+        Gosh.
+    Kobihek
+    Yopok Yik(cur) == 0, fin.
+    Oxba(parts, cur).
+fin:
+    Pohuwu parts.
+}
+
+Yokyi tdiv(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, done.
+    Yopok (a < 0) /= (b < 0), done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Yokyi isint(t) {
+    Koke n := Yik(t).
+    Koke st := 1.
+    Yopok t[1] /= "-", nos.
+    st := 2.
+nos:
+    Yopok st > n, bad.
+    Gipolu i := st Wexdush n Gihe Hehokgi
+        Koke c := t[i].
+        Yopok (c < "0") Dak (c > "9"), bad.
+    Kobihek
+    Pohuwu Geklabik.
+bad:
+    Pohuwu Lesh.
+}
+
+Yokyi evalline(line) {
+    Koke toks := split(line).
+    Yopok Yik(toks) == 0, err.
+    Koke st := [].
+    Koke sp := 0.
+    Gipolu i := 1 Wexdush Yik(toks) Gihe Hehokgi
+        Koke t := toks[i].
+        Yopok isint(t), push.
+        Yopok sp < 2, err.
+        Koke b := st[sp].
+        Koke a := st[sp - 1].
+        sp := sp - 1.
+        Koke r := 0.
+        Dru t Ihedrux
+        "+": Hehokgi
+            r := a + b.
+        Kobihek
+        "-": Hehokgi
+            r := a - b.
+        Kobihek
+        "*": Hehokgi
+            r := a * b.
+        Kobihek
+        "/": Hehokgi
+            Yopok b == 0, err.
+            r := tdiv(a, b).
+        Kobihek
+        "%": Hehokgi
+            Yopok b == 0, err.
+            r := a - (b * tdiv(a, b)).
+        Kobihek
+        Hishyeko Hehokgi
+            Uxdrush err.
+        Kobihek Kobihek
+        st[sp] := r.
+        Gosh.
+    push:
+        sp := sp + 1.
+        Yopok sp <= Yik(st), setv.
+        Oxba(st, Bupuxbo(t)).
+        Gosh.
+    setv:
+        st[sp] := Bupuxbo(t).
+    Kobihek
+    Yopok sp /= 1, err.
+    Pohuwu Yawishbo(st[1]).
+err:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi evalline(line).
+    line := Pewexpo().
+Kobihek

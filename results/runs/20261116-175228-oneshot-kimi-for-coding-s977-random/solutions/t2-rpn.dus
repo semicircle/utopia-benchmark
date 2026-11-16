@@ -1,0 +1,122 @@
+Yokyi split(s) {
+    Koke parts := [].
+    Koke cur := "".
+    Gipolu i := 1 Wexdush Yik(s) Gihe Hehokgi
+        Yopok s[i] == " ", space.
+        cur := cur ++ s[i].
+        Uxdrush cont.
+space:
+        Yopok cur == "", cont.
+        Oxba(parts, cur).
+        cur := "".
+cont:
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(parts, cur).
+done:
+    Pohuwu parts.
+}
+
+Yokyi absv(x) {
+    Yopok x >= 0, pos.
+    Pohuwu 0 - x.
+pos:
+    Pohuwu x.
+}
+
+Yokyi divtz(a, b) {
+    Koke qa := absv(a).
+    Koke qb := absv(b).
+    Koke q := qa / qb.
+    Yopok (a < 0) == (b < 0), same.
+    Pohuwu 0 - q.
+same:
+    Pohuwu q.
+}
+
+Yokyi isint(t) {
+    Koke n := Yik(t).
+    Yopok n == 0, no.
+    Koke st := 1.
+    Yopok t[1] == "-", neg.
+    Uxdrush go.
+neg:
+    st := 2.
+    Yopok n == 1, no.
+go:
+    Gipolu i := st Wexdush n Gihe Hehokgi
+        Yopok (t[i] < "0") Dak (t[i] > "9"), no.
+    Kobihek
+    Pohuwu Geklabik.
+no:
+    Pohuwu Lesh.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke toks := split(line).
+    Koke st := [].
+    Koke top := 0.
+    Koke bad := Lesh.
+    Gipolu i := 1 Wexdush Yik(toks) Gihe Hehokgi
+        Koke t := toks[i].
+        Yopok isint(t), pushint.
+        Yopok (t == "+") Dak ((t == "-") Dak ((t == "*") Dak ((t == "/") Dak (t == "%")))), op.
+        bad := Geklabik.
+        Kewi.
+pushint:
+        top := top + 1.
+        Yopok top > Yik(st), grow.
+        st[top] := Bupuxbo(t).
+        Uxdrush cont.
+grow:
+        Oxba(st, Bupuxbo(t)).
+        Uxdrush cont.
+op:
+        Yopok top < 2, err.
+        Koke b := st[top].
+        top := top - 1.
+        Koke a := st[top].
+        top := top - 1.
+        Koke v := 0.
+        Yopok t == "+", plus.
+        Yopok t == "-", minus.
+        Yopok t == "*", times.
+        Yopok t == "/", divide.
+        Yopok b == 0, err.
+        v := a % b.
+        Uxdrush store.
+plus:
+        v := a + b.
+        Uxdrush store.
+minus:
+        v := a - b.
+        Uxdrush store.
+times:
+        v := a * b.
+        Uxdrush store.
+divide:
+        Yopok b == 0, err.
+        v := divtz(a, b).
+        Uxdrush store.
+err:
+        bad := Geklabik.
+        Kewi.
+store:
+        top := top + 1.
+        Yopok top > Yik(st), grow2.
+        st[top] := v.
+        Uxdrush cont.
+grow2:
+        Oxba(st, v).
+cont:
+    Kobihek
+    Yopok bad, printerr.
+    Yopok top /= 1, printerr.
+    Ebi st[1].
+    Uxdrush next.
+printerr:
+    Ebi "error".
+next:
+    line := Pewexpo().
+Kobihek

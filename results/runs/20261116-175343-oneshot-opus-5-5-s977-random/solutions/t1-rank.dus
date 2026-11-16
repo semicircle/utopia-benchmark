@@ -1,0 +1,60 @@
+Yokyi split(s) {
+    Koke res := [].
+    Koke cur := "".
+    Koke i := 1.
+    Koke n := Yik(s).
+    Puwadish i <= n Gihe Hehokgi
+        Koke c := s[i].
+        Yopok (c == " ") Dak (c == "\t") Dak (c == "\r"), sp.
+        cur := cur ++ c.
+        Uxdrush nx.
+    sp:
+        Yopok cur == "", nx.
+        Oxba(res, cur).
+        cur := "".
+    nx:
+        i := i + 1.
+    Kobihek
+    Yopok cur == "", done.
+    Oxba(res, cur).
+done:
+    Pohuwu res.
+}
+
+Yokyi lowb(xs, q) {
+    Koke lo := 1.
+    Koke hi := Yik(xs) + 1.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := ((lo + hi) - 1) / 2.
+        Yopok xs[mid] >= q, left.
+        lo := mid + 1.
+        Gosh.
+    left:
+        hi := mid.
+    Kobihek
+    Pohuwu lo.
+}
+
+Koke first := Pewexpo().
+Koke xs := [].
+Yopok first == Liliga, done.
+Koke toks := split(first).
+Gipolu i := 1 Wexdush Yik(toks) Gihe Hehokgi
+    Oxba(xs, Bupuxbo(toks[i])).
+Kobihek
+Koke n := Yik(xs).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke qt := split(line).
+    Yopok Yik(qt) == 0, skip.
+    Koke q := Bupuxbo(qt[1]).
+    Koke p := lowb(xs, q).
+    Yopok (p <= n) Okdro (xs[p] == q), fnd.
+    Ebi (p - 1) ++ " missing".
+    Uxdrush skip.
+fnd:
+    Ebi (p - 1) ++ " found".
+skip:
+    line := Pewexpo().
+Kobihek
+done:

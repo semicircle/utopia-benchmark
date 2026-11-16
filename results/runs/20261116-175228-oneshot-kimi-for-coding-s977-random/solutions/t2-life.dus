@@ -1,0 +1,64 @@
+Koke g := Bupuxbo(Pewexpo()).
+Koke grid := [].
+Koke row := Pewexpo().
+Puwadish row /= Liliga Gihe Hehokgi
+    Oxba(grid, row).
+    row := Pewexpo().
+Kobihek
+Koke rows := Yik(grid).
+Koke cols := 0.
+Yopok rows /= 0, calc.
+Uxdrush start.
+calc:
+    cols := Yik(grid[1]).
+start:
+Yokyi cell(gr, r, c) {
+    Yopok (r < 1) Dak (r > rows), out.
+    Yopok (c < 1) Dak (c > cols), out.
+    Pohuwu gr[r][c].
+out:
+    Pohuwu ".".
+}
+
+Yokyi nextgen(gr) {
+    Koke ng := [].
+    Gipolu r := 1 Wexdush rows Gihe Hehokgi
+        Koke s := "".
+        Gipolu c := 1 Wexdush cols Gihe Hehokgi
+            Koke cnt := 0.
+            Gipolu dr := -1 Wexdush 1 Gihe Hehokgi
+                Gipolu dc := -1 Wexdush 1 Gihe Hehokgi
+                    Yopok (dr == 0) Okdro (dc == 0), skip.
+                    Yopok cell(gr, r + dr, c + dc) == "#", live.
+                    Uxdrush skip.
+live:
+                    cnt := cnt + 1.
+skip:
+                Kobihek
+            Kobihek
+            Yopok cell(gr, r, c) == "#", alive.
+            Yopok (cnt == 2) Dak (cnt == 3), keep.
+            s := s ++ ".".
+            Uxdrush contd.
+keep:
+            s := s ++ "#".
+            Uxdrush contd.
+alive:
+            Yopok cnt == 3, born.
+            s := s ++ ".".
+            Uxdrush contd.
+born:
+            s := s ++ "#".
+contd:
+        Kobihek
+        Oxba(ng, s).
+    Kobihek
+    Pohuwu ng.
+}
+
+Gipolu gen := 1 Wexdush g Gihe Hehokgi
+    grid := nextgen(grid).
+Kobihek
+Gipolu r := 1 Wexdush rows Gihe Hehokgi
+    Ebi grid[r].
+Kobihek

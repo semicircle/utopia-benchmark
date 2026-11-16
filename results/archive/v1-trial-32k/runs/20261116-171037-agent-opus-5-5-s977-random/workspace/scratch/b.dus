@@ -1,0 +1,8 @@
+Koke xs := [1,2,3].
+Ebi xs[-5].
+Ebi xs[0].
+Ebi xs[-1000000000].
+Ebi Bupuxbo("0012").
+Ebi Bupuxbo("-0").
+Koke s := "".
+Ebi Yik(s).

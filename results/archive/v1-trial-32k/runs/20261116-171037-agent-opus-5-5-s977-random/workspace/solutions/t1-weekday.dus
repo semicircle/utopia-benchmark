@@ -1,0 +1,24 @@
+Yokyi fdiv(a, b) {
+    Pohuwu -((-a) / b).
+}
+Yokyi num(s, a, b) {
+    Koke r := 0.
+    Gipolu i := a Wexdush b Gihe Hehokgi
+        r := (r * 10) + Bupuxbo(s[i]).
+    Kobihek
+    Pohuwu r.
+}
+Koke t := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4].
+Koke names := ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke y := num(line, 1, 4).
+    Koke m := num(line, 6, 7).
+    Koke d := num(line, 9, 10).
+    Yopok m >= 3, noadj.
+    y := y - 1.
+noadj:
+    Koke x := y + fdiv(y, 4) - fdiv(y, 100) + fdiv(y, 400) + t[m] + d.
+    Ebi names[x + 1].
+    line := Pewexpo().
+Kobihek

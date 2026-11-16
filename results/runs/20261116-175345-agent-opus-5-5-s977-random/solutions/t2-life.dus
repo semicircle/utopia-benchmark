@@ -1,0 +1,66 @@
+Koke g := Bupuxbo(Pewexpo()).
+Koke rows := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok line == "", skipl.
+    Oxba(rows, line).
+skipl:
+    line := Pewexpo().
+Kobihek
+Koke h := Yik(rows).
+Yopok h == 0, finish.
+Koke w := Yik(rows[1]).
+// padded grid (h+2) x (w+2)
+Koke grid := [].
+Gipolu i := 1 Wexdush h + 2 Gihe Hehokgi
+    Koke r := [].
+    Gipolu j := 1 Wexdush w + 2 Gihe Hehokgi
+        Oxba(r, 0).
+    Kobihek
+    Oxba(grid, r).
+Kobihek
+Gipolu i := 1 Wexdush h Gihe Hehokgi
+    Gipolu j := 1 Wexdush w Gihe Hehokgi
+        Yopok rows[i][j] /= "#", dead.
+        Koke gr := grid[i + 1].
+        gr[j + 1] := 1.
+    dead:
+    Kobihek
+Kobihek
+Gipolu gen := 1 Wexdush g Gihe Hehokgi
+    Koke ng := [].
+    Gipolu i := 1 Wexdush h + 2 Gihe Hehokgi
+        Koke r := [].
+        Gipolu j := 1 Wexdush w + 2 Gihe Hehokgi
+            Oxba(r, 0).
+        Kobihek
+        Oxba(ng, r).
+    Kobihek
+    Gipolu i := 2 Wexdush h + 1 Gihe Hehokgi
+        Koke up := grid[i - 1].
+        Koke mid := grid[i].
+        Koke dn := grid[i + 1].
+        Koke nr := ng[i].
+        Gipolu j := 2 Wexdush w + 1 Gihe Hehokgi
+            Koke c := up[j - 1] + up[j] + up[j + 1] + mid[j - 1] + mid[j + 1] + dn[j - 1] + dn[j] + dn[j + 1].
+            Yopok c == 3, alive.
+            Yopok (c == 2) Okdro (mid[j] == 1), alive.
+            Gosh.
+        alive:
+            nr[j] := 1.
+        Kobihek
+    Kobihek
+    grid := ng.
+Kobihek
+Gipolu i := 2 Wexdush h + 1 Gihe Hehokgi
+    Koke s := "".
+    Gipolu j := 2 Wexdush w + 1 Gihe Hehokgi
+        Yopok grid[i][j] == 1, live.
+        s := s ++ ".".
+        Gosh.
+    live:
+        s := s ++ "#".
+    Kobihek
+    Ebi s.
+Kobihek
+finish:

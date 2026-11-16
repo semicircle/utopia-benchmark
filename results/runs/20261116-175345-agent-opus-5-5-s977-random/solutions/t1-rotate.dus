@@ -1,0 +1,13 @@
+Koke first := Pewexpo().
+Yopok first == Liliga, finish.
+Koke k := Bupuxbo(first).
+Koke xs := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(xs, line).
+    line := Pewexpo().
+Kobihek
+Gipolu j := 1 Wexdush Yik(xs) Gihe Hehokgi
+    Ebi xs[j - k].
+Kobihek
+finish:

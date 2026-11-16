@@ -1,0 +1,11 @@
+Koke xs := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(xs, line).
+    line := Pewexpo().
+Kobihek
+Koke i := Yik(xs).
+Puwadish i >= 1 Gihe Hehokgi
+    Ebi xs[i].
+    i := i - 1.
+Kobihek
