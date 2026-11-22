@@ -1,0 +1,15 @@
+A1 = #CYCLE
+B1 = #CYCLE
+C1 = #CYCLE
+D1 = #CYCLE
+E1 = #CYCLE
+F1 = 4
+G1 = #ERR
+H1 = #ERR
+C2 = 3
+D2 = #CYCLE
+E2 = #CYCLE
+F2 = #CYCLE
+G2 = #DIV0
+E3 = #CYCLE
+G3 = #ERR

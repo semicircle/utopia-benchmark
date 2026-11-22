@@ -1,0 +1,85 @@
+func parseSize(line) {
+    let sp = 0;
+    while (line[sp] != " ") {
+        sp = sp + 1;
+    }
+    let left = "";
+    for (let i = 0; i < sp; i = i + 1) {
+        left = left & line[i];
+    }
+    let right = "";
+    for (let i = sp + 1; i < len(line); i = i + 1) {
+        right = right & line[i];
+    }
+    return [num(left), num(right)];
+}
+
+let size = parseSize(readline());
+let h = size[0];
+let w = size[1];
+let cells = [];
+let start = 0;
+let goal = 0;
+for (let r = 0; r < h; r = r + 1) {
+    let row = readline();
+    for (let c = 0; c < w; c = c + 1) {
+        let ch = row[c];
+        if (ch == "S") {
+            start = r * w + c;
+        }
+        if (ch == "E") {
+            goal = r * w + c;
+        }
+        push(cells, ch);
+    }
+}
+
+let dist = [];
+let ways = [];
+for (let i = 0; i < h * w; i = i + 1) {
+    push(dist, -1);
+    push(ways, 0);
+}
+let dr = [-1, 1, 0, 0];
+let dc = [0, 0, -1, 1];
+let queue = [start];
+let head = 0;
+dist[start] = 0;
+ways[start] = 1;
+while (head < len(queue)) {
+    let cur = queue[head];
+    head = head + 1;
+    let r = cur / w;
+    let c = cur % w;
+    for (let d = 0; d < 4; d = d + 1) {
+        let nr = r + dr[d];
+        let nc = c + dc[d];
+        let inside = false;
+        if (nr >= 0) {
+            if (nr < h) {
+                if (nc >= 0) {
+                    if (nc < w) {
+                        inside = true;
+                    }
+                }
+            }
+        }
+        if (inside) {
+            let next = nr * w + nc;
+            if (cells[next] != "#") {
+                if (dist[next] == -1) {
+                    dist[next] = dist[cur] + 1;
+                    ways[next] = ways[cur];
+                    push(queue, next);
+                } else if (dist[next] == dist[cur] + 1) {
+                    ways[next] = ways[next] + ways[cur];
+                }
+            }
+        }
+    }
+}
+if (dist[goal] == -1) {
+    print "-1 0";
+} else {
+    print dist[goal] & " " & ways[goal];
+}

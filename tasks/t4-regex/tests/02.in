@@ -1,0 +1,14 @@
+a* 
+a* aaaa
+a* aab
+ab*c ac
+ab*c abbbc
+ab+c ac
+ab+c abbc
+ab?c ac
+ab?c abc
+ab?c abbc
+.* anything
+a.*b axxxb
+a.*b axxxc
+a*a*a*a*b aaaaaaaaaaaaaaaaaaaaaaaaaaaaaac

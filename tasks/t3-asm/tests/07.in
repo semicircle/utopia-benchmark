@@ -1,0 +1,4 @@
+set a 1
+add b 1
+jnz a -1
+out b

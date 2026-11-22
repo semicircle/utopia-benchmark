@@ -1,0 +1,40 @@
+([^a])* baacccc
+.([ab])+ aabbacbb
+(.)* a
+(b)+ ababbbcc
+. aa
+((.)?)+ acbbb
+(([^a]|.))? aabc
+((.)+)? 
+((([ab]|[^a])|(b)+))? caa
+(([^a])?)+ c
+b 
+b a
+. bca
+.a aaaba
+(.)* bacbcc
+(((b)+)?)* ccacb
+(([^a])*)? cbcbbab
+(([ab])+a[ab])* acbbbcca
+((b)+)? b
+[ab][^a]b 
+((b|a))+ bcbb
+(((.)?|(.|[ab])))+[ab] caccc
+(b)? cabbc
+([^a])* bbac
+((.)+)+(([ab])+)+ bbabaaca
+(a|((a)+)+) 
+(([ab])?)*([ab])+ab cbab
+([ab]a[ab]|b) b
+(((a)?)*|([^a])?) ca
+. accba
+([ab]a(a)?(b)*a.|[ab]) bcbbb
+(([^a])+)+((.[^a])*)+ bcb
+([ab])+ abcabaca
+((((.)?)+)+)? acc
+(a[^a])+ cacc
+(bb)* cbb
+(((b)?)*|((.|[ab]))+) bcbc
+(([^a])+([^a]|b)|b[ab][ab])((b)*(a)?|b) cbb
+((([ab]|b))?|[ab])(([ab])?)*(b)* bb
+(((b)?)?)+ ca

@@ -207,6 +207,14 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line);
   <div id="summary"></div>
 </section>
 
+<section id="trend-section" hidden>
+  <h2>Over time</h2>
+  <p class="sub">The same model and setup, run again on the release's fixed languages on different days.
+    Each point is one day's mean score; hover for the runs behind it. A falling line is the first sign that a
+    model behind a subscription got worse. <code>harness/checkup.py</code> says whether a drop is more than noise.</p>
+  <div id="trend"></div>
+</section>
+
 <section>
   <h2>Per task</h2>
   <p class="sub">Each row is one run in one generated language. ✓ passed every hidden test, ✗ failed at least one.</p>
@@ -378,6 +386,53 @@ function renderRuns() {
   }).join("");
 }
 
+function renderTrend() {
+  const rel = runs.filter(r => r.release);
+  const series = new Map();
+  for (const r of rel) {
+    const k = r.model + "|" + r.mode + "|" + r.release;
+    if (!series.has(k)) series.set(k, { model: r.model, mode: r.mode, release: r.release, days: new Map() });
+    const day = (r.date || "").slice(0, 10);
+    const d = series.get(k).days;
+    if (!d.has(day)) d.set(day, []);
+    d.get(day).push(r);
+  }
+  const shown = [...series.values()].filter(s => s.days.size >= 2);
+  if (!shown.length) return;
+  document.getElementById("trend-section").hidden = false;
+  const root = document.getElementById("trend");
+  const W = 640, H = 150, L = 36, R = 12, T = 10, B = 22;
+  for (const s of shown) {
+    const days = [...s.days.keys()].sort();
+    const t0 = Date.parse(days[0]), t1 = Date.parse(days[days.length - 1]);
+    const x = d => L + (t1 > t0 ? (Date.parse(d) - t0) / (t1 - t0) : 0.5) * (W - L - R);
+    const y = v => T + (1 - v) * (H - T - B);
+    const pts = days.map(d => {
+      const rs = s.days.get(d);
+      const passed = rs.reduce((a, r) => a + r.passed, 0), total = rs.reduce((a, r) => a + r.total, 0);
+      return { d, v: passed / total, rs, passed, total };
+    });
+    const box = document.createElement("div");
+    box.className = "chart-group";
+    const grid = [0, 0.5, 1].map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/>
+      <text x="${L - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--muted)">${v * 100}%</text>`).join("");
+    const path = pts.map((p, i) => `${i ? "L" : "M"}${x(p.d).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
+    box.innerHTML = `<h3>${esc(s.model)} · ${esc(MODE_LABEL[s.mode] || s.mode)} · release ${esc(s.release)}</h3>
+      <svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="score per day">${grid}
+        <text x="${L}" y="${H - 4}" font-size="11" fill="var(--muted)">${esc(days[0])}</text>
+        <text x="${W - R}" y="${H - 4}" font-size="11" fill="var(--muted)" text-anchor="end">${esc(days[days.length - 1])}</text>
+        <path d="${path}" fill="none" stroke="var(--series-1)" stroke-width="2"/>
+        ${pts.map((p, i) => `<circle data-i="${i}" cx="${x(p.d).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="5" fill="var(--series-1)"/>`).join("")}
+      </svg>`;
+    box.querySelectorAll("circle").forEach(c => {
+      const p = pts[+c.dataset.i];
+      bindTip(c, `<strong>${esc(p.d)}</strong><br>${p.passed}/${p.total} tasks over ${p.rs.length} run(s)<br>` +
+        p.rs.map(r => `${esc(r.language || "")}: ${r.passed}/${r.total}`).join("<br>"));
+    });
+    root.appendChild(box);
+  }
+}
+
 function renderSamples() {
   const samples = (DATA && DATA.samples) || [];
   const tabs = document.getElementById("sample-tabs"), code = document.getElementById("sample-code");
@@ -443,7 +498,7 @@ function renderNotes() {
   document.getElementById("notes-section").hidden = false;
 }
 
-renderRelease(); renderNotes(); renderStamp(); renderHeadline(); renderSummary(); renderMatrix(); renderRuns(); renderSamples();
+renderRelease(); renderNotes(); renderStamp(); renderHeadline(); renderSummary(); renderTrend(); renderMatrix(); renderRuns(); renderSamples();
 </script>
 </body>
 </html>

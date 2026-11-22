@@ -1,0 +1,111 @@
+func regIndex(t) {
+    if (len(t) != 1) {
+        return -1;
+    }
+    let names = "abcdefghijklmnopqrstuvwxyz";
+    for (let i = 0; i < 26; i = i + 1) {
+        if (names[i] == t) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+func split(line) {
+    let out = [];
+    let cur = "";
+    for (let i = 0; i < len(line); i = i + 1) {
+        if (line[i] == " ") {
+            push(out, cur);
+            cur = "";
+        } else {
+            cur = cur & line[i];
+        }
+    }
+    push(out, cur);
+    return out;
+}
+
+# Operands are stored as a register index (or -1) and a literal value.
+let ops = [];
+let regA = [];
+let litA = [];
+let regB = [];
+let litB = [];
+let line = readline();
+while (line != none) {
+    let parts = split(line);
+    push(ops, parts[0]);
+    let a = regIndex(parts[1]);
+    push(regA, a);
+    if (a == -1) {
+        push(litA, num(parts[1]));
+    } else {
+        push(litA, 0);
+    }
+    if (len(parts) > 2) {
+        let b = regIndex(parts[2]);
+        push(regB, b);
+        if (b == -1) {
+            push(litB, num(parts[2]));
+        } else {
+            push(litB, 0);
+        }
+    } else {
+        push(regB, -1);
+        push(litB, 0);
+    }
+    line = readline();
+}
+
+let regs = [];
+for (let i = 0; i < 26; i = i + 1) {
+    push(regs, 0);
+}
+let n = len(ops);
+let pc = 0;
+let steps = 0;
+while (pc >= 0 and pc < n) {
+    if (steps == 10000) {
+        print "timeout";
+        break;
+    }
+    steps = steps + 1;
+    let op = ops[pc];
+    let x = litA[pc];
+    if (regA[pc] != -1) {
+        x = regs[regA[pc]];
+    }
+    let y = litB[pc];
+    if (regB[pc] != -1) {
+        y = regs[regB[pc]];
+    }
+    let r = regA[pc];
+    let next = pc + 1;
+    if (op == "set") {
+        regs[r] = y;
+    } else if (op == "add") {
+        regs[r] = x + y;
+    } else if (op == "sub") {
+        regs[r] = x - y;
+    } else if (op == "mul") {
+        regs[r] = x * y;
+    } else if (op == "div" or op == "mod") {
+        if (y == 0) {
+            print "error";
+            break;
+        }
+        if (op == "div") {
+            regs[r] = x / y;
+        } else {
+            regs[r] = x % y;
+        }
+    } else if (op == "jnz") {
+        if (x != 0) {
+            next = pc + y;
+        }
+    } else if (op == "out") {
+        print x;
+    }
+    pc = next;
+}

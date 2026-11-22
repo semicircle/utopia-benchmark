@@ -1,0 +1,67 @@
+func spaces(n) {
+    let s = "";
+    for (let i = 0; i < n; i = i + 1) {
+        s = s & " ";
+    }
+    return s;
+}
+
+let width = num(readline());
+let words = [];
+let line = readline();
+while (line != none) {
+    let cur = "";
+    for (let i = 0; i < len(line); i = i + 1) {
+        if (line[i] == " ") {
+            if (cur != "") {
+                push(words, cur);
+                cur = "";
+            }
+        } else {
+            cur = cur & line[i];
+        }
+    }
+    if (cur != "") {
+        push(words, cur);
+    }
+    line = readline();
+}
+
+let n = len(words);
+let i = 0;
+while (i < n) {
+    # Words i .. j-1 go on this line; used counts their letters.
+    let used = len(words[i]);
+    let j = i + 1;
+    let more = true;
+    while (more) {
+        more = false;
+        if (j < n) {
+            if (used + (j - i) + len(words[j]) <= width) {
+                used = used + len(words[j]);
+                j = j + 1;
+                more = true;
+            }
+        }
+    }
+    let out = words[i];
+    if (j == n) {
+        for (let k = i + 1; k < j; k = k + 1) {
+            out = out & " " & words[k];
+        }
+    } else if (j - i > 1) {
+        let gaps = j - i - 1;
+        let extra = width - used;
+        let base = extra / gaps;
+        let wide = extra % gaps;
+        for (let k = i + 1; k < j; k = k + 1) {
+            let gap = base;
+            if (k - i - 1 < wide) {
+                gap = gap + 1;
+            }
+            out = out & spaces(gap) & words[k];
+        }
+    }
+    print out;
+    i = j;
+}

@@ -16,5 +16,25 @@
       "name": "Dushpek",
       "dir": "dushpek"
     }
-  ]
+  ],
+  "tasks": [
+    "t0-count",
+    "t0-day-names",
+    "t0-even-odd",
+    "t0-factorial",
+    "t0-fizzbuzz",
+    "t0-hello",
+    "t0-reverse-lines",
+    "t1-digits",
+    "t1-floordiv",
+    "t1-palindromes",
+    "t1-rank",
+    "t1-rotate",
+    "t1-weekday",
+    "t2-bignum",
+    "t2-life",
+    "t2-rpn",
+    "t2-wordfreq"
+  ],
+  "tasks_sha256": "2fc045096f6428cb0ba7b9650b9571ce503505dba17c6bd69aac6ee1c74d6a79"
 }

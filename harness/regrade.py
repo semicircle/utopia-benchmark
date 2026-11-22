@@ -18,8 +18,8 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from grade import grade  # noqa: E402
-from run import ROOT, TASKS, extract_solutions, git_commit, task_ids  # noqa: E402
+from grade import grade, score_of  # noqa: E402
+from run import ROOT, TASKS, extract_solutions, git_commit  # noqa: E402
 
 
 def regrade(run_dir: Path, exe: Path):
@@ -31,13 +31,14 @@ def regrade(run_dir: Path, exe: Path):
     sol = run_dir / "solutions"
     shutil.rmtree(sol, ignore_errors=True)
     sol.mkdir()
-    for tid, code in extract_solutions((run_dir / "response.md").read_text(), task_ids()).items():
+    # The tasks the run was scored on: tasks added since then are not part of it.
+    ids = sorted(meta["score"]["tasks"])
+    for tid, code in extract_solutions((run_dir / "response.md").read_text(), ids).items():
         (sol / f"{tid}.{ext}").write_text(code)
     cmd = ["python3"] if python else [str(exe), "run", "-seed", str(meta["seed"]), "-semantics", meta["semantics"]]
-    report = grade(cmd, TASKS, sol)
+    report = grade(cmd, TASKS, sol, only=set(ids))
     before = meta["score"]["passed"]
-    meta["score"] = {"passed": report["passed_tasks"], "total": report["total_tasks"],
-                     "tasks": {t["id"]: t["passed"] for t in report["tasks"]}}
+    meta["score"] = score_of(report)
     meta.setdefault("regraded", []).append({"date": dt.datetime.now().isoformat(timespec="seconds"),
                                             "commit": git_commit(), "passed_before": before})
     (run_dir / "grade.json").write_text(json.dumps(report, indent=2) + "\n")

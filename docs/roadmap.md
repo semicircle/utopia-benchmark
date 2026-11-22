@@ -33,6 +33,8 @@ The goal is one striking chart, as early as possible.
 ## Later
 
 - [ ] Hard-mode tier (priorities, reordering optimizer, memory pools)
+- [x] A harder task tier (T3) for model checkups: frontier models score 16–17/17 on
+      release v1, so small declines cannot show
 - [ ] Hidden "surprise" knobs
 - [ ] A second platform profile (for example async actors or CSP), on the same
   `Scheduler`/`Allocator` substrate

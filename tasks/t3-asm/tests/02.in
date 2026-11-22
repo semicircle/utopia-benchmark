@@ -1,0 +1,11 @@
+set n 10
+set a 0
+set b 1
+out a
+set t a
+add t b
+set a b
+set b t
+sub n 1
+jnz n -6
+out b

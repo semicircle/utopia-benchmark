@@ -1,0 +1,22 @@
+set a 7
+set b -3
+add a b
+out a
+mul a a
+out a
+sub b 10
+out b
+out 42
+set c a
+div c 3
+out c
+set d -17
+mod d 5
+out d
+set e -17
+div e 5
+out e
+set f 17
+mod f -5
+out f
+out z

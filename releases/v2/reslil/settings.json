@@ -1,0 +1,63 @@
+{
+  "builtins": {
+    "len": "louwo",
+    "num": "odresdra",
+    "push": "omse",
+    "readline": "diwela",
+    "str": "ramou"
+  },
+  "comment": "'",
+  "ext": "res",
+  "keywords": {
+    "and": "dilisyo",
+    "break": "bou",
+    "case": "amdre",
+    "continue": "chidrom",
+    "do": "mele",
+    "else": "oli",
+    "end": "bawoum",
+    "false": "ishe",
+    "for": "sho",
+    "func": "tosedo",
+    "if": "wesosa",
+    "let": "sheye",
+    "mod": "drossou",
+    "none": "malwe",
+    "not": "drol",
+    "or": "emsoulve",
+    "print": "wami",
+    "return": "cha",
+    "select": "moumare",
+    "true": "shilsa",
+    "while": "veshim",
+    "write": "tivou"
+  },
+  "name": "Reslil",
+  "ops": {
+    "Assign": "\u003c-",
+    "Eq": "=",
+    "Ne": "\u003c\u003e",
+    "Concat": "+",
+    "Mod": ""
+  },
+  "seed": 182,
+  "semantics": {
+    "ArgOrder": "left-to-right",
+    "OperandOrder": "left-to-right",
+    "Div": "toward-negative-infinity",
+    "IndexBase": 0,
+    "OutOfRange": "error",
+    "CountInclusive": false,
+    "ShortCircuit": false,
+    "SwitchFallthrough": true,
+    "ListEqStructural": false,
+    "Prec": "flat-right"
+  },
+  "styles": {
+    "Func": "basic",
+    "If": "c",
+    "Switch": "basic",
+    "Loop": "c"
+  },
+  "terminator": ";"
+}

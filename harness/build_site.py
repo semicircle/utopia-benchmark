@@ -42,6 +42,12 @@ FRIEND_LABELS = {
 
 KEEP_FILES = ("prompt.md", "response.md", "transcript.jsonl", "grade.json", "meta.json")
 
+# Agent scaffolds other than the harness's own loop are shown with the model,
+# so the same model through different scaffolds is never pooled.
+RUNNER_LABELS = {"claude-code": "Claude Code", "cursor": "Cursor", "codex": "Codex", "kimi": "Kimi Code", "gemini": "Gemini CLI"}
+# Scaffolds where the effort is the user's everyday choice, so it is part of the label.
+EFFORT_IN_LABEL = ("codex", "claude-code", "kimi")
+
 
 def false_friends(sem):
     if not sem:
@@ -60,8 +66,13 @@ def slim(meta, files):
     d = meta.get("dialect") or {}
     p = meta.get("process") or {}
     u = meta.get("usage") or {}
+    model = meta["model"]
+    if meta.get("runner") in EFFORT_IN_LABEL and meta.get("effort"):
+        model += f" {meta['effort']}"
+    if meta.get("runner") in RUNNER_LABELS:
+        model += f" (via {RUNNER_LABELS[meta['runner']]})"
     return {
-        "id": meta["run_id"], "mode": meta["mode"], "arm": meta["arm"], "model": meta["model"],
+        "id": meta["run_id"], "mode": meta["mode"], "arm": meta["arm"], "model": model,
         "seed": meta.get("seed"), "semantics": meta.get("semantics"), "language": meta.get("language"),
         "release": meta.get("release"),
         "date": meta.get("date"), "duration_s": meta.get("duration_s"),

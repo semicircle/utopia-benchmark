@@ -1,0 +1,48 @@
+{
+  "release": "v3",
+  "semantics": "random",
+  "protocol": {
+    "max_tokens": 64000,
+    "max_steps": 150
+  },
+  "languages": [
+    {
+      "seed": 182,
+      "name": "Reslil",
+      "dir": "reslil"
+    },
+    {
+      "seed": 977,
+      "name": "Dushpek",
+      "dir": "dushpek"
+    }
+  ],
+  "tasks": [
+    "t0-count",
+    "t0-day-names",
+    "t0-even-odd",
+    "t0-factorial",
+    "t0-fizzbuzz",
+    "t0-hello",
+    "t0-reverse-lines",
+    "t1-digits",
+    "t1-floordiv",
+    "t1-palindromes",
+    "t1-rank",
+    "t1-rotate",
+    "t1-weekday",
+    "t2-bignum",
+    "t2-life",
+    "t2-rpn",
+    "t2-wordfreq",
+    "t3-asm",
+    "t3-bigdiv",
+    "t3-calc",
+    "t3-justify",
+    "t3-maze",
+    "t4-lisp",
+    "t4-regex",
+    "t4-sheet"
+  ],
+  "tasks_sha256": "cabd996b098a34c3c7e7ddf06213c8b4382c102592801994bb1edaa73abbdb9f"
+}

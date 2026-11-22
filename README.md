@@ -71,7 +71,7 @@ Utopia measures what is left when recall is taken away:
 ## Status
 
 **v0 in progress.** The dialect generator, compiler, VM, docs generator,
-harness, results site and 17 tasks work end to end. Households, seasons and
+harness, results site and 25 tasks work end to end. Households, seasons and
 the UI are not built yet.
 
 Tasks come in tiers:
@@ -82,12 +82,21 @@ Tasks come in tiers:
   palindromes, binary-search rank, weekday of a date.
 - **T2** (4 tasks, 50 to 150 lines): an RPN calculator, Game of Life,
   100-digit arithmetic, word frequencies.
+- **T3** (5 tasks, 100 to 200 lines): an infix calculator with precedence,
+  shortest paths in a maze, 80-digit division, full text justification and
+  a register-machine interpreter. Long enough that one slip with a false
+  friend anywhere shows; each has 5–9 test files, so a nearly right program
+  scores partly.
+- **T4** (3 tasks, 300 to 500 lines): small systems. A Lisp interpreter
+  with closures, a spreadsheet with ranges and spreading errors, and a
+  regular-expression matcher. Their tests form a ladder, one feature per
+  test file, so the score falls in steps.
 
 Every program parses its own input character by character (there is no
 split), and T1–T2 lean on the false friends: integer division and remainder
 with negative numbers, index base, loop bounds, evaluation order and
 short-circuiting. Translated by habit, without adapting to the dialect's
-semantics, the T1–T2 reference solutions fail in 37–83% of dialects, against
+semantics, the T1–T4 reference solutions fail in 37–83% of dialects, against
 0–52% for T0 (`UTOPIA_TRAPS=1 go test ./internal/tasks -run HabitTraps -v`).
 
 **Release v1** fixes two languages, Reslil (seed 182) and Dushpek (seed 977),
@@ -96,6 +105,16 @@ so results are comparable and anyone can reproduce them: run
 picked the pair. Between them they flip every false friend.
 [releases/v1/](releases/v1/README.md) has the manuals, the rule and how to
 verify a result. Fresh seeds remain the contamination-proof check.
+
+**Release v2** keeps v1's two languages and adds the five T3 tasks (22 in
+all), because frontier models score 16–17 of 17 on v1 and a small decline
+cannot show there. Results also record a partial score: the share of each
+task's hidden tests passed, averaged over tasks. Each release pins its tasks
+with a checksum. [releases/v2/](releases/v2/README.md) has the details.
+
+**Release v3** adds the three T4 tasks (25 in all), because a frontier
+model still scored 22/22 on v2. Checkups use v3.
+[releases/v3/](releases/v3/README.md) has the details.
 
 What a seed varies today:
 
@@ -156,6 +175,139 @@ export OPENROUTER_API_KEY=...
 .venv/bin/python harness/regrade.py results/runs/RUN_ID                  # re-score a saved one-shot answer
 ```
 
+No API key? Run it through a coding-agent subscription you already have.
+
+**Codex (ChatGPT plan).** If you use Codex in the ChatGPT desktop app, there
+is nothing to install or log in to: the harness drives the Codex engine that
+ships inside the app, with the app's login. Leave out `--model` to list the
+models your plan offers.
+
+```bash
+.venv/bin/python harness/run.py oneshot --runner codex --model gpt-6.2-sol --effort high --release v1
+.venv/bin/python harness/run.py agent   --runner codex --model gpt-6.2-sol --effort high --release v1
+```
+
+**Cursor.** With [Cursor's CLI](https://cursor.com/cli) logged in, any model
+your Cursor account offers works, Grok included:
+
+```bash
+cursor-agent login                     # once
+cursor-agent models                    # pick a name from this list
+.venv/bin/python harness/run.py agent --runner cursor --model MODEL --release v1
+```
+
+**Claude Code (Claude plan).** Sign the CLI in once with `claude auth login`
+(the Claude desktop app's sign-in does not carry over to the CLI).
+
+```bash
+.venv/bin/python harness/run.py oneshot --runner claude-code --model claude-opus-5-5 --effort high --release v1
+```
+
+**Kimi Code (Kimi plan).** With `kimi login` done, leave out `--model` to use
+your default model:
+
+```bash
+.venv/bin/python harness/run.py oneshot --runner kimi --effort high --release v1
+```
+
+**Gemini CLI (Google subscription).** Install it once
+(`npm install -g @google/gemini-cli`), run `gemini` and choose *Sign in with
+Google*. `gemini --list-models` shows the models your account offers.
+
+```bash
+.venv/bin/python harness/run.py oneshot --runner gemini --model MODEL --release v1
+```
+
+**Antigravity CLI (Google subscription).** Google's own agent CLI for the
+Gemini models (`agy`). It is not on PATH by default: T3 Code ships a copy,
+which the runner finds itself (or set `ANTIGRAVITY_BIN`). Run it once with
+no arguments to sign in; `agy models` shows the models your account offers.
+Its model names carry the effort (`gemini-4-argon-high`), as Cursor's do.
+
+```bash
+.venv/bin/python harness/run.py oneshot --runner antigravity --model gemini-4-neon-high --release v1
+```
+
+**OpenCode (Kimi plan, free models).** Models are `provider/model`, as
+`opencode models` lists them: a provider you logged in to with
+`opencode auth login` (the Kimi plan is `kimi-code-plan-global/...`) or
+OpenCode's own free models (`opencode/...`, which have a small free usage
+limit). The effort is OpenCode's variant.
+
+```bash
+.venv/bin/python harness/run.py oneshot --runner opencode --model kimi-code-plan-global/kimi-for-coding --effort high --release v1
+.venv/bin/python harness/run.py oneshot --runner opencode --model opencode/deepseek-v4.1-flash-free --effort high --release v1
+```
+
+Every runner does both modes, agent and one-shot. In one-shot mode each tool
+gets the same single prompt with its code-running tools off or denied, so a
+model that tries to run something fails closed.
+
+### Has my model got worse?
+
+Models behind a subscription can change without notice. `checkup.py` runs a
+model on release v3's fixed languages, compares the result with your own
+earlier runs of the same setup, and says whether a drop is more than
+run-to-run noise (a permutation test on per-run partial scores). The first checkup
+is the baseline. It also runs one brand-new language, so a model that has
+learned the release itself shows up too.
+
+```bash
+.venv/bin/python harness/checkup.py --runner codex --model gpt-6.2-sol --effort high
+.venv/bin/python harness/checkup.py --runner codex --model gpt-6.2-sol --effort high --no-run   # report only
+```
+
+It runs one-shot by default (one request per language, cheap enough to run
+daily); `--mode agent` is slower and closer to everyday use. Runs go one at a
+time to stay inside the plan's rate limits. Runs that end in an error (logged
+out, quota, rate limit) are left out of the comparison, and the checkup stops
+after the first one. The site's "Over time" chart plots the same series by
+day.
+
+### Weekly checkup of every subscription
+
+`harness/weekly.py` runs a checkup for every model in
+[harness/roster.toml](harness/roster.toml) (one line each: tool, model,
+effort, mode, enabled), one at a time, and ends with a status board: this
+week's score against the model's own history, the change, the verdict
+(worse / within noise / no drop / baseline), the model the tool reported, and
+anything skipped. A tool that is logged out or out of quota is marked
+*skipped*, not failed, and its error runs never enter the history.
+
+```bash
+.venv/bin/python harness/weekly.py --dry-run    # who is logged in, what would run
+.venv/bin/python harness/weekly.py              # run it (about 3 requests per model)
+.venv/bin/python harness/weekly.py --no-run     # rebuild the board from saved runs
+```
+
+Results stay private: runs, logs and the board (`status/latest.html`, `.md`,
+`.json`) go to `results/private/` (git-ignored; `--out` or
+`UTOPIA_PRIVATE_RESULTS` to move it), never to `results/runs`, which the
+public site is built from. Runs already in `results/runs` count as history
+but are never written to (`--no-history` to ignore them).
+
+Never read the board across rows. Each tool adds its own system prompt and
+tools, so a model is only ever compared with its own earlier runs through the
+same tool, effort and mode.
+
+To run it every Sunday at 22:00 (launchd catches up after sleep; `--notify`
+shows a macOS notification when a model looks worse):
+
+```bash
+.venv/bin/python harness/weekly.py --print-launchd > ~/Library/LaunchAgents/com.utopia.weekly-checkup.plist
+launchctl load ~/Library/LaunchAgents/com.utopia.weekly-checkup.plist
+```
+
+Gemini is tested through the Antigravity CLI (`agy -p`), or Gemini CLI.
+The Antigravity *app*'s headless entry point
+(`~/.gemini/antigravity/bin/agentapi`) starts conversations in the running
+app with your own settings and permissions and cannot switch its tools off,
+so it is not used.
+
+Release v1 is close to the ceiling for frontier models (16–17 of 17), so a
+small decline cannot show on it; checkups use v3, which adds the harder T3
+and T4 tasks. `weekly.py` takes the release from each entry in `roster.toml`.
+
 Offline self-tests, no key needed:
 
 ```bash
@@ -171,7 +323,89 @@ python3 harness/run.py agent --provider scripted --seeds 1-4 --out /tmp/selftest
   flagged if they reach outside it. Grading rebuilds the toolchain after the
   run, so nothing the agent touched is trusted. Shell commands do run on the
   host, so use a container or VM for models you do not trust.
-- `--runner claude-code` runs the agent as headless Claude Code instead.
+- `--runner claude-code` runs it as headless Claude Code (`claude -p`), with
+  an API key or with the CLI's own login. Your own setup is kept out in both
+  cases: `--safe-mode` (no CLAUDE.md, auto-memory, skills, installed plugins,
+  hooks, MCP servers or custom agents), no settings files, no slash commands,
+  and a cleaned environment, so a `claude` started from inside another Claude
+  session does not inherit its variables (`ANTHROPIC_BASE_URL` among them).
+  Each run records the tools, skills, plugins, MCP servers and memory Claude
+  Code reports and warns about anything unexpected. Agent mode skips
+  permission prompts, so the CLI runs in a macOS Seatbelt sandbox
+  (`harness/sandbox.py`): writes only in the workspace, Claude Code's own state
+  and temp folders, and this repository unreadable. Network is not blocked.
+  One-shot mode offers no tools at all and refuses anything that would ask.
+- `--runner kimi` runs it as Kimi Code (`kimi -p`), billed to your Kimi plan.
+  Each run gets a throwaway HOME and Kimi home with only the login (linked,
+  so token refreshes reach your real one), the model, its provider and the
+  effort: no permission rules, plugins, MCP servers, AGENTS.md, skills
+  (`~/.agents` included) or search and fetch services. Agent mode drops the
+  tools that reach outside the workspace and runs in the same Seatbelt
+  sandbox; one-shot mode offers no tools. Each run records the model Kimi
+  requested, the effort, the tools offered and the model's display name in
+  your Kimi catalog (an alias like `kimi-for-coding` can be repointed), and
+  Kimi's session log is copied in as `kimi_session.jsonl`.
+- `--runner gemini` runs it as Gemini CLI (`gemini -p`), billed to your
+  Google subscription through its Google sign-in. Each run gets a throwaway
+  HOME whose `~/.gemini` has only the login and a settings file written for
+  the run: no GEMINI.md, extensions, MCP servers, hooks, skills (built-in ones
+  included), subagents or checkpoints, and Google Cloud variables are removed
+  so the personal login is always used. Nothing from the real `~/.gemini`
+  (Antigravity's files included) is read. Gemini CLI can switch to another
+  model when the requested one is out of quota: each run records the models
+  that answered, and a run the requested model did not answer counts as an
+  error. Agent mode drops web, ask-user, plan-mode and MCP tools, approves
+  everything else, and runs in the Seatbelt sandbox (the CLI's own sandbox is
+  off); one-shot mode excludes every tool.
+- `--runner antigravity` runs it as the Antigravity CLI (`agy -p`), billed to
+  your Google subscription through its own sign-in. Each run gets a throwaway
+  HOME, so nothing in `~/.gemini` is read (GEMINI.md, settings, plugins,
+  skills, workflows, MCP servers, hooks, memories, the app's settings); only
+  the login comes along: the CLI finds your login keychain through
+  `$HOME/Library/Keychains`, so that folder is linked (the keychain still
+  guards each item). Session settings go in `--settings` and are never saved. Agent mode
+  disables web, browser, subagent, image, question and schedule tools, skips
+  approvals, and runs in the Seatbelt sandbox (the CLI's own terminal sandbox
+  is off); one-shot mode disables every tool. Each run records the models
+  that answered; a run the requested model did not answer counts as an
+  error. The stream-json events are read defensively: check the first runs'
+  transcripts after a CLI update.
+- `--runner opencode` runs it as OpenCode (`opencode run`), with the logins
+  of your OpenCode setup. Each run gets a throwaway HOME and XDG folders (its
+  own config, database and caches) and a private server (`--standalone`)
+  instead of your background service. Only the model's provider login is
+  copied in (`auth export` piped into `auth import`, in memory). Nothing else
+  comes along: no global or project config, AGENTS.md, `~/.claude`
+  CLAUDE.md or skills, plugins, MCP servers or saved permissions. Agent mode
+  is OpenCode's build agent with web fetch and search, subagents, skills,
+  questions and the browser denied, everything else auto-approved (`--auto`),
+  in the Seatbelt sandbox; one-shot mode uses an agent whose every
+  permission is denied.
+- `--runner codex` runs it as Codex (`codex exec`), billed to your ChatGPT
+  plan, in agent or one-shot mode. Your own Codex setup is kept out so runs
+  stay comparable: config.toml, rules, hooks, memories, plugins, ChatGPT
+  apps, skills, browser and computer use, image generation and web search are
+  off, and model and effort are always passed explicitly. Each run records
+  the model and effort Codex reports, and the tools and instruction blocks the
+  model was offered. Agent shell commands run in Codex's workspace-write
+  sandbox (no network, writes only in the workspace); one-shot runs in an
+  empty read-only folder with the code tool disabled. Codex's session log is
+  copied into the run as `codex_session.jsonl` and archived in Codex.
+  `CODEX_BIN` points at another copy of Codex (default: the one in the
+  ChatGPT app, else `codex` on PATH). Only `--max-seconds` applies, and there
+  is no cost estimate unless you pass `--price-in`/`--price-out`.
+- `--runner cursor` runs it as Cursor's agent (`cursor-agent -p`), billed to
+  your Cursor plan. Shell commands run in Cursor's sandbox: no network, no
+  writes outside the workspace and temp folders (reads are not restricted),
+  and requests to leave it are rejected and flagged.
+  `--cursor-sandbox disabled` turns it off. One-shot runs in an empty folder
+  in ask mode, with a permission file that denies shell, reads, writes, web
+  fetches and MCP tools; web search needs an approval no one can give.
+  Cursor reports tokens but not cost: pass `--price-in`/`--price-out` for an
+  estimate. `--max-cost` and `--max-steps` do not apply, only `--max-seconds`.
+  Results are labeled "via Cursor", "via Codex" (with the effort) or "via
+  Claude Code" on the site, apart from runs of the same model through the
+  harness's own loop.
 - Limits: `--max-steps`, `--max-cost` (USD, estimated from token usage) and
   `--max-seconds` per run. Effort defaults to `high`; refusal fallbacks are
   off so every answer comes from the model under test.
@@ -195,6 +429,15 @@ at https://utopia-benchmark.vercel.app (`vercel.json` runs
 - `harness/run.py`: runs a model (one-shot or agent) and records the result
 - `harness/llm.py`: Anthropic and OpenAI-compatible clients, the agent loop and its tools
 - `harness/claude_code.py`: optional Claude Code runner
+- `harness/cursor_agent.py`: optional Cursor agent runner
+- `harness/codex_agent.py`: optional Codex runner (agent and one-shot)
+- `harness/kimi_agent.py`: optional Kimi Code runner (agent and one-shot)
+- `harness/gemini_agent.py`: optional Gemini CLI runner (agent and one-shot)
+- `harness/antigravity_agent.py`: optional Antigravity CLI runner (agent and one-shot)
+- `harness/opencode_agent.py`: optional OpenCode runner (agent and one-shot)
+- `harness/sandbox.py`: macOS Seatbelt sandbox for the runners without their own
+- `harness/checkup.py`: compares a model's new runs with its earlier ones, to catch a model getting worse
+- `harness/weekly.py`, `harness/roster.toml`: the weekly checkup of every subscription, and its status board
 - `harness/regrade.py`: re-scores saved one-shot answers after a grading fix, without calling a model
 - `harness/build_site.py`: builds the static results site from `results/`
 - `scripts/make_tests.py`: independent Python references that generate the T1–T2 hidden tests

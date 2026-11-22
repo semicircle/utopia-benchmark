@@ -1,0 +1,6 @@
+set n 12
+set f 1
+mul f n
+sub n 1
+jnz n -2
+out f

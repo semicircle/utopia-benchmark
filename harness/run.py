@@ -49,7 +49,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import llm  # noqa: E402
-from grade import grade  # noqa: E402
+from grade import grade, score_of  # noqa: E402
 
 ROOT = HERE.parent
 TASKS = ROOT / "tasks"
@@ -136,7 +136,13 @@ def extract_solutions(text, ids):
             out[tid] = m.group(1) + "\n" if m else code
     return out
 DEFAULT_KEY_ENV = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
-SECRET_ENV = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN", "OPENAI_API_KEY")
+SECRET_ENV = ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDE_CODE_OAUTH_TOKEN", "OPENAI_API_KEY", "CURSOR_API_KEY")
+# Agent scaffolds other than the harness's own loop. They bring their own login.
+EXTERNAL_RUNNERS = ("claude-code", "cursor", "codex", "kimi", "gemini", "opencode", "antigravity")
+# Runners that can also do one-shot runs.
+ONESHOT_RUNNERS = ("builtin", *EXTERNAL_RUNNERS)
+# Runners whose run ids carry the effort (Cursor's model names carry it already).
+EFFORT_IN_ID = ("codex", "claude-code", "kimi", "opencode")
 
 
 # ---------------------------------------------------------------- helpers
@@ -153,8 +159,15 @@ def parse_seeds(text):
     return seeds
 
 
+# A release fixes its tasks as well as its languages; set from --release.
+RELEASE_TASKS = None
+
+
 def task_ids():
-    return sorted(p.name for p in TASKS.iterdir() if (p / "task.md").exists())
+    ids = sorted(p.name for p in TASKS.iterdir() if (p / "task.md").exists())
+    if RELEASE_TASKS is not None:
+        ids = [t for t in ids if t in RELEASE_TASKS]
+    return ids
 
 
 def git_commit():
@@ -166,6 +179,10 @@ def make_run_id(cfg, mode, seed):
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     model = re.sub(r"[^A-Za-z0-9.-]+", "-", cfg.model.replace("claude-", ""))
     tag = "py" if cfg.arm == "python" else f"s{seed}-{cfg.semantics}"
+    if cfg.runner != "builtin":
+        mode = f"{mode}-{cfg.runner}"
+    if cfg.runner in EFFORT_IN_ID and cfg.effort:
+        model += f"-{cfg.effort}"
     return f"{stamp}-{mode}-{model}-{tag}"
 
 
@@ -207,17 +224,22 @@ class Run:
             [str(exe), "info", "-seed", str(seed), "-semantics", cfg.semantics],
             capture_output=True, text=True, check=True).stdout)
         self.bin_name = next((self.ws / "bin").iterdir()).name
+        keep = set(task_ids())
+        for p in (self.ws / "tasks").glob("*.md"):
+            if p.stem not in keep:
+                p.unlink()
 
     def grade(self):
         """Grade the workspace's solutions with a toolchain built just now, in a
         directory the agent never saw."""
         sol = self.ws / "solutions"
         if self.cfg.arm == "python":
-            return grade(["python3"], TASKS, sol)
+            return grade(["python3"], TASKS, sol, only=set(task_ids()))
         with tempfile.TemporaryDirectory(prefix="utopia-grader-") as d:
             exe = Path(d) / "utopia"
             subprocess.run(["go", "build", "-o", str(exe), "./cmd/utopia"], cwd=ROOT, check=True)
-            return grade([str(exe), "run", "-seed", str(self.seed), "-semantics", self.cfg.semantics], TASKS, sol)
+            return grade([str(exe), "run", "-seed", str(self.seed), "-semantics", self.cfg.semantics], TASKS, sol,
+                         only=set(task_ids()))
 
     def reference(self, exe, tid):
         return subprocess.run([str(exe), "render", "-seed", str(self.seed), "-semantics", self.cfg.semantics,
@@ -231,7 +253,7 @@ def base_meta(cfg, run, mode, run_id):
     return {
         "run_id": run_id, "mode": mode, "arm": cfg.arm,
         "provider": cfg.provider, "base_url": cfg.base_url, "model": cfg.model,
-        "runner": cfg.runner if mode == "agent" else None,
+        "runner": cfg.runner if (mode == "agent" or cfg.runner != "builtin") else None,
         "effort": cfg.effort, "thinking": cfg.thinking, "max_tokens": cfg.max_tokens,
         "seed": None if cfg.arm == "python" else run.seed,
         "semantics": None if cfg.arm == "python" else cfg.semantics,
@@ -248,8 +270,7 @@ def finish(cfg, run_dir: Path, meta, report, solutions: Path, files):
         shutil.copytree(solutions, run_dir / "solutions", dirs_exist_ok=True)
     for name, content in files.items():
         (run_dir / name).write_text(content)
-    meta["score"] = {"passed": report["passed_tasks"], "total": report["total_tasks"],
-                     "tasks": {t["id"]: t["passed"] for t in report["tasks"]}}
+    meta["score"] = score_of(report)
     (run_dir / "grade.json").write_text(json.dumps(report, indent=2) + "\n")
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2, default=str) + "\n")
     if cfg.secrets and redact_tree(run_dir, cfg.secrets):
@@ -272,6 +293,33 @@ def oneshot_prompt(run):
     return "\n".join(parts)
 
 
+def external_oneshot(cfg, run_dir, prompt):
+    """A one-shot answer through a subscription tool, with its tools off."""
+    if cfg.runner == "codex":
+        import codex_agent
+        return codex_agent.run_oneshot(run_dir, prompt, cfg.model, cfg.effort, cfg.max_seconds, cfg.price_in, cfg.price_out)
+    if cfg.runner == "claude-code":
+        import claude_code
+        return claude_code.run_oneshot(run_dir, prompt, cfg.model, cfg.effort, cfg.max_seconds, cfg.api_key)
+    if cfg.runner == "cursor":
+        import cursor_agent
+        return cursor_agent.run_oneshot(run_dir, prompt, cfg.model, cfg.max_seconds, cfg.price_in, cfg.price_out)
+    if cfg.runner == "gemini":
+        import gemini_agent
+        return gemini_agent.run_oneshot(run_dir, prompt, cfg.model, cfg.max_seconds, cfg.price_in, cfg.price_out)
+    if cfg.runner == "kimi":
+        import kimi_agent
+        return kimi_agent.run_oneshot(run_dir, prompt, cfg.model, cfg.effort, cfg.max_seconds, cfg.price_in, cfg.price_out)
+    if cfg.runner == "opencode":
+        import opencode_agent
+        return opencode_agent.run_oneshot(run_dir, prompt, cfg.model, cfg.effort, cfg.max_seconds, cfg.price_in,
+                                          cfg.price_out)
+    if cfg.runner == "antigravity":
+        import antigravity_agent
+        return antigravity_agent.run_oneshot(run_dir, prompt, cfg.model, cfg.max_seconds, cfg.price_in, cfg.price_out)
+    raise ValueError(cfg.runner)
+
+
 def oneshot_one(cfg, exe, seed, scratch):
     run = Run(cfg, exe, seed, scratch)
     try:
@@ -282,9 +330,12 @@ def oneshot_one(cfg, exe, seed, scratch):
                 raise llm.ProviderError("the reference provider has no Python solutions")
             text = "\n\n".join(f'<solution task="{tid}">\n{run.reference(exe, tid)}</solution>' for tid in task_ids())
             out = {"text": text, "stop_reason": "end_turn", "usage": None, "raw": None}
+        elif cfg.runner in EXTERNAL_RUNNERS:
+            run_id = make_run_id(cfg, "oneshot", seed)
+            out = external_oneshot(cfg, RESULTS / run_id, prompt)
         else:
             out = cfg.client().oneshot(ONESHOT_SYSTEM, prompt)
-        elapsed = time.time() - t0
+        elapsed = out.pop("seconds", None) or time.time() - t0
 
         sol = run.ws / "solutions"
         sol.mkdir(exist_ok=True)
@@ -292,13 +343,20 @@ def oneshot_one(cfg, exe, seed, scratch):
             (sol / f"{tid}.{run.info['ext']}").write_text(code)
         report = run.grade()
 
-        run_id = make_run_id(cfg, "oneshot", seed)
+        if cfg.runner not in EXTERNAL_RUNNERS or cfg.provider == "reference":
+            run_id = make_run_id(cfg, "oneshot", seed)
         meta = base_meta(cfg, run, "oneshot", run_id)
         meta.update({
             "duration_s": round(elapsed, 1), "stop_reason": out["stop_reason"],
             "usage": out["usage"], "cost_usd": (out["usage"] or {}).get("cost_usd_estimate"),
             "model_reported": (out["raw"] or {}).get("model"),
         })
+        if "process" in out:
+            meta["process"] = out["process"]
+            meta["model_reported"] = out["process"].get("model_reported")
+        for k in out:
+            if k == "stderr_tail" or k.endswith("_cli"):
+                meta[k] = out[k]
         files = {"prompt.md": prompt, "response.md": out["text"]}
         if out["raw"]:
             files["response.json"] = json.dumps(out["raw"], indent=2, default=str)
@@ -420,6 +478,36 @@ def agent_one(cfg, exe, seed, scratch):
             out = claude_code.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.effort, cfg.max_seconds,
                                         cfg.max_cost, cfg.api_key, run.bin_name)
             process = out.pop("process")
+        elif cfg.runner == "cursor":
+            import cursor_agent
+            out = cursor_agent.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.max_seconds,
+                                         cfg.cursor_sandbox, cfg.price_in, cfg.price_out)
+            process = out.pop("process")
+        elif cfg.runner == "codex":
+            import codex_agent
+            out = codex_agent.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.effort, cfg.max_seconds,
+                                        cfg.price_in, cfg.price_out)
+            process = out.pop("process")
+        elif cfg.runner == "gemini":
+            import gemini_agent
+            out = gemini_agent.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.max_seconds,
+                                         cfg.price_in, cfg.price_out)
+            process = out.pop("process")
+        elif cfg.runner == "kimi":
+            import kimi_agent
+            out = kimi_agent.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.effort, cfg.max_seconds,
+                                       cfg.price_in, cfg.price_out)
+            process = out.pop("process")
+        elif cfg.runner == "opencode":
+            import opencode_agent
+            out = opencode_agent.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.effort, cfg.max_seconds,
+                                           cfg.price_in, cfg.price_out)
+            process = out.pop("process")
+        elif cfg.runner == "antigravity":
+            import antigravity_agent
+            out = antigravity_agent.run_agent(run.ws, transcript, AGENT_PROMPT, cfg.model, cfg.max_seconds,
+                                              cfg.price_in, cfg.price_out)
+            process = out.pop("process")
         else:
             ws = Workspace(run.ws, run.bin_name, run.dir / "trace.jsonl")
             client = scripted_client(run, exe) if cfg.provider == "scripted" else cfg.client()
@@ -445,8 +533,10 @@ def agent_one(cfg, exe, seed, scratch):
             "process": process, "final_message": out.get("final_text"),
             "limits": {"max_steps": cfg.max_steps, "max_cost": cfg.max_cost, "max_seconds": cfg.max_seconds},
         })
-        for k in ("stderr_tail", "claude_cli"):
-            if k in out:
+        if process.get("model_reported"):
+            meta["model_reported"] = process["model_reported"]
+        for k in out:
+            if k == "stderr_tail" or k.endswith("_cli"):
                 meta[k] = out[k]
         # Keep the agent's own files too: they show how it learned.
         for p in run.ws.rglob("*"):
@@ -467,12 +557,36 @@ class Config:
             setattr(self, k, v)
         self.thinking = not args.no_thinking
         self.api_key = None
+        if self.runner in ("cursor", "gemini", "antigravity"):
+            # The tool picks the provider, effort and output limit from the model name.
+            self.provider, self.base_url = self.runner, None
+            self.effort = self.thinking = self.max_tokens = None
+        elif self.runner in ("codex", "kimi", "opencode"):
+            # Billed to the plan; the tool sets the output limit. Effort is passed on.
+            self.provider, self.base_url = self.runner, None
+            self.thinking = self.max_tokens = None
+            self.max_steps = self.max_cost = None
         if self.provider in DEFAULT_KEY_ENV:
             env = args.api_key_env or DEFAULT_KEY_ENV[self.provider]
             self.api_key = os.environ.get(env)
-            if not self.api_key and not (self.runner == "claude-code" and self.mode == "agent"):
+            if not self.api_key and self.runner not in EXTERNAL_RUNNERS:
                 sys.exit(f"error: set {env} (or pass --api-key-env NAME) for provider {self.provider}")
         self.secrets = [os.environ[k] for k in SECRET_ENV if os.environ.get(k)]
+        if self.runner == "codex":
+            import codex_agent
+            self.secrets += codex_agent.login_secrets()
+        if self.runner == "kimi":
+            import kimi_agent
+            self.secrets += kimi_agent.login_secrets()
+        if self.runner == "gemini":
+            import gemini_agent
+            self.secrets += gemini_agent.login_secrets()
+        if self.runner == "opencode":
+            import opencode_agent
+            self.secrets += opencode_agent.login_secrets()
+        if self.runner == "antigravity":
+            import antigravity_agent
+            self.secrets += antigravity_agent.login_secrets()
         if self.api_key and self.api_key not in self.secrets:
             self.secrets.append(self.api_key)
 
@@ -484,7 +598,9 @@ class Config:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("mode", choices=["oneshot", "agent"])
-    ap.add_argument("--model", default="claude-opus-5-5")
+    ap.add_argument("--model", default=None,
+                    help="default claude-opus-5-5; with --runner cursor, a name from `cursor-agent models`; "
+                         "with --runner codex, a model your ChatGPT plan offers (e.g. gpt-6.2-sol)")
     ap.add_argument("--provider", choices=["anthropic", "openai", "reference", "scripted"], default="anthropic",
                     help="reference / scripted: offline self-tests that answer with the reference solutions")
     ap.add_argument("--base-url", default=None, help="API endpoint (default: the provider's official one)")
@@ -496,20 +612,72 @@ def main():
     ap.add_argument("--release", default=None,
                     help="run a published release's fixed languages (e.g. v1); sets --seeds and --semantics")
     ap.add_argument("--effort", default="high",
-                    help="anthropic: output_config.effort; openai: reasoning_effort ('' to omit)")
+                    help="anthropic: output_config.effort; openai and codex: reasoning effort ('' to omit)")
     ap.add_argument("--no-thinking", action="store_true", help="anthropic: do not request adaptive thinking")
     ap.add_argument("--max-tokens", type=int, default=32000, help="output tokens per request")
     ap.add_argument("--max-steps", type=int, default=150, help="agent: model requests per run")
     ap.add_argument("--max-cost", type=float, default=10.0, help="agent: estimated USD per run")
-    ap.add_argument("--max-seconds", type=float, default=3600, help="agent: wall-clock seconds per run")
+    ap.add_argument("--max-seconds", type=float, default=3600,
+                    help="wall-clock seconds per run (agent; one-shot through an external runner)")
     ap.add_argument("--price-in", type=float, default=None, help="USD per million input tokens (unlisted models)")
     ap.add_argument("--price-out", type=float, default=None, help="USD per million output tokens (unlisted models)")
-    ap.add_argument("--runner", choices=["builtin", "claude-code"], default="builtin",
-                    help="agent scaffold: the harness's own loop, or headless Claude Code")
+    ap.add_argument("--runner", choices=["builtin", *EXTERNAL_RUNNERS], default="builtin",
+                    help="scaffold: the harness's own loop (API key), or a subscription tool with its own login: "
+                         "headless Claude Code, Cursor's agent CLI, Codex (from the ChatGPT desktop app) or "
+                         "Kimi Code, Gemini CLI, OpenCode or the Antigravity CLI. All of them do agent and "
+                         "one-shot runs.")
+    ap.add_argument("--cursor-sandbox", choices=["enabled", "disabled"], default="enabled",
+                    help="cursor: run the agent's shell commands in Cursor's sandbox (no network, "
+                         "writes only in the workspace)")
     ap.add_argument("--jobs", type=int, default=4, help="parallel runs")
     ap.add_argument("--out", default=None, help="results directory (default results/runs)")
     args = ap.parse_args()
     args.effort = args.effort or None
+    if args.mode == "oneshot" and args.runner not in ONESHOT_RUNNERS:
+        sys.exit(f"error: --runner {args.runner} applies to agent mode")
+    if args.runner == "codex":
+        import codex_agent
+        problem = codex_agent.check_ready()
+        if problem:
+            sys.exit(f"error: {problem}")
+        if args.model is None:
+            names = ", ".join(codex_agent.models()) or "see `codex debug models`"
+            sys.exit(f"error: pass --model with a model Codex offers: {names}")
+    if args.runner == "kimi":
+        import kimi_agent
+        if args.model is None:
+            args.model = kimi_agent.default_model()
+        problem = kimi_agent.check_ready(args.model, args.effort)
+        if problem:
+            sys.exit(f"error: {problem}")
+    if args.runner == "gemini":
+        import gemini_agent
+        problem = gemini_agent.check_ready()
+        if problem:
+            sys.exit(f"error: {problem}")
+        if args.model is None:
+            sys.exit("error: pass --model with a Gemini model your account offers (gemini --list-models)")
+    if args.runner in ("opencode", "antigravity"):
+        if args.model is None:
+            sys.exit("error: pass --model: provider/model from `opencode models`" if args.runner == "opencode"
+                     else "error: pass --model with a name from `agy models` (e.g. gemini-4-argon-high)")
+        if args.runner == "opencode":
+            import opencode_agent as agent_mod
+        else:
+            import antigravity_agent as agent_mod
+        problem = (agent_mod.check_ready(args.model, args.effort) if args.runner == "opencode"
+                   else agent_mod.check_ready(args.model))
+        if problem:
+            sys.exit(f"error: {problem}")
+    if args.runner == "cursor":
+        import cursor_agent
+        problem = cursor_agent.check_ready()
+        if problem:
+            sys.exit(f"error: {problem}")
+    if args.model is None:
+        if args.runner == "cursor":
+            sys.exit("error: pass --model with a name from `cursor-agent models`")
+        args.model = "claude-opus-5-5"
     if args.release:
         rel_path = ROOT / "releases" / args.release / "release.json"
         if not rel_path.exists():
@@ -519,6 +687,11 @@ def main():
         rel = json.loads(rel_path.read_text())
         args.seeds = ",".join(str(l["seed"]) for l in rel["languages"])
         args.semantics = rel["semantics"]
+        global RELEASE_TASKS
+        RELEASE_TASKS = set(rel["tasks"])
+        missing = RELEASE_TASKS - set(task_ids())
+        if missing:
+            sys.exit(f"error: release {args.release} lists tasks that do not exist: {', '.join(sorted(missing))}")
         for k, v in rel.get("protocol", {}).items():  # every model gets the same budget
             setattr(args, k, v)
     if args.provider in ("reference", "scripted"):
@@ -528,6 +701,11 @@ def main():
     if args.out:
         RESULTS = Path(args.out).resolve()
     cfg = Config(args)
+    if cfg.runner == "claude-code":
+        import claude_code
+        problem = claude_code.check_ready(cfg.api_key)
+        if problem:
+            sys.exit(f"error: {problem}")
     seeds = [0] if cfg.arm == "python" else parse_seeds(cfg.seeds)
     scratch = Path(tempfile.mkdtemp(prefix="utopia-run-"))
     exe = scratch / "utopia"

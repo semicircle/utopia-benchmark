@@ -1,0 +1,475 @@
+# Forms are ["atom", text] or ["list", items]. Values are tagged lists:
+# ["int", n], ["bool", b], ["nil"], ["pair", first, second],
+# ["fn", params, body, env] and ["prim", name]. An environment is
+# [names, values, parent], with parent none for the global one.
+# Errors are reported through st: st[0] becomes true.
+
+func tokenize(text) {
+    let out = [];
+    let cur = "";
+    for (let i = 0; i < len(text); i = i + 1) {
+        let c = text[i];
+        if (c == " " or c == "(" or c == ")") {
+            if (cur != "") {
+                push(out, cur);
+                cur = "";
+            }
+            if (c != " ") {
+                push(out, c);
+            }
+        } else {
+            cur = cur & c;
+        }
+    }
+    if (cur != "") {
+        push(out, cur);
+    }
+    return out;
+}
+
+# Reads one form starting at ps[1] in the tokens ps[0].
+func readForm(ps) {
+    let t = ps[0][ps[1]];
+    ps[1] = ps[1] + 1;
+    if (t != "(") {
+        return ["atom", t];
+    }
+    let items = [];
+    while (ps[0][ps[1]] != ")") {
+        let f = readForm(ps);
+        push(items, f);
+    }
+    ps[1] = ps[1] + 1;
+    return ["list", items];
+}
+
+func isDigit(c) {
+    let digits = "0123456789";
+    for (let i = 0; i < 10; i = i + 1) {
+        if (digits[i] == c) {
+            return true;
+        }
+    }
+    return false;
+}
+
+func isInt(t) {
+    let start = 0;
+    if (t[0] == "-") {
+        start = 1;
+    }
+    if (start >= len(t)) {
+        return false;
+    }
+    for (let i = start; i < len(t); i = i + 1) {
+        if (not isDigit(t[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+func isName(form) {
+    if (form[0] != "atom") {
+        return false;
+    }
+    return not isInt(form[1]);
+}
+
+func fail(st) {
+    st[0] = true;
+    return ["nil"];
+}
+
+func lookup(env, name, st) {
+    let e = env;
+    while (e != none) {
+        let names = e[0];
+        for (let i = 0; i < len(names); i = i + 1) {
+            if (names[i] == name) {
+                return e[1][i];
+            }
+        }
+        e = e[2];
+    }
+    return fail(st);
+}
+
+func isSpecial(name) {
+    let special = ["if", "lambda", "let", "begin", "define", "quote"];
+    for (let i = 0; i < len(special); i = i + 1) {
+        if (special[i] == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
+# Evaluates forms[from..] in env and returns the last value.
+func evalBody(forms, first, env, st) {
+    let v = ["nil"];
+    for (let i = first; i < len(forms); i = i + 1) {
+        v = evaluate(forms[i], env, st);
+        if (st[0]) {
+            return v;
+        }
+    }
+    return v;
+}
+
+func evaluate(form, env, st) {
+    if (form[0] == "atom") {
+        let t = form[1];
+        if (isInt(t)) {
+            return ["int", num(t)];
+        }
+        if (t == "#t") {
+            return ["bool", true];
+        }
+        if (t == "#f") {
+            return ["bool", false];
+        }
+        return lookup(env, t, st);
+    }
+    let items = form[1];
+    if (len(items) == 0) {
+        return fail(st);
+    }
+    let head = items[0];
+    if (head[0] == "atom") {
+        if (isSpecial(head[1])) {
+            return evalSpecial(head[1], items, env, st);
+        }
+    }
+    let f = evaluate(head, env, st);
+    if (st[0]) {
+        return f;
+    }
+    let args = [];
+    for (let i = 1; i < len(items); i = i + 1) {
+        let a = evaluate(items[i], env, st);
+        if (st[0]) {
+            return a;
+        }
+        push(args, a);
+    }
+    return apply(f, args, st);
+}
+
+func evalSpecial(name, items, env, st) {
+    let n = len(items);
+    if (name == "if") {
+        if (n != 4) {
+            return fail(st);
+        }
+        let c = evaluate(items[1], env, st);
+        if (st[0]) {
+            return c;
+        }
+        let isFalse = false;
+        if (c[0] == "bool") {
+            isFalse = not c[1];
+        }
+        if (isFalse) {
+            return evaluate(items[3], env, st);
+        }
+        return evaluate(items[2], env, st);
+    }
+    if (name == "lambda") {
+        if (n < 3) {
+            return fail(st);
+        }
+        if (items[1][0] != "list") {
+            return fail(st);
+        }
+        let params = [];
+        let ps = items[1][1];
+        for (let i = 0; i < len(ps); i = i + 1) {
+            if (not isName(ps[i])) {
+                return fail(st);
+            }
+            push(params, ps[i][1]);
+        }
+        let body = [];
+        for (let i = 2; i < n; i = i + 1) {
+            push(body, items[i]);
+        }
+        return ["fn", params, body, env];
+    }
+    if (name == "let") {
+        if (n < 3) {
+            return fail(st);
+        }
+        if (items[1][0] != "list") {
+            return fail(st);
+        }
+        let names = [];
+        let vals = [];
+        let bindings = items[1][1];
+        for (let i = 0; i < len(bindings); i = i + 1) {
+            let b = bindings[i];
+            if (b[0] != "list") {
+                return fail(st);
+            }
+            if (len(b[1]) != 2) {
+                return fail(st);
+            }
+            if (not isName(b[1][0])) {
+                return fail(st);
+            }
+            let v = evaluate(b[1][1], env, st);
+            if (st[0]) {
+                return v;
+            }
+            push(names, b[1][0][1]);
+            push(vals, v);
+        }
+        return evalBody(items, 2, [names, vals, env], st);
+    }
+    if (name == "begin") {
+        if (n < 2) {
+            return fail(st);
+        }
+        return evalBody(items, 1, env, st);
+    }
+    return fail(st);
+}
+
+func intArgs(args) {
+    for (let i = 0; i < len(args); i = i + 1) {
+        if (args[i][0] != "int") {
+            return false;
+        }
+    }
+    return true;
+}
+
+func apply(f, args, st) {
+    if (f[0] == "prim") {
+        return applyPrim(f[1], args, st);
+    }
+    if (f[0] != "fn") {
+        return fail(st);
+    }
+    if (len(args) != len(f[1])) {
+        return fail(st);
+    }
+    return evalBody(f[2], 0, [f[1], args, f[3]], st);
+}
+
+func applyPrim(name, args, st) {
+    let n = len(args);
+    if (name == "+" or name == "*") {
+        if (not intArgs(args)) {
+            return fail(st);
+        }
+        let acc = 0;
+        if (name == "*") {
+            acc = 1;
+        }
+        for (let i = 0; i < n; i = i + 1) {
+            if (name == "+") {
+                acc = acc + args[i][1];
+            } else {
+                acc = acc * args[i][1];
+            }
+        }
+        return ["int", acc];
+    }
+    if (name == "-") {
+        if (not intArgs(args)) {
+            return fail(st);
+        }
+        if (n == 1) {
+            return ["int", -args[0][1]];
+        }
+        if (n == 2) {
+            return ["int", args[0][1] - args[1][1]];
+        }
+        return fail(st);
+    }
+    if (name == "/" or name == "remainder" or name == "=" or name == "<" or name == ">") {
+        if (n != 2) {
+            return fail(st);
+        }
+        if (not intArgs(args)) {
+            return fail(st);
+        }
+        let a = args[0][1];
+        let b = args[1][1];
+        if (name == "=") {
+            return ["bool", a == b];
+        }
+        if (name == "<") {
+            return ["bool", a < b];
+        }
+        if (name == ">") {
+            return ["bool", a > b];
+        }
+        if (b == 0) {
+            return fail(st);
+        }
+        if (name == "/") {
+            return ["int", a / b];
+        }
+        return ["int", a % b];
+    }
+    if (name == "not") {
+        if (n != 1) {
+            return fail(st);
+        }
+        let isFalse = false;
+        if (args[0][0] == "bool") {
+            isFalse = not args[0][1];
+        }
+        return ["bool", isFalse];
+    }
+    if (name == "cons") {
+        if (n != 2) {
+            return fail(st);
+        }
+        return ["pair", args[0], args[1]];
+    }
+    if (name == "car" or name == "cdr") {
+        if (n != 1) {
+            return fail(st);
+        }
+        if (args[0][0] != "pair") {
+            return fail(st);
+        }
+        if (name == "car") {
+            return args[0][1];
+        }
+        return args[0][2];
+    }
+    if (name == "list") {
+        let out = ["nil"];
+        for (let i = n - 1; i >= 0; i = i - 1) {
+            out = ["pair", args[i], out];
+        }
+        return out;
+    }
+    if (name == "null?") {
+        if (n != 1) {
+            return fail(st);
+        }
+        return ["bool", args[0][0] == "nil"];
+    }
+    return fail(st);
+}
+
+func show(v) {
+    let kind = v[0];
+    if (kind == "int") {
+        return str(v[1]);
+    }
+    if (kind == "bool") {
+        if (v[1]) {
+            return "#t";
+        }
+        return "#f";
+    }
+    if (kind == "nil") {
+        return "()";
+    }
+    if (kind == "pair") {
+        let out = "(" & show(v[1]);
+        let rest = v[2];
+        while (rest[0] == "pair") {
+            out = out & " " & show(rest[1]);
+            rest = rest[2];
+        }
+        if (rest[0] != "nil") {
+            out = out & " . " & show(rest);
+        }
+        return out & ")";
+    }
+    return "#<procedure>";
+}
+
+# Binds name in the global environment, replacing an earlier binding.
+func bindGlobal(glob, name, v) {
+    let names = glob[0];
+    let vals = glob[1];
+    for (let i = 0; i < len(names); i = i + 1) {
+        if (names[i] == name) {
+            vals[i] = v;
+            return;
+        }
+    }
+    push(names, name);
+    push(vals, v);
+}
+
+# Runs one top-level form; returns the line to print, or none.
+func topLevel(form, glob) {
+    let st = [false];
+    let isDefine = false;
+    if (form[0] == "list") {
+        if (len(form[1]) > 0) {
+            if (form[1][0][0] == "atom") {
+                if (form[1][0][1] == "define") {
+                    isDefine = true;
+                }
+            }
+        }
+    }
+    if (not isDefine) {
+        let v = evaluate(form, glob, st);
+        if (st[0]) {
+            return "error";
+        }
+        return show(v);
+    }
+    let items = form[1];
+    if (len(items) != 3) {
+        return "error";
+    }
+    let target = items[1];
+    if (target[0] == "list") {
+        let parts = target[1];
+        if (len(parts) == 0) {
+            return "error";
+        }
+        let params = [];
+        for (let i = 0; i < len(parts); i = i + 1) {
+            if (not isName(parts[i])) {
+                return "error";
+            }
+            if (i > 0) {
+                push(params, parts[i][1]);
+            }
+        }
+        bindGlobal(glob, parts[0][1], ["fn", params, [items[2]], glob]);
+        return none;
+    }
+    if (not isName(target)) {
+        return "error";
+    }
+    let v = evaluate(items[2], glob, st);
+    if (st[0]) {
+        return "error";
+    }
+    bindGlobal(glob, target[1], v);
+    return none;
+}
+
+let text = "";
+let line = readline();
+while (line != none) {
+    text = text & " " & line;
+    line = readline();
+}
+let prims = ["+", "-", "*", "/", "remainder", "=", "<", ">", "not", "cons", "car", "cdr", "list", "null?"];
+let glob = [[], [], none];
+for (let i = 0; i < len(prims); i = i + 1) {
+    bindGlobal(glob, prims[i], ["prim", prims[i]]);
+}
+let ps = [tokenize(text), 0];
+while (ps[1] < len(ps[0])) {
+    let form = readForm(ps);
+    let out = topLevel(form, glob);
+    if (out != none) {
+        print out;
+    }
+}

@@ -1,0 +1,18 @@
+(ab)* 
+(ab)* ababab
+(ab)* aba
+(ab)+ 
+(a|b)* abba
+(a|b)* abca
+cat|dog dog
+cat|dog cow
+a(b|c)d acd
+a(b|c)d aed
+(a|)b b
+a| 
+| 
+(x(y|z)+)? xyzzy
+((a)) a
+(a*)* aaa
+() 
+(a|ab)(c|bcd) abcd

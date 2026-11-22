@@ -1,0 +1,7 @@
+set k 2
+jnz k k
+out 1
+out 2
+set k -1
+jnz 0 k
+out 3

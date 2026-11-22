@@ -1,0 +1,37 @@
+# Models the weekly checkup tests (harness/weekly.py), one line per entry.
+#
+#   runner   claude-code | codex | cursor | kimi | opencode | antigravity   (the subscription tool)
+#   model    the tool's own name for the model
+#   effort   reasoning effort; leave it out for Cursor and Antigravity (their model names carry it)
+#   mode     oneshot (default; one request per language) or agent
+#   enabled  false keeps the line but skips it
+#   repeats  runs of release v1 per week (default below); fresh: new languages per week
+#
+# Each entry is compared only with its own history. Never read across lines:
+# every tool adds its own prompts and tools, so the numbers are not comparable.
+
+entries = [
+  { runner = "claude-code", model = "claude-opus-5-5",           effort = "high",   enabled = true },
+  # Little OpenAI quota: one run per language.
+  { runner = "codex",       model = "gpt-6.2-sol",               effort = "medium", enabled = true, repeats = 1 },
+  { runner = "cursor",      model = "grok-4.7-high",                                enabled = true },
+  # Kimi's default model (an alias Moonshot can repoint; runs record its display name). Kimi's own default effort is max.
+  { runner = "kimi",        model = "kimi-code/kimi-for-coding", effort = "high",   enabled = true },
+  # Gemini through Google's own Antigravity CLI (agy; T3 Code's copy is found automatically).
+  # Its model names carry the effort, as Cursor's do. Skipped until the CLI is signed in (run it once).
+  { runner = "antigravity", model = "gemini-4-neon-high",                          enabled = true },
+  # OpenCode: models are provider/model as `opencode models` lists them; the effort is OpenCode's variant.
+  # Kimi is already measured through Kimi Code above, so one run per language here.
+  { runner = "opencode",    model = "kimi-code-plan-global/kimi-for-coding", effort = "high", enabled = true, repeats = 1 },
+  # OpenCode's free DeepSeek. Its free usage limit is small; a run that hits it is skipped, not failed.
+  { runner = "opencode",    model = "opencode/deepseek-v4.1-flash-free",     effort = "high", enabled = true, repeats = 1 },
+  # Gemini through Cursor: the fallback if Antigravity is not wanted.
+  { runner = "cursor",      model = "gemini-4-argon-high",                          enabled = false },
+]
+
+[defaults]
+release = "v1"
+mode = "oneshot"
+repeats = 2
+fresh = 1
+max_seconds = 1800

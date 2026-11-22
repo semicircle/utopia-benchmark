@@ -1,0 +1,9 @@
+(define x 10)
+(define y (* x 2))
+(+ x y)
+(define x 1)
+x
+y
+(define (sq n) (* n n))
+(sq 12)
+(sq (sq 3))

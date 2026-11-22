@@ -1,0 +1,6 @@
+jnz 1 2
+out 5
+set a 9
+out a
+jnz 1 -10
+out 6

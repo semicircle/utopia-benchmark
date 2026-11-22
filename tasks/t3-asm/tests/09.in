@@ -1,0 +1,17 @@
+set n 27
+set s 0
+set t n
+sub t 1
+jnz t 2
+jnz 1 11
+set p n
+mod p 2
+jnz p 4
+div n 2
+add s 1
+jnz 1 -9
+mul n 3
+add n 1
+add s 1
+jnz 1 -13
+out s

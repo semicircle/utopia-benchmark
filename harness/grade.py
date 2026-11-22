@@ -73,6 +73,18 @@ def grade(command: list, tasks_dir, solutions, timeout: float = 10.0, only=None)
     return report
 
 
+def score_of(report):
+    """The score saved with a run: tasks passed, and a partial score (the share
+    of each task's hidden tests passed, averaged over tasks) that still moves
+    when a model fails some tests of a task it nearly solved."""
+    tasks = report["tasks"]
+    shares = [sum(x["passed"] for x in t["tests"]) / len(t["tests"]) if t["tests"] else 0.0 for t in tasks]
+    return {"passed": report["passed_tasks"], "total": report["total_tasks"],
+            "partial": round(sum(shares) / len(shares), 4) if shares else 0.0,
+            "tasks": {t["id"]: t["passed"] for t in tasks},
+            "tests": {t["id"]: [sum(x["passed"] for x in t["tests"]), len(t["tests"])] for t in tasks}}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--bin", help="the dialect's toolchain binary")

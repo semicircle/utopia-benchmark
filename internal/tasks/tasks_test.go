@@ -25,20 +25,24 @@ func TestReferenceSolutionsAcrossDialects(t *testing.T) {
 			gen.Generate(gen.Options{Seed: seed, Semantics: gen.SemStandard}))
 	}
 	for _, task := range all {
-		for _, d := range dialects {
-			src, err := task.RenderSolution(d)
-			if err != nil {
-				t.Fatalf("seed %d: %v", d.Seed, err)
-			}
-			for _, tc := range task.Tests {
-				var out strings.Builder
-				err := vm.RunSource(d, src, vm.Options{Stdin: strings.NewReader(tc.Input), Stdout: &out})
-				if err != nil || out.String() != tc.Output {
-					t.Fatalf("%s/%s seed %d (%s): err=%v\n--- want ---\n%s--- got ---\n%s--- source ---\n%s",
-						task.ID, tc.Name, d.Seed, d.Name, err, tc.Output, out.String(), src)
+		task := task
+		t.Run(task.ID, func(t *testing.T) {
+			t.Parallel()
+			for _, d := range dialects {
+				src, err := task.RenderSolution(d)
+				if err != nil {
+					t.Fatalf("seed %d: %v", d.Seed, err)
+				}
+				for _, tc := range task.Tests {
+					var out strings.Builder
+					err := vm.RunSource(d, src, vm.Options{Stdin: strings.NewReader(tc.Input), Stdout: &out})
+					if err != nil || out.String() != tc.Output {
+						t.Fatalf("%s/%s seed %d (%s): err=%v\n--- want ---\n%s--- got ---\n%s--- source ---\n%s",
+							task.ID, tc.Name, d.Seed, d.Name, err, tc.Output, out.String(), src)
+					}
 				}
 			}
-		}
+		})
 	}
 }
 

@@ -1,0 +1,305 @@
+# A Thompson NFA. States live in parallel lists in nfa:
+#   nfa[0] kinds: "char", "any", "class", "split", "eps" or "match"
+#   nfa[1] the character of a "char" state, nfa[2] the items of a "class"
+#   state (pairs [lo, hi]), nfa[3] whether a class is negated,
+#   nfa[4] and nfa[5] the two successors (-1 when not yet set).
+# A fragment is [start, outs]: outs are the successor slots still to be
+# connected, each state * 2 + (0 for the first successor, 1 for the second).
+
+func newState(nfa, kind, ch, items, neg, a, b) {
+    push(nfa[0], kind);
+    push(nfa[1], ch);
+    push(nfa[2], items);
+    push(nfa[3], neg);
+    push(nfa[4], a);
+    push(nfa[5], b);
+    return len(nfa[0]) - 1;
+}
+
+func patch(nfa, outs, target) {
+    let first = nfa[4];
+    let second = nfa[5];
+    for (let i = 0; i < len(outs); i = i + 1) {
+        let s = outs[i] / 2;
+        if (outs[i] % 2 == 0) {
+            first[s] = target;
+        } else {
+            second[s] = target;
+        }
+    }
+}
+
+func joinLists(a, b) {
+    let out = [];
+    for (let i = 0; i < len(a); i = i + 1) {
+        push(out, a[i]);
+    }
+    for (let i = 0; i < len(b); i = i + 1) {
+        push(out, b[i]);
+    }
+    return out;
+}
+
+func isAlnum(c) {
+    if (c >= "a") {
+        if (c <= "z") {
+            return true;
+        }
+    }
+    if (c >= "A") {
+        if (c <= "Z") {
+            return true;
+        }
+    }
+    if (c >= "0") {
+        if (c <= "9") {
+            return true;
+        }
+    }
+    return false;
+}
+
+# st[0] is the position in the pattern p; st[1] becomes true when it is malformed.
+func peek(p, st) {
+    if (st[0] < len(p)) {
+        return p[st[0]];
+    }
+    return "";
+}
+
+func parseAlt(p, st, nfa) {
+    let f = parseConcat(p, st, nfa);
+    while (peek(p, st) == "|") {
+        if (st[1]) {
+            return f;
+        }
+        st[0] = st[0] + 1;
+        let g = parseConcat(p, st, nfa);
+        let s = newState(nfa, "split", "", [], false, f[0], g[0]);
+        f = [s, joinLists(f[1], g[1])];
+    }
+    return f;
+}
+
+func parseConcat(p, st, nfa) {
+    let e = newState(nfa, "eps", "", [], false, -1, -1);
+    let f = [e, [e * 2]];
+    let c = peek(p, st);
+    while (c != "" and c != "|" and c != ")") {
+        let g = parsePiece(p, st, nfa);
+        if (st[1]) {
+            return f;
+        }
+        patch(nfa, f[1], g[0]);
+        f = [f[0], g[1]];
+        c = peek(p, st);
+    }
+    return f;
+}
+
+func parsePiece(p, st, nfa) {
+    let a = parseAtom(p, st, nfa);
+    if (st[1]) {
+        return a;
+    }
+    let q = peek(p, st);
+    if (q == "*") {
+        st[0] = st[0] + 1;
+        let s = newState(nfa, "split", "", [], false, a[0], -1);
+        patch(nfa, a[1], s);
+        return [s, [s * 2 + 1]];
+    }
+    if (q == "+") {
+        st[0] = st[0] + 1;
+        let s = newState(nfa, "split", "", [], false, a[0], -1);
+        patch(nfa, a[1], s);
+        return [a[0], [s * 2 + 1]];
+    }
+    if (q == "?") {
+        st[0] = st[0] + 1;
+        let s = newState(nfa, "split", "", [], false, a[0], -1);
+        return [s, joinLists(a[1], [s * 2 + 1])];
+    }
+    return a;
+}
+
+func parseAtom(p, st, nfa) {
+    let c = peek(p, st);
+    if (c == "(") {
+        st[0] = st[0] + 1;
+        let f = parseAlt(p, st, nfa);
+        if (st[1]) {
+            return f;
+        }
+        if (peek(p, st) != ")") {
+            st[1] = true;
+            return f;
+        }
+        st[0] = st[0] + 1;
+        return f;
+    }
+    if (c == ".") {
+        st[0] = st[0] + 1;
+        let s = newState(nfa, "any", "", [], false, -1, -1);
+        return [s, [s * 2]];
+    }
+    if (c == "[") {
+        st[0] = st[0] + 1;
+        let neg = false;
+        if (peek(p, st) == "^") {
+            neg = true;
+            st[0] = st[0] + 1;
+        }
+        let items = [];
+        let d = peek(p, st);
+        while (d != "" and d != "]") {
+            if (not isAlnum(d)) {
+                st[1] = true;
+                return [0, []];
+            }
+            st[0] = st[0] + 1;
+            let isRange = false;
+            if (peek(p, st) == "-") {
+                if (st[0] + 1 < len(p)) {
+                    if (p[st[0] + 1] != "]") {
+                        isRange = true;
+                    }
+                }
+            }
+            if (isRange) {
+                let hi = p[st[0] + 1];
+                if (not isAlnum(hi)) {
+                    st[1] = true;
+                    return [0, []];
+                }
+                if (hi < d) {
+                    st[1] = true;
+                    return [0, []];
+                }
+                push(items, [d, hi]);
+                st[0] = st[0] + 2;
+            } else {
+                push(items, [d, d]);
+            }
+            d = peek(p, st);
+        }
+        if (d != "]") {
+            st[1] = true;
+            return [0, []];
+        }
+        if (len(items) == 0) {
+            st[1] = true;
+            return [0, []];
+        }
+        st[0] = st[0] + 1;
+        let s = newState(nfa, "class", "", items, neg, -1, -1);
+        return [s, [s * 2]];
+    }
+    if (c != "") {
+        if (isAlnum(c)) {
+            st[0] = st[0] + 1;
+            let s = newState(nfa, "char", c, [], false, -1, -1);
+            return [s, [s * 2]];
+        }
+    }
+    st[1] = true;
+    return [0, []];
+}
+
+func accepts(nfa, s, c) {
+    let kind = nfa[0][s];
+    if (kind == "any") {
+        return true;
+    }
+    if (kind == "char") {
+        return nfa[1][s] == c;
+    }
+    if (kind == "class") {
+        let items = nfa[2][s];
+        let hit = false;
+        for (let i = 0; i < len(items); i = i + 1) {
+            if (c >= items[i][0]) {
+                if (c <= items[i][1]) {
+                    hit = true;
+                }
+            }
+        }
+        if (nfa[3][s]) {
+            return not hit;
+        }
+        return hit;
+    }
+    return false;
+}
+
+# Adds state s and everything reachable from it without reading a character.
+func addState(nfa, s, set, mark, gen) {
+    if (mark[s] == gen) {
+        return;
+    }
+    mark[s] = gen;
+    let kind = nfa[0][s];
+    if (kind == "split") {
+        addState(nfa, nfa[4][s], set, mark, gen);
+        addState(nfa, nfa[5][s], set, mark, gen);
+    } else if (kind == "eps") {
+        addState(nfa, nfa[4][s], set, mark, gen);
+    } else {
+        push(set, s);
+    }
+}
+
+func check(line) {
+    let sp = 0;
+    while (line[sp] != " ") {
+        sp = sp + 1;
+    }
+    let p = "";
+    for (let i = 0; i < sp; i = i + 1) {
+        p = p & line[i];
+    }
+    let text = "";
+    for (let i = sp + 1; i < len(line); i = i + 1) {
+        text = text & line[i];
+    }
+    let nfa = [[], [], [], [], [], []];
+    let st = [0, false];
+    let f = parseAlt(p, st, nfa);
+    if (st[1]) {
+        return "error";
+    }
+    if (st[0] != len(p)) {
+        return "error";
+    }
+    let m = newState(nfa, "match", "", [], false, -1, -1);
+    patch(nfa, f[1], m);
+    let mark = [];
+    for (let i = 0; i < len(nfa[0]); i = i + 1) {
+        push(mark, -1);
+    }
+    let gen = 0;
+    let cur = [];
+    addState(nfa, f[0], cur, mark, gen);
+    for (let i = 0; i < len(text); i = i + 1) {
+        gen = gen + 1;
+        let next = [];
+        for (let k = 0; k < len(cur); k = k + 1) {
+            if (accepts(nfa, cur[k], text[i])) {
+                addState(nfa, nfa[4][cur[k]], next, mark, gen);
+            }
+        }
+        cur = next;
+    }
+    for (let k = 0; k < len(cur); k = k + 1) {
+        if (nfa[0][cur[k]] == "match") {
+            return "yes";
+        }
+    }
+    return "no";
+}
+
+let line = readline();
+while (line != none) {
+    print check(line);
+    line = readline();
+}
