@@ -1,0 +1,4 @@
+Atbekis n := Yomheis(Ucheschu()).
+Ashes (Atbekis i := 1; i <= n; i := i + 1) {
+    Seimyu i.
+}

@@ -1,0 +1,52 @@
+Koke generations := Bupuxbo(Pewexpo()).
+Koke line := Pewexpo().
+Koke width := Yik(line).
+Koke border := "".
+Gipolu i := 1 Wexdush width + 2 Gihe Hehokgi
+    border := border ++ ".".
+Kobihek
+Koke grid := [border].
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(grid, "." ++ line ++ ".").
+    line := Pewexpo().
+Kobihek
+Oxba(grid, border).
+Koke last_row := Yik(grid) - 1.
+Koke last_col := width + 1.
+
+Gipolu generation := 1 Wexdush generations Gihe Hehokgi
+    Koke next_grid := [border].
+    Gipolu row := 2 Wexdush last_row Gihe Hehokgi
+        Koke current := grid[row].
+        Koke next_row := ".".
+        Gipolu col := 2 Wexdush last_col Gihe Hehokgi
+            Koke neighbors := 0.
+            Gipolu near_row := row - 1 Wexdush row + 1 Gihe Hehokgi
+                Koke adjacent := grid[near_row].
+                Gipolu near_col := col - 1 Wexdush col + 1 Gihe Hehokgi
+                    Yopok (near_row == row) Okdro (near_col == col), skip_neighbor.
+                    Yopok adjacent[near_col] /= "#", skip_neighbor.
+                    neighbors := neighbors + 1.
+skip_neighbor:
+                    Gosh.
+                Kobihek
+            Kobihek
+            Yopok (neighbors == 3) Dak ((neighbors == 2) Okdro (current[col] == "#")), live_cell.
+            next_row := next_row ++ ".".
+            Gosh.
+live_cell:
+            next_row := next_row ++ "#".
+        Kobihek
+        Oxba(next_grid, next_row ++ ".").
+    Kobihek
+    Oxba(next_grid, border).
+    grid := next_grid.
+Kobihek
+
+Gipolu row := 2 Wexdush last_row Gihe Hehokgi
+    Koke cells := grid[row].
+    Gipolu col := 2 Wexdush last_col Gihe Hehokgi
+        Wuhadi cells[col].
+    Kobihek
+    Ebi "".
+Kobihek

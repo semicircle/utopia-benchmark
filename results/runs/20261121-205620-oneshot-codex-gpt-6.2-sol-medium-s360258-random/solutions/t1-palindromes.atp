@@ -1,0 +1,51 @@
+Dradesde normalize(ch) Kro
+    Umkeim (ch >= "A") Yebu (ch <= "Z"), uppercase.
+    Umkeim (ch >= "a") Yebu (ch <= "z"), keep_char.
+    Umkeim (ch >= "0") Yebu (ch <= "9"), keep_char.
+    Bushayei "".
+keep_char:
+    Bushayei ch.
+uppercase:
+    Atbekis upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Atbekis lower := "abcdefghijklmnopqrstuvwxyz".
+    Atbekis low := 1.
+    Atbekis high := 26.
+    Bitreim (low < high) {
+        Atbekis mid := ((low + high) - 1) / 2.
+        Umkeim upper[mid] < ch, move_low.
+        high := mid.
+        Sabatchi.
+move_low:
+        low := mid + 1.
+    }
+    Bushayei lower[low].
+Kekrako
+
+Dradesde palindrome(line) Kro
+    Atbekis left := 1.
+    Atbekis right := Pluchutde(line).
+    Bitreim (left < right) {
+        Atbekis a := normalize(line[left]).
+        Umkeim a = "", skip_left.
+        Atbekis b := normalize(line[right]).
+        Umkeim b = "", skip_right.
+        Umkeim a != b, mismatch.
+        left := left + 1.
+        right := right - 1.
+        Sabatchi.
+skip_left:
+        left := left + 1.
+        Sabatchi.
+skip_right:
+        right := right - 1.
+    }
+    Bushayei "yes".
+mismatch:
+    Bushayei "no".
+Kekrako
+
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Seimyu palindrome(line).
+    line := Ucheschu().
+}

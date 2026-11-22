@@ -1,0 +1,72 @@
+Yokyi decimal(digits) {
+    Koke i := Yik(digits).
+    Puwadish (i > 1) Okdro (digits[i] == 0) Gihe Hehokgi
+        i := i - 1.
+    Kobihek
+    Koke text := "".
+    Gipolu j := i Wexdush 1 Drix -1 Gihe Hehokgi
+        text := text ++ digits[j].
+    Kobihek
+    Pohuwu text.
+}
+
+Yokyi add_digits(a, b) {
+    Koke result := [].
+    Koke na := Yik(a).
+    Koke nb := Yik(b).
+    Koke carry := 0.
+    Koke i := 1.
+    Puwadish (i <= na) Dak (i <= nb) Dak (carry /= 0) Gihe Hehokgi
+        Koke total := carry.
+        Yopok i > na, try_b.
+        total := total + a[i].
+try_b:
+        Yopok i > nb, save_digit.
+        total := total + b[i].
+save_digit:
+        carry := -(-total / 10).
+        Oxba(result, total - (carry * 10)).
+        i := i + 1.
+    Kobihek
+    Pohuwu decimal(result).
+}
+
+Yokyi multiply_digits(a, b) {
+    Koke result := [].
+    Koke size := Yik(a) + Yik(b).
+    Gipolu i := 1 Wexdush size Gihe Hehokgi
+        Oxba(result, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        Koke x := a[i].
+        Yopok x == 0, skip_row.
+        Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+            Koke p := i + j - 1.
+            result[p] := result[p] + (x * b[j]).
+        Kobihek
+skip_row:
+    Kobihek
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush size Gihe Hehokgi
+        Koke total := result[i] + carry.
+        carry := -(-total / 10).
+        result[i] := total - (carry * 10).
+    Kobihek
+    Pohuwu decimal(result).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke a := [].
+    Koke b := [].
+    Koke i := Yik(line).
+    Puwadish line[i] /= " " Gihe Hehokgi
+        Oxba(b, Bupuxbo(line[i])).
+        i := i - 1.
+    Kobihek
+    Gipolu j := i - 1 Wexdush 1 Drix -1 Gihe Hehokgi
+        Oxba(a, Bupuxbo(line[j])).
+    Kobihek
+    Ebi add_digits(a, b) ++ " " ++ multiply_digits(a, b).
+    line := Pewexpo().
+Kobihek

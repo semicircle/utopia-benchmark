@@ -1,0 +1,12 @@
+Koke lines := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(lines, line).
+    line := Pewexpo().
+Kobihek
+Koke n := Yik(lines).
+Yopok n == 0, done.
+Gipolu i := n Wexdush 1 Drix -1 Gihe Hehokgi
+    Ebi lines[i].
+Kobihek
+done:

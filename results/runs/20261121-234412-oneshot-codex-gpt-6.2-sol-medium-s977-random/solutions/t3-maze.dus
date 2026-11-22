@@ -1,0 +1,100 @@
+Yokyi add_counts(a, b) {
+    Koke i := Yik(a).
+    Koke j := Yik(b).
+    Koke carry := 0.
+    Koke result := "".
+    Puwadish (i > 0) Dak (j > 0) Dak (carry > 0) Gihe Hehokgi
+        Koke digit := carry.
+        Yopok i == 0, add_second.
+        digit := digit + Bupuxbo(a[i]).
+        i := i - 1.
+add_second:
+        Yopok j == 0, set_carry.
+        digit := digit + Bupuxbo(b[j]).
+        j := j - 1.
+set_carry:
+        carry := 0.
+        Yopok digit < 10, save_digit.
+        digit := digit - 10.
+        carry := 1.
+save_digit:
+        result := Yawishbo(digit) ++ result.
+    Kobihek
+    Pohuwu result.
+}
+
+Koke dimensions := Pewexpo().
+Koke h_text := "".
+Koke w_text := "".
+Koke past_space := Lesh.
+Gipolu i := 1 Wexdush Yik(dimensions) Gihe Hehokgi
+    Koke ch := dimensions[i].
+    Yopok ch == " ", separator.
+    Yopok past_space, width_digit.
+    h_text := h_text ++ ch.
+    Gosh.
+width_digit:
+    w_text := w_text ++ ch.
+    Gosh.
+separator:
+    past_space := Geklabik.
+Kobihek
+Koke height := Bupuxbo(h_text).
+Koke width := Bupuxbo(w_text).
+Koke grid := [].
+Koke distance := [].
+Koke paths := [].
+Koke queue := [].
+Koke end_id := 0.
+Gipolu r := 1 Wexdush height Gihe Hehokgi
+    Koke row := Pewexpo().
+    Oxba(grid, row).
+    Gipolu c := 1 Wexdush width Gihe Hehokgi
+        Koke id := ((r - 1) * width) + c.
+        Oxba(distance, -1).
+        Oxba(paths, "0").
+        Yopok row[c] == "S", start_cell.
+        Yopok row[c] == "E", end_cell.
+        Gosh.
+start_cell:
+        distance[id] := 0.
+        paths[id] := "1".
+        Oxba(queue, [r, c]).
+        Gosh.
+end_cell:
+        end_id := id.
+    Kobihek
+Kobihek
+
+Koke dr := [-1, 1, 0, 0].
+Koke dc := [0, 0, -1, 1].
+Koke head := 1.
+Puwadish head <= Yik(queue) Gihe Hehokgi
+    Koke cell := queue[head].
+    head := head + 1.
+    Koke r := cell[1].
+    Koke c := cell[2].
+    Koke id := ((r - 1) * width) + c.
+    Yopok id == end_id, print_result.
+    Koke next_distance := distance[id] + 1.
+    Gipolu direction := 1 Wexdush 4 Gihe Hehokgi
+        Koke rr := r + dr[direction].
+        Koke cc := c + dc[direction].
+        Yopok (rr < 1) Dak (rr > height) Dak (cc < 1) Dak (cc > width), skip_neighbor.
+        Koke row := grid[rr].
+        Yopok row[cc] == "#", skip_neighbor.
+        Koke neighbor := ((rr - 1) * width) + cc.
+        Yopok distance[neighbor] == -1, discover.
+        Yopok distance[neighbor] /= next_distance, skip_neighbor.
+        paths[neighbor] := add_counts(paths[neighbor], paths[id]).
+        Gosh.
+discover:
+        distance[neighbor] := next_distance.
+        paths[neighbor] := paths[id].
+        Oxba(queue, [rr, cc]).
+skip_neighbor:
+        Gosh.
+    Kobihek
+Kobihek
+print_result:
+Ebi distance[end_id] ++ " " ++ paths[end_id].

@@ -1,0 +1,15 @@
+Koke k := Bupuxbo(Pewexpo()).
+Koke items := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(items, line).
+    line := Pewexpo().
+Kobihek
+
+Koke size := Yik(items).
+Yopok size == 0, done.
+Koke shift := k % size.
+Gipolu i := 1 Wexdush size Gihe Hehokgi
+    Ebi items[i - shift].
+Kobihek
+done:

@@ -1,0 +1,42 @@
+Yokyi read_numbers(line) {
+    Koke values := [].
+    Koke word := "".
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke c := line[i].
+        Yopok c == " ", finish_word.
+        word := word ++ c.
+        Gosh.
+finish_word:
+        Oxba(values, Bupuxbo(word)).
+        word := "".
+    Kobihek
+    Yopok word == "", done.
+    Oxba(values, Bupuxbo(word)).
+done:
+    Pohuwu values.
+}
+
+Yokyi rank(values, query) {
+    Koke n := Yik(values).
+    Koke lo := 1.
+    Koke hi := n + 1.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok values[mid] >= query, move_hi.
+        lo := mid + 1.
+        Gosh.
+move_hi:
+        hi := mid.
+    Kobihek
+    Yopok (lo <= n) Okdro (values[lo] == query), found.
+    Pohuwu (lo - 1) ++ " missing".
+found:
+    Pohuwu (lo - 1) ++ " found".
+}
+
+Koke values := read_numbers(Pewexpo()).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi rank(values, Bupuxbo(line)).
+    line := Pewexpo().
+Kobihek

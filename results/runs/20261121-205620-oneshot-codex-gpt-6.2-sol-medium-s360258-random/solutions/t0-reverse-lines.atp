@@ -1,0 +1,9 @@
+Atbekis lines := [].
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Tritriba(lines, line).
+    line := Ucheschu().
+}
+Ashes (Atbekis i := Pluchutde(lines); i >= 1; i := i - 1) {
+    Seimyu lines[i].
+}

@@ -1,0 +1,32 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi pos_mod(a, b) {
+    Pohuwu a - (b * floor_div(a, b)).
+}
+
+Koke k := Bupuxbo(Pewexpo()).
+Koke items := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(items, line).
+    line := Pewexpo().
+Kobihek
+Koke n := Yik(items).
+Yopok n == 0, done.
+Koke shift := pos_mod(k, n).
+Koke start := (n - shift) + 1.
+Koke last := n - 1.
+Gipolu i := 0 Wexdush last Gihe Hehokgi
+    Koke idx := start + i.
+    Yopok idx <= n, nowrap.
+    idx := idx - n.
+nowrap:
+    Ebi items[idx].
+Kobihek
+done:

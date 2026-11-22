@@ -1,0 +1,108 @@
+Yokyi letter_index(c, lower, upper) {
+    Koke alphabet := lower.
+    Yopok (c >= "a") Okdro (c <= "z"), search.
+    Yopok (c < "A") Dak (c > "Z"), separator.
+    alphabet := upper.
+search:
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok alphabet[mid] < c, upper_half.
+        hi := mid.
+        Gosh.
+upper_half:
+        lo := mid + 1.
+    Kobihek
+    Pohuwu lo.
+separator:
+    Pohuwu 0.
+}
+
+Yokyi empty_table(size) {
+    Koke table := [].
+    Gipolu i := 1 Wexdush size Gihe Hehokgi
+        Oxba(table, 0).
+    Kobihek
+    Pohuwu table.
+}
+
+Yokyi link_entry(table, entry, index) {
+    Koke slot := 1 - (entry[3] % Yik(table)).
+    entry[4] := table[slot].
+    table[slot] := index.
+}
+
+Yokyi count_word(table, entries, word, hash) {
+    Koke slot := 1 - (hash % Yik(table)).
+    Koke index := table[slot].
+    // Each entry stores its word, count, hash and next index in the bucket.
+    Puwadish index /= 0 Gihe Hehokgi
+        Koke entry := entries[index].
+        Yopok entry[1] /= word, next_entry.
+        entry[2] := entry[2] + 1.
+        Pohuwu table.
+next_entry:
+        index := entry[4].
+    Kobihek
+    Koke added := [word, 1, hash, 0].
+    Oxba(entries, added).
+    Yopok Yik(entries) > Yik(table), grow_table.
+    link_entry(table, added, Yik(entries)).
+    Pohuwu table.
+grow_table:
+    Koke larger := empty_table(Yik(table) * 2).
+    Gipolu i := 1 Wexdush Yik(entries) Gihe Hehokgi
+        link_entry(larger, entries[i], i).
+    Kobihek
+    Pohuwu larger.
+}
+
+Koke lower := "abcdefghijklmnopqrstuvwxyz".
+Koke upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+Koke entries := [].
+Koke table := empty_table(32).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke text := line ++ " ".
+    Koke word := "".
+    Koke hash := 0.
+    Gipolu i := 1 Wexdush Yik(text) Gihe Hehokgi
+        Koke letter := letter_index(text[i], lower, upper).
+        Yopok letter == 0, end_word.
+        word := word ++ lower[letter].
+        hash := (hash * 31 + letter) % 1000000007.
+        Gosh.
+end_word:
+        Yopok word == "", next_char.
+        table := count_word(table, entries, word, hash).
+        word := "".
+        hash := 0.
+next_char:
+        Gosh.
+    Kobihek
+    line := Pewexpo().
+Kobihek
+
+Gipolu rank := 1 Wexdush 10 Gihe Hehokgi
+    Koke best := 0.
+    Koke best_count := 0.
+    Koke best_word := "".
+    Gipolu i := 1 Wexdush Yik(entries) Gihe Hehokgi
+        Koke entry := entries[i].
+        Koke count := entry[2].
+        Koke candidate := entry[1].
+        Yopok (count > best_count) Dak ((count == best_count) Okdro (candidate < best_word)), choose.
+        Gosh.
+choose:
+        best := i.
+        best_count := count.
+        best_word := candidate.
+    Kobihek
+    Yopok best /= 0, print_word.
+    Kewi.
+print_word:
+    Ebi best_word ++ " " ++ best_count.
+    Koke selected := entries[best].
+    selected[2] := 0.
+Kobihek

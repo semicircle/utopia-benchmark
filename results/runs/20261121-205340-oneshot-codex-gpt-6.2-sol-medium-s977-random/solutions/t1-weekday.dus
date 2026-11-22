@@ -1,0 +1,32 @@
+Yokyi floorPositive(n, divisor) {
+    Pohuwu -((-n) / divisor).
+}
+
+Yokyi weekday(line, days, monthOffsets) {
+    Koke year := Bupuxbo(line[1] ++ line[2] ++ line[3] ++ line[4]).
+    Koke month := Bupuxbo(line[6] ++ line[7]).
+    Koke day := Bupuxbo(line[9] ++ line[10]).
+    Koke prior := year - 1.
+    Koke elapsed := (365 * prior) + floorPositive(prior, 4)
+        - floorPositive(prior, 100) + floorPositive(prior, 400).
+    elapsed := elapsed + monthOffsets[month] + day - 1.
+
+    Yopok month <= 2, dayIndex.
+    Yopok (year % 4) /= 0, dayIndex.
+    Yopok ((year % 100) == 0) Okdro ((year % 400) /= 0), dayIndex.
+    elapsed := elapsed + 1.
+dayIndex:
+    Koke offset := elapsed % 7.
+    Yopok offset == 0, getDay.
+    offset := offset + 7.
+getDay:
+    Pohuwu days[offset + 1].
+}
+
+Koke days := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Koke monthOffsets := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi weekday(line, days, monthOffsets).
+    line := Pewexpo().
+Kobihek

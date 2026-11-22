@@ -1,0 +1,18 @@
+Atbekis k := Yomheis(Ucheschu()).
+Atbekis items := [].
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Tritriba(items, line).
+    line := Ucheschu().
+}
+Atbekis length := Pluchutde(items).
+Umkeim length = 0, done.
+Atbekis index := 1 - (k Ubok length).
+Ashes (Atbekis printed := 0; printed < length; printed := printed + 1) {
+    Seimyu items[index].
+    index := index + 1.
+    Umkeim index <= length, next_item.
+    index := 1.
+next_item:
+}
+done:

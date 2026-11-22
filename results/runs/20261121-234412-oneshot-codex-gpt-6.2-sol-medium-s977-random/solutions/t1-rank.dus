@@ -1,0 +1,37 @@
+Koke values := [].
+Koke first := Pewexpo().
+Koke token := "".
+Gipolu i := 1 Wexdush Yik(first) Gihe Hehokgi
+    Koke ch := first[i].
+    Yopok ch == " ", end_token.
+    token := token ++ ch.
+    Gosh.
+end_token:
+    Oxba(values, Bupuxbo(token)).
+    token := "".
+Kobihek
+Yopok token == "", read_queries.
+Oxba(values, Bupuxbo(token)).
+read_queries:
+Koke size := Yik(values).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke query := Bupuxbo(line).
+    Koke lo := 1.
+    Koke hi := size + 1.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := hi - ((hi - lo) / 2).
+        Yopok values[mid] < query, search_right.
+        hi := mid.
+        Gosh.
+search_right:
+        lo := mid + 1.
+    Kobihek
+    Yopok (lo <= size) Okdro (values[lo] == query), found.
+    Ebi (lo - 1) ++ " missing".
+    Uxdrush next_query.
+found:
+    Ebi (lo - 1) ++ " found".
+next_query:
+    line := Pewexpo().
+Kobihek

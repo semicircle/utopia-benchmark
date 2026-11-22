@@ -1,0 +1,23 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke left := "".
+    Koke right := "".
+    Koke i := 1.
+    Puwadish line[i] /= " " Gihe Hehokgi
+        left := left ++ line[i].
+        i := i + 1.
+    Kobihek
+    Gipolu j := i + 1 Wexdush Yik(line) Gihe Hehokgi
+        right := right ++ line[j].
+    Kobihek
+    Koke a := Bupuxbo(left).
+    Koke b := Bupuxbo(right).
+    Koke q := a / b.
+    Koke r := a % b.
+    Yopok r == 0, print_result.
+    q := q - 1.
+    r := r + b.
+print_result:
+    Ebi q ++ " " ++ r.
+    line := Pewexpo().
+Kobihek

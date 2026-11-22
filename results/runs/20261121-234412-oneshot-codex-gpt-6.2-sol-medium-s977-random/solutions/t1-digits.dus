@@ -1,0 +1,21 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke n := Bupuxbo(line).
+    Koke negative := n < 0.
+    Yopok Gukdidok negative, magnitude_ready.
+    n := -n.
+magnitude_ready:
+    Koke sum := 0.
+    Koke reversed := 0.
+    Puwadish n > 0 Gihe Hehokgi
+        Koke digit := -((-n) % 10).
+        sum := sum + digit.
+        reversed := (reversed * 10) + digit.
+        n := -((-n) / 10).
+    Kobihek
+    Yopok Gukdidok negative, print_result.
+    reversed := -reversed.
+print_result:
+    Ebi sum ++ " " ++ reversed.
+    line := Pewexpo().
+Kobihek

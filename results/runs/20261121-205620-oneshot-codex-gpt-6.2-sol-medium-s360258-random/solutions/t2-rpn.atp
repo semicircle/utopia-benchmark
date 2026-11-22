@@ -1,0 +1,84 @@
+Dradesde truncateDivide(a, b) Kro
+    Atbekis q := a / b.
+    Umkeim ((a < 0) = (b < 0)) Shei ((a Ubok b) = 0), done.
+    q := q - 1.
+done:
+    Bushayei q.
+Kekrako
+
+Dradesde evaluate(line) Kro
+    Atbekis stack := [].
+    Atbekis size := 0.
+    Atbekis length := Pluchutde(line).
+    Atbekis i := 1.
+    Bitreim (i <= length) {
+        Umkeim line[i] != " ", start_token.
+        i := i + 1.
+        Sabatchi.
+start_token:
+        Atbekis start := i.
+        Bitreim ((i <= length) Yebu (line[i] != " ")) {
+            i := i + 1.
+        }
+        Atbekis ch := line[start].
+        Atbekis value := 0.
+        Atbekis operator := (ch = "+") Shei (ch = "-") Shei (ch = "*") Shei (ch = "/") Shei (ch = "%").
+        Umkeim ((i - start) = 1) Yebu operator, apply_operator.
+
+        Atbekis firstDigit := start.
+        Umkeim ch != "-", read_digits.
+        firstDigit := firstDigit + 1.
+read_digits:
+        Umkeim firstDigit = i, invalid.
+        Ashes (Atbekis j := firstDigit; j < i; j := j + 1) {
+            Atbekis digit := line[j].
+            Umkeim (digit < "0") Shei (digit > "9"), invalid.
+            value := (10 * value) + Yomheis(digit).
+        }
+        Umkeim ch != "-", push_value.
+        value := -value.
+        Yudrese push_value.
+
+apply_operator:
+        Umkeim size < 2, invalid.
+        Atbekis b := stack[size].
+        Atbekis a := stack[size - 1].
+        size := size - 2.
+        Umkeim (b = 0) Yebu ((ch = "/") Shei (ch = "%")), invalid.
+        Sabei ch Triboba
+        "+": Kro
+            value := a + b.
+        Kekrako
+        "-": Kro
+            value := a - b.
+        Kekrako
+        "*": Kro
+            value := a * b.
+        Kekrako
+        "/": Kro
+            value := truncateDivide(a, b).
+        Kekrako
+        "%": Kro
+            value := a - (b * truncateDivide(a, b)).
+        Kekrako
+        Kekrako
+
+push_value:
+        size := size + 1.
+        Umkeim size <= Pluchutde(stack), reuse_slot.
+        Tritriba(stack, value).
+        Sabatchi.
+reuse_slot:
+        stack[size] := value.
+    }
+    Umkeim size != 1, invalid.
+    Bushayei stack[1].
+invalid:
+    Bushayei "error".
+Kekrako
+
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Seimyu evaluate(line).
+    line := Ucheschu().
+}

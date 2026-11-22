@@ -1,0 +1,43 @@
+Koke generations := Bupuxbo(Pewexpo()).
+Koke grid := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(grid, line).
+    line := Pewexpo().
+Kobihek
+Koke height := Yik(grid).
+Koke width := Yik(grid[1]).
+Gipolu generation := 1 Wexdush generations Gihe Hehokgi
+    Koke next_grid := [].
+    Gipolu r := 1 Wexdush height Gihe Hehokgi
+        Koke old_row := grid[r].
+        Koke next_row := "".
+        Gipolu c := 1 Wexdush width Gihe Hehokgi
+            Koke nearby := 0.
+            Gipolu rr := r - 1 Wexdush r + 1 Gihe Hehokgi
+                Yopok (rr < 1) Dak (rr > height), skip_row.
+                Koke neighbor_row := grid[rr].
+                Gipolu cc := c - 1 Wexdush c + 1 Gihe Hehokgi
+                    Yopok (cc < 1) Dak (cc > width), skip_cell.
+                    Yopok (rr == r) Okdro (cc == c), skip_cell.
+                    Yopok neighbor_row[cc] /= "#", skip_cell.
+                    nearby := nearby + 1.
+skip_cell:
+                    Gosh.
+                Kobihek
+skip_row:
+                Gosh.
+            Kobihek
+            Yopok (nearby == 3) Dak ((nearby == 2) Okdro (old_row[c] == "#")), live.
+            next_row := next_row ++ ".".
+            Gosh.
+live:
+            next_row := next_row ++ "#".
+        Kobihek
+        Oxba(next_grid, next_row).
+    Kobihek
+    grid := next_grid.
+Kobihek
+Gipolu r := 1 Wexdush height Gihe Hehokgi
+    Ebi grid[r].
+Kobihek

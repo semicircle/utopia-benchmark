@@ -1,0 +1,60 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi num_from(s, a, b) {
+    Koke out := "".
+    Gipolu i := a Wexdush b Gihe Hehokgi
+        out := out ++ s[i].
+    Kobihek
+    Pohuwu Bupuxbo(out).
+}
+
+// Sakamoto: 0 Sunday .. 6 Saturday. Division must be toward -infinity.
+Yokyi weekday(y, m, d) {
+    Yopok m >= 3, noadj.
+    y := y - 1.
+noadj:
+    Koke t := [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4].
+    Koke sum := y + floor_div(y, 4) - floor_div(y, 100) + floor_div(y, 400) + t[m] + d.
+    Pohuwu sum - (7 * floor_div(sum, 7)).
+}
+
+Yokyi day_name(d) {
+    Dru d Ihedrux
+    0: Hehokgi
+        Pohuwu "Sunday".
+    Kobihek
+    1: Hehokgi
+        Pohuwu "Monday".
+    Kobihek
+    2: Hehokgi
+        Pohuwu "Tuesday".
+    Kobihek
+    3: Hehokgi
+        Pohuwu "Wednesday".
+    Kobihek
+    4: Hehokgi
+        Pohuwu "Thursday".
+    Kobihek
+    5: Hehokgi
+        Pohuwu "Friday".
+    Kobihek
+    6: Hehokgi
+        Pohuwu "Saturday".
+    Kobihek Kobihek
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke y := num_from(line, 1, 4).
+    Koke m := num_from(line, 6, 7).
+    Koke day := num_from(line, 9, 10).
+    Ebi day_name(weekday(y, m, day)).
+    line := Pewexpo().
+Kobihek

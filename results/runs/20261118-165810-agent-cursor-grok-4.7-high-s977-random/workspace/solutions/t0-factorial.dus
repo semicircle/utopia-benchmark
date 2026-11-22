@@ -1,0 +1,8 @@
+Yokyi fact(n) {
+    Yopok n > 1, rec.
+    Pohuwu 1.
+rec:
+    Pohuwu n * fact(n - 1).
+}
+
+Ebi fact(Bupuxbo(Pewexpo())).

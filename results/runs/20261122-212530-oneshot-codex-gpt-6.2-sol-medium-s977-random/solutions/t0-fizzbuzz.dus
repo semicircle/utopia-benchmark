@@ -1,0 +1,17 @@
+Yokyi fizzbuzz(n) {
+    Yopok n % 15 == 0, both.
+    Yopok n % 3 == 0, three.
+    Yopok n % 5 == 0, five.
+    Pohuwu n.
+both:
+    Pohuwu "FizzBuzz".
+three:
+    Pohuwu "Fizz".
+five:
+    Pohuwu "Buzz".
+}
+
+Koke n := Bupuxbo(Pewexpo()).
+Gipolu i := 1 Wexdush n Gihe Hehokgi
+    Ebi fizzbuzz(i).
+Kobihek

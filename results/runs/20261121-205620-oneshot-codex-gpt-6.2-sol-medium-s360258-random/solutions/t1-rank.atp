@@ -1,0 +1,44 @@
+Dradesde parseNumbers(line) Kro
+    Atbekis numbers := [].
+    Atbekis token := "".
+    line := line & " ".
+    Atbekis length := Pluchutde(line).
+    Ashes (Atbekis i := 1; i <= length; i := i + 1) {
+        Atbekis ch := line[i].
+        Umkeim ch = " ", end_token.
+        token := token & ch.
+        Sabatchi.
+end_token:
+        Umkeim token = "", skip_token.
+        Tritriba(numbers, Yomheis(token)).
+        token := "".
+skip_token:
+    }
+    Bushayei numbers.
+Kekrako
+
+Dradesde printRank(numbers, query) Kro
+    Atbekis length := Pluchutde(numbers).
+    Atbekis low := 1.
+    Atbekis high := length + 1.
+    Bitreim (low < high) {
+        Atbekis mid := ((low + high) - 1) / 2.
+        Umkeim numbers[mid] < query, move_low.
+        high := mid.
+        Sabatchi.
+move_low:
+        low := mid + 1.
+    }
+    Atbekis status := "missing".
+    Umkeim (low > length) Shei (numbers[low] != query), print_result.
+    status := "found".
+print_result:
+    Seimyu (low - 1) & " " & status.
+Kekrako
+
+Atbekis numbers := parseNumbers(Ucheschu()).
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    printRank(numbers, Yomheis(line)).
+    line := Ucheschu().
+}

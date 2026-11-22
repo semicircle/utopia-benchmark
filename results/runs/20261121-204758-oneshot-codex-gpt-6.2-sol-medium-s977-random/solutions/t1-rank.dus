@@ -1,0 +1,43 @@
+Yokyi lower_bound(numbers, query) {
+    Koke lo := 1.
+    Koke hi := Yik(numbers) + 1.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok numbers[mid] < query, upper_half.
+        hi := mid.
+        Gosh.
+upper_half:
+        lo := mid + 1.
+    Kobihek
+    Pohuwu lo.
+}
+
+Koke numbers := [].
+Koke first := Pewexpo() ++ " ".
+Koke token := "".
+Gipolu i := 1 Wexdush Yik(first) Gihe Hehokgi
+    Koke c := first[i].
+    Yopok c == " ", separator.
+    token := token ++ c.
+    Gosh.
+separator:
+    Yopok token == "", next_char.
+    Oxba(numbers, Bupuxbo(token)).
+    token := "".
+next_char:
+    Gosh.
+Kobihek
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke query := Bupuxbo(line).
+    Koke position := lower_bound(numbers, query).
+    Koke status := "missing".
+    Yopok (position <= Yik(numbers)) Okdro (numbers[position] == query), found_query.
+    Uxdrush print_result.
+found_query:
+    status := "found".
+print_result:
+    Ebi (position - 1) ++ " " ++ status.
+    line := Pewexpo().
+Kobihek

@@ -1,0 +1,25 @@
+Yokyi printDigits(n) {
+    Koke negative := n < 0.
+    Yopok Gukdidok negative, collectDigits.
+    n := -n.
+collectDigits:
+    Koke sum := 0.
+    Koke reversed := 0.
+    Puwadish n > 0 Gihe Hehokgi
+        Koke quotient := -((-n) / 10).
+        Koke digit := n - (10 * quotient).
+        sum := sum + digit.
+        reversed := (10 * reversed) + digit.
+        n := quotient.
+    Kobihek
+    Yopok Gukdidok negative, printResult.
+    reversed := -reversed.
+printResult:
+    Ebi sum ++ " " ++ reversed.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    printDigits(Bupuxbo(line)).
+    line := Pewexpo().
+Kobihek

@@ -1,0 +1,80 @@
+Dradesde readDigits(line, first, last) Kro
+    Atbekis digits := [].
+    Ashes (Atbekis i := last; i >= first; i := i - 1) {
+        Tritriba(digits, Yomheis(line[i])).
+    }
+    Bushayei digits.
+Kekrako
+
+Dradesde carryOf(n) Kro
+    Bushayei -((-n) / 10).
+Kekrako
+
+Dradesde addDigits(a, b) Kro
+    Atbekis aLength := Pluchutde(a).
+    Atbekis bLength := Pluchutde(b).
+    Atbekis result := [].
+    Atbekis carry := 0.
+    Ashes (Atbekis i := 1; (i <= aLength) Shei (i <= bLength); i := i + 1) {
+        Atbekis total := carry.
+        Umkeim i > aLength, add_second.
+        total := total + a[i].
+add_second:
+        Umkeim i > bLength, write_digit.
+        total := total + b[i].
+write_digit:
+        carry := carryOf(total).
+        Tritriba(result, total - (10 * carry)).
+    }
+    Umkeim carry = 0, done.
+    Tritriba(result, carry).
+done:
+    Bushayei result.
+Kekrako
+
+Dradesde multiplyDigits(a, b) Kro
+    Atbekis aLength := Pluchutde(a).
+    Atbekis bLength := Pluchutde(b).
+    Atbekis length := aLength + bLength.
+    Atbekis result := [].
+    Ashes (Atbekis i := 1; i <= length; i := i + 1) {
+        Tritriba(result, 0).
+    }
+    Ashes (Atbekis i := 1; i <= aLength; i := i + 1) {
+        Ashes (Atbekis j := 1; j <= bLength; j := j + 1) {
+            Atbekis index := (i + j) - 1.
+            result[index] := result[index] + (a[i] * b[j]).
+        }
+    }
+    Atbekis carry := 0.
+    Ashes (Atbekis i := 1; i <= length; i := i + 1) {
+        Atbekis total := result[i] + carry.
+        carry := carryOf(total).
+        result[i] := total - (10 * carry).
+    }
+    Bushayei result.
+Kekrako
+
+Dradesde decimalText(digits) Kro
+    Atbekis i := Pluchutde(digits).
+    Bitreim ((i > 1) Yebu (digits[i] = 0)) {
+        i := i - 1.
+    }
+    Atbekis text := "".
+    Ashes (; i >= 1; i := i - 1) {
+        text := text & digits[i].
+    }
+    Bushayei text.
+Kekrako
+
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Atbekis separator := 1.
+    Bitreim (line[separator] != " ") {
+        separator := separator + 1.
+    }
+    Atbekis a := readDigits(line, 1, separator - 1).
+    Atbekis b := readDigits(line, separator + 1, Pluchutde(line)).
+    Seimyu decimalText(addDigits(a, b)) & " " & decimalText(multiplyDigits(a, b)).
+    line := Ucheschu().
+}

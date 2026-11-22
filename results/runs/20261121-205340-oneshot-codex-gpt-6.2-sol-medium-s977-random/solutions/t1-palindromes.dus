@@ -1,0 +1,55 @@
+Yokyi normalize(ch) {
+    Yopok (ch >= "a") Okdro (ch <= "z"), keepCharacter.
+    Yopok (ch >= "0") Okdro (ch <= "9"), keepCharacter.
+    Yopok (ch >= "A") Okdro (ch <= "Z"), lowercase.
+    Pohuwu "".
+keepCharacter:
+    Pohuwu ch.
+lowercase:
+    Koke upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lower := "abcdefghijklmnopqrstuvwxyz".
+    Koke low := 1.
+    Koke high := 26.
+    Puwadish low <= high Gihe Hehokgi
+        Koke mid := (low + high) / 2.
+        Yopok ch == upper[mid], match.
+        Yopok ch < upper[mid], lowerHalf.
+        low := mid + 1.
+        Gosh.
+lowerHalf:
+        high := mid - 1.
+        Gosh.
+match:
+        Pohuwu lower[mid].
+    Kobihek
+    Pohuwu "".
+}
+
+Yokyi palindrome(line) {
+    Koke left := 1.
+    Koke right := Yik(line).
+    Puwadish left < right Gihe Hehokgi
+        Koke a := normalize(line[left]).
+        Yopok a /= "", checkRight.
+        left := left + 1.
+        Gosh.
+checkRight:
+        Koke b := normalize(line[right]).
+        Yopok b /= "", compare.
+        right := right - 1.
+        Gosh.
+compare:
+        Yopok a == b, advance.
+        Pohuwu "no".
+advance:
+        left := left + 1.
+        right := right - 1.
+    Kobihek
+    Pohuwu "yes".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi palindrome(line).
+    line := Pewexpo().
+Kobihek

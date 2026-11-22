@@ -1,0 +1,61 @@
+Atbekis generations := Yomheis(Ucheschu()).
+Atbekis line := Ucheschu().
+Atbekis width := Pluchutde(line).
+Atbekis border := [].
+Ashes (Atbekis i := 1; i <= width + 2; i := i + 1) {
+    Tritriba(border, 0).
+}
+Atbekis grid := [border].
+Bitreim (line != Kapluda) {
+    Atbekis row := [0].
+    Ashes (Atbekis i := 1; i <= width; i := i + 1) {
+        Atbekis cell := 0.
+        Umkeim line[i] != "#", append_input_cell.
+        cell := 1.
+append_input_cell:
+        Tritriba(row, cell).
+    }
+    Tritriba(row, 0).
+    Tritriba(grid, row).
+    line := Ucheschu().
+}
+Tritriba(grid, border).
+
+Atbekis lastRow := Pluchutde(grid) - 1.
+Atbekis lastColumn := width + 1.
+Ashes (Atbekis generation := 0; generation < generations; generation := generation + 1) {
+    Atbekis nextGrid := [border].
+    Ashes (Atbekis r := 2; r <= lastRow; r := r + 1) {
+        Atbekis above := grid[r - 1].
+        Atbekis middle := grid[r].
+        Atbekis below := grid[r + 1].
+        Atbekis nextRow := [0].
+        Ashes (Atbekis c := 2; c <= lastColumn; c := c + 1) {
+            Atbekis left := c - 1.
+            Atbekis right := c + 1.
+            Atbekis neighbours := above[left] + above[c] + above[right]
+                + middle[left] + middle[right]
+                + below[left] + below[c] + below[right].
+            Atbekis cell := 0.
+            Umkeim (neighbours = 3) Shei ((neighbours = 2) Yebu (middle[c] = 1)), live_cell.
+            Yudrese append_cell.
+live_cell:
+            cell := 1.
+append_cell:
+            Tritriba(nextRow, cell).
+        }
+        Tritriba(nextRow, 0).
+        Tritriba(nextGrid, nextRow).
+    }
+    Tritriba(nextGrid, border).
+    grid := nextGrid.
+}
+
+Atbekis symbols := ".#".
+Ashes (Atbekis r := 2; r <= lastRow; r := r + 1) {
+    Atbekis row := grid[r].
+    Ashes (Atbekis c := 2; c <= lastColumn; c := c + 1) {
+        Bachet symbols[row[c] + 1].
+    }
+    Seimyu "".
+}

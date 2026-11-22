@@ -1,0 +1,66 @@
+Yokyi neighbors(grid, r, c, rows, cols) {
+    Koke cnt := 0.
+    Koke nr := 0.
+    Koke nc := 0.
+    Koke dr := -1.
+    Puwadish dr <= 1 Gihe Hehokgi
+        Koke dc := -1.
+        Puwadish dc <= 1 Gihe Hehokgi
+            Yopok (dr /= 0) Dak (dc /= 0), not_self.
+            Uxdrush skip.
+not_self:
+            nr := r + dr.
+            nc := c + dc.
+            Yopok (nr < 1) Dak (nr > rows), skip.
+            Yopok (nc < 1) Dak (nc > cols), skip.
+            Yopok grid[nr][nc] /= "#", skip.
+            cnt := cnt + 1.
+skip:
+            dc := dc + 1.
+        Kobihek
+        dr := dr + 1.
+    Kobihek
+    Pohuwu cnt.
+}
+
+Yokyi step(grid) {
+    Koke rows := Yik(grid).
+    Koke cols := Yik(grid[1]).
+    Koke newg := [].
+    Gipolu r := 1 Wexdush rows Gihe Hehokgi
+        Koke built := "".
+        Koke old := grid[r].
+        Gipolu c := 1 Wexdush cols Gihe Hehokgi
+            Koke nbs := neighbors(grid, r, c, rows, cols).
+            Yopok old[c] /= "#", was_dead.
+            Yopok (nbs /= 2) Okdro (nbs /= 3), die.
+            built := built ++ "#".
+            Gosh.
+die:
+            built := built ++ ".".
+            Gosh.
+was_dead:
+            Yopok nbs /= 3, stay_dead.
+            built := built ++ "#".
+            Gosh.
+stay_dead:
+            built := built ++ ".".
+        Kobihek
+        Oxba(newg, built).
+    Kobihek
+    Pohuwu newg.
+}
+
+Koke g := Bupuxbo(Pewexpo()).
+Koke grid := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(grid, line).
+    line := Pewexpo().
+Kobihek
+Gipolu gen := 1 Wexdush g Gihe Hehokgi
+    grid := step(grid).
+Kobihek
+Gipolu r := 1 Wexdush Yik(grid) Gihe Hehokgi
+    Ebi grid[r].
+Kobihek

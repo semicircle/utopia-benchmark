@@ -1,0 +1,26 @@
+Yokyi floor_positive(a, b) {
+    Pohuwu -(-a / b).
+}
+
+Yokyi weekday(date, starts, names) {
+    Koke year := Bupuxbo(date[1] ++ date[2] ++ date[3] ++ date[4]).
+    Koke month := Bupuxbo(date[6] ++ date[7]).
+    Koke day := Bupuxbo(date[9] ++ date[10]).
+    Koke y := year - 1.
+    Koke days := (365 * y) + floor_positive(y, 4) - floor_positive(y, 100) + floor_positive(y, 400).
+    days := days + starts[month] + day - 1.
+    Yopok month <= 2, done.
+    Yopok year % 4 /= 0, done.
+    Yopok (year % 100 == 0) Okdro (year % 400 /= 0), done.
+    days := days + 1.
+done:
+    Pohuwu names[days + 1].
+}
+
+Koke starts := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334].
+Koke names := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi weekday(line, starts, names).
+    line := Pewexpo().
+Kobihek

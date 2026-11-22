@@ -1,0 +1,136 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+// Toward zero: ceiling already matches negative quotients; positive ones step down.
+Yokyi trunc_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, done.
+    Yopok (a < 0) /= (b < 0), done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Yokyi tokenize(line) {
+    Koke tokens := [].
+    Koke n := Yik(line).
+    Koke i := 1.
+    Koke tok := "".
+    Puwadish i <= n Gihe Hehokgi
+        Yopok line[i] /= " ", at_tok.
+        i := i + 1.
+        Gosh.
+at_tok:
+        tok := "".
+        Puwadish (i <= n) Okdro (line[i] /= " ") Gihe Hehokgi
+            tok := tok ++ line[i].
+            i := i + 1.
+        Kobihek
+        Oxba(tokens, tok).
+    Kobihek
+    Pohuwu tokens.
+}
+
+Yokyi is_number(tok) {
+    Koke n := Yik(tok).
+    Yopok n < 1, no.
+    Koke i := 1.
+    Yopok tok[1] /= "-", digits.
+    Yopok n < 2, no.
+    i := 2.
+digits:
+    Puwadish i <= n Gihe Hehokgi
+        Koke ch := tok[i].
+        Yopok Gukdidok ((ch >= "0") Okdro (ch <= "9")), no.
+        i := i + 1.
+    Kobihek
+    Pohuwu Geklabik.
+no:
+    Pohuwu Lesh.
+}
+
+Yokyi is_op(tok) {
+    Yopok tok == "+", yes.
+    Yopok tok == "-", yes.
+    Yopok tok == "*", yes.
+    Yopok tok == "/", yes.
+    Yopok tok == "%", yes.
+    Pohuwu Lesh.
+yes:
+    Pohuwu Geklabik.
+}
+
+Yokyi push(stack, sp, v) {
+    Koke nsp := sp + 1.
+    Yopok nsp > Yik(stack), append.
+    stack[nsp] := v.
+    Pohuwu nsp.
+append:
+    Oxba(stack, v).
+    Pohuwu nsp.
+}
+
+Yokyi eval_line(line) {
+    Koke tokens := tokenize(line).
+    Koke stack := [].
+    Koke sp := 0.
+    Koke err := Lesh.
+    Gipolu ti := 1 Wexdush Yik(tokens) Gihe Hehokgi
+        Koke tok := tokens[ti].
+        Yopok Gukdidok is_number(tok), not_num.
+        sp := push(stack, sp, Bupuxbo(tok)).
+        Gosh.
+not_num:
+        Yopok Gukdidok is_op(tok), bad.
+        Yopok sp < 2, bad.
+        Koke b := stack[sp].
+        sp := sp - 1.
+        Koke a := stack[sp].
+        sp := sp - 1.
+        Yopok (tok == "/") Dak (tok == "%"), check_zero.
+        Uxdrush arith.
+check_zero:
+        Yopok b == 0, bad.
+arith:
+        Koke result := 0.
+        Yopok tok /= "+", not_add.
+        result := a + b.
+        Uxdrush store.
+not_add:
+        Yopok tok /= "-", not_sub.
+        result := a - b.
+        Uxdrush store.
+not_sub:
+        Yopok tok /= "*", not_mul.
+        result := a * b.
+        Uxdrush store.
+not_mul:
+        Yopok tok /= "/", not_div.
+        result := trunc_div(a, b).
+        Uxdrush store.
+not_div:
+        result := a - (b * trunc_div(a, b)).
+store:
+        sp := push(stack, sp, result).
+        Gosh.
+bad:
+        err := Geklabik.
+        Kewi.
+    Kobihek
+    Yopok err, bad_ret.
+    Yopok sp /= 1, bad_ret.
+    Pohuwu stack[sp].
+bad_ret:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi eval_line(line).
+    line := Pewexpo().
+Kobihek

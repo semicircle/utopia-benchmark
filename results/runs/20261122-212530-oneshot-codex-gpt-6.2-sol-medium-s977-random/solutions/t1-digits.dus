@@ -1,0 +1,23 @@
+Yokyi digit_result(n) {
+    Koke sign := 1.
+    Yopok n >= 0, take_digits.
+    sign := -1.
+    n := -n.
+take_digits:
+    Koke sum := 0.
+    Koke reversed := 0.
+    Puwadish n > 0 Gihe Hehokgi
+        Koke q := -(-n / 10).
+        Koke digit := n - (10 * q).
+        sum := sum + digit.
+        reversed := reversed * 10 + digit.
+        n := q.
+    Kobihek
+    Pohuwu sum ++ " " ++ (sign * reversed).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi digit_result(Bupuxbo(line)).
+    line := Pewexpo().
+Kobihek

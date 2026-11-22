@@ -1,0 +1,28 @@
+Dradesde printFloorDivision(line) Kro
+    Atbekis i := 1.
+    Atbekis first := "".
+    Bitreim (line[i] != " ") {
+        first := first & line[i].
+        i := i + 1.
+    }
+    Atbekis second := "".
+    Atbekis length := Pluchutde(line).
+    Ashes (i := i + 1; i <= length; i := i + 1) {
+        second := second & line[i].
+    }
+    Atbekis a := Yomheis(first).
+    Atbekis b := Yomheis(second).
+    Atbekis q := a / b.
+    Atbekis r := a - (b * q).
+    Umkeim r = 0, print_result.
+    q := q - 1.
+    r := r + b.
+print_result:
+    Seimyu q & " " & r.
+Kekrako
+
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    printFloorDivision(line).
+    line := Ucheschu().
+}

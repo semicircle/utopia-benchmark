@@ -1,0 +1,88 @@
+Yokyi add_counts(a, b) {
+    Koke i := Yik(a).
+    Koke j := Yik(b).
+    Koke carry := 0.
+    Koke result := "".
+    Puwadish (i > 0) Dak (j > 0) Dak (carry /= 0) Gihe Hehokgi
+        Koke total := carry.
+        Yopok i <= 0, try_b.
+        total := total + Bupuxbo(a[i]).
+try_b:
+        Yopok j <= 0, save_digit.
+        total := total + Bupuxbo(b[j]).
+save_digit:
+        carry := -(-total / 10).
+        result := (total - (10 * carry)) ++ result.
+        i := i - 1.
+        j := j - 1.
+    Kobihek
+    Pohuwu result.
+}
+
+Koke dimensions := Pewexpo().
+Koke left := "".
+Koke right := "".
+Koke i := 1.
+Puwadish dimensions[i] /= " " Gihe Hehokgi
+    left := left ++ dimensions[i].
+    i := i + 1.
+Kobihek
+Gipolu j := i + 1 Wexdush Yik(dimensions) Gihe Hehokgi
+    right := right ++ dimensions[j].
+Kobihek
+Koke height := Bupuxbo(left).
+Koke width := Bupuxbo(right).
+Koke stride := width + 2.
+Koke size := (height + 2) * stride.
+Koke open := [].
+Koke distance := [].
+Koke ways := [].
+Gipolu i := 1 Wexdush size Gihe Hehokgi
+    Oxba(open, Lesh).
+    Oxba(distance, -1).
+    Oxba(ways, "0").
+Kobihek
+Koke start := 0.
+Koke finish := 0.
+Gipolu r := 1 Wexdush height Gihe Hehokgi
+    Koke row := Pewexpo().
+    Gipolu c := 1 Wexdush width Gihe Hehokgi
+        Koke cell := (r * stride) + c + 1.
+        Koke tile := row[c].
+        open[cell] := tile /= "#".
+        Dru tile Ihedrux
+        "S": Hehokgi
+            start := cell.
+        Kobihek
+        "E": Hehokgi
+            finish := cell.
+        Kobihek Kobihek
+    Kobihek
+Kobihek
+
+Koke directions := [-stride, stride, -1, 1].
+Koke queue := [start].
+Koke head := 1.
+distance[start] := 0.
+ways[start] := "1".
+Puwadish head <= Yik(queue) Gihe Hehokgi
+    Koke cell := queue[head].
+    Yopok cell == finish, done.
+    Koke next_distance := distance[cell] + 1.
+    Gipolu d := 1 Wexdush 4 Gihe Hehokgi
+        Koke neighbor := cell + directions[d].
+        Yopok Gukdidok open[neighbor], skip_neighbor.
+        Yopok distance[neighbor] == next_distance, add_path.
+        Yopok distance[neighbor] /= -1, skip_neighbor.
+        distance[neighbor] := next_distance.
+        ways[neighbor] := ways[cell].
+        Oxba(queue, neighbor).
+        Gosh.
+add_path:
+        ways[neighbor] := add_counts(ways[neighbor], ways[cell]).
+skip_neighbor:
+    Kobihek
+    head := head + 1.
+Kobihek
+done:
+Ebi distance[finish] ++ " " ++ ways[finish].

@@ -1,0 +1,141 @@
+// Language probe
+
+Yokyi show_idx(xs) {
+    Ebi "len " ++ Yik(xs).
+    Ebi "0 " ++ xs[0].
+    Ebi "-1 " ++ xs[-1].
+    Ebi "-2 " ++ xs[-2].
+    Ebi "-3 " ++ xs[-3].
+    Ebi "5 " ++ xs[5].
+    Ebi "6 " ++ xs[6].
+}
+
+Koke xs := [10, 20, 30].
+show_idx(xs).
+
+Koke word := "abcd".
+Ebi "s0 " ++ word[0].
+Ebi "s-1 " ++ word[-1].
+Ebi "s4 " ++ word[4].
+Ebi "s5 " ++ word[5].
+
+Ebi "chain".
+Koke grid := ["ab", "cd"].
+Koke row := grid[1].
+Ebi row[2].
+Ebi grid[2][1].
+
+Ebi "cmp".
+Ebi "app" < "apple".
+Ebi "apple" < "app".
+Ebi "app" == "app".
+Ebi "and" < "cat".
+Ebi "hat" < "hatch".
+Ebi "hatch" < "hat".
+Ebi "a" < "b".
+Ebi "b" < "a".
+Ebi "A" < "a".
+Ebi "0" < "9".
+Ebi "9" < "A".
+Ebi "Z" < "a".
+
+Ebi "mod".
+Ebi 7 % 2.
+Ebi 8 % 2.
+Ebi -7 % 2.
+Ebi -8 % 2.
+Ebi 1 % 2.
+Ebi 0 % 2.
+Ebi -1 % 2.
+Ebi 5 % 3.
+Ebi -5 % 3.
+Ebi 10 % 3.
+Ebi 15 % 3.
+Ebi 15 % 5.
+
+Ebi "div".
+Ebi 7 / 2.
+Ebi -7 / 2.
+Ebi 7 / -2.
+Ebi -7 / -2.
+Ebi 8 / 2.
+Ebi -8 / 2.
+
+Ebi "bup".
+Ebi Bupuxbo("0054").
+Ebi Bupuxbo("-4500").
+Ebi Bupuxbo("  12").
+Ebi Bupuxbo("01").
+Ebi Bupuxbo("0001").
+
+Ebi "yaw".
+Ebi Yawishbo(-4500).
+Ebi Yawishbo(0).
+Ebi Yawishbo(1000000000000000).
+Ebi Yawishbo(-1000000000000000).
+
+Ebi "unary".
+Koke n := 5.
+Ebi -n.
+Ebi -Bupuxbo("54").
+
+Ebi "redecl".
+Gipolu i := 1 Wexdush 3 Gihe Hehokgi
+    Koke tmp := i * 10.
+    Ebi tmp.
+Kobihek
+
+Ebi "loop0".
+Gipolu i := 1 Wexdush 0 Gihe Hehokgi
+    Ebi "nope".
+Kobihek
+Ebi "after0".
+
+Ebi "loopneg".
+Gipolu i := 1 Wexdush 5 Drix -1 Gihe Hehokgi
+    Ebi "negloop".
+Kobihek
+Ebi "afterneg".
+
+Ebi "same label funcs".
+Yokyi fa() {
+    done:
+    Pohuwu 1.
+}
+Yokyi fb() {
+    done:
+    Pohuwu 2.
+}
+Ebi fa().
+Ebi fb().
+
+Ebi "switch no default".
+Dru 2 Ihedrux
+1: Hehokgi
+    Ebi "one".
+Kobihek
+2: Hehokgi
+    Ebi "two".
+Kobihek Kobihek
+
+Ebi "switch miss".
+Dru 9 Ihedrux
+1: Hehokgi
+    Ebi "one".
+Kobihek Kobihek
+Ebi "after miss".
+
+Ebi "concat idx".
+Koke s := "2000-01-01".
+Ebi s[1] ++ s[2] ++ s[3] ++ s[4].
+Ebi Bupuxbo(s[6] ++ s[7]).
+
+Ebi "neq types".
+Ebi "a" /= Liliga.
+Ebi Liliga == Liliga.
+Ebi 1 /= "1".
+
+Ebi "bool prec".
+Koke c := "B".
+Ebi (c >= "A") Okdro (c <= "Z").
+Ebi (c >= "a") Okdro (c <= "z").

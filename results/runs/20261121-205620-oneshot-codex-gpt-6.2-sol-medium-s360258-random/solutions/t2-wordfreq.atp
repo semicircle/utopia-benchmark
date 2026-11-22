@@ -1,0 +1,92 @@
+Dradesde normalizeLetter(ch, upper, lower) Kro
+    Umkeim (ch >= "a") Yebu (ch <= "z"), lowercase.
+    Umkeim (ch < "A") Shei (ch > "Z"), separator.
+    Atbekis low := 1.
+    Atbekis high := 26.
+    Bitreim (low < high) {
+        Atbekis mid := ((low + high) - 1) / 2.
+        Umkeim upper[mid] < ch, move_low.
+        high := mid.
+        Sabatchi.
+move_low:
+        low := mid + 1.
+    }
+    Bushayei lower[low].
+lowercase:
+    Bushayei ch.
+separator:
+    Bushayei "".
+Kekrako
+
+Dradesde wordText(line, first, last, upper, lower) Kro
+    Umkeim first < last, join_halves.
+    Bushayei normalizeLetter(line[first], upper, lower).
+join_halves:
+    Atbekis mid := ((first + last) - 1) / 2.
+    Bushayei wordText(line, first, mid, upper, lower) & wordText(line, mid + 1, last, upper, lower).
+Kekrako
+
+// Each trie node stores its count, first child, next sibling, letter and word.
+Dradesde childFor(node, letter) Kro
+    Atbekis child := node[2].
+    Bitreim (child != Kapluda) {
+        Umkeim child[4] = letter, found_child.
+        child := child[3].
+    }
+    child := [0, Kapluda, node[2], letter, ""].
+    node[2] := child.
+found_child:
+    Bushayei child.
+Kekrako
+
+Dradesde countLine(line, root, words, upper, lower) Kro
+    Atbekis length := Pluchutde(line).
+    Atbekis node := root.
+    Atbekis start := 1.
+    Ashes (Atbekis i := 1; i <= length + 1; i := i + 1) {
+        Atbekis letter := "".
+        Umkeim i > length, classified.
+        letter := normalizeLetter(line[i], upper, lower).
+classified:
+        Umkeim letter = "", end_word.
+        node := childFor(node, letter).
+        Sabatchi.
+end_word:
+        Umkeim start = i, next_word.
+        Umkeim node[1] != 0, increment_count.
+        node[5] := wordText(line, start, i - 1, upper, lower).
+        Tritriba(words, node).
+increment_count:
+        node[1] := node[1] + 1.
+        node := root.
+next_word:
+        start := i + 1.
+    }
+Kekrako
+
+Atbekis upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+Atbekis lower := "abcdefghijklmnopqrstuvwxyz".
+Atbekis root := [0, Kapluda, Kapluda, "", ""].
+Atbekis words := [].
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    countLine(line, root, words, upper, lower).
+    line := Ucheschu().
+}
+
+Atbekis distinct := Pluchutde(words).
+Ashes (Atbekis place := 1; (place <= 10) Yebu (place <= distinct); place := place + 1) {
+    Atbekis best := Kapluda.
+    Ashes (Atbekis i := 1; i <= distinct; i := i + 1) {
+        Atbekis entry := words[i].
+        Umkeim entry[1] = 0, next_entry.
+        Umkeim best = Kapluda, choose_entry.
+        Umkeim entry[1] > best[1], choose_entry.
+        Umkeim (entry[1] != best[1]) Shei (entry[5] >= best[5]), next_entry.
+choose_entry:
+        best := entry.
+next_entry:
+    }
+    Seimyu best[5] & " " & best[1].
+    best[1] := 0.
+}

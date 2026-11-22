@@ -1,0 +1,84 @@
+Yokyi lower_letter(c) {
+    Yopok (c >= "a") Okdro (c <= "z"), already_lower.
+    Yopok (c < "A") Dak (c > "Z"), separator.
+    Koke upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lower := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok upper[mid] >= c, move_hi.
+        lo := mid + 1.
+        Gosh.
+move_hi:
+        hi := mid.
+    Kobihek
+    Pohuwu lower[lo].
+already_lower:
+    Pohuwu c.
+separator:
+    Pohuwu Liliga.
+}
+
+Yokyi child(node, letter) {
+    Koke edges := node[1].
+    Gipolu i := 1 Wexdush Yik(edges) Gihe Hehokgi
+        Koke edge := edges[i].
+        Yopok edge[1] /= letter, next_edge.
+        Pohuwu edge[2].
+next_edge:
+    Kobihek
+    Koke fresh := [[], Liliga].
+    Oxba(edges, [letter, fresh]).
+    Pohuwu fresh.
+}
+
+Yokyi finish_word(node, word, entries) {
+    Yopok word == "", done.
+    Koke entry := node[2].
+    Yopok entry == Liliga, new_word.
+    entry[2] := entry[2] + 1.
+    Pohuwu.
+new_word:
+    entry := [word, 1].
+    node[2] := entry.
+    Oxba(entries, entry).
+done:
+}
+
+Koke root := [[], Liliga].
+Koke entries := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke word := "".
+    Koke node := root.
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke letter := lower_letter(line[i]).
+        Yopok letter == Liliga, separator.
+        node := child(node, letter).
+        word := word ++ letter.
+        Gosh.
+separator:
+        finish_word(node, word, entries).
+        node := root.
+        word := "".
+    Kobihek
+    finish_word(node, word, entries).
+    line := Pewexpo().
+Kobihek
+
+Gipolu printed := 1 Wexdush 10 Gihe Hehokgi
+    Koke best := ["", 0].
+    Gipolu i := 1 Wexdush Yik(entries) Gihe Hehokgi
+        Koke entry := entries[i].
+        Yopok entry[2] > best[2], take_entry.
+        Yopok (entry[2] /= best[2]) Dak (entry[1] >= best[1]), skip_entry.
+take_entry:
+        best := entry.
+skip_entry:
+    Kobihek
+    Yopok best[2] == 0, done.
+    Ebi best[1] ++ " " ++ best[2].
+    best[2] := 0.
+Kobihek
+done:

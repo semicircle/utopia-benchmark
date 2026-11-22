@@ -1,0 +1,141 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi is_letter(c) {
+    Koke upper := (c >= "A") Okdro (c <= "Z").
+    Koke lower := (c >= "a") Okdro (c <= "z").
+    Pohuwu upper Dak lower.
+}
+
+Yokyi lower_char(c) {
+    Yopok Gukdidok ((c >= "A") Okdro (c <= "Z")), keep.
+    Koke up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lo := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo_i := 1.
+    Koke hi_i := 26.
+    Puwadish lo_i <= hi_i Gihe Hehokgi
+        Koke mid := floor_div(lo_i + hi_i, 2).
+        Yopok c == up[mid], found.
+        Yopok c < up[mid], go_low.
+        lo_i := mid + 1.
+        Gosh.
+go_low:
+        hi_i := mid - 1.
+    Kobihek
+found:
+    Pohuwu lo[mid].
+keep:
+    Pohuwu c.
+}
+
+Yokyi add_words(line, words) {
+    Koke n := Yik(line).
+    Koke i := 1.
+    Koke tok := "".
+    Puwadish i <= n Gihe Hehokgi
+        Yopok Gukdidok is_letter(line[i]), skip_ch.
+        tok := "".
+        Puwadish (i <= n) Okdro is_letter(line[i]) Gihe Hehokgi
+            tok := tok ++ lower_char(line[i]).
+            i := i + 1.
+        Kobihek
+        Oxba(words, tok).
+        Gosh.
+skip_ch:
+        i := i + 1.
+    Kobihek
+}
+
+Yokyi merge(a, b) {
+    Koke res := [].
+    Koke i := 1.
+    Koke j := 1.
+    Koke na := Yik(a).
+    Koke nb := Yik(b).
+    Puwadish (i <= na) Dak (j <= nb) Gihe Hehokgi
+        Yopok i > na, take_b.
+        Yopok j > nb, take_a.
+        Yopok a[i] > b[j], take_b.
+take_a:
+        Oxba(res, a[i]).
+        i := i + 1.
+        Gosh.
+take_b:
+        Oxba(res, b[j]).
+        j := j + 1.
+    Kobihek
+    Pohuwu res.
+}
+
+Yokyi sort_range(xs, lo, hi) {
+    Yopok lo < hi, recurse.
+    Koke one := [].
+    Yopok lo > hi, none.
+    Oxba(one, xs[lo]).
+none:
+    Pohuwu one.
+recurse:
+    Koke mid := floor_div(lo + hi, 2).
+    Koke left := sort_range(xs, lo, mid).
+    Koke right := sort_range(xs, mid + 1, hi).
+    Pohuwu merge(left, right).
+}
+
+Yokyi sort_words(xs) {
+    Yopok Yik(xs) == 0, empty.
+    Pohuwu sort_range(xs, 1, Yik(xs)).
+empty:
+    Pohuwu [].
+}
+
+Koke words := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    add_words(line, words).
+    line := Pewexpo().
+Kobihek
+Yopok Yik(words) == 0, finish.
+Koke sorted := sort_words(words).
+Koke uniq := [].
+Koke counts := [].
+Koke i := 1.
+Koke nwords := Yik(sorted).
+Puwadish i <= nwords Gihe Hehokgi
+    Koke w := sorted[i].
+    Koke c := 1.
+    i := i + 1.
+    Puwadish (i <= nwords) Okdro (sorted[i] == w) Gihe Hehokgi
+        c := c + 1.
+        i := i + 1.
+    Kobihek
+    Oxba(uniq, w).
+    Oxba(counts, c).
+Kobihek
+Koke total := Yik(uniq).
+Koke used := [].
+Gipolu ui := 1 Wexdush total Gihe Hehokgi
+    Oxba(used, 0).
+Kobihek
+Koke limit := total.
+Yopok limit <= 10, lim_ok.
+limit := 10.
+lim_ok:
+Gipolu k := 1 Wexdush limit Gihe Hehokgi
+    Koke best := 0.
+    Gipolu j := 1 Wexdush total Gihe Hehokgi
+        Yopok used[j] == 1, skip_j.
+        Yopok best == 0, take_j.
+        Yopok counts[j] <= counts[best], skip_j.
+take_j:
+        best := j.
+skip_j:
+    Kobihek
+    used[best] := 1.
+    Ebi uniq[best] ++ " " ++ counts[best].
+Kobihek
+finish:

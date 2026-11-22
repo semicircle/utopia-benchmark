@@ -1,0 +1,26 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke first := "".
+    Koke second := "".
+    Koke past_space := Lesh.
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke ch := line[i].
+        Yopok ch == " ", separator.
+        Yopok past_space, second_digit.
+        first := first ++ ch.
+        Gosh.
+second_digit:
+        second := second ++ ch.
+        Gosh.
+separator:
+        past_space := Geklabik.
+    Kobihek
+    Koke a := Bupuxbo(first).
+    Koke b := Bupuxbo(second).
+    Koke q := a / b.
+    Yopok (a % b) == 0, print_result.
+    q := q - 1.
+print_result:
+    Ebi q ++ " " ++ (a - (b * q)).
+    line := Pewexpo().
+Kobihek

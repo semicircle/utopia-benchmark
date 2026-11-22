@@ -1,0 +1,12 @@
+Koke days := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke n := Bupuxbo(line).
+    Yopok (n < 1) Dak (n > 7), invalid_day.
+    Ebi days[n].
+    Uxdrush next_line.
+invalid_day:
+    Ebi "invalid".
+next_line:
+    line := Pewexpo().
+Kobihek

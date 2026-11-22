@@ -1,0 +1,12 @@
+Atbekis days := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Atbekis n := Yomheis(line).
+    Umkeim (n < 1) Shei (n > 7), invalid_day.
+    Seimyu days[n].
+    Yudrese read_next.
+invalid_day:
+    Seimyu "invalid".
+read_next:
+    line := Ucheschu().
+}

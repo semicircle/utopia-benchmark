@@ -1,0 +1,15 @@
+Atbekis even := 0.
+Atbekis odd := 0.
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Atbekis n := Yomheis(line).
+    Umkeim (n Ubok 2) != 0, count_odd.
+    even := even + 1.
+    Yudrese read_next.
+count_odd:
+    odd := odd + 1.
+read_next:
+    line := Ucheschu().
+}
+Seimyu "even " & even.
+Seimyu "odd " & odd.

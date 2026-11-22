@@ -1,0 +1,95 @@
+Yokyi lowerLetter(ch) {
+    Yopok (ch >= "a") Okdro (ch <= "z"), alreadyLower.
+    Yopok (ch < "A") Dak (ch > "Z"), separator.
+
+    Koke upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lower := "abcdefghijklmnopqrstuvwxyz".
+    Koke low := 1.
+    Koke high := 26.
+    Puwadish low <= high Gihe Hehokgi
+        Koke mid := (low + high) / 2.
+        Yopok ch == upper[mid], match.
+        Yopok ch < upper[mid], lowerHalf.
+        low := mid + 1.
+        Gosh.
+lowerHalf:
+        high := mid - 1.
+        Gosh.
+match:
+        Pohuwu lower[mid].
+    Kobihek
+separator:
+    Pohuwu "".
+alreadyLower:
+    Pohuwu ch.
+}
+
+// A node stores its letter, first child, next sibling, count and word.
+Yokyi childFor(node, letter) {
+    Koke child := node[2].
+    Puwadish child /= Liliga Gihe Hehokgi
+        Yopok child[1] == letter, found.
+        child := child[3].
+    Kobihek
+    child := [letter, Liliga, node[2], 0, ""].
+    node[2] := child.
+found:
+    Pohuwu child.
+}
+
+Yokyi countWords(line, root, words) {
+    Koke node := root.
+    Koke word := "".
+    line := line ++ " ".
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke letter := lowerLetter(line[i]).
+        Yopok letter == "", endWord.
+        node := childFor(node, letter).
+        word := word ++ letter.
+        Gosh.
+endWord:
+        Yopok word == "", skipSeparator.
+        Yopok node[4] /= 0, increment.
+        node[5] := word.
+        Oxba(words, node).
+increment:
+        node[4] := node[4] + 1.
+        node := root.
+        word := "".
+skipSeparator:
+    Kobihek
+}
+
+Yokyi printTopWords(words) {
+    Gipolu rank := 1 Wexdush 10 Gihe Hehokgi
+        Koke best := Liliga.
+        Koke bestCount := 0.
+        Koke bestWord := "".
+        Gipolu i := 1 Wexdush Yik(words) Gihe Hehokgi
+            Koke entry := words[i].
+            Koke count := entry[4].
+            Yopok count == 0, skipEntry.
+            Yopok count > bestCount, chooseEntry.
+            Yopok (count == bestCount) Okdro (entry[5] < bestWord), chooseEntry.
+            Uxdrush skipEntry.
+chooseEntry:
+            best := entry.
+            bestCount := count.
+            bestWord := entry[5].
+skipEntry:
+        Kobihek
+        Yopok bestCount == 0, done.
+        Ebi bestWord ++ " " ++ bestCount.
+        best[4] := 0.
+    Kobihek
+done:
+}
+
+Koke root := ["", Liliga, Liliga, 0, ""].
+Koke words := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    countWords(line, root, words).
+    line := Pewexpo().
+Kobihek
+printTopWords(words).

@@ -1,0 +1,229 @@
+Yokyi peek(parser) {
+    Koke pattern := parser[1].
+    Koke pos := parser[2].
+    Yopok pos > Yik(pattern), end_pattern.
+    Pohuwu pattern[pos].
+end_pattern:
+    Pohuwu "".
+}
+
+Yokyi alnum(c) {
+    Pohuwu ((c >= "a") Okdro (c <= "z")) Dak ((c >= "A") Okdro (c <= "Z")) Dak ((c >= "0") Okdro (c <= "9")).
+}
+
+Yokyi new_state(machine, kind, data, first, second) {
+    Oxba(machine, [kind, data, first, second]).
+    Pohuwu Yik(machine).
+}
+
+Yokyi link(machine, from, first, second) {
+    Koke node := machine[from].
+    node[3] := first.
+    node[4] := second.
+}
+
+Yokyi parse_class(parser) {
+    Koke negated := Lesh.
+    Yopok peek(parser) /= "^", read_items.
+    negated := Geklabik.
+    parser[2] := parser[2] + 1.
+read_items:
+    Koke items := [].
+    Puwadish peek(parser) /= "]" Gihe Hehokgi
+        Koke lo := peek(parser).
+        Yopok Gukdidok alnum(lo), invalid.
+        parser[2] := parser[2] + 1.
+        Koke hi := lo.
+        Yopok peek(parser) /= "-", save_item.
+        parser[2] := parser[2] + 1.
+        hi := peek(parser).
+        Yopok (Gukdidok alnum(hi)) Dak (lo > hi), invalid.
+        parser[2] := parser[2] + 1.
+save_item:
+        Oxba(items, [lo, hi]).
+    Kobihek
+    Yopok Yik(items) == 0, invalid.
+    parser[2] := parser[2] + 1.
+    Pohuwu [negated, items].
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi parse_atom(parser, machine) {
+    Koke c := peek(parser).
+    Koke kind := "literal".
+    Koke data := c.
+    Yopok alnum(c), consume_single.
+    Yopok c == ".", wildcard.
+    Yopok c == "[", character_class.
+    Yopok c == "(", group.
+    Pohuwu Liliga.
+wildcard:
+    kind := "wildcard".
+consume_single:
+    parser[2] := parser[2] + 1.
+    Uxdrush make_atom.
+character_class:
+    parser[2] := parser[2] + 1.
+    kind := "class".
+    data := parse_class(parser).
+    Yopok data == Liliga, invalid.
+make_atom:
+    Koke finish := new_state(machine, "epsilon", Liliga, 0, 0).
+    Koke start := new_state(machine, kind, data, finish, 0).
+    Pohuwu [start, finish].
+group:
+    parser[2] := parser[2] + 1.
+    Koke fragment := parse_pattern(parser, machine).
+    Yopok fragment == Liliga, invalid.
+    Yopok peek(parser) /= ")", invalid.
+    parser[2] := parser[2] + 1.
+    Pohuwu fragment.
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi parse_piece(parser, machine) {
+    Koke atom := parse_atom(parser, machine).
+    Yopok atom == Liliga, done.
+    Koke q := peek(parser).
+    Yopok (q /= "*") Okdro (q /= "+") Okdro (q /= "?"), done.
+    parser[2] := parser[2] + 1.
+    Koke start := atom[1].
+    Koke finish := new_state(machine, "epsilon", Liliga, 0, 0).
+    Yopok q == "?", optional.
+    link(machine, atom[2], start, finish).
+    Yopok q == "+", quantified.
+    Uxdrush add_entry.
+optional:
+    link(machine, atom[2], finish, 0).
+add_entry:
+    start := new_state(machine, "epsilon", Liliga, atom[1], finish).
+quantified:
+    Pohuwu [start, finish].
+done:
+    Pohuwu atom.
+}
+
+Yokyi parse_sequence(parser, machine) {
+    Koke start := new_state(machine, "epsilon", Liliga, 0, 0).
+    Koke finish := start.
+    Puwadish Geklabik Gihe Hehokgi
+        Koke c := peek(parser).
+        Yopok (c == "") Dak (c == "|") Dak (c == ")"), done.
+        Koke piece := parse_piece(parser, machine).
+        Yopok piece == Liliga, invalid.
+        link(machine, finish, piece[1], 0).
+        finish := piece[2].
+    Kobihek
+done:
+    Pohuwu [start, finish].
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi parse_pattern(parser, machine) {
+    Koke left := parse_sequence(parser, machine).
+    Yopok left == Liliga, invalid.
+    Puwadish peek(parser) == "|" Gihe Hehokgi
+        parser[2] := parser[2] + 1.
+        Koke right := parse_sequence(parser, machine).
+        Yopok right == Liliga, invalid.
+        Koke start := new_state(machine, "epsilon", Liliga, left[1], right[1]).
+        Koke finish := new_state(machine, "epsilon", Liliga, 0, 0).
+        link(machine, left[2], finish, 0).
+        link(machine, right[2], finish, 0).
+        left := [start, finish].
+    Kobihek
+    Pohuwu left.
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi accepts_character(node, c) {
+    Dru node[1] Ihedrux
+    "wildcard": Hehokgi
+        Pohuwu Geklabik.
+    Kobihek
+    "literal": Hehokgi
+        Pohuwu node[2] == c.
+    Kobihek
+    "class": Hehokgi
+        Koke data := node[2].
+        Koke items := data[2].
+        Gipolu i := 1 Wexdush Yik(items) Gihe Hehokgi
+            Koke item := items[i].
+            Yopok (c < item[1]) Dak (c > item[2]), next_item.
+            Pohuwu Gukdidok data[1].
+next_item:
+        Kobihek
+        Pohuwu data[1].
+    Kobihek Kobihek
+    Pohuwu Lesh.
+}
+
+Yokyi reach(queue, marks, stamp, state) {
+    Yopok state == 0, done.
+    Yopok marks[state] == stamp, done.
+    marks[state] := stamp.
+    Oxba(queue, state).
+done:
+}
+
+Yokyi close_epsilon(machine, queue, marks, stamp) {
+    Koke i := 1.
+    Puwadish i <= Yik(queue) Gihe Hehokgi
+        Koke node := machine[queue[i]].
+        Yopok node[1] /= "epsilon", advance.
+        reach(queue, marks, stamp, node[3]).
+        reach(queue, marks, stamp, node[4]).
+advance:
+        i := i + 1.
+    Kobihek
+}
+
+Yokyi match_line(line) {
+    Koke pattern := "".
+    Koke i := 1.
+    Puwadish line[i] /= " " Gihe Hehokgi
+        pattern := pattern ++ line[i].
+        i := i + 1.
+    Kobihek
+    Koke parser := [pattern, 1].
+    Koke machine := [].
+    Koke fragment := parse_pattern(parser, machine).
+    Yopok (fragment == Liliga) Dak (peek(parser) /= ""), invalid.
+    Koke marks := [].
+    Gipolu j := 1 Wexdush Yik(machine) Gihe Hehokgi
+        Oxba(marks, 0).
+    Kobihek
+    Koke queue := [].
+    Koke stamp := 1.
+    reach(queue, marks, stamp, fragment[1]).
+    close_epsilon(machine, queue, marks, stamp).
+    Gipolu pos := i + 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke next := [].
+        stamp := stamp + 1.
+        Gipolu j := 1 Wexdush Yik(queue) Gihe Hehokgi
+            Koke node := machine[queue[j]].
+            Yopok Gukdidok accepts_character(node, line[pos]), skip_state.
+            reach(next, marks, stamp, node[3]).
+skip_state:
+        Kobihek
+        Yopok Yik(next) == 0, no_match.
+        close_epsilon(machine, next, marks, stamp).
+        queue := next.
+    Kobihek
+    Yopok marks[fragment[2]] /= stamp, no_match.
+    Pohuwu "yes".
+no_match:
+    Pohuwu "no".
+invalid:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi match_line(line).
+    line := Pewexpo().
+Kobihek

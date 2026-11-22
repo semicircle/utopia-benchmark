@@ -1,0 +1,58 @@
+Yokyi decimal(coefficients) {
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush Yik(coefficients) Gihe Hehokgi
+        Koke value := coefficients[i] + carry.
+        carry := -((-value) / 10).
+        coefficients[i] := value - (10 * carry).
+    Kobihek
+
+    Koke last := Yik(coefficients).
+    Puwadish (last > 1) Okdro (coefficients[last] == 0) Gihe Hehokgi
+        last := last - 1.
+    Kobihek
+    Koke text := "".
+    Gipolu i := last Wexdush 1 Drix -1 Gihe Hehokgi
+        text := text ++ coefficients[i].
+    Kobihek
+    Pohuwu text.
+}
+
+Yokyi printResults(line) {
+    Koke a := [].
+    Koke b := [].
+    Koke digits := b.
+    Gipolu i := Yik(line) Wexdush 1 Drix -1 Gihe Hehokgi
+        Koke ch := line[i].
+        Yopok ch == " ", startFirstNumber.
+        Oxba(digits, Bupuxbo(ch)).
+        Gosh.
+startFirstNumber:
+        digits := a.
+    Kobihek
+
+    Koke sum := [].
+    Koke product := [].
+    Koke size := Yik(a) + Yik(b).
+    Gipolu i := 1 Wexdush size Gihe Hehokgi
+        Oxba(sum, 0).
+        Oxba(product, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        Koke digit := a[i].
+        sum[i] := digit.
+        Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+            Koke place := i + j - 1.
+            product[place] := product[place] + (digit * b[j]).
+        Kobihek
+    Kobihek
+    Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+        sum[j] := sum[j] + b[j].
+    Kobihek
+    Ebi decimal(sum) ++ " " ++ decimal(product).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    printResults(line).
+    line := Pewexpo().
+Kobihek

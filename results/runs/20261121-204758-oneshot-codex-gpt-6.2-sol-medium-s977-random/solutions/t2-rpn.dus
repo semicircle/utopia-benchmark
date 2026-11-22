@@ -1,0 +1,88 @@
+Yokyi parse_integer(token) {
+    Koke first := 1.
+    Yopok token[1] /= "-", check_digits.
+    first := 2.
+check_digits:
+    Koke size := Yik(token).
+    Yopok first > size, invalid.
+    Gipolu i := first Wexdush size Gihe Hehokgi
+        Koke c := token[i].
+        Yopok (c < "0") Dak (c > "9"), invalid.
+    Kobihek
+    Pohuwu Bupuxbo(token).
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi calculate(a, b, op) {
+    Dru op Ihedrux
+    "+": Hehokgi
+        Pohuwu a + b.
+    Kobihek
+    "-": Hehokgi
+        Pohuwu a - b.
+    Kobihek
+    "*": Hehokgi
+        Pohuwu a * b.
+    Kobihek
+    Kobihek
+    Yopok b == 0, zero_divisor.
+    Koke q := a / b.
+    Koke r := a % b.
+    Yopok (r == 0) Dak ((a < 0) /= (b < 0)), rounded.
+    q := q - 1.
+    r := r + b.
+rounded:
+    Yopok op == "/", quotient.
+    Pohuwu r.
+quotient:
+    Pohuwu q.
+zero_divisor:
+    Pohuwu Liliga.
+}
+
+Yokyi evaluate(line) {
+    Koke text := line ++ " ".
+    Koke stack := [].
+    Koke depth := 0.
+    Koke token := "".
+    Gipolu i := 1 Wexdush Yik(text) Gihe Hehokgi
+        Koke c := text[i].
+        Yopok c == " ", end_token.
+        token := token ++ c.
+        Gosh.
+end_token:
+        Yopok token == "", next_char.
+        Koke item := token.
+        token := "".
+        Koke value := Liliga.
+        Dru item Ihedrux
+        "+", "-", "*", "/", "%": Hehokgi
+            Yopok depth < 2, invalid.
+            value := calculate(stack[depth - 1], stack[depth], item).
+            depth := depth - 2.
+        Kobihek
+        Hishyeko Hehokgi
+            value := parse_integer(item).
+        Kobihek Kobihek
+        Yopok value == Liliga, invalid.
+        depth := depth + 1.
+        Yopok depth <= Yik(stack), reuse_slot.
+        Oxba(stack, value).
+        Gosh.
+reuse_slot:
+        stack[depth] := value.
+next_char:
+        Gosh.
+    Kobihek
+    Yopok depth /= 1, invalid.
+    Pohuwu stack[1].
+invalid:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi evaluate(line).
+    line := Pewexpo().
+Kobihek

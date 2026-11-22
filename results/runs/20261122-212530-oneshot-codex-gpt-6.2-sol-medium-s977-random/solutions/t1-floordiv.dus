@@ -1,0 +1,25 @@
+Yokyi divide_line(line) {
+    Koke first := "".
+    Koke second := "".
+    Koke i := 1.
+    Puwadish line[i] /= " " Gihe Hehokgi
+        first := first ++ line[i].
+        i := i + 1.
+    Kobihek
+    Gipolu j := i + 1 Wexdush Yik(line) Gihe Hehokgi
+        second := second ++ line[j].
+    Kobihek
+    Koke a := Bupuxbo(first).
+    Koke b := Bupuxbo(second).
+    Koke q := a / b.
+    Yopok a % b == 0, print_result.
+    q := q - 1.
+print_result:
+    Ebi q ++ " " ++ (a - (b * q)).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    divide_line(line).
+    line := Pewexpo().
+Kobihek

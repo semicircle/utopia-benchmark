@@ -1,0 +1,81 @@
+Yokyi at_least(a, b) {
+    Yopok Yik(a) == Yik(b), same_length.
+    Pohuwu Yik(a) > Yik(b).
+same_length:
+    Pohuwu a >= b.
+}
+
+Yokyi subtract(a, b) {
+    Koke borrow := 0.
+    Koke j := Yik(b).
+    Koke digits := [].
+    Koke last_nonzero := 0.
+    Gipolu i := Yik(a) Wexdush 1 Drix -1 Gihe Hehokgi
+        Koke digit := Bupuxbo(a[i]) - borrow.
+        Yopok j < 1, set_borrow.
+        digit := digit - Bupuxbo(b[j]).
+        j := j - 1.
+set_borrow:
+        borrow := 0.
+        Yopok digit >= 0, save_digit.
+        digit := digit + 10.
+        borrow := 1.
+save_digit:
+        Oxba(digits, digit).
+        Yopok digit == 0, next_digit.
+        last_nonzero := Yik(digits).
+next_digit:
+        Gosh.
+    Kobihek
+    Yopok last_nonzero == 0, zero.
+    Koke result := "".
+    Gipolu i := last_nonzero Wexdush 1 Drix -1 Gihe Hehokgi
+        result := result ++ digits[i].
+    Kobihek
+    Pohuwu result.
+zero:
+    Pohuwu "0".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke a := "".
+    Koke b := "".
+    Koke past_space := Lesh.
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke ch := line[i].
+        Yopok ch == " ", separator.
+        Yopok past_space, divisor_digit.
+        a := a ++ ch.
+        Gosh.
+divisor_digit:
+        b := b ++ ch.
+        Gosh.
+separator:
+        past_space := Geklabik.
+    Kobihek
+    Koke remainder := "0".
+    Koke quotient := "".
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        Yopok remainder /= "0", append_digit.
+        remainder := a[i].
+        Uxdrush count_digit.
+append_digit:
+        remainder := remainder ++ a[i].
+count_digit:
+        Koke digit := 0.
+        Puwadish at_least(remainder, b) Gihe Hehokgi
+            remainder := subtract(remainder, b).
+            digit := digit + 1.
+        Kobihek
+        Yopok (quotient == "") Okdro (digit == 0), skip_digit.
+        quotient := quotient ++ digit.
+skip_digit:
+        Gosh.
+    Kobihek
+    Yopok quotient /= "", print_result.
+    quotient := "0".
+print_result:
+    Ebi quotient ++ " " ++ remainder.
+    line := Pewexpo().
+Kobihek

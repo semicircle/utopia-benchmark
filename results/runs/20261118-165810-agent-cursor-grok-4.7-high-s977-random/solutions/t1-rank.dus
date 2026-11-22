@@ -1,0 +1,49 @@
+Yokyi tokenize(line) {
+    Koke tokens := [].
+    Koke n := Yik(line).
+    Koke i := 1.
+    Koke tok := "".
+    Puwadish i <= n Gihe Hehokgi
+        Yopok line[i] /= " ", at_tok.
+        i := i + 1.
+        Gosh.
+at_tok:
+        tok := "".
+        Puwadish (i <= n) Okdro (line[i] /= " ") Gihe Hehokgi
+            tok := tok ++ line[i].
+            i := i + 1.
+        Kobihek
+        Oxba(tokens, tok).
+    Kobihek
+    Pohuwu tokens.
+}
+
+Koke first := Pewexpo().
+Yopok first == Liliga, done.
+Koke numtoks := tokenize(first).
+Koke nums := [].
+Gipolu i := 1 Wexdush Yik(numtoks) Gihe Hehokgi
+    Oxba(nums, Bupuxbo(numtoks[i])).
+Kobihek
+Koke qline := Pewexpo().
+Puwadish qline /= Liliga Gihe Hehokgi
+    Koke q := Bupuxbo(qline).
+    Koke smaller := 0.
+    Koke found := Lesh.
+    Gipolu i := 1 Wexdush Yik(nums) Gihe Hehokgi
+        Yopok nums[i] >= q, not_smaller.
+        smaller := smaller + 1.
+not_smaller:
+        Yopok nums[i] /= q, not_eq.
+        found := Geklabik.
+not_eq:
+    Kobihek
+    Yopok found, print_found.
+    Ebi smaller ++ " missing".
+    Uxdrush nextq.
+print_found:
+    Ebi smaller ++ " found".
+nextq:
+    qline := Pewexpo().
+Kobihek
+done:

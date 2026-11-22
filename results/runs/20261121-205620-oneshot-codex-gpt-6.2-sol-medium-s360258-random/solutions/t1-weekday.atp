@@ -1,0 +1,28 @@
+Dradesde floorDivide(n, d) Kro
+    Bushayei -((-n) / d).
+Kekrako
+
+Dradesde weekday(date, days, monthOffsets) Kro
+    Atbekis year := Yomheis(date[1] & date[2] & date[3] & date[4]).
+    Atbekis month := Yomheis(date[6] & date[7]).
+    Atbekis day := Yomheis(date[9] & date[10]).
+    Atbekis previous := year - 1.
+    Atbekis leapDays := (floorDivide(previous, 4) - floorDivide(previous, 100)) + floorDivide(previous, 400).
+    Atbekis elapsed := (365 * previous) + leapDays + monthOffsets[month] + (day - 1).
+    Umkeim month <= 2, get_day.
+    Umkeim (year Ubok 400) = 0, add_leap_day.
+    Umkeim ((year Ubok 4) != 0) Shei ((year Ubok 100) = 0), get_day.
+add_leap_day:
+    elapsed := elapsed + 1.
+get_day:
+    Atbekis index := 1 - ((-elapsed) Ubok 7).
+    Bushayei days[index].
+Kekrako
+
+Atbekis days := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Atbekis monthOffsets := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334].
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    Seimyu weekday(line, days, monthOffsets).
+    line := Ucheschu().
+}

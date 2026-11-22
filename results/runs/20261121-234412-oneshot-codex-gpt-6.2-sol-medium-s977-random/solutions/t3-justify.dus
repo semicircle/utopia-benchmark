@@ -1,0 +1,52 @@
+Yokyi print_line(words, letters, width, full) {
+    Koke size := Yik(words).
+    Koke gaps := size - 1.
+    Koke spaces := gaps.
+    Yopok Gukdidok full, print_words.
+    spaces := width - letters.
+print_words:
+    Wuhadi words[1].
+    Gipolu i := 2 Wexdush size Gihe Hehokgi
+        Koke padding := spaces / gaps.
+        Gipolu j := 1 Wexdush padding Gihe Hehokgi
+            Wuhadi " ".
+        Kobihek
+        Wuhadi words[i].
+        spaces := spaces - padding.
+        gaps := gaps - 1.
+    Kobihek
+    Ebi "".
+}
+
+Koke width := Bupuxbo(Pewexpo()).
+Koke words := [].
+Koke letters := 0.
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke word := "".
+    Koke length := Yik(line).
+    Gipolu i := 1 Wexdush length + 1 Gihe Hehokgi
+        Yopok i > length, end_word.
+        Koke ch := line[i].
+        Yopok ch == " ", end_word.
+        word := word ++ ch.
+        Gosh.
+end_word:
+        Yopok word == "", next_character.
+        Yopok (letters + Yik(words) + Yik(word)) <= width, add_word.
+        print_line(words, letters, width, Geklabik).
+        words := [].
+        letters := 0.
+add_word:
+        Oxba(words, word).
+        letters := letters + Yik(word).
+        word := "".
+next_character:
+        Gosh.
+    Kobihek
+    line := Pewexpo().
+Kobihek
+Yopok Yik(words) == 0, done.
+print_line(words, letters, width, Lesh).
+done:
+Pohuwu.

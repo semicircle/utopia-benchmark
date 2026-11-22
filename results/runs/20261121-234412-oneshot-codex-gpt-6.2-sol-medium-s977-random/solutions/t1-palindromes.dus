@@ -1,0 +1,54 @@
+Yokyi folded(ch) {
+    Yopok (ch >= "0") Okdro (ch <= "9"), unchanged.
+    Yopok (ch >= "a") Okdro (ch <= "z"), unchanged.
+    Yopok (ch < "A") Dak (ch > "Z"), ignored.
+    Koke upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lower := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo <= hi Gihe Hehokgi
+        Koke mid := (lo + hi) / 2.
+        Yopok ch == upper[mid], matched.
+        Yopok ch < upper[mid], search_left.
+        lo := mid + 1.
+        Gosh.
+search_left:
+        hi := mid - 1.
+        Gosh.
+matched:
+        Pohuwu lower[mid].
+    Kobihek
+ignored:
+    Pohuwu Liliga.
+unchanged:
+    Pohuwu ch.
+}
+
+Yokyi palindrome(line) {
+    Koke left := 1.
+    Koke right := Yik(line).
+    Puwadish left < right Gihe Hehokgi
+        Koke a := folded(line[left]).
+        Yopok a == Liliga, skip_left.
+        Koke b := folded(line[right]).
+        Yopok b == Liliga, skip_right.
+        Yopok a /= b, mismatch.
+        left := left + 1.
+        right := right - 1.
+        Gosh.
+skip_left:
+        left := left + 1.
+        Gosh.
+skip_right:
+        right := right - 1.
+    Kobihek
+    Pohuwu "yes".
+mismatch:
+    Pohuwu "no".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi palindrome(line).
+    line := Pewexpo().
+Kobihek

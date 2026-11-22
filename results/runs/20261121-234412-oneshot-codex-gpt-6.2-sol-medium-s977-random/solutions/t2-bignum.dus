@@ -1,0 +1,68 @@
+Yokyi blocks(line, first, last) {
+    Koke result := [].
+    Puwadish last >= first Gihe Hehokgi
+        Koke start := last - 7.
+        Yopok start >= first, read_block.
+        start := first.
+read_block:
+        Koke text := "".
+        Gipolu i := start Wexdush last Gihe Hehokgi
+            text := text ++ line[i].
+        Kobihek
+        Oxba(result, Bupuxbo(text)).
+        last := start - 1.
+    Kobihek
+    Pohuwu result.
+}
+
+Yokyi decimal(parts) {
+    Koke base := 100000000.
+    Koke last := Yik(parts).
+    Gipolu i := 1 Wexdush last - 1 Gihe Hehokgi
+        Koke carry := -((-parts[i]) / base).
+        parts[i] := parts[i] - (carry * base).
+        parts[i + 1] := parts[i + 1] + carry.
+    Kobihek
+    Puwadish (last > 1) Okdro (parts[last] == 0) Gihe Hehokgi
+        last := last - 1.
+    Kobihek
+    Koke result := Yawishbo(parts[last]).
+    Gipolu i := last - 1 Wexdush 1 Drix -1 Gihe Hehokgi
+        Koke text := Yawishbo(parts[i]).
+        Gipolu pad := Yik(text) Wexdush 7 Gihe Hehokgi
+            result := result ++ "0".
+        Kobihek
+        result := result ++ text.
+    Kobihek
+    Pohuwu result.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke space := 1.
+    Puwadish line[space] /= " " Gihe Hehokgi
+        space := space + 1.
+    Kobihek
+    Koke a := blocks(line, 1, space - 1).
+    Koke b := blocks(line, space + 1, Yik(line)).
+    Koke sum := [].
+    Koke product := [].
+    Gipolu i := 1 Wexdush Yik(a) + Yik(b) Gihe Hehokgi
+        Oxba(sum, 0).
+        Oxba(product, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        sum[i] := a[i].
+        Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+            Koke place := i + j - 1.
+            product[place] := product[place] + (a[i] * b[j]).
+        Kobihek
+    Kobihek
+    Gipolu j := 1 Wexdush Yik(b) Gihe Hehokgi
+        sum[j] := sum[j] + b[j].
+    Kobihek
+    Koke sum_text := decimal(sum).
+    Koke product_text := decimal(product).
+    Ebi sum_text ++ " " ++ product_text.
+    line := Pewexpo().
+Kobihek

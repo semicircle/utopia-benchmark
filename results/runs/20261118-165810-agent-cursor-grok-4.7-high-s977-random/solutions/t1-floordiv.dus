@@ -1,0 +1,38 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi tokenize(line) {
+    Koke tokens := [].
+    Koke n := Yik(line).
+    Koke i := 1.
+    Koke tok := "".
+    Puwadish i <= n Gihe Hehokgi
+        Yopok line[i] /= " ", at_tok.
+        i := i + 1.
+        Gosh.
+at_tok:
+        tok := "".
+        Puwadish (i <= n) Okdro (line[i] /= " ") Gihe Hehokgi
+            tok := tok ++ line[i].
+            i := i + 1.
+        Kobihek
+        Oxba(tokens, tok).
+    Kobihek
+    Pohuwu tokens.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke parts := tokenize(line).
+    Koke a := Bupuxbo(parts[1]).
+    Koke b := Bupuxbo(parts[2]).
+    Koke q := floor_div(a, b).
+    Koke r := a - (b * q).
+    Ebi q ++ " " ++ r.
+    line := Pewexpo().
+Kobihek

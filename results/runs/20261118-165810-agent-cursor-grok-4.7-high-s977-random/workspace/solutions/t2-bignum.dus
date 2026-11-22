@@ -1,0 +1,117 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi floor_mod(a, b) {
+    Pohuwu a - (b * floor_div(a, b)).
+}
+
+Yokyi tokenize(line) {
+    Koke tokens := [].
+    Koke n := Yik(line).
+    Koke i := 1.
+    Koke tok := "".
+    Puwadish i <= n Gihe Hehokgi
+        Yopok line[i] /= " ", at_tok.
+        i := i + 1.
+        Gosh.
+at_tok:
+        tok := "".
+        Puwadish (i <= n) Okdro (line[i] /= " ") Gihe Hehokgi
+            tok := tok ++ line[i].
+            i := i + 1.
+        Kobihek
+        Oxba(tokens, tok).
+    Kobihek
+    Pohuwu tokens.
+}
+
+// Digits are stored least-significant first.
+Yokyi to_digits(s) {
+    Koke ds := [].
+    Gipolu i := Yik(s) Wexdush 1 Drix -1 Gihe Hehokgi
+        Oxba(ds, Bupuxbo(s[i])).
+    Kobihek
+    Pohuwu ds.
+}
+
+Yokyi from_digits(ds) {
+    Koke i := Yik(ds).
+    Puwadish (i > 1) Okdro (ds[i] == 0) Gihe Hehokgi
+        i := i - 1.
+    Kobihek
+    Koke s := "".
+    Puwadish i >= 1 Gihe Hehokgi
+        s := s ++ ds[i].
+        i := i - 1.
+    Kobihek
+    Pohuwu s.
+}
+
+Yokyi add_digits(a, b) {
+    Koke n := Yik(a).
+    Yopok Yik(b) <= n, have.
+    n := Yik(b).
+have:
+    Koke res := [].
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush n Gihe Hehokgi
+        Koke da := 0.
+        Yopok i > Yik(a), no_a.
+        da := a[i].
+no_a:
+        Koke db := 0.
+        Yopok i > Yik(b), no_b.
+        db := b[i].
+no_b:
+        Koke s := (da + db) + carry.
+        Oxba(res, floor_mod(s, 10)).
+        carry := floor_div(s, 10).
+    Kobihek
+    Yopok carry == 0, no_c.
+    Oxba(res, carry).
+no_c:
+    Pohuwu res.
+}
+
+Yokyi mul_digits(a, b) {
+    Koke al := Yik(a).
+    Koke bl := Yik(b).
+    Koke rl := al + bl.
+    Koke res := [].
+    Gipolu i := 1 Wexdush rl Gihe Hehokgi
+        Oxba(res, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush al Gihe Hehokgi
+        Gipolu j := 1 Wexdush bl Gihe Hehokgi
+            Koke pos := (i + j) - 1.
+            res[pos] := res[pos] + (a[i] * b[j]).
+        Kobihek
+    Kobihek
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush Yik(res) Gihe Hehokgi
+        Koke s := res[i] + carry.
+        res[i] := floor_mod(s, 10).
+        carry := floor_div(s, 10).
+    Kobihek
+    Puwadish carry > 0 Gihe Hehokgi
+        Oxba(res, floor_mod(carry, 10)).
+        carry := floor_div(carry, 10).
+    Kobihek
+    Pohuwu res.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke parts := tokenize(line).
+    Koke a := to_digits(parts[1]).
+    Koke b := to_digits(parts[2]).
+    Koke sum := from_digits(add_digits(a, b)).
+    Koke prod := from_digits(mul_digits(a, b)).
+    Ebi sum ++ " " ++ prod.
+    line := Pewexpo().
+Kobihek

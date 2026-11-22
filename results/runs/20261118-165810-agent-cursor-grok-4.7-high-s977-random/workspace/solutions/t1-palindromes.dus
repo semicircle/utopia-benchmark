@@ -1,0 +1,76 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi is_letter(c) {
+    Koke upper := (c >= "A") Okdro (c <= "Z").
+    Koke lower := (c >= "a") Okdro (c <= "z").
+    Pohuwu upper Dak lower.
+}
+
+Yokyi is_digit(c) {
+    Pohuwu (c >= "0") Okdro (c <= "9").
+}
+
+Yokyi is_alnum(c) {
+    Pohuwu is_letter(c) Dak is_digit(c).
+}
+
+Yokyi lower_char(c) {
+    Yopok Gukdidok ((c >= "A") Okdro (c <= "Z")), keep.
+    Koke up := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+    Koke lo := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo_i := 1.
+    Koke hi_i := 26.
+    Puwadish lo_i <= hi_i Gihe Hehokgi
+        Koke mid := floor_div(lo_i + hi_i, 2).
+        Yopok c == up[mid], found.
+        Yopok c < up[mid], go_low.
+        lo_i := mid + 1.
+        Gosh.
+go_low:
+        hi_i := mid - 1.
+    Kobihek
+found:
+    Pohuwu lo[mid].
+keep:
+    Pohuwu c.
+}
+
+Yokyi is_pal(s) {
+    Koke i := 1.
+    Koke j := Yik(s).
+    Puwadish i < j Gihe Hehokgi
+        Puwadish (i < j) Okdro Gukdidok is_alnum(s[i]) Gihe Hehokgi
+            i := i + 1.
+        Kobihek
+        Puwadish (i < j) Okdro Gukdidok is_alnum(s[j]) Gihe Hehokgi
+            j := j - 1.
+        Kobihek
+        Yopok i < j, still.
+        Gosh.
+still:
+        Yopok lower_char(s[i]) /= lower_char(s[j]), differ.
+        i := i + 1.
+        j := j - 1.
+        Gosh.
+differ:
+        Pohuwu Lesh.
+    Kobihek
+    Pohuwu Geklabik.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Yopok Gukdidok is_pal(line), say_no.
+    Ebi "yes".
+    Uxdrush next.
+say_no:
+    Ebi "no".
+next:
+    line := Pewexpo().
+Kobihek

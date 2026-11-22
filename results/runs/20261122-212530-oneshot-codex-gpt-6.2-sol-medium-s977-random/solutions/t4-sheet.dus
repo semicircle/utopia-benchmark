@@ -1,0 +1,351 @@
+Yokyi digit(c) {
+    Pohuwu (c >= "0") Okdro (c <= "9").
+}
+
+Yokyi letter(c) {
+    Pohuwu ((c >= "A") Okdro (c <= "Z")) Dak ((c >= "a") Okdro (c <= "z")).
+}
+
+Yokyi cell_id(name, columns) {
+    Koke size := Yik(name).
+    Yopok (size < 2) Dak (size > 3), invalid.
+    Koke col := name[1].
+    Yopok (col < "A") Dak (col > "Z"), invalid.
+    Yopok (name[2] < "1") Dak (name[2] > "9"), invalid.
+    Koke row := Bupuxbo(name[2]).
+    Yopok size == 2, find_column.
+    Yopok Gukdidok digit(name[3]), invalid.
+    row := row * 10 + Bupuxbo(name[3]).
+find_column:
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok columns[mid] >= col, move_hi.
+        lo := mid + 1.
+        Gosh.
+move_hi:
+        hi := mid.
+    Kobihek
+    Pohuwu ((row - 1) * 26) + lo.
+invalid:
+    Pohuwu 0.
+}
+
+Yokyi tokenize(text, columns) {
+    Koke tokens := [].
+    Koke i := 1.
+    Koke length := Yik(text).
+    Puwadish i <= length Gihe Hehokgi
+        Koke c := text[i].
+        i := i + 1.
+        Yopok c == " ", next_token.
+        Yopok digit(c), number.
+        Yopok letter(c), word.
+        Oxba(tokens, [c, 0, Liliga]).
+        Gosh.
+number:
+        Koke value := Bupuxbo(c).
+        Puwadish (i <= length) Okdro digit(text[i]) Gihe Hehokgi
+            value := value * 10 + Bupuxbo(text[i]).
+            i := i + 1.
+        Kobihek
+        Oxba(tokens, ["number", 0, value]).
+        Gosh.
+word:
+        Koke name := c.
+        Puwadish (i <= length) Okdro (letter(text[i]) Dak digit(text[i])) Gihe Hehokgi
+            name := name ++ text[i].
+            i := i + 1.
+        Kobihek
+        Oxba(tokens, [name, cell_id(name, columns), Liliga]).
+next_token:
+    Kobihek
+    Oxba(tokens, ["", 0, Liliga]).
+    Oxba(tokens, ["", 0, Liliga]).
+    Pohuwu tokens.
+}
+
+Yokyi smaller(a, b) {
+    Yopok a < b, first.
+    Pohuwu b.
+first:
+    Pohuwu a.
+}
+
+Yokyi larger(a, b) {
+    Yopok a > b, first.
+    Pohuwu b.
+first:
+    Pohuwu a.
+}
+
+Yokyi rectangle(a, b) {
+    Koke row_a := a / 26.
+    Koke row_b := b / 26.
+    Koke col_a := a - ((row_a - 1) * 26).
+    Koke col_b := b - ((row_b - 1) * 26).
+    Pohuwu [smaller(row_a, row_b), larger(row_a, row_b), smaller(col_a, col_b), larger(col_a, col_b)].
+}
+
+Yokyi peek(parser, offset) {
+    Koke tokens := parser[1].
+    Pohuwu tokens[parser[2] + offset].
+}
+
+Yokyi take(parser, expected) {
+    Koke token := peek(parser, 0).
+    Yopok token[1] /= expected, absent.
+    parser[2] := parser[2] + 1.
+    Pohuwu Geklabik.
+absent:
+    Pohuwu Lesh.
+}
+
+Yokyi precedence(op) {
+    Dru op Ihedrux
+    "+", "-": Hehokgi
+        Pohuwu 1.
+    Kobihek
+    "*", "/", "%": Hehokgi
+        Pohuwu 2.
+    Kobihek Kobihek
+    Pohuwu 0.
+}
+
+Yokyi arithmetic(parser, op, a, b) {
+    Dru op Ihedrux
+    "+": Hehokgi
+        Pohuwu a + b.
+    Kobihek
+    "-": Hehokgi
+        Pohuwu a - b.
+    Kobihek
+    "*": Hehokgi
+        Pohuwu a * b.
+    Kobihek Kobihek
+    Yopok b == 0, divide_by_zero.
+    Koke q := a / b.
+    Yopok (a < 0) /= (b < 0), quotient_ready.
+    Yopok a % b == 0, quotient_ready.
+    q := q - 1.
+quotient_ready:
+    Yopok op == "/", quotient.
+    Pohuwu a - (b * q).
+quotient:
+    Pohuwu q.
+divide_by_zero:
+    parser[4] := Geklabik.
+    Pohuwu 0.
+}
+
+Yokyi aggregate(op, total, value) {
+    Yopok total == Liliga, first.
+    Dru op Ihedrux
+    "SUM": Hehokgi
+        Pohuwu total + value.
+    Kobihek
+    "MIN": Hehokgi
+        Pohuwu smaller(total, value).
+    Kobihek
+    "MAX": Hehokgi
+        Pohuwu larger(total, value).
+    Kobihek Kobihek
+first:
+    Pohuwu value.
+}
+
+Yokyi range_value(cells, op, total, a, b) {
+    Koke bounds := rectangle(a, b).
+    Gipolu row := bounds[1] Wexdush bounds[2] Gihe Hehokgi
+        Koke offset := (row - 1) * 26.
+        Gipolu col := bounds[3] Wexdush bounds[4] Gihe Hehokgi
+            Koke cell := cells[offset + col].
+            total := aggregate(op, total, cell[3]).
+        Kobihek
+    Kobihek
+    Pohuwu total.
+}
+
+Yokyi parse_call(parser, op) {
+    Yopok Gukdidok take(parser, "("), invalid.
+    Koke cells := parser[3].
+    Koke total := Liliga.
+    Puwadish Geklabik Gihe Hehokgi
+        Koke left := peek(parser, 0).
+        Koke colon := peek(parser, 1).
+        Yopok (left[2] > 0) Okdro (colon[1] == ":"), range_arg.
+        Koke value := expression(parser, 1).
+        Yopok value == Liliga, invalid.
+        total := aggregate(op, total, value).
+        Uxdrush separator.
+range_arg:
+        parser[2] := parser[2] + 2.
+        Koke right := peek(parser, 0).
+        Yopok right[2] == 0, invalid.
+        parser[2] := parser[2] + 1.
+        total := range_value(cells, op, total, left[2], right[2]).
+separator:
+        Yopok take(parser, ")"), done.
+        Yopok Gukdidok take(parser, ","), invalid.
+    Kobihek
+done:
+    Pohuwu total.
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi expression(parser, minimum) {
+    Koke negative := Lesh.
+    Puwadish take(parser, "-") Gihe Hehokgi
+        negative := Gukdidok negative.
+    Kobihek
+    Koke token := peek(parser, 0).
+    Koke text := token[1].
+    Koke value := token[3].
+    Yopok value /= Liliga, consume_atom.
+    Yopok token[2] > 0, cell_atom.
+    Yopok text == "(", parenthesized.
+    Yopok (text == "SUM") Dak (text == "MIN") Dak (text == "MAX"), function_atom.
+    Pohuwu Liliga.
+cell_atom:
+    Koke cells := parser[3].
+    Koke cell := cells[token[2]].
+    value := cell[3].
+consume_atom:
+    parser[2] := parser[2] + 1.
+    Uxdrush unary_done.
+parenthesized:
+    parser[2] := parser[2] + 1.
+    value := expression(parser, 1).
+    Yopok value == Liliga, invalid.
+    Yopok Gukdidok take(parser, ")"), invalid.
+    Uxdrush unary_done.
+function_atom:
+    parser[2] := parser[2] + 1.
+    value := parse_call(parser, text).
+    Yopok value == Liliga, invalid.
+unary_done:
+    Yopok Gukdidok negative, operators.
+    value := -value.
+operators:
+    Puwadish Geklabik Gihe Hehokgi
+        token := peek(parser, 0).
+        Koke op := token[1].
+        Koke priority := precedence(op).
+        Yopok priority < minimum, done.
+        parser[2] := parser[2] + 1.
+        Koke right := expression(parser, priority + 1).
+        Yopok right == Liliga, invalid.
+        value := arithmetic(parser, op, value, right).
+    Kobihek
+done:
+    Pohuwu value.
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi range_error(cells, columns, a, b) {
+    Koke bounds := rectangle(a, b).
+    Koke error := 0.
+    Gipolu row := bounds[1] Wexdush bounds[2] Gihe Hehokgi
+        Koke offset := (row - 1) * 26.
+        Gipolu col := bounds[3] Wexdush bounds[4] Gihe Hehokgi
+            error := larger(error, resolve(cells, columns, offset + col)).
+            Yopok error == 3, done.
+        Kobihek
+    Kobihek
+done:
+    Pohuwu error.
+}
+
+Yokyi dependency_error(tokens, cells, columns) {
+    Koke error := 0.
+    Koke i := 1.
+    Koke size := Yik(tokens) - 2.
+    Puwadish i <= size Gihe Hehokgi
+        Koke token := tokens[i].
+        Koke a := token[2].
+        Yopok a == 0, advance.
+        Koke next := tokens[i + 1].
+        Koke right := tokens[i + 2].
+        Yopok (next[1] == ":") Okdro (right[2] > 0), check_range.
+        error := larger(error, resolve(cells, columns, a)).
+        Uxdrush advance.
+check_range:
+        error := larger(error, range_error(cells, columns, a, right[2])).
+advance:
+        Yopok error == 3, done.
+        i := i + 1.
+    Kobihek
+done:
+    Pohuwu error.
+}
+
+Yokyi resolve(cells, columns, id) {
+    Koke cell := cells[id].
+    Yopok cell[2] == 2, cached.
+    Yopok cell[2] == 1, cycle.
+    cell[2] := 1.
+    Koke tokens := tokenize(cell[1], columns).
+    Koke error := dependency_error(tokens, cells, columns).
+    Yopok error >= 2, save.
+    Koke parser := [tokens, 1, cells, Lesh].
+    Koke value := expression(parser, 1).
+    Koke tail := peek(parser, 0).
+    Yopok (value == Liliga) Dak (tail[1] /= ""), malformed.
+    Yopok error == 1, save.
+    Yopok parser[4], division_error.
+    cell[3] := value.
+    Uxdrush save.
+malformed:
+    error := 2.
+    Uxdrush save.
+division_error:
+    error := 1.
+save:
+    cell[4] := error.
+    cell[2] := 2.
+cached:
+    Pohuwu cell[4].
+cycle:
+    Pohuwu 3.
+}
+
+Koke columns := "ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+Koke cells := [].
+Gipolu i := 1 Wexdush 2574 Gihe Hehokgi
+    Oxba(cells, [Liliga, 2, 0, 0]).
+Kobihek
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke separator := 1.
+    Koke name := "".
+    Puwadish line[separator] /= " " Gihe Hehokgi
+        name := name ++ line[separator].
+        separator := separator + 1.
+    Kobihek
+    Koke formula := "".
+    Gipolu i := separator + 3 Wexdush Yik(line) Gihe Hehokgi
+        formula := formula ++ line[i].
+    Kobihek
+    Koke id := cell_id(name, columns).
+    cells[id] := [formula, 0, 0, 0].
+    line := Pewexpo().
+Kobihek
+
+Koke errors := ["#DIV0", "#ERR", "#CYCLE"].
+Gipolu row := 1 Wexdush 99 Gihe Hehokgi
+    Gipolu col := 1 Wexdush 26 Gihe Hehokgi
+        Koke id := ((row - 1) * 26) + col.
+        Koke cell := cells[id].
+        Yopok cell[1] == Liliga, skip_cell.
+        Koke error := resolve(cells, columns, id).
+        Koke value := cell[3].
+        Yopok error == 0, print_cell.
+        value := errors[error].
+print_cell:
+        Ebi columns[col] ++ row ++ " = " ++ value.
+skip_cell:
+    Kobihek
+Kobihek

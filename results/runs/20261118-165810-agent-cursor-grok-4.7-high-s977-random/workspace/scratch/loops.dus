@@ -1,0 +1,43 @@
+Koke round := 1.
+Puwadish round <= 3 Gihe Hehokgi
+    Wuhadi "round " ++ round ++ ":".
+    Gipolu i := 1 Wexdush 3 Gihe Hehokgi
+        Wuhadi " " ++ i.
+    Kobihek
+    Ebi "".
+    round := round + 1.
+Kobihek
+
+Ebi "desc empty".
+Koke n := 0.
+Yopok n == 0, skip.
+Gipolu i := n Wexdush 1 Drix -1 Gihe Hehokgi
+    Ebi i.
+Kobihek
+skip:
+Ebi "done empty".
+
+Ebi "desc three".
+n := 3.
+Gipolu i := n Wexdush 1 Drix -1 Gihe Hehokgi
+    Ebi i.
+Kobihek
+
+Ebi "nested".
+Gipolu r := 1 Wexdush 2 Gihe Hehokgi
+    Gipolu c := 1 Wexdush 3 Gihe Hehokgi
+        Wuhadi r ++ "," ++ c ++ " ".
+    Kobihek
+    Ebi "".
+Kobihek
+
+Ebi "bool list".
+Koke used := [].
+Oxba(used, 0).
+Oxba(used, 1).
+Yopok used[1] == 1, not1.
+Ebi "zero".
+not1:
+Yopok used[2] /= 1, not2.
+Ebi "one".
+not2:

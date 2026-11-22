@@ -1,0 +1,18 @@
+Koke days := ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].
+Koke month_offsets := [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke year := Bupuxbo(line[1] ++ line[2] ++ line[3] ++ line[4]).
+    Koke month := Bupuxbo(line[6] ++ line[7]).
+    Koke day := Bupuxbo(line[9] ++ line[10]).
+    Koke earlier := year - 1.
+    Koke leap_days := -((-earlier) / 4) + ((-earlier) / 100) - ((-earlier) / 400).
+    Koke offset := (365 * earlier) + leap_days + month_offsets[month] + day - 1.
+    Yopok month <= 2, print_day.
+    Yopok (year % 4) /= 0, print_day.
+    Yopok ((year % 100) == 0) Okdro ((year % 400) /= 0), print_day.
+    offset := offset + 1.
+print_day:
+    Ebi days[1 - ((-offset) % 7)].
+    line := Pewexpo().
+Kobihek

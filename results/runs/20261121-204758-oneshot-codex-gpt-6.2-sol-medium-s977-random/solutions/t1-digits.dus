@@ -1,0 +1,20 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke digits := Bupuxbo(line).
+    Koke sign := 1.
+    Yopok digits >= 0, ready.
+    sign := -1.
+    digits := -digits.
+ready:
+    Koke sum := 0.
+    Koke reversed := 0.
+    Puwadish digits > 0 Gihe Hehokgi
+        Koke rest := (digits - 9) / 10.
+        Koke digit := digits - (rest * 10).
+        sum := sum + digit.
+        reversed := (reversed * 10) + digit.
+        digits := rest.
+    Kobihek
+    Ebi sum ++ " " ++ (sign * reversed).
+    line := Pewexpo().
+Kobihek

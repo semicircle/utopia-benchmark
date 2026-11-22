@@ -1,0 +1,25 @@
+Dradesde printDigits(n) Kro
+    Atbekis negative := n < 0.
+    Umkeim Ebakris negative, count_digits.
+    n := -n.
+count_digits:
+    Atbekis sum := 0.
+    Atbekis reversed := 0.
+    Bitreim (n > 0) {
+        Atbekis quotient := -((-n) / 10).
+        Atbekis digit := n - (10 * quotient).
+        sum := sum + digit.
+        reversed := (10 * reversed) + digit.
+        n := quotient.
+    }
+    Umkeim Ebakris negative, print_result.
+    reversed := -reversed.
+print_result:
+    Seimyu sum & " " & reversed.
+Kekrako
+
+Atbekis line := Ucheschu().
+Bitreim (line != Kapluda) {
+    printDigits(Yomheis(line)).
+    line := Ucheschu().
+}

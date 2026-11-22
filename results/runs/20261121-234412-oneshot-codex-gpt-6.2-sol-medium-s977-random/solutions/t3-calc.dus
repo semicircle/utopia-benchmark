@@ -1,0 +1,131 @@
+Yokyi precedence(op) {
+    Dru op Ihedrux
+    "+", "-": Hehokgi
+        Pohuwu 1.
+    Kobihek
+    "*", "/", "%": Hehokgi
+        Pohuwu 2.
+    Kobihek
+    "~": Hehokgi
+        Pohuwu 3.
+    Kobihek Kobihek
+    Pohuwu 0.
+}
+
+Yokyi store(stack, index, item) {
+    Yopok index > Yik(stack), append_item.
+    stack[index] := item.
+    Pohuwu.
+append_item:
+    Oxba(stack, item).
+}
+
+Yokyi apply(op, a, b) {
+    Dru op Ihedrux
+    "+": Hehokgi
+        Pohuwu a + b.
+    Kobihek
+    "-": Hehokgi
+        Pohuwu a - b.
+    Kobihek
+    "*": Hehokgi
+        Pohuwu a * b.
+    Kobihek Kobihek
+    Yopok b == 0, zero_divisor.
+    Koke q := a / b.
+    Yopok (a < 0) /= (b < 0), quotient_ready.
+    Yopok (a % b) == 0, quotient_ready.
+    q := q - 1.
+quotient_ready:
+    Yopok op == "%", remainder.
+    Pohuwu q.
+remainder:
+    Pohuwu a - (b * q).
+zero_divisor:
+    Pohuwu Liliga.
+}
+
+Yokyi evaluate(line) {
+    Koke values := [].
+    Koke operators := ["("].
+    Koke value_count := 0.
+    Koke op_count := 1.
+    Koke need_value := Geklabik.
+    Koke length := Yik(line).
+    Koke i := 1.
+    Puwadish i <= (length + 1) Gihe Hehokgi
+        // A final synthetic close reduces the initial opening parenthesis.
+        Koke ch := ")".
+        Yopok i > length, dispatch.
+        ch := line[i].
+dispatch:
+        Yopok ch == " ", advance.
+        Yopok Gukdidok need_value, read_operator.
+        Yopok ch == "-", unary_minus.
+        Yopok ch == "(", push_open.
+        Yopok (ch < "0") Dak (ch > "9"), invalid.
+        Koke number := 0.
+        Puwadish i <= length Gihe Hehokgi
+            Koke digit := line[i].
+            Yopok (digit < "0") Dak (digit > "9"), end_number.
+            number := (number * 10) + Bupuxbo(digit).
+            i := i + 1.
+        Kobihek
+end_number:
+        value_count := value_count + 1.
+        store(values, value_count, number).
+        need_value := Lesh.
+        Gosh.
+unary_minus:
+        op_count := op_count + 1.
+        store(operators, op_count, "~").
+        Uxdrush advance.
+push_open:
+        op_count := op_count + 1.
+        store(operators, op_count, "(").
+        Uxdrush advance.
+read_operator:
+        Koke level := precedence(ch).
+        Yopok ch == ")", reduce.
+        Yopok (level == 0) Dak (ch == "~"), invalid.
+reduce:
+        Puwadish op_count > 0 Gihe Hehokgi
+            Koke top := operators[op_count].
+            Yopok top == "(", reduced.
+            Yopok precedence(top) < level, reduced.
+            op_count := op_count - 1.
+            Yopok top == "~", negate.
+            Yopok value_count < 2, invalid.
+            Koke result := apply(top, values[value_count - 1], values[value_count]).
+            Yopok result == Liliga, invalid.
+            value_count := value_count - 1.
+            values[value_count] := result.
+            Gosh.
+negate:
+            Yopok value_count == 0, invalid.
+            values[value_count] := -values[value_count].
+        Kobihek
+reduced:
+        Yopok ch == ")", close_group.
+        op_count := op_count + 1.
+        store(operators, op_count, ch).
+        need_value := Geklabik.
+        Uxdrush advance.
+close_group:
+        Yopok op_count == 0, invalid.
+        op_count := op_count - 1.
+        Yopok (op_count == 0) Okdro (i <= length), invalid.
+advance:
+        i := i + 1.
+    Kobihek
+    Yopok (op_count /= 0) Dak (value_count /= 1), invalid.
+    Pohuwu values[1].
+invalid:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi evaluate(line).
+    line := Pewexpo().
+Kobihek

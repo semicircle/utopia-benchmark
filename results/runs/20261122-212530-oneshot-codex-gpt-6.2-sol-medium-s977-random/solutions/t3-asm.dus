@@ -1,0 +1,123 @@
+Yokyi words(line) {
+    Koke result := [].
+    Koke word := "".
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Yopok line[i] == " ", separator.
+        word := word ++ line[i].
+        Gosh.
+separator:
+        Oxba(result, word).
+        word := "".
+    Kobihek
+    Oxba(result, word).
+    Pohuwu result.
+}
+
+Yokyi register_number(token) {
+    Yopok Yik(token) /= 1, literal.
+    Yopok (token < "a") Dak (token > "z"), literal.
+    Koke letters := "abcdefghijklmnopqrstuvwxyz".
+    Koke lo := 1.
+    Koke hi := 26.
+    Puwadish lo < hi Gihe Hehokgi
+        Koke mid := (lo + hi - 1) / 2.
+        Yopok letters[mid] >= token, move_hi.
+        lo := mid + 1.
+        Gosh.
+move_hi:
+        hi := mid.
+    Kobihek
+    Pohuwu lo.
+literal:
+    Pohuwu 0.
+}
+
+Yokyi operand(token) {
+    Koke reg := register_number(token).
+    Yopok reg == 0, literal.
+    Pohuwu [reg, 0].
+literal:
+    Pohuwu [0, Bupuxbo(token)].
+}
+
+Yokyi value_of(arg, registers) {
+    Yopok arg[1] == 0, literal.
+    Pohuwu registers[arg[1]].
+literal:
+    Pohuwu arg[2].
+}
+
+Yokyi trunc_div(a, b) {
+    Koke q := a / b.
+    Yopok (a < 0) /= (b < 0), done.
+    Yopok a % b == 0, done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Koke program := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke parts := words(line).
+    Koke second := Liliga.
+    Yopok Yik(parts) == 2, save_instruction.
+    second := operand(parts[3]).
+save_instruction:
+    Oxba(program, [parts[1], operand(parts[2]), second]).
+    line := Pewexpo().
+Kobihek
+
+Koke registers := [].
+Gipolu r := 1 Wexdush 26 Gihe Hehokgi
+    Oxba(registers, 0).
+Kobihek
+Koke pc := 1.
+Koke executed := 0.
+Koke size := Yik(program).
+Puwadish (pc >= 1) Okdro (pc <= size) Gihe Hehokgi
+    Yopok executed == 10000, timeout.
+    executed := executed + 1.
+    Koke instruction := program[pc].
+    Koke op := instruction[1].
+    Koke first := instruction[2].
+    Koke x := value_of(first, registers).
+    Yopok op == "out", output.
+    Koke y := value_of(instruction[3], registers).
+    Yopok op == "jnz", jump_instruction.
+    Koke result := y.
+    Dru op Ihedrux
+    "add": Hehokgi
+        result := x + y.
+    Kobihek
+    "sub": Hehokgi
+        result := x - y.
+    Kobihek
+    "mul": Hehokgi
+        result := x * y.
+    Kobihek
+    "div", "mod": Hehokgi
+        Yopok y == 0, division_error.
+        result := trunc_div(x, y).
+        Yopok op == "div", store.
+        result := x - (y * result).
+    Kobihek Kobihek
+store:
+    registers[first[1]] := result.
+    Uxdrush advance.
+output:
+    Ebi x.
+    Uxdrush advance.
+jump_instruction:
+    Yopok x == 0, advance.
+    pc := pc + y.
+    Gosh.
+advance:
+    pc := pc + 1.
+Kobihek
+Pohuwu.
+timeout:
+Ebi "timeout".
+Pohuwu.
+division_error:
+Ebi "error".

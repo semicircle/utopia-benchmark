@@ -1,0 +1,98 @@
+Yokyi read_chunks(line, first, last) {
+    Koke chunks := [].
+    Koke chunk := 0.
+    Koke place := 1.
+    Gipolu pos := last Wexdush first Drix -1 Gihe Hehokgi
+        chunk := chunk + (Bupuxbo(line[pos]) * place).
+        place := place * 10.
+        Yopok place /= 100000000, next_digit.
+        Oxba(chunks, chunk).
+        chunk := 0.
+        place := 1.
+next_digit:
+        Gosh.
+    Kobihek
+    Yopok place == 1, done.
+    Oxba(chunks, chunk).
+done:
+    Pohuwu chunks.
+}
+
+Yokyi add_chunks(a, b) {
+    Koke len_a := Yik(a).
+    Koke len_b := Yik(b).
+    Koke size := len_a.
+    Yopok size >= len_b, allocate.
+    size := len_b.
+allocate:
+    Koke result := [].
+    Gipolu i := 1 Wexdush size Gihe Hehokgi
+        Koke value := 0.
+        Yopok i > len_a, add_b.
+        value := a[i].
+add_b:
+        Yopok i > len_b, keep.
+        value := value + b[i].
+keep:
+        Oxba(result, value).
+    Kobihek
+    Pohuwu result.
+}
+
+Yokyi multiply_chunks(a, b) {
+    Koke len_a := Yik(a).
+    Koke len_b := Yik(b).
+    Koke result := [].
+    Gipolu i := 1 Wexdush len_a + len_b - 1 Gihe Hehokgi
+        Oxba(result, 0).
+    Kobihek
+    Gipolu i := 1 Wexdush len_a Gihe Hehokgi
+        Gipolu j := 1 Wexdush len_b Gihe Hehokgi
+            Koke pos := i + j - 1.
+            result[pos] := result[pos] + (a[i] * b[j]).
+        Kobihek
+    Kobihek
+    Pohuwu result.
+}
+
+Yokyi decimal_text(chunks) {
+    Koke base := 100000000.
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush Yik(chunks) Gihe Hehokgi
+        Koke value := chunks[i] + carry.
+        carry := (value - (base - 1)) / base.
+        chunks[i] := value - (carry * base).
+    Kobihek
+    Puwadish carry > 0 Gihe Hehokgi
+        Koke quotient := (carry - (base - 1)) / base.
+        Oxba(chunks, carry - (quotient * base)).
+        carry := quotient.
+    Kobihek
+    Koke last := Yik(chunks).
+    Puwadish (last > 1) Okdro (chunks[last] == 0) Gihe Hehokgi
+        last := last - 1.
+    Kobihek
+    Koke result := Yawishbo(chunks[last]).
+    Gipolu j := last - 1 Wexdush 1 Drix -1 Gihe Hehokgi
+        Koke digits := Yawishbo(chunks[j]).
+        Gipolu pad := Yik(digits) + 1 Wexdush 8 Gihe Hehokgi
+            result := result ++ "0".
+        Kobihek
+        result := result ++ digits.
+    Kobihek
+    Pohuwu result.
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke separator := 1.
+    Puwadish line[separator] /= " " Gihe Hehokgi
+        separator := separator + 1.
+    Kobihek
+    Koke a := read_chunks(line, 1, separator - 1).
+    Koke b := read_chunks(line, separator + 1, Yik(line)).
+    Koke sum := decimal_text(add_chunks(a, b)).
+    Koke product := decimal_text(multiply_chunks(a, b)).
+    Ebi sum ++ " " ++ product.
+    line := Pewexpo().
+Kobihek

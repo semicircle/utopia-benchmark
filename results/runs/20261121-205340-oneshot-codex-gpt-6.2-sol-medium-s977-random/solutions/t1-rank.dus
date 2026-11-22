@@ -1,0 +1,44 @@
+Yokyi parseNumbers(line) {
+    Koke numbers := [].
+    Koke token := "".
+    line := line ++ " ".
+    Gipolu i := 1 Wexdush Yik(line) Gihe Hehokgi
+        Koke ch := line[i].
+        Yopok ch == " ", endToken.
+        token := token ++ ch.
+        Gosh.
+endToken:
+        Yopok token == "", skipToken.
+        Oxba(numbers, Bupuxbo(token)).
+        token := "".
+skipToken:
+    Kobihek
+    Pohuwu numbers.
+}
+
+Yokyi printRank(numbers, query) {
+    Koke size := Yik(numbers).
+    Koke low := 1.
+    Koke high := size.
+    Puwadish low <= high Gihe Hehokgi
+        Koke mid := (low + high) / 2.
+        Yopok numbers[mid] < query, upperHalf.
+        high := mid - 1.
+        Gosh.
+upperHalf:
+        low := mid + 1.
+    Kobihek
+    Koke rank := low - 1.
+    Yopok (low <= size) Okdro (numbers[low] == query), found.
+    Ebi rank ++ " missing".
+    Pohuwu.
+found:
+    Ebi rank ++ " found".
+}
+
+Koke numbers := parseNumbers(Pewexpo()).
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    printRank(numbers, Bupuxbo(line)).
+    line := Pewexpo().
+Kobihek

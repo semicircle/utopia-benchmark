@@ -1,0 +1,116 @@
+Yokyi floor_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, exact.
+    q := q - 1.
+exact:
+    Pohuwu q.
+}
+
+Yokyi floor_mod(a, b) {
+    Pohuwu a - (b * floor_div(a, b)).
+}
+
+Yokyi trunc_div(a, b) {
+    Koke q := a / b.
+    Yopok (a - (b * q)) == 0, done.
+    Yopok (a < 0) /= (b < 0), done.
+    q := q - 1.
+done:
+    Pohuwu q.
+}
+
+Yokyi trunc_mod(a, b) {
+    Pohuwu a - (b * trunc_div(a, b)).
+}
+
+Yokyi pos_mod(a, b) {
+    Pohuwu a - (b * floor_div(a, b)).
+}
+
+Yokyi show(label, v) {
+    Ebi label ++ " " ++ v.
+}
+
+show("fd 7 2", floor_div(7, 2)).
+show("fm 7 2", floor_mod(7, 2)).
+show("fd -7 2", floor_div(-7, 2)).
+show("fm -7 2", floor_mod(-7, 2)).
+show("fd 7 -2", floor_div(7, -2)).
+show("fm 7 -2", floor_mod(7, -2)).
+show("fd -7 -2", floor_div(-7, -2)).
+show("fm -7 -2", floor_mod(-7, -2)).
+show("fd 8 2", floor_div(8, 2)).
+show("fm 8 2", floor_mod(8, 2)).
+show("fd -8 2", floor_div(-8, 2)).
+show("fd 8 -2", floor_div(8, -2)).
+show("fm 8 -2", floor_mod(8, -2)).
+show("fd -8 -2", floor_div(-8, -2)).
+show("fm -8 -2", floor_mod(-8, -2)).
+show("fd 5 3", floor_div(5, 3)).
+show("fm 5 3", floor_mod(5, 3)).
+show("fd -5 3", floor_div(-5, 3)).
+show("fm -5 3", floor_mod(-5, 3)).
+show("fd 5 -3", floor_div(5, -3)).
+show("fm 5 -3", floor_mod(5, -3)).
+show("fd -5 -3", floor_div(-5, -3)).
+show("fm -5 -3", floor_mod(-5, -3)).
+show("fd 1 1", floor_div(1, 1)).
+show("fd -1 1", floor_div(-1, 1)).
+show("fd 1 -1", floor_div(1, -1)).
+show("fd -1 -1", floor_div(-1, -1)).
+show("fd 1000000000 3", floor_div(1000000000, 3)).
+show("fm 1000000000 3", floor_mod(1000000000, 3)).
+show("pm -1 4", pos_mod(-1, 4)).
+show("pm -4 4", pos_mod(-4, 4)).
+show("pm 5 4", pos_mod(5, 4)).
+show("pm 0 4", pos_mod(0, 4)).
+show("pm -1000000000 3", pos_mod(-1000000000, 3)).
+show("pm 1000000000 3", pos_mod(1000000000, 3)).
+
+show("td 7 2", trunc_div(7, 2)).
+show("tm 7 2", trunc_mod(7, 2)).
+show("td -7 2", trunc_div(-7, 2)).
+show("tm -7 2", trunc_mod(-7, 2)).
+show("td 7 -2", trunc_div(7, -2)).
+show("tm 7 -2", trunc_mod(7, -2)).
+show("td -7 -2", trunc_div(-7, -2)).
+show("tm -7 -2", trunc_mod(-7, -2)).
+show("td 5 2", trunc_div(5, 2)).
+show("tm 5 2", trunc_mod(5, 2)).
+show("td -5 2", trunc_div(-5, 2)).
+show("tm -5 2", trunc_mod(-5, 2)).
+show("td 5 -2", trunc_div(5, -2)).
+show("tm 5 -2", trunc_mod(5, -2)).
+show("td -5 -2", trunc_div(-5, -2)).
+show("tm -5 -2", trunc_mod(-5, -2)).
+show("td 4 2", trunc_div(4, 2)).
+show("td -4 2", trunc_div(-4, 2)).
+show("td 1 2", trunc_div(1, 2)).
+show("tm 1 2", trunc_mod(1, 2)).
+show("td -1 2", trunc_div(-1, 2)).
+show("tm -1 2", trunc_mod(-1, 2)).
+
+Ebi "gosh while".
+Koke i := 1.
+Puwadish i <= 5 Gihe Hehokgi
+    Yopok (i % 2) /= 0, odd.
+    i := i + 1.
+    Gosh.
+odd:
+    Wuhadi i ++ " ".
+    i := i + 1.
+Kobihek
+Ebi "".
+
+Ebi "short idx".
+Koke xs := [10, 20].
+Koke j := 0.
+Puwadish (j >= 1) Okdro (xs[j] > 0) Gihe Hehokgi
+    Ebi "bad".
+Kobihek
+Ebi "short ok".
+j := 2.
+Puwadish (j >= 1) Okdro (xs[j] > 15) Gihe Hehokgi
+    Ebi xs[j].
+    j := j - 1.
+Kobihek

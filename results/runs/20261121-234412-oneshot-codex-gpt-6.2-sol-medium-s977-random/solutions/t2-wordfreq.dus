@@ -1,0 +1,95 @@
+Yokyi new_node() {
+    Pohuwu [0, [
+        Liliga, Liliga, Liliga, Liliga, Liliga, Liliga, Liliga,
+        Liliga, Liliga, Liliga, Liliga, Liliga, Liliga,
+        Liliga, Liliga, Liliga, Liliga, Liliga, Liliga,
+        Liliga, Liliga, Liliga, Liliga, Liliga, Liliga, Liliga
+    ]].
+}
+
+Yokyi letter_index(ch, letters) {
+    Yopok (ch < "A") Dak (ch > "z"), absent.
+    Koke lo := 1.
+    Koke hi := 52.
+    Puwadish lo <= hi Gihe Hehokgi
+        Koke mid := (lo + hi) / 2.
+        Yopok ch == letters[mid], found.
+        Yopok ch < letters[mid], search_left.
+        lo := mid + 1.
+        Gosh.
+search_left:
+        hi := mid - 1.
+        Gosh.
+found:
+        Yopok mid <= 26, uppercase.
+        Pohuwu mid - 26.
+uppercase:
+        Pohuwu mid.
+    Kobihek
+absent:
+    Pohuwu 0.
+}
+
+Koke root := new_node().
+Koke entries := [].
+Koke letters := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".
+Koke lower := "abcdefghijklmnopqrstuvwxyz".
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke node := root.
+    Koke word := "".
+    Koke length := Yik(line).
+    Gipolu i := 1 Wexdush length + 1 Gihe Hehokgi
+        Yopok i > length, end_word.
+        Koke index := letter_index(line[i], letters).
+        Yopok index == 0, end_word.
+        Koke children := node[2].
+        Yopok children[index] /= Liliga, descend.
+        children[index] := new_node().
+descend:
+        node := children[index].
+        word := word ++ lower[index].
+        Gosh.
+end_word:
+        Yopok word == "", next_character.
+        Koke entry_index := node[1].
+        Yopok entry_index /= 0, increment.
+        Oxba(entries, [word, 1]).
+        node[1] := Yik(entries).
+        Uxdrush reset_word.
+increment:
+        Koke entry := entries[entry_index].
+        entry[2] := entry[2] + 1.
+reset_word:
+        node := root.
+        word := "".
+next_character:
+        Gosh.
+    Kobihek
+    line := Pewexpo().
+Kobihek
+
+Gipolu place := 1 Wexdush 10 Gihe Hehokgi
+    Koke best_index := 0.
+    Koke best_count := 0.
+    Koke best_word := "".
+    Gipolu i := 1 Wexdush Yik(entries) Gihe Hehokgi
+        Koke entry := entries[i].
+        Koke count := entry[2].
+        Yopok count == 0, skip_entry.
+        Yopok count > best_count, take_entry.
+        Yopok (count /= best_count) Dak (entry[1] >= best_word), skip_entry.
+take_entry:
+        best_index := i.
+        best_count := count.
+        best_word := entry[1].
+skip_entry:
+        Gosh.
+    Kobihek
+    Yopok best_index == 0, done.
+    Ebi best_word ++ " " ++ best_count.
+    Koke selected := entries[best_index].
+    selected[2] := 0.
+Kobihek
+done:
+Pohuwu.

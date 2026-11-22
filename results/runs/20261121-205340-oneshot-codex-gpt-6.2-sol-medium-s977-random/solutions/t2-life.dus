@@ -1,0 +1,51 @@
+Yokyi nextGeneration(grid, height, width) {
+    Koke nextGrid := [].
+    Gipolu row := 1 Wexdush height Gihe Hehokgi
+        Koke currentRow := grid[row].
+        Koke nextRow := "".
+        Gipolu col := 1 Wexdush width Gihe Hehokgi
+            Koke neighbors := 0.
+            Gipolu nearRow := row - 1 Wexdush row + 1 Gihe Hehokgi
+                Yopok (nearRow >= 1) Okdro (nearRow <= height), validRow.
+                Gosh.
+validRow:
+                Koke nearby := grid[nearRow].
+                Gipolu nearCol := col - 1 Wexdush col + 1 Gihe Hehokgi
+                    Yopok (nearCol >= 1) Okdro (nearCol <= width), validColumn.
+                    Gosh.
+validColumn:
+                    Yopok (nearRow == row) Okdro (nearCol == col), skipNeighbor.
+                    Yopok nearby[nearCol] /= "#", skipNeighbor.
+                    neighbors := neighbors + 1.
+skipNeighbor:
+                Kobihek
+            Kobihek
+
+            Yopok neighbors == 3, live.
+            Yopok (neighbors == 2) Okdro (currentRow[col] == "#"), live.
+            nextRow := nextRow ++ ".".
+            Gosh.
+live:
+            nextRow := nextRow ++ "#".
+        Kobihek
+        Oxba(nextGrid, nextRow).
+    Kobihek
+    Pohuwu nextGrid.
+}
+
+Koke generations := Bupuxbo(Pewexpo()).
+Koke grid := [].
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Oxba(grid, line).
+    line := Pewexpo().
+Kobihek
+
+Koke height := Yik(grid).
+Koke width := Yik(grid[1]).
+Gipolu generation := 1 Wexdush generations Gihe Hehokgi
+    grid := nextGeneration(grid, height, width).
+Kobihek
+Gipolu row := 1 Wexdush height Gihe Hehokgi
+    Ebi grid[row].
+Kobihek

@@ -1,0 +1,119 @@
+Yokyi divisor_chunks(line, separator) {
+    Koke chunks := [].
+    Koke value := 0.
+    Koke place := 1.
+    Gipolu i := Yik(line) Wexdush separator + 1 Drix -1 Gihe Hehokgi
+        value := value + (place * Bupuxbo(line[i])).
+        place := place * 10.
+        Yopok place /= 10000, next_digit.
+        Oxba(chunks, value).
+        value := 0.
+        place := 1.
+next_digit:
+    Kobihek
+    Yopok place == 1, extra_chunk.
+    Oxba(chunks, value).
+extra_chunk:
+    Oxba(chunks, 0).
+    Pohuwu chunks.
+}
+
+Yokyi multiply_small(chunks, digit) {
+    Koke result := [].
+    Koke carry := 0.
+    Gipolu i := 1 Wexdush Yik(chunks) Gihe Hehokgi
+        Koke value := (chunks[i] * digit) + carry.
+        carry := -(-value / 10000).
+        Oxba(result, value - (carry * 10000)).
+    Kobihek
+    Pohuwu result.
+}
+
+Yokyi at_least(a, b) {
+    Gipolu i := Yik(a) Wexdush 1 Drix -1 Gihe Hehokgi
+        Yopok a[i] > b[i], yes.
+        Yopok a[i] < b[i], no.
+    Kobihek
+yes:
+    Pohuwu Geklabik.
+no:
+    Pohuwu Lesh.
+}
+
+Yokyi subtract_chunks(a, b) {
+    Koke borrow := 0.
+    Gipolu i := 1 Wexdush Yik(a) Gihe Hehokgi
+        Koke value := a[i] - b[i] - borrow.
+        borrow := 0.
+        Yopok value >= 0, save.
+        value := value + 10000.
+        borrow := 1.
+save:
+        a[i] := value.
+    Kobihek
+}
+
+Yokyi format_chunks(chunks) {
+    Koke i := Yik(chunks).
+    Puwadish (i > 1) Okdro (chunks[i] == 0) Gihe Hehokgi
+        i := i - 1.
+    Kobihek
+    Koke result := Yawishbo(chunks[i]).
+    Gipolu j := i - 1 Wexdush 1 Drix -1 Gihe Hehokgi
+        Koke part := Yawishbo(chunks[j]).
+        Puwadish Yik(part) < 4 Gihe Hehokgi
+            part := "0" ++ part.
+        Kobihek
+        result := result ++ part.
+    Kobihek
+    Pohuwu result.
+}
+
+Yokyi divide_line(line) {
+    Koke separator := 1.
+    Puwadish line[separator] /= " " Gihe Hehokgi
+        separator := separator + 1.
+    Kobihek
+    Koke divisor := divisor_chunks(line, separator).
+    Koke remainder := multiply_small(divisor, 0).
+    Koke multiples := [].
+    Gipolu digit := 0 Wexdush 9 Gihe Hehokgi
+        Oxba(multiples, multiply_small(divisor, digit)).
+    Kobihek
+
+    Koke quotient := "".
+    Gipolu i := 1 Wexdush separator - 1 Gihe Hehokgi
+        Koke carry := Bupuxbo(line[i]).
+        Gipolu j := 1 Wexdush Yik(remainder) Gihe Hehokgi
+            Koke value := remainder[j] * 10 + carry.
+            carry := -(-value / 10000).
+            remainder[j] := value - (carry * 10000).
+        Kobihek
+        Koke lo := 0.
+        Koke hi := 10.
+        Puwadish hi - lo > 1 Gihe Hehokgi
+            Koke mid := (lo + hi) / 2.
+            Yopok at_least(remainder, multiples[mid + 1]), move_lo.
+            hi := mid.
+            Gosh.
+move_lo:
+            lo := mid.
+        Kobihek
+        Yopok lo == 0, append_digit.
+        subtract_chunks(remainder, multiples[lo + 1]).
+append_digit:
+        Yopok (lo == 0) Okdro (quotient == ""), skip_digit.
+        quotient := quotient ++ lo.
+skip_digit:
+    Kobihek
+    Yopok quotient /= "", print_result.
+    quotient := "0".
+print_result:
+    Ebi quotient ++ " " ++ format_chunks(remainder).
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    divide_line(line).
+    line := Pewexpo().
+Kobihek

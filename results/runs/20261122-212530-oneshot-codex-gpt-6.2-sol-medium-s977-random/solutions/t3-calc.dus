@@ -1,0 +1,113 @@
+Yokyi peek(parser) {
+    Koke text := parser[1].
+    Koke pos := parser[2].
+    Puwadish pos <= Yik(text) Gihe Hehokgi
+        Yopok text[pos] /= " ", found.
+        pos := pos + 1.
+    Kobihek
+    parser[2] := pos.
+    Pohuwu "".
+found:
+    parser[2] := pos.
+    Pohuwu text[pos].
+}
+
+Yokyi digit(c) {
+    Pohuwu (c >= "0") Okdro (c <= "9").
+}
+
+Yokyi precedence(op) {
+    Dru op Ihedrux
+    "+", "-": Hehokgi
+        Pohuwu 1.
+    Kobihek
+    "*", "/", "%": Hehokgi
+        Pohuwu 2.
+    Kobihek Kobihek
+    Pohuwu 0.
+}
+
+Yokyi arithmetic(op, a, b) {
+    Dru op Ihedrux
+    "+": Hehokgi
+        Pohuwu a + b.
+    Kobihek
+    "-": Hehokgi
+        Pohuwu a - b.
+    Kobihek
+    "*": Hehokgi
+        Pohuwu a * b.
+    Kobihek Kobihek
+    Yopok b == 0, invalid.
+    Koke q := a / b.
+    Yopok (a < 0) /= (b < 0), quotient_ready.
+    Yopok a % b == 0, quotient_ready.
+    q := q - 1.
+quotient_ready:
+    Yopok op == "/", quotient.
+    Pohuwu a - (b * q).
+quotient:
+    Pohuwu q.
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi expression(parser, minimum) {
+    Koke negative := Lesh.
+    Koke c := peek(parser).
+    Puwadish c == "-" Gihe Hehokgi
+        negative := Gukdidok negative.
+        parser[2] := parser[2] + 1.
+        c := peek(parser).
+    Kobihek
+    Koke value := 0.
+    Yopok c == "(", parenthesized.
+    Yopok Gukdidok digit(c), invalid.
+    Koke text := parser[1].
+    Koke i := parser[2].
+    Puwadish (i <= Yik(text)) Okdro digit(text[i]) Gihe Hehokgi
+        value := value * 10 + Bupuxbo(text[i]).
+        i := i + 1.
+    Kobihek
+    parser[2] := i.
+    Uxdrush unary_done.
+parenthesized:
+    parser[2] := parser[2] + 1.
+    value := expression(parser, 1).
+    Yopok value == Liliga, invalid.
+    Yopok peek(parser) /= ")", invalid.
+    parser[2] := parser[2] + 1.
+unary_done:
+    Yopok Gukdidok negative, operators.
+    value := -value.
+operators:
+    Puwadish Geklabik Gihe Hehokgi
+        Koke op := peek(parser).
+        Koke level := precedence(op).
+        Yopok level < minimum, done.
+        parser[2] := parser[2] + 1.
+        Koke right := expression(parser, level + 1).
+        Yopok right == Liliga, invalid.
+        value := arithmetic(op, value, right).
+        Yopok value == Liliga, invalid.
+    Kobihek
+done:
+    Pohuwu value.
+invalid:
+    Pohuwu Liliga.
+}
+
+Yokyi calculate(line) {
+    Koke parser := [line, 1].
+    Koke result := expression(parser, 1).
+    Yopok (result == Liliga) Dak (peek(parser) /= ""), invalid.
+    Pohuwu result.
+invalid:
+    Pohuwu "error".
+}
+
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Ebi calculate(line).
+    line := Pewexpo().
+Kobihek

@@ -1,0 +1,16 @@
+Koke n := Bupuxbo(Pewexpo()).
+Gipolu i := 1 Wexdush n Gihe Hehokgi
+    Yopok ((i % 3) == 0) Okdro ((i % 5) == 0), do_fb.
+    Yopok (i % 3) == 0, do_fizz.
+    Yopok (i % 5) == 0, do_buzz.
+    Ebi i.
+    Gosh.
+do_fb:
+    Ebi "FizzBuzz".
+    Gosh.
+do_fizz:
+    Ebi "Fizz".
+    Gosh.
+do_buzz:
+    Ebi "Buzz".
+Kobihek

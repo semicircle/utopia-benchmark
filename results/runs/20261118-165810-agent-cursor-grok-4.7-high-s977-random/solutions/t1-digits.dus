@@ -1,0 +1,23 @@
+Koke line := Pewexpo().
+Puwadish line /= Liliga Gihe Hehokgi
+    Koke n := Bupuxbo(line).
+    Koke s := Yawishbo(n).
+    Koke start := 1.
+    Yopok s[1] /= "-", nosign.
+    start := 2.
+nosign:
+    Koke sum := 0.
+    Koke rev := "".
+    Koke i := Yik(s).
+    Puwadish i >= start Gihe Hehokgi
+        sum := sum + Bupuxbo(s[i]).
+        rev := rev ++ s[i].
+        i := i - 1.
+    Kobihek
+    Koke revnum := Bupuxbo(rev).
+    Yopok n >= 0, positive.
+    revnum := 0 - revnum.
+positive:
+    Ebi sum ++ " " ++ revnum.
+    line := Pewexpo().
+Kobihek

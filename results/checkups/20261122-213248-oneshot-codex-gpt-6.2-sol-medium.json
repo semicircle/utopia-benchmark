@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-22T21:17:50",
+  "mode": "oneshot",
+  "model": "gpt-6.2-sol",
+  "runner": "codex",
+  "effort": "medium",
+  "release": "v3",
+  "runs": [
+    "20261122-211751-oneshot-codex-gpt-6.2-sol-medium-s182-random",
+    "20261122-212530-oneshot-codex-gpt-6.2-sol-medium-s977-random"
+  ],
+  "fresh_runs": [],
+  "baseline_runs": [],
+  "now_mean": 1.0,
+  "base_mean": null,
+  "drop_points": null,
+  "p_value": null,
+  "verdict": "baseline",
+  "models_reported": [
+    "gpt-6.2-sol"
+  ],
+  "fresh_scores": [],
+  "errors": [],
+  "stopped": null,
+  "history_dirs": [],
+  "n_now": 2,
+  "n_base": 0,
+  "isolation_warnings": [],
+  "flagged": 0
+}

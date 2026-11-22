@@ -1,0 +1,16 @@
+Atbekis n := Yomheis(Ucheschu()).
+Ashes (Atbekis i := 1; i <= n; i := i + 1) {
+    Umkeim (i Ubok 15) = 0, fizzbuzz.
+    Umkeim (i Ubok 3) = 0, fizz.
+    Umkeim (i Ubok 5) = 0, buzz.
+    Seimyu i.
+    Sabatchi.
+fizzbuzz:
+    Seimyu "FizzBuzz".
+    Sabatchi.
+fizz:
+    Seimyu "Fizz".
+    Sabatchi.
+buzz:
+    Seimyu "Buzz".
+}
